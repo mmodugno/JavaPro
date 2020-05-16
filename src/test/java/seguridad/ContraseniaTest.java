@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class ContraseñaTest {
+public class ContraseniaTest {
 	
 	AccountFieldValidation validator = new AccountFieldValidation();
 	
