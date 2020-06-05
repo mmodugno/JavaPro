@@ -24,10 +24,15 @@ public class Presupuesto {
 	public Proveedor getProveedor() {
 		return proveedor;
 	}
-	
-	public double valorTotal() {
-		return egresoAsociado.valorTotal();
-	}
+
+
+	public Double valorTotal() throws SinItemsExcepcion{
+			if(items.isEmpty()){
+				throw new SinItemsExcepcion();
+			}
+			return items.stream().mapToDouble(Item::getPrecio).sum();
+		}
+
 	
 	
 }

@@ -1,13 +1,11 @@
 package egreso;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.OptionalDouble;
 
-import producto.Producto;
+import static java.util.stream.Collectors.toList;
 
 public class ElMasBarato implements CriterioSeleccion {
-	
+
 	public Double elMenor(List<Double> t) {
 	
     double min = 0;
@@ -20,16 +18,14 @@ public class ElMasBarato implements CriterioSeleccion {
 	return min;
     
 	}
-	
+
 	@Override
 	public Presupuesto seleccionar(OrdenDeCompra ordenDeCompra) {
-		
-	
-		Double menorPrecio = elMenor(ordenDeCompra.getPresupuestos().stream().mapToDouble(presupuesto -> presupuesto.valorTotal()));
 
-		
-		return ordenDeCompra.getPresupuestos().stream().filter(m -> m.valorTotal() == menorPrecio).first();
-		
+		List<Double> lista = ordenDeCompra.getPresupuestos().stream().map(Presupuesto::valorTotal).collect(toList());
+		Double menorPrecio = elMenor(lista);
+		Presupuesto presu = ordenDeCompra.getPresupuestos().stream().filter(m -> m.valorTotal() == menorPrecio).findFirst().get();
+		return presu;
 		
 	}
 

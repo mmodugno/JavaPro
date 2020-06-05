@@ -24,8 +24,9 @@ public class Validador {
 	}
 	
 	public Presupuesto seleccionarPresupuesto(OrdenDeCompra ordenDeCompra) {
-	
-		return criterioSeleccion.seleccionar(ordenDeCompra);
+
+		Presupuesto presu= criterioSeleccion.seleccionar(ordenDeCompra);
+		return presu;
 
 	}
 	
