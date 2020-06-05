@@ -19,5 +19,7 @@ public class Item {
 		return cantidad;
 	}
 	
-	
+	public float getPrecio() {
+		return producto.getPrecio();
+	}
 }
