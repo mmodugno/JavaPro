@@ -17,11 +17,11 @@ public class OrdenDeCompra {
 		this.presupuestos = presupuestos;
 		this.revisores = revisores;
 	}
-	List<Producto> productos;
-	String fecha; 
-	int necesitaPresupuesto;
-	List<Presupuesto> presupuestos;
-	List<CuentaUsuario> revisores;
+	private List<Producto> productos;
+	private String fecha; 
+	private int necesitaPresupuesto;
+	private List<Presupuesto> presupuestos;
+	private List<CuentaUsuario> revisores;
 	
 	public double valorTotal() throws SinItemsExcepcion{
         if(productos.isEmpty()){
@@ -29,6 +29,27 @@ public class OrdenDeCompra {
         }
         return productos.stream().mapToDouble(Producto::getPrecio).sum();
     }
+
+	public List<Producto> getProductos() {
+		return productos;
+	}
+
+	public String getFecha() {
+		return fecha;
+	}
+
+	public int getNecesitaPresupuesto() {
+		return necesitaPresupuesto;
+	}
+
+	public List<Presupuesto> getPresupuestos() {
+		return presupuestos;
+	}
+
+	public List<CuentaUsuario> getRevisores() {
+		return revisores;
+	}
+
 	
 	//public void generarDocumentoComercial()
 
