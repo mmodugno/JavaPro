@@ -29,6 +29,8 @@ public class OrdenDeCompra {
         }
         return productos.stream().mapToDouble(Producto::getPrecio).sum();
     }
+	
+	//public void generarDocumentoComercial()
 
 	
 }
