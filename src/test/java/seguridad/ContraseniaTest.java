@@ -3,6 +3,9 @@ import java.io.FileNotFoundException;
 import org.junit.Assert;
 import org.junit.Test;
 
+import usuarios.AccountFieldValidation;
+import usuarios.CreationError;
+
 public class ContraseniaTest {
 	
 	AccountFieldValidation validator = new AccountFieldValidation();

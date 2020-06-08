@@ -2,8 +2,8 @@ package egreso;
 
 import java.util.List;
 
-import seguridad.CuentaUsuario;
 import producto.*;
+import usuarios.CreadorUsuario;
 
 public class Egreso {
 

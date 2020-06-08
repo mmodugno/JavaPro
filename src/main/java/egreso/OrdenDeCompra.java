@@ -3,14 +3,13 @@ package egreso;
 import java.util.List;
 
 import producto.*;
-
-import seguridad.CuentaUsuario;
+import usuarios.CreadorUsuario;
 
 
 public class OrdenDeCompra {
 
 	public OrdenDeCompra(List<Producto> productos, int necesitaPresupuesto, List<Presupuesto> presupuestos,
-			List<CuentaUsuario> revisores) {
+			List<CreadorUsuario> revisores) {
 		
 		this.productos = productos;
 		this.necesitaPresupuesto = necesitaPresupuesto;
@@ -21,7 +20,7 @@ public class OrdenDeCompra {
 	String fecha; 
 	int necesitaPresupuesto;
 	List<Presupuesto> presupuestos;
-	List<CuentaUsuario> revisores;
+	List<CreadorUsuario> revisores;
 	
 	public double valorTotal() throws SinItemsExcepcion{
         if(productos.isEmpty()){
