@@ -19,7 +19,8 @@ public class Item {
 		return cantidad;
 	}
 	
-	public float getPrecio() {
-		return producto.getPrecio();
+	public Double getPrecio() {
+		Double precio = cantidad * producto.getPrecio();
+		return precio;
 	}
 }

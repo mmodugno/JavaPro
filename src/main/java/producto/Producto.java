@@ -5,12 +5,12 @@ public class Producto {
 		private int codProducto;
 		private String nombre;
 		private String descripcion;
-		private float precio;
+		private Double precio;
 		private TipoItem tipoProducto;
 		
 		
 		
-		public Producto(int codigo, String unNombre, String descripcion,float unPrecio, TipoItem tipo) {
+		public Producto(int codigo, String unNombre, String descripcion,Double unPrecio, TipoItem tipo) {
 			this.nombre = unNombre;
 			this.precio = unPrecio;
 			this.descripcion = descripcion;
@@ -33,7 +33,7 @@ public class Producto {
 
 
 
-		public float getPrecio() {
+		public Double getPrecio() {
 			return precio;
 		}
 
