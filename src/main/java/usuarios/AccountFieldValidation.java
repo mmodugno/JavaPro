@@ -1,4 +1,4 @@
-package seguridad;
+package usuarios;
 /**
  * Esta clase verifica que se cumplan las normativas constituidas
  * en el OWASP (Proyecto Abierto de Seguridad en Aplicaciones Web).

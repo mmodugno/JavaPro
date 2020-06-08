@@ -1,27 +1,52 @@
-package seguridad;
-
+package usuarios;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
-public class CuentaUsuario {
+public class CreadorUsuario {
 	private String usuario;
 	private String contrasenia;
 	
-	private int totalAttempts = 3;
+	// private int totalAttempts = 3;
 	
 	private AccountFieldValidation validator = new AccountFieldValidation();
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public String getContrasenia() {
+		return contrasenia;
+	}
+		
+	public Usuario crearUsuario(String newUser, String newPassword, String tipoUsuario) throws FileNotFoundException, ClassNotFoundException, CreationError, SQLException {
+		if(!validator.validateUser(newUser)) throw new CreationError("El usuario no cumple los requisitos.");
+		if(!validator.validatePassword(newPassword)) throw new CreationError("La password no cumple los requisitos.");
+		if(validator.weakPassword(newPassword)) throw new CreationError("La password es demasiado debil. Por favor, elija otra.");
+		
+		if(tipoUsuario == "admin") {
+			return new UsuarioAdministrador(newUser, newPassword);
+		} else {			
+			return new UsuarioEstandard(newUser, newPassword);
+		}
+	}
 	
-	public CuentaUsuario(String NewUser, String NewPassword) throws CreationError, FileNotFoundException, ClassNotFoundException, SQLException {
+	
+	
+	
+	
+	
+	/*
+	public CreadorUsuario(String NewUser, String NewPassword) throws CreationError, FileNotFoundException, ClassNotFoundException, SQLException {
 		if(!validator.validateUser(NewUser)) throw new CreationError("El usuario no cumple los requisitos.");
 		if(!validator.validatePassword(NewPassword)) throw new CreationError("La password no cumple los requisitos.");
 		if(validator.weakPassword(NewPassword)) throw new CreationError("La password es demasiado debil. Por favor, elija otra.");
 		
 		this.usuario = NewUser;
 		this.contrasenia = NewPassword;
-	}
+	} */
 	
-	
+	/*
 	public void ExecuteLogin(String tempUser, String tempPass) throws AttemptError {
 		
 		//String tempUser;
@@ -38,25 +63,6 @@ public class CuentaUsuario {
 			throw new AttemptError("Has alcanzado el maximo numero de intentos. Por favor, intente más tarde.");
 		}
 	}
+	*/
 	
-	
-	public String getUsuario() {
-		return usuario;
-	}
-
-	public String getContrasenia() {
-		return contrasenia;
-	}
-	
-	
-	public static void main(String[] args) throws CreationError, AttemptError, FileNotFoundException, ClassNotFoundException, SQLException {
-		CuentaUsuario test = new CuentaUsuario("nubevi23", "pru3b@tesT");
-		System.out.println("El usuario es: " + test.getUsuario());
-		System.out.println("La contraseña es: " + test.getContrasenia());
-		
-		test.ExecuteLogin("hola", "hola");
-		test.ExecuteLogin("hola", "asdffdsa");
-		test.ExecuteLogin("hola", "a3f3afd");
-		test.ExecuteLogin("hola", "heabbaebola");
-	}
 }

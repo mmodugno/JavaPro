@@ -1,4 +1,4 @@
-package seguridad;
+package usuarios;
 /**
  * En esta clase se hashea y deberia guardar en una base de datos
  * las contraseñas de las cuentas recien creadas

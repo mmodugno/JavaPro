@@ -1,4 +1,4 @@
-package seguridad;
+package usuarios;
 
 
 public class AttemptError extends Exception {
