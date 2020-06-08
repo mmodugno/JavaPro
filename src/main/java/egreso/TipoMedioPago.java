@@ -15,15 +15,13 @@ public enum TipoMedioPago {
 	Cordial,
 	Cordobesa,
 	Cabal,
-	VisaDébito,
-	MastercardDébito,
+	VisaDebito,
+	MastercardDebito,
 	TarjetaMercadoPago,
 	Oxxo,
 	BBVABancomer,
 	Banamex,
 	Santander,
 	DineroEnCuenta,
-	Bitcoin
-
-	
+	Bitcoin	
 }

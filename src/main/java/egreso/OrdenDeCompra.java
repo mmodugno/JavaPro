@@ -16,12 +16,21 @@ public class OrdenDeCompra {
 		this.presupuestos = presupuestos;
 		this.revisores = revisores;
 	}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> branch 'master' of https://github.com/dds-utn/2020-ma-no-group-09.git
 	private List<Producto> productos;
 	private String fecha; 
 	private int necesitaPresupuesto;
 	private List<Presupuesto> presupuestos;
+<<<<<<< HEAD
 	private List<Usuario> revisores;
+=======
+	private List<CreadorUsuario> revisores;
+
+>>>>>>> branch 'master' of https://github.com/dds-utn/2020-ma-no-group-09.git
 	
 	public double valorTotal() throws SinItemsExcepcion{
         if(productos.isEmpty()){
@@ -46,7 +55,11 @@ public class OrdenDeCompra {
 		return presupuestos;
 	}
 
+<<<<<<< HEAD
 	public List<Usuario> getRevisores() {
+=======
+	public List<CreadorUsuario> getRevisores() {
+>>>>>>> branch 'master' of https://github.com/dds-utn/2020-ma-no-group-09.git
 		return revisores;
 	}
 

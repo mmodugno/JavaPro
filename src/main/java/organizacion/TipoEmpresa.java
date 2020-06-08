@@ -1,6 +1,8 @@
 package organizacion;
 
-public interface TipoEmpresa {
-
-public TipoEmpresa categorizarEmpresa(Categoria categoria,float promedioDeVentas,int cantidadEmpleados);
+public enum TipoEmpresa {
+	Micro,
+	Pequenia,
+	MedianaTramo1,
+	MedianaTramo2
 }

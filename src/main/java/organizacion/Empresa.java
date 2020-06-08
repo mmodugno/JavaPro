@@ -1,5 +1,6 @@
 package organizacion;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Empresa extends EntidadJuridica{
@@ -7,7 +8,7 @@ public class Empresa extends EntidadJuridica{
 	
 	public Empresa(String razonSocial, String nombre, String cuit, int direccionPostal, int codInscripcion,
 			List<EntidadBase> entidadesBase, int cantidadDePersonal, String actividad, Categoria categoria,
-			float promedioDeVentas) {
+			double promedioDeVentas) {
 		super(razonSocial, nombre, cuit, direccionPostal, codInscripcion, entidadesBase);
 		this.cantidadDePersonal = cantidadDePersonal;
 		this.actividad = actividad;
@@ -19,18 +20,21 @@ public class Empresa extends EntidadJuridica{
 	private int cantidadDePersonal;
 	private String actividad;
 	private Categoria categoria;
-	private float promedioDeVentas;
+	private double promedioDeVentas;
 	private TipoEmpresa tipoEmpresa;
 	
 	public TipoEmpresa getTipo() {
-		return tipoEmpresa;
-	}
-	
-	public void calcularTipo() {
 		
-	}
-	
-	
-	
+		List<TipoEmpresa> listaTipos =  new ArrayList<TipoEmpresa>();
+		
+		Categorizar categorizador = new Categorizar();
+		
+		listaTipos.add(categorizador.categorizarVentas(categoria,promedioDeVentas));
+		listaTipos.add(categorizador.categorizarPersonal(categoria,cantidadDePersonal));
+		
+		TipoEmpresa tipo = categorizador.elegirTipo(listaTipos);
+		
+		return tipo;
+	}	
 	
 }

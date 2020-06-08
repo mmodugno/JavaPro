@@ -1,13 +1,6 @@
 package organizacion;
 
-public class Micro implements TipoEmpresa{
+public class Micro {
 
-	@Override
-	public TipoEmpresa categorizarEmpresa(Categoria categoria,float promedioDeVentas, int cantidadEmpleados) {
-	
-		
-		
-		return null;
-	}
 
 }

@@ -45,7 +45,7 @@ public abstract class Usuario {
 		OrdenDeCompra unaOrden = new OrdenDeCompra(productos, necesitaPresupuesto, presupuestos, revisores);
 		return unaOrden;
 	}
-	
+
 	public boolean creadoConExito() {
 		return true;
 	}
