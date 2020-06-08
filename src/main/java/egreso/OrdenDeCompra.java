@@ -1,5 +1,6 @@
 package egreso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import producto.*;
@@ -8,16 +9,15 @@ import usuarios.Usuario;
 
 public class OrdenDeCompra {
 
-	public OrdenDeCompra(List<Producto> productos, int necesitaPresupuesto, List<Presupuesto> presupuestos,
-			List<Usuario> revisores) {
+	public OrdenDeCompra(int necesitaPresupuesto) {
 		
-		this.productos = productos;
+		this.items = new ArrayList<Item>();
 		this.necesitaPresupuesto = necesitaPresupuesto;
-		this.presupuestos = presupuestos;
-		this.revisores = revisores;
+		this.presupuestos = new ArrayList<Presupuesto>();
+		this.revisores = new ArrayList<Usuario>();
 	}
 
-	private List<Producto> productos;
+	private List<Item> items;
 	private String fecha; 
 	private int necesitaPresupuesto;
 	private List<Presupuesto> presupuestos;
@@ -25,14 +25,14 @@ public class OrdenDeCompra {
 
 	
 	public double valorTotal() throws SinItemsExcepcion{
-        if(productos.isEmpty()){
+        if(items.isEmpty()){
             throw new SinItemsExcepcion();
         }
-        return productos.stream().mapToDouble(Producto::getPrecio).sum();
+        return items.stream().mapToDouble(Item::getPrecio).sum();
     }
 
-	public List<Producto> getProductos() {
-		return productos;
+	public List<Item> getItems() {
+		return items;
 	}
 
 	public String getFecha() {
@@ -50,6 +50,14 @@ public class OrdenDeCompra {
 	public List<Usuario> getRevisores() {
 
 		return revisores;
+	}
+
+	public void agregarItem(Item item){
+		items.add(item);
+	}
+
+	public void agregarRevisor(Usuario usuario){
+		revisores.add(usuario);
 	}
 
 	

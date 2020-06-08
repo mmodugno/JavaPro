@@ -33,17 +33,21 @@ public abstract class Usuario {
 	}
 
 	public void suscribirse(OrdenDeCompra ordenASuscribir) {
+
 		suscripciones.add(ordenASuscribir);
+		ordenASuscribir.agregarRevisor(this);
 	}
 
 	public void egresoValidado(Egreso unEgreso) {
 		egresosValidados.add(unEgreso);
 	}
 
-	public OrdenDeCompra crearOrdenDeCompra(List<Producto> productos, int necesitaPresupuesto, List<Presupuesto> presupuestos,
-			List<Usuario> revisores) {
-		OrdenDeCompra unaOrden = new OrdenDeCompra(productos, necesitaPresupuesto, presupuestos, revisores);
+	public OrdenDeCompra crearOrdenDeCompra(int necesitaPresupuesto) {
+		OrdenDeCompra unaOrden = new OrdenDeCompra(necesitaPresupuesto);
 		return unaOrden;
+	}
+	public void agregarItemOrdendeCompra(Item item, OrdenDeCompra ordenDeCompra){
+		ordenDeCompra.agregarItem(item);
 	}
 
 	public boolean creadoConExito() {

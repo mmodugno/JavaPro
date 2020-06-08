@@ -1,4 +1,5 @@
 package seguridad;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.awt.List;
@@ -6,11 +7,9 @@ import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Assertions.*;
-
 import egreso.OrdenDeCompra;
 import egreso.Presupuesto;
+import org.junit.Before;
 import producto.Item;
 import producto.Producto;
 import producto.TipoItem;
@@ -44,16 +43,27 @@ public class CrearUsuarioTest {
 			} catch(CreationError e){}
 	}
 	
-	/*
+	@Test
 	public void usuarioSuscriptoConExito() throws FileNotFoundException, ClassNotFoundException, CreationError, SQLException {
-		Usuario usuarioPrueba = userMaker.crearUsuario("guidoAdministrador", "prue3b@tesT", "admin");
-		Producto unProducto = new Producto(1, "lavandina", "cosmetico", 55.0, TipoItem.ARTICULO);
-		Producto otroProducto = new Producto(23, "instalarWIFI", "otros", 951324.0, TipoItem.SERVICIO);
-		Item unItem = new Item(unProducto, 2);
-		Item otroItem = new Item(otroProducto, 1);
+		Usuario userAdmin = userMaker.crearUsuario("guidoAdmin", "pru3b@tesT", "admin");
+		Producto p1 = new Producto(1,"Yerba","yerba Marolio", 80.0, TipoItem.ARTICULO);
+		Producto p2 = new Producto(2,"Azucar", "azucar ledesma",55.50,TipoItem.ARTICULO);
+		Item item1 = new Item(p1, 1);
+		Item item2 = new Item(p2,2);
+
+		OrdenDeCompra ordenDeCompra = new OrdenDeCompra(0);
+
+		ordenDeCompra.agregarItem(item1);
+		ordenDeCompra.agregarItem(item2);
+
+		userAdmin.suscribirse(ordenDeCompra);
+
+		assertEquals(1,ordenDeCompra.getRevisores().size());
+
+
 		
 		
 		
 	}
-	*/
+
 }
