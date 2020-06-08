@@ -6,7 +6,7 @@ import producto.*;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.List;
-
+//asd
 public abstract class Usuario {
 	
 	public Usuario(String nombre, String password){
