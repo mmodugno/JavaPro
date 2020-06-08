@@ -46,6 +46,8 @@ public class ContraseniaTest {
 	    Assert.assertTrue(validator.validatePassword(contrasenia));
 	    Assert.assertFalse(validator.weakPassword(contrasenia));
 	}
+	
+	
 		
 
 }
