@@ -8,7 +8,7 @@ public class Empresa extends EntidadJuridica{
 	
 	public Empresa(String razonSocial, String nombre, String cuit, int direccionPostal, int codInscripcion,
 			List<EntidadBase> entidadesBase, int cantidadDePersonal, String actividad, Categoria categoria,
-			float promedioDeVentas) {
+			double promedioDeVentas) {
 		super(razonSocial, nombre, cuit, direccionPostal, codInscripcion, entidadesBase);
 		this.cantidadDePersonal = cantidadDePersonal;
 		this.actividad = actividad;
