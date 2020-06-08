@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import producto.*;
+import egreso.*;
 import usuarios.CreadorUsuario;
 
 public class Egreso {

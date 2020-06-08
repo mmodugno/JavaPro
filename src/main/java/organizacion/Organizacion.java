@@ -6,20 +6,17 @@ import egreso.*;
 
 public class Organizacion {
 
-	public Organizacion(List<EntidadJuridica> entidades,
-			List<Presupuesto> presupuestos) {
+	public Organizacion(){
 		super();
-		this.entidades = entidades;
-		this.egresos = egresos;
-		this.ordenes = ordenes;
-		this.presupuestos = presupuestos;
+		this.entidades = new ArrayList<EntidadJuridica>();
+		this.egresos = new ArrayList<Egreso>();
+		this.ordenes = new ArrayList<OrdenDeCompra>();
 	}
 	
 	
 	private List<EntidadJuridica> entidades;
 	private List<Egreso> egresos;
-	private List<OrdenDeCompra> ordenes = new ArrayList<OrdenDeCompra>();
-	private List<Presupuesto> presupuestos  = new ArrayList<Presupuesto>();
+	private List<OrdenDeCompra> ordenes;
 	
 	
 	
@@ -31,9 +28,7 @@ public class Organizacion {
 		entidades.add(entidad);
 	}
 
-
-
-	
-	
-	
+	public List<Egreso> getEgresos() {
+		return egresos;
+	}
 }

@@ -1,24 +1,25 @@
 package egreso;
 
+import java.util.ArrayList;
 import java.util.List;
 import producto.*;
 
 public class Presupuesto {
 
-	public Presupuesto(Egreso egresoAsociado, List<Item> items, Proveedor proveedor, MedioDePago medioDePago) {
+	public Presupuesto(OrdenDeCompra ordenAsociada, Proveedor proveedor, MedioDePago medioDePago) {
 		super();
-		this.egresoAsociado = egresoAsociado;
-		this.items = items;
+		this.ordenAsociada = ordenAsociada;
+		this.items = new ArrayList<Item>();
 		this.proveedor = proveedor;
 		this.medioDePago = medioDePago;
 	}
-	private Egreso egresoAsociado;
+	private OrdenDeCompra ordenAsociada;
 	private List<Item> items;
 	private Proveedor proveedor;
 	private MedioDePago medioDePago;
 	
-	public Egreso getEgresoAsociado() {
-		return egresoAsociado;
+	public OrdenDeCompra getOrdenAsociada() {
+		return ordenAsociada;
 	}
 	public List<Item> getItems() {
 		return items;
@@ -35,6 +36,9 @@ public class Presupuesto {
 			return items.stream().mapToDouble(Item::getPrecio).sum();
 		}
 
-	
+	public void agregarItem(Item item){
+		items.add(item);
+	}
+
 	
 }

@@ -60,6 +60,11 @@ public class OrdenDeCompra {
 		revisores.add(usuario);
 	}
 
+	public void agregarPresupuesto(Presupuesto presupuesto){
+		presupuestos.add(presupuesto);
+	}
+
+
 	
 	//public void generarDocumentoComercial()
 

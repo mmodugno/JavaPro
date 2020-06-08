@@ -29,12 +29,14 @@ public class Validador {
 	}
 	
 	public void validarOrden(OrdenDeCompra ordenDeCompra) throws ErrorDeValidacion {
-		
-		if(condicion.validarOrden(ordenDeCompra)){
+
+		if(ordenDeCompra.getNecesitaPresupuesto() == 0){
+			Egreso egreso = new Egreso(ordenDeCompra, null);
+			ordenDeCompra.getRevisores().forEach(usuario -> usuario.egresoValidado(egreso));
+		}else if(condicion.validarOrden(ordenDeCompra)){
 			Presupuesto presupuestoElegido = seleccionarPresupuesto(ordenDeCompra);
 			Egreso egreso = new Egreso(ordenDeCompra, presupuestoElegido);
 			ordenDeCompra.getRevisores().forEach(usuario -> usuario.egresoValidado(egreso));
-
 
 		}else{
 			throw new ErrorDeValidacion("Error en validacion");
