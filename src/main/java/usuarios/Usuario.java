@@ -1,6 +1,7 @@
 package usuarios;
 
 import egreso.*;
+import organizacion.Organizacion;
 import producto.*;
 
 import java.io.FileNotFoundException;
@@ -10,16 +11,17 @@ import java.util.List;
 
 public abstract class Usuario {
 	
-	public Usuario(String nombre, String password){
+	public Usuario(String nombre, String password, Organizacion organizacion){
 		this.nombre = nombre;
 		this.password = password;
 		this.suscripciones = new ArrayList<OrdenDeCompra>();
 		this.egresosValidados = new ArrayList<Egreso>();
+		this.organizacion = organizacion;
 	}
 
 	private String nombre;
 	private String password;
-	// private organizacion organizacion;
+	private Organizacion organizacion;
 	private List<OrdenDeCompra> suscripciones;
 	private List<Egreso> egresosValidados;
 	
@@ -39,7 +41,9 @@ public abstract class Usuario {
 	}
 
 	public void egresoValidado(Egreso unEgreso) {
+
 		egresosValidados.add(unEgreso);
+		organizacion.nuevoEgreso(unEgreso);
 	}
 
 	public OrdenDeCompra crearOrdenDeCompra(int necesitaPresupuesto) {

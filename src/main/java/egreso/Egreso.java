@@ -1,5 +1,6 @@
 package egreso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import producto.*;
@@ -7,14 +8,13 @@ import usuarios.CreadorUsuario;
 
 public class Egreso {
 
-	public Egreso(MedioDePago medioDePago, List<DocumentoComercial> documentosComerciales, OrdenDeCompra ordenDeCompra,
+	public Egreso(OrdenDeCompra ordenDeCompra,
 			Presupuesto presupuesto) {
-				this.medioDePago = medioDePago;
-		this.documentosComerciales = documentosComerciales;
+		this.documentosComerciales = new ArrayList<DocumentoComercial>();
 		this.ordenDeCompra = ordenDeCompra;
 		this.presupuesto = presupuesto;
 	}
-	private MedioDePago medioDePago;
+
 	private List<DocumentoComercial> documentosComerciales;
 	private OrdenDeCompra ordenDeCompra;
 	private Presupuesto presupuesto;

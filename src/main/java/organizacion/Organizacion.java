@@ -30,6 +30,9 @@ public class Organizacion {
 	public void agregarEntidad(EntidadJuridica entidad) {
 		entidades.add(entidad);
 	}
+
+
+
 	
 	
 	

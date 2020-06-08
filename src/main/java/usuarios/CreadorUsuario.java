@@ -1,5 +1,7 @@
 package usuarios;
 
+import organizacion.Organizacion;
+
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
@@ -19,15 +21,15 @@ public class CreadorUsuario {
 		return contrasenia;
 	}
 		
-	public Usuario crearUsuario(String newUser, String newPassword, String tipoUsuario) throws FileNotFoundException, ClassNotFoundException, CreationError, SQLException {
+	public Usuario crearUsuario(String newUser, String newPassword, String tipoUsuario, Organizacion organizacion) throws FileNotFoundException, ClassNotFoundException, CreationError, SQLException {
 		if(!validator.validateUser(newUser)) throw new CreationError("El usuario no cumple los requisitos.");
 		if(!validator.validatePassword(newPassword)) throw new CreationError("La password no cumple los requisitos.");
 		if(validator.weakPassword(newPassword)) throw new CreationError("La password es demasiado debil. Por favor, elija otra.");
 		
 		if(tipoUsuario == "admin") {
-			return new UsuarioAdministrador(newUser, newPassword);
+			return new UsuarioAdministrador(newUser, newPassword, organizacion);
 		} else if (tipoUsuario == "estandard"){
-			return new UsuarioEstandard(newUser, newPassword);
+			return new UsuarioEstandard(newUser, newPassword, organizacion);
 		}else {
 			throw new CreationError("No reconozco el tipo de usuario");
 		}

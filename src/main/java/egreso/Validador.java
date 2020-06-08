@@ -1,21 +1,19 @@
 package egreso;
 
+import usuarios.Usuario;
+
 public class Validador {
-	
-	private int cantidadNecesaria;
+
 	private CondicionValidacion condicion;
 	private CriterioSeleccion criterioSeleccion;
 	
-	public Validador(int cantidadNecesaria, CondicionValidacion condicion, CriterioSeleccion criterioSeleccion) {
+	public Validador( CondicionValidacion condicion, CriterioSeleccion criterioSeleccion) {
 		super();
-		this.cantidadNecesaria = cantidadNecesaria;
 		this.condicion = condicion;
 		this.criterioSeleccion = criterioSeleccion;
 	}
 
-	public int getCantidadNecesaria() {
-		return cantidadNecesaria;
-	}
+
 	public CondicionValidacion getCondicion() {
 		return condicion;
 	}
@@ -30,11 +28,20 @@ public class Validador {
 
 	}
 	
-	public boolean validarOrden(OrdenDeCompra ordenDeCompra) {
+	public void validarOrden(OrdenDeCompra ordenDeCompra) throws ErrorDeValidacion {
 		
-		return ordenDeCompra.getPresupuestos().size() == cantidadNecesaria;
+		if(condicion.validarOrden(ordenDeCompra)){
+			Presupuesto presupuestoElegido = seleccionarPresupuesto(ordenDeCompra);
+			Egreso egreso = new Egreso(ordenDeCompra, presupuestoElegido);
+			ordenDeCompra.getRevisores().forEach(usuario -> usuario.egresoValidado(egreso));
+
+
+		}else{
+			throw new ErrorDeValidacion("Error en validacion");
+		}
 		
 	}
+
 
 	
 	
