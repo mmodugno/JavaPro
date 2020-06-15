@@ -5,10 +5,13 @@ public class Item {
 	
 	private Producto producto;
 	private int cantidad;
+	private double precioUnitario;
+	private boolean estaCerrada = false;
 	
-	public Item(Producto producto, int cantidad) {
+	public Item(Producto producto, int cantidad, double precioUnitario) {
 		this.producto = producto;
 		this.cantidad = cantidad;
+		this.precioUnitario = precioUnitario;
 	}
 
 	public Producto getProducto() {
@@ -19,8 +22,23 @@ public class Item {
 		return cantidad;
 	}
 	
-	public Double getPrecio() {
-		Double precio = cantidad * producto.getPrecio();
+	public Double obtenerPrecio() {
+		Double precio = cantidad * precioUnitario;
 		return precio;
+	}
+
+	public double getPrecioUnitario() {
+		return precioUnitario;
+	}
+
+	public void setPrecioUnitario(double precioUnitario) throws RuntimeException{
+		if(estaCerrada) throw new RuntimeException("La operacion esta cerrada");
+		else {
+		this.precioUnitario = precioUnitario;
+		}
+	}
+
+	public  void fijarPrecio() {
+		estaCerrada = true;
 	}
 }

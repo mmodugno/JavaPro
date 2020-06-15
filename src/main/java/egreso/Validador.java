@@ -32,6 +32,8 @@ public class Validador {
 
 		if(ordenDeCompra.getNecesitaPresupuesto() == 0){
 			Egreso egreso = new Egreso(ordenDeCompra, null);
+			
+	
 			ordenDeCompra.getRevisores().forEach(usuario -> usuario.egresoValidado(egreso));
 		}else if(condicion.validarOrden(ordenDeCompra)){
 			Presupuesto presupuestoElegido = seleccionarPresupuesto(ordenDeCompra);

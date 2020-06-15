@@ -25,7 +25,20 @@ public class Egreso {
 		return ordenDeCompra.valorTotal();
 	}
 	
-	public void generarDocumentoComercial(DocumentoComercial documento) {
+	public void agregarDocumentoComercial(DocumentoComercial documento) {
 		documentosComerciales.add(documento);
 	}
+
+	public List<DocumentoComercial> getDocumentosComerciales() {
+		return documentosComerciales;
+	}
+
+	public OrdenDeCompra getOrdenDeCompra() {
+		return ordenDeCompra;
+	}
+
+	public Presupuesto getPresupuesto() {
+		return presupuesto;
+	}
+	
 }

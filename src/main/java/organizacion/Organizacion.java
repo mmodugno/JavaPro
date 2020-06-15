@@ -10,13 +10,13 @@ public class Organizacion {
 		super();
 		this.entidades = new ArrayList<EntidadJuridica>();
 		this.egresos = new ArrayList<Egreso>();
-		this.ordenes = new ArrayList<OrdenDeCompra>();
+		this.ordenesPendientes = new ArrayList<OrdenDeCompra>();
 	}
 	
 	
 	private List<EntidadJuridica> entidades;
 	private List<Egreso> egresos;
-	private List<OrdenDeCompra> ordenes;
+	private List<OrdenDeCompra> ordenesPendientes;
 	
 	
 	
@@ -31,4 +31,10 @@ public class Organizacion {
 	public List<Egreso> getEgresos() {
 		return egresos;
 	}
+
+	public void sacarOrden(OrdenDeCompra ordenDeCompra) {
+		ordenesPendientes.removeIf(unaOrden->unaOrden.getIdOrden() == ordenDeCompra.getIdOrden());
+		
+	}
+	
 }

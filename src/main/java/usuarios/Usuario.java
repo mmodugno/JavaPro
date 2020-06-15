@@ -15,7 +15,6 @@ public abstract class Usuario {
 		this.nombre = nombre;
 		this.password = password;
 		this.suscripciones = new ArrayList<OrdenDeCompra>();
-		this.egresosValidados = new ArrayList<Egreso>();
 		this.organizacion = organizacion;
 	}
 
@@ -41,21 +40,16 @@ public abstract class Usuario {
 	}
 
 	public void egresoValidado(Egreso unEgreso) {
-
-		egresosValidados.add(unEgreso);
 		organizacion.nuevoEgreso(unEgreso);
+		organizacion.sacarOrden(unEgreso.getOrdenDeCompra());
+		
 	}
 
-	public OrdenDeCompra crearOrdenDeCompra(int necesitaPresupuesto) {
-		OrdenDeCompra unaOrden = new OrdenDeCompra(necesitaPresupuesto);
-		return unaOrden;
-	}
-	public void agregarItemOrdendeCompra(Item item, OrdenDeCompra ordenDeCompra){
-		ordenDeCompra.agregarItem(item);
-	}
-
+	
+/*
 	public boolean creadoConExito() {
 		return true;
 	}
+	*/
 	//public Presupuesto crearPresupuesto(OrdenDeCompra unaOrdenDeCompra) {}
 }
