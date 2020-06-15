@@ -41,4 +41,9 @@ public class Item {
 	public  void fijarPrecio() {
 		estaCerrada = true;
 	}
+	
+	public int obtenerCodigoProducto() {
+		return producto.getCodProducto();
+	}
+	
 }

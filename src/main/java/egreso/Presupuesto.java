@@ -5,23 +5,19 @@ import producto.*;
 
 public class Presupuesto {
 
-	public Presupuesto(OrdenDeCompra ordenAsociada, Proveedor proveedor, MedioDePago medioDePago) {
+	public Presupuesto(List<Item> items, Proveedor proveedor, MedioDePago medioDePago) {
 		super();
-		this.ordenAsociada = ordenAsociada;
-		this.items = ordenAsociada.getItems();
+		this.items = items;
 		this.proveedor = proveedor;
 		this.medioDePago = medioDePago;
 	}
-	private OrdenDeCompra ordenAsociada;
+	
 	private List<Item> items;
 	private Proveedor proveedor;
 	private MedioDePago medioDePago;
 	
 	
 	
-	public OrdenDeCompra getOrdenAsociada() {
-		return ordenAsociada;
-	}
 	public List<Item> getItems() {
 		return items;
 	}
