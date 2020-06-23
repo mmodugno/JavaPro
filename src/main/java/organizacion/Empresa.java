@@ -30,11 +30,15 @@ public class Empresa extends EntidadJuridica{
 		Categorizar categorizador = new Categorizar();
 		
 		listaTipos.add(categorizador.categorizarVentas(categoria,promedioDeVentas));
-		listaTipos.add(categorizador.categorizarPersonal(categoria,cantidadDePersonal));
+		listaTipos.add(categorizador.reClasificarPorPersonal(categoria,cantidadDePersonal));
 		
 		TipoEmpresa tipo = categorizador.elegirTipo(listaTipos);
 		
 		return tipo;
-	}	
+	}
+	
+	public double setPromedioDeVentas(double valor) {
+		return this.promedioDeVentas = valor;
+	}
 	
 }
