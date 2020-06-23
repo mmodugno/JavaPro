@@ -28,50 +28,17 @@ public enum Categoria2 {
 	int persMedianaTramoUno;
 	int persMedianaTramoDos;
 	
-	public int getPersMicro() {
-		return persMicro;
-	}
-
-	public int getPersPequenia() {
-		return persPequenia;
-	}
-
-	public int getPersMedianaTramoUno() {
-		return persMedianaTramoUno;
-	}
-
-	public int getPersMedianaTramoDos() {
-		return persMedianaTramoDos;
-	}
-
-	
-	public double getVtasMicro() {
-		return vtasMicro;
-	}
-
-	public double getVtasPequenia() {
-		return vtasPequenia;
-	}
-
-	public double getVtasMedianaTramoUno() {
-		return vtasMedianaTramoUno;
-	}
-
-	public double getVtasMedianaTramoDos() {
-		return vtasMedianaTramoDos;
-	}
-
 	public TipoEmpresa reClasificar(Double promedioDeVentas) {
 				
-		if(promedioDeVentas > this.getVtasMedianaTramoDos()) {
+		if(promedioDeVentas > this.vtasMedianaTramoDos) {
 			return TipoEmpresa.MedianaTramo2;
 		}
 		
-		if(promedioDeVentas > this.getVtasMedianaTramoUno()) {
+		if(promedioDeVentas > this.vtasMedianaTramoUno) {
 			return TipoEmpresa.MedianaTramo1;
 		}
 		
-		if(promedioDeVentas > this.getVtasPequenia()) {
+		if(promedioDeVentas > this.vtasPequenia) {
 			return TipoEmpresa.Pequenia;
 		}
 		
@@ -80,15 +47,15 @@ public enum Categoria2 {
 	
 	public TipoEmpresa reClasificarPorPersonal(int cantidadPersonal) {
 		
-		if(cantidadPersonal > this.getPersMedianaTramoDos()) {
+		if(cantidadPersonal > this.persMedianaTramoDos) {
 			return TipoEmpresa.MedianaTramo2;
 		}
 		
-		if(cantidadPersonal > this.getPersMedianaTramoUno()) {
+		if(cantidadPersonal > this.vtasMedianaTramoUno) {
 			return TipoEmpresa.MedianaTramo1;
 		}
 		
-		if(cantidadPersonal > this.getPersPequenia()) {
+		if(cantidadPersonal > this.persPequenia) {
 			return TipoEmpresa.Pequenia;
 		}
 		
