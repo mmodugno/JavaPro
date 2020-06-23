@@ -23,10 +23,20 @@ public class OrganizacionTest {
 		Assert.assertEquals(empresa.getTipo(), TipoEmpresa.Pequenia);
 		
 	}
-	
+	@Test
+	public void testRecategorizarEmpresa() {
 		
-	
-
+		EntidadBase entidadBase = new EntidadBase("nombre","desc",null);
+		
+		List<EntidadBase> lista = Arrays.asList(entidadBase);
+		
+		Empresa empresa = new Empresa("razon","nombre","cuil",1514,1,lista,7,"abc",Categoria.Comercio,170000000.0);
+		
+		empresa.setPromedioDeVentas(1500000000.0);
+		
+		Assert.assertNotEquals(empresa.getTipo(), TipoEmpresa.Pequenia);
+		
+	}
 }
 
 
