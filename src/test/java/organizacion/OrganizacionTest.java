@@ -24,7 +24,7 @@ public class OrganizacionTest {
 		
 	}
 	@Test
-	public void testRecategorizarEmpresa() {
+	public void testRecategorizarComercioPequenio() {
 		
 		EntidadBase entidadBase = new EntidadBase("nombre","desc",null);
 		
@@ -35,6 +35,21 @@ public class OrganizacionTest {
 		empresa.setPromedioDeVentas(1500000000.0);
 		
 		Assert.assertNotEquals(empresa.getTipo(), TipoEmpresa.Pequenia);
+		
+	}
+	
+	@Test
+	public void testRecategorizarServiciosTramo1aTramo2() {
+		
+		EntidadBase entidadBase = new EntidadBase("nombre","desc",null);
+		
+		List<EntidadBase> lista = Arrays.asList(entidadBase);
+		
+		Empresa empresa = new Empresa("razon","nombre","cuil",1514,1,lista,7,"abc",Categoria.Servicios,385170000.0);
+		
+		empresa.setPromedioDeVentas(590000000.0);
+		
+		Assert.assertEquals(empresa.getTipo(), TipoEmpresa.MedianaTramo2);
 		
 	}
 }
