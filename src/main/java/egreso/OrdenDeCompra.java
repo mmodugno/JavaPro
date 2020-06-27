@@ -1,6 +1,7 @@
 package egreso;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import producto.*;
@@ -9,23 +10,17 @@ import usuarios.Usuario;
 
 public class OrdenDeCompra {
 
-	public OrdenDeCompra(List<Item> items, int necesitaPresupuesto, int idOrden) {
-		super();
-		this.items = items;
-		this.necesitaPresupuesto = necesitaPresupuesto;
-		this.idOrden = idOrden;
-	}
-
-	public OrdenDeCompra(int necesitaPresupuesto) {
-		
+	public OrdenDeCompra(int necesitaPresupuesto,int idOrden) {
+		this.fecha = new Date();
 		this.items = new ArrayList<Item>();
 		this.necesitaPresupuesto = necesitaPresupuesto;
 		this.presupuestos = new ArrayList<Presupuesto>();
 		this.revisores = new ArrayList<Usuario>();
+		this.idOrden = idOrden;
 	}
 
 	private List<Item> items;
-	private String fecha; 
+	private Date fecha; 
 	private int necesitaPresupuesto;
 	private List<Presupuesto> presupuestos;
 	private List<Usuario> revisores;
@@ -49,7 +44,7 @@ public class OrdenDeCompra {
 		return items;
 	}
 
-	public String getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 
@@ -82,8 +77,4 @@ public class OrdenDeCompra {
 	}
 
 
-	
-	//public void generarDocumentoComercial()
-
-	
 }
