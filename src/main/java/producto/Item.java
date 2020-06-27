@@ -1,6 +1,6 @@
 package producto;
 
-public class Item {
+public class Item implements Cloneable {
 
 	
 	private Producto producto;
@@ -38,6 +38,10 @@ public class Item {
 		}
 	}
 
+	// Overriding clone() method of Object class
+	public Item clone() throws CloneNotSupportedException{
+		return (Item) super.clone();
+	}
 	public  void fijarPrecio() {
 		estaCerrada = true;
 	}

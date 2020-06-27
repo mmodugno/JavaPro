@@ -12,29 +12,27 @@ import usuarios.Usuario;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.fail;
 
 public class CrearEgresoTest {
-
-    Producto p1 = new Producto(1,"Yerba","yerba NoblezaGaucha", 80.0, TipoItem.ARTICULO);
-    Producto p2 = new Producto(2,"Azucar", "azucar ledesma",55.50,TipoItem.ARTICULO);
-    Producto p11 = new Producto(11,"Yerba","yerba Playadito", 100.0, TipoItem.ARTICULO);
-    Producto p22 = new Producto(22,"Azucar", "azucar chango",60.0,TipoItem.ARTICULO);
+//PRODUCTOS-ITEM-PROVEEDOR
+    Producto p1 = new Producto(1,"Televisor", "Televisor", TipoItem.ARTICULO);
+    Producto p2 = new Producto(2,"Tostadora", "Tostadora", TipoItem.ARTICULO);
     Proveedor proveedor1 = new Proveedor("carlos","22412145696", "6725");
     Proveedor proveedor2 = new Proveedor("Juan","21123214569","1419");
+    Item item1 = new Item(p1, 1,0.00);
+    Item item2 = new Item(p2,2,0.00);
 
-
-
-    Item item1 = new Item(p1, 1);
-    Item item2 = new Item(p2,2);
-    Item item11 = new Item(p11, 1);
-    Item item22 = new Item(p22,2);
-
+    //VALIDADOR
     CondicionValidacion condicionValidacion = new CondicionValidacion();
     ElMasBarato elMasBarato = new ElMasBarato();
     OrdenDeCompra ordenDeCompra;
     Validador validador;
+
+    //ORGANIZCION-USUARIO-PRESUPUESTO-MEDIO DE PAGO
     Organizacion organizacion = new Organizacion();
     CreadorUsuario userMaker = new CreadorUsuario();
     Presupuesto presupuesto1;
@@ -59,16 +57,13 @@ public class CrearEgresoTest {
     public void validarConPresupuesto() throws ErrorDeValidacion{
         proveedor1.agregarProductos(p1);
         proveedor1.agregarProductos(p2);
-        proveedor2.agregarProductos(p11);
-        proveedor2.agregarProductos(p22);
-
+        
         presupuesto1 = new Presupuesto(ordenDeCompra,proveedor1,medioDePago);
         presupuesto1.agregarItem(item1);
         presupuesto1.agregarItem(item2);
 
         presupuesto2 = new Presupuesto(ordenDeCompra,proveedor2,medioDePago);
-        presupuesto2.agregarItem(item11);
-        presupuesto2.agregarItem(item22);
+
 
         ordenDeCompra.agregarPresupuesto(presupuesto1);
         ordenDeCompra.agregarPresupuesto(presupuesto2);
@@ -89,5 +84,5 @@ public class CrearEgresoTest {
             fail("Se esperaba la excepcion ErrorDeValidacion");
         } catch (ErrorDeValidacion e) {
         }
-    }
+    }7
 }
