@@ -60,20 +60,20 @@ public class CrearEgresoTest {
     }
     
     //TODO terminar de revisar este test
-    /*
+
     @Test
-    public void validarConPresupuesto() throws ErrorDeValidacion{
+    public void validarConPresupuesto() throws ErrorDeValidacion, CloneNotSupportedException {
 
 
         
-        presupuesto1 = new Presupuesto(ordenDeCompra,proveedor1,medioDePago);
-        presupuesto1.agregarItem(item1);
-        presupuesto1.agregarItem(item2);
+        presupuesto1 = new Presupuesto(ordenDeCompra.getItems(),proveedor1,medioDePago);
+        presupuesto1.getItems().get(0).setPrecioUnitario(10.00);
+        presupuesto1.getItems().get(1).setPrecioUnitario(10.00);
 
-        presupuesto2 = new Presupuesto(ordenDeCompra,proveedor2,medioDePago);
+        presupuesto2 = new Presupuesto(ordenDeCompra.getItems(),proveedor2,medioDePago);
+        presupuesto2.getItems().get(0).setPrecioUnitario(15.00);
+        presupuesto2.getItems().get(0).setPrecioUnitario(15.00);
 
-        
-        Egreso egreso2 = new Egreso(ordenDeCompra, presupuesto2);
  
         ordenDeCompra.agregarPresupuesto(presupuesto1);
         ordenDeCompra.agregarPresupuesto(presupuesto2);
@@ -85,7 +85,7 @@ public class CrearEgresoTest {
         
         Assert.assertEquals(1, organizacion.getEgresos().size());
 
-    }*/
+    }
 
     @Test
     public void validacionMala() throws ErrorDeValidacion {
