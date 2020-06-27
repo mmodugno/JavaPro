@@ -13,7 +13,9 @@ public class ElMasBarato implements CriterioSeleccion {
 
 		List<Double> lista = ordenDeCompra.getPresupuestos().stream().map(Presupuesto::valorTotal).collect(toList());
 		Double menorPrecio = Collections.min(lista);
-		Presupuesto presu = ordenDeCompra.getPresupuestos().stream().filter(m -> m.valorTotal().equals(menorPrecio)).collect(toList()).get(0);
+		
+		Presupuesto presu = ordenDeCompra.getPresupuestos().stream().filter(m -> m.valorTotal().equals(menorPrecio)).findFirst().get();
+		
 		return presu;
 		
 	}
