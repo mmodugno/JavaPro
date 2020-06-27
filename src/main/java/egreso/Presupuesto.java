@@ -1,17 +1,28 @@
 package egreso;
 
+import java.util.ArrayList;
 import java.util.List;
 import producto.*;
 
 public class Presupuesto {
 
-	public Presupuesto(List<Item> items, Proveedor proveedor, MedioDePago medioDePago) {
+	public Presupuesto(List<Item> itemsoriginal, Proveedor proveedor, MedioDePago medioDePago) throws CloneNotSupportedException {
 		super();
-		this.items = items;
+		this.items = new ArrayList<Item>();
 		this.proveedor = proveedor;
 		this.medioDePago = medioDePago;
+
+		llenarItems(itemsoriginal);
 	}
-	
+	private void llenarItems(List<Item> itemsoriginales) throws CloneNotSupportedException {
+		for(int i = 0;i<itemsoriginales.size();i++){
+			items.add(itemsoriginales.get(i).clone());
+		}
+
+	}
+
+
+
 	private List<Item> items;
 	private Proveedor proveedor;
 	private MedioDePago medioDePago;
