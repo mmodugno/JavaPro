@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class UsuarioEstandard extends Usuario {
 
-	public UsuarioEstandard(String nombre, String password, Organizacion organizacion) throws FileNotFoundException, ClassNotFoundException, CreationError, SQLException {
-		super(nombre, password, organizacion);
+	public UsuarioEstandard(String nombre, String password, Organizacion organizacion, boolean creadoConExito) throws FileNotFoundException, ClassNotFoundException, CreationError, SQLException {
+		super(nombre, password, organizacion, creadoConExito);
 	}
 }

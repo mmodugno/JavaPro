@@ -1,4 +1,4 @@
-/*package seguridad;
+package seguridad;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -48,12 +48,12 @@ public class CrearUsuarioTest {
 	@Test
 	public void usuarioSuscriptoConExito() throws FileNotFoundException, ClassNotFoundException, CreationError, SQLException {
 		Usuario userAdmin = userMaker.crearUsuario("guidoAdmin", "pru3b@tesT", "admin",organizacion);
-		Producto p1 = new Producto(1,"Yerba","yerba Marolio", 80.0, TipoItem.ARTICULO);
-		Producto p2 = new Producto(2,"Azucar", "azucar ledesma",55.50,TipoItem.ARTICULO);
-		Item item1 = new Item(p1, 1);
-		Item item2 = new Item(p2,2);
+		Producto p1 = new Producto(1,"Yerba","yerba Marolio", TipoItem.ARTICULO);
+		Producto p2 = new Producto(2,"Azucar", "azucar ledesma", TipoItem.ARTICULO);
+		Item item1 = new Item(p1, 1, 80);
+		Item item2 = new Item(p2,2, 90);
 
-		OrdenDeCompra ordenDeCompra = new OrdenDeCompra(0);
+		OrdenDeCompra ordenDeCompra = new OrdenDeCompra(0, 1);
 
 		ordenDeCompra.agregarItem(item1);
 		ordenDeCompra.agregarItem(item2);
@@ -61,11 +61,7 @@ public class CrearUsuarioTest {
 		userAdmin.suscribirse(ordenDeCompra);
 
 		assertEquals(1,ordenDeCompra.getRevisores().size());
-
-
-		
-		
 		
 	}
 
-}*/
+}

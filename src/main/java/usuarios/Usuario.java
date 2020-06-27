@@ -11,11 +11,12 @@ import java.util.List;
 
 public abstract class Usuario {
 	
-	public Usuario(String nombre, String password, Organizacion organizacion){
+	public Usuario(String nombre, String password, Organizacion organizacion, boolean creadoConExito){
 		this.nombre = nombre;
 		this.password = password;
 		this.suscripciones = new ArrayList<OrdenDeCompra>();
 		this.organizacion = organizacion;
+		this.creadoConExito = creadoConExito;
 	}
 
 	private String nombre;
@@ -23,6 +24,7 @@ public abstract class Usuario {
 	private Organizacion organizacion;
 	private List<OrdenDeCompra> suscripciones;
 	private List<Egreso> egresosValidados;
+	private boolean creadoConExito;
 	
 	
 	public String getNombre() {
@@ -44,7 +46,10 @@ public abstract class Usuario {
 		organizacion.sacarOrden(unEgreso.getOrdenDeCompra());
 		
 	}
-
+	
+	public boolean creadoConExito() {
+		return creadoConExito;
+	}
 	
 /*
 	public boolean creadoConExito() {

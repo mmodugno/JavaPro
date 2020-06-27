@@ -27,9 +27,9 @@ public class CreadorUsuario {
 		if(validator.weakPassword(newPassword)) throw new CreationError("La password es demasiado debil. Por favor, elija otra.");
 		
 		if(tipoUsuario == "admin") {
-			return new UsuarioAdministrador(newUser, newPassword, organizacion);
+			return new UsuarioAdministrador(newUser, newPassword, organizacion, true);
 		} else if (tipoUsuario == "estandard"){
-			return new UsuarioEstandard(newUser, newPassword, organizacion);
+			return new UsuarioEstandard(newUser, newPassword, organizacion, true);
 		}else {
 			throw new CreationError("No reconozco el tipo de usuario");
 		}
