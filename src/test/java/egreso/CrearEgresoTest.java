@@ -88,6 +88,28 @@ public class CrearEgresoTest {
     }
 
     @Test
+    public void seleccionoElMasBarato() throws ErrorDeValidacion, CloneNotSupportedException {
+
+        presupuesto1 = new Presupuesto(ordenDeCompra.getItems(),proveedor1,medioDePago);
+        presupuesto1.getItems().get(0).setPrecioUnitario(10.00);
+        presupuesto1.getItems().get(1).setPrecioUnitario(10.00);
+
+        presupuesto2 = new Presupuesto(ordenDeCompra.getItems(),proveedor2,medioDePago);
+        presupuesto2.getItems().get(0).setPrecioUnitario(7.00);
+        presupuesto2.getItems().get(0).setPrecioUnitario(6.00);
+
+        ordenDeCompra.agregarPresupuesto(presupuesto1);
+        ordenDeCompra.agregarPresupuesto(presupuesto2);
+
+        validador.validarOrden(ordenDeCompra);
+
+        Assert.assertEquals( presupuesto2, organizacion.getEgresos().get(0).getPresupuesto());
+
+
+
+    }
+
+    @Test
     public void validacionMala() throws ErrorDeValidacion {
 
         try {
