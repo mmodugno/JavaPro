@@ -19,7 +19,6 @@ public class Organizacion {
 	private List<OrdenDeCompra> ordenesPendientes;
 	
 	
-	
 	public void nuevoEgreso(Egreso nuevoEgreso) {
 		egresos.add(nuevoEgreso);
 	}
@@ -34,7 +33,6 @@ public class Organizacion {
 
 	public void sacarOrden(OrdenDeCompra ordenDeCompra) {
 		ordenesPendientes.removeIf(unaOrden->unaOrden.getIdOrden() == ordenDeCompra.getIdOrden());
-		
 	}
 	
 }

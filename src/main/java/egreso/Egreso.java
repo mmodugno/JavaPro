@@ -9,8 +9,7 @@ import usuarios.CreadorUsuario;
 
 public class Egreso {
 
-	public Egreso(OrdenDeCompra ordenDeCompra,
-			Presupuesto presupuesto) {
+	public Egreso(OrdenDeCompra ordenDeCompra, Presupuesto presupuesto) {
 		this.documentosComerciales = new ArrayList<DocumentoComercial>();
 		this.ordenDeCompra = ordenDeCompra;
 		this.presupuesto = presupuesto;

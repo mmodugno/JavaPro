@@ -26,7 +26,10 @@ public abstract class Usuario {
 	private List<Egreso> egresosValidados;
 	private boolean creadoConExito;
 	
-	
+	public List<OrdenDeCompra> getSuscripciones() {
+		return suscripciones;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -36,7 +39,6 @@ public abstract class Usuario {
 	}
 
 	public void suscribirse(OrdenDeCompra ordenASuscribir) {
-
 		suscripciones.add(ordenASuscribir);
 		ordenASuscribir.agregarRevisor(this);
 	}
@@ -44,7 +46,6 @@ public abstract class Usuario {
 	public void egresoValidado(Egreso unEgreso) {
 		organizacion.nuevoEgreso(unEgreso);
 		organizacion.sacarOrden(unEgreso.getOrdenDeCompra());
-		
 	}
 	
 	public boolean creadoConExito() {
@@ -55,6 +56,6 @@ public abstract class Usuario {
 	public boolean creadoConExito() {
 		return true;
 	}
-	*/
-	//public Presupuesto crearPresupuesto(OrdenDeCompra unaOrdenDeCompra) {}
+	public Presupuesto crearPresupuesto(OrdenDeCompra unaOrdenDeCompra) {}
+ */
 }
