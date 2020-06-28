@@ -2,7 +2,7 @@ package organizacion;
 
 import java.util.List;
 
-public class Categorizar {
+public class Categorizador {
 
 	public TipoEmpresa elegirTipo(List<TipoEmpresa> listaEmpresas) {
 		
@@ -29,14 +29,14 @@ public class Categorizar {
 	}
 	
 	
-	public TipoEmpresa categorizarVentas(Categoria categoria, double promedioDeVentas){
+	public TipoEmpresa categorizarVentas(Rubro rubro, double promedioDeVentas){
 	
-		return categoria.reClasificar(promedioDeVentas);
+		return rubro.reClasificar(promedioDeVentas);
 }
 	
-	public TipoEmpresa reClasificarPorPersonal(Categoria categoria, int cantidadPersonal){
+	public TipoEmpresa reClasificarPorPersonal(Rubro rubro, int cantidadPersonal){
 
-		return categoria.reClasificarPorPersonal(cantidadPersonal);
+		return rubro.reClasificarPorPersonal(cantidadPersonal);
 	}
 	
 }

@@ -18,6 +18,23 @@ public class OrganizacionTest {
 		
 		List<EntidadBase> lista = Arrays.asList(entidadBase);
 		
+		Empresa empresa = new Empresa("razon","nombre","cuil",1514,1,lista,7,"abc",new Construccion(),170000000);
+		
+		empresa.actualizarTipoEmpresa();
+		
+		Assert.assertEquals(TipoEmpresa.Micro, empresa.getTipoEmpresa() );
+		
+	}
+	
+	
+	/*
+	@Test
+	public void testEmpresaComercioPeque() {
+		
+		EntidadBase entidadBase = new EntidadBase("nombre","desc",null);
+		
+		List<EntidadBase> lista = Arrays.asList(entidadBase);
+		
 		Empresa empresa = new Empresa("razon","nombre","cuil",1514,1,lista,7,"abc",Categoria.Comercio,170000000.0);
 		
 		Assert.assertEquals(empresa.getTipo(), TipoEmpresa.Pequenia);
@@ -52,6 +69,9 @@ public class OrganizacionTest {
 		Assert.assertEquals(empresa.getTipo(), TipoEmpresa.MedianaTramo2);
 		
 	}
+	*/
+	
+	
 }
 
 
