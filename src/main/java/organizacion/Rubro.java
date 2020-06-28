@@ -73,15 +73,15 @@ public Rubro(double vtasMicro, double vtasPequenia, double vtasMedianaTramoUno, 
 	
 	public TipoEmpresa reClasificarPorPersonal(int cantidadPersonal) {
 		
-		if(cantidadPersonal > this.vtasMedianaTramoDos) {
+		if(cantidadPersonal > this.persMedianaTramoDos) {
 			return TipoEmpresa.MedianaTramo2;
 		}
 		
-		if(cantidadPersonal > this.vtasMedianaTramoUno) {
+		if(cantidadPersonal > this.persMedianaTramoUno) {
 			return TipoEmpresa.MedianaTramo1;
 		}
 		
-		if(cantidadPersonal > this.vtasPequenia) {
+		if(cantidadPersonal > this.persPequenia) {
 			return TipoEmpresa.Pequenia;
 		}
 		

@@ -42,15 +42,13 @@ public class OrganizacionTest {
 	
 	
 	@Test
-	public void testEmpresaConstruccionMedianaTramo1() {
+	public void testEmpresaConstruccionMedianaTramo2() {
 		
 		empresa.actualizarTipoEmpresa();
 		
-		Assert.assertEquals(TipoEmpresa.MedianaTramo2, empresaComercio.getTipoEmpresa());
+		Assert.assertEquals(TipoEmpresa.Pequenia, empresa.getTipoEmpresa());
 		
 	}
-	
-	
 	
 	@Test
 	public void testEmpresaComercioMedianaTramo2() {
