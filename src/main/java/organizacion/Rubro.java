@@ -56,15 +56,15 @@ public Rubro(double vtasMicro, double vtasPequenia, double vtasMedianaTramoUno, 
 	
 	public TipoEmpresa reClasificar(Double promedioDeVentas) {
 		
-		if(promedioDeVentas > this.vtasMedianaTramoUno) {
+		if(promedioDeVentas > this.vtasMedianaTramoDos) {
 			return TipoEmpresa.MedianaTramo2;
 		}
 		
-		if(promedioDeVentas > this.vtasPequenia) {
+		if(promedioDeVentas > this.vtasMedianaTramoUno) {
 			return TipoEmpresa.MedianaTramo1;
 		}
 		
-		if(promedioDeVentas > this.vtasMicro) {
+		if(promedioDeVentas > this.vtasPequenia) {
 			return TipoEmpresa.Pequenia;
 		}
 		
@@ -73,15 +73,15 @@ public Rubro(double vtasMicro, double vtasPequenia, double vtasMedianaTramoUno, 
 	
 	public TipoEmpresa reClasificarPorPersonal(int cantidadPersonal) {
 		
-		if(cantidadPersonal > this.persMedianaTramoUno) {
+		if(cantidadPersonal > this.vtasMedianaTramoDos) {
 			return TipoEmpresa.MedianaTramo2;
 		}
 		
-		if(cantidadPersonal > this.persPequenia) {
+		if(cantidadPersonal > this.vtasMedianaTramoUno) {
 			return TipoEmpresa.MedianaTramo1;
 		}
 		
-		if(cantidadPersonal > this.persMicro) {
+		if(cantidadPersonal > this.vtasPequenia) {
 			return TipoEmpresa.Pequenia;
 		}
 		

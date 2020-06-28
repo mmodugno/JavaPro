@@ -14,7 +14,7 @@ public class Categorizador {
 		
 		if(listaEmpresas.contains(TipoEmpresa.MedianaTramo1)) {
 			
-			return TipoEmpresa.MedianaTramo2;
+			return TipoEmpresa.MedianaTramo1;
 			
 		}
 		
