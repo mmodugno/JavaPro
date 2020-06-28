@@ -39,10 +39,8 @@ public class OrganizacionTest {
 		  
 	    }
 	
-	
-	
 	@Test
-	public void testEmpresaConstruccionMedianaTramo2() {
+	public void testEmpresaConstruccionPequenia() {
 		
 		empresa.actualizarTipoEmpresa();
 		
