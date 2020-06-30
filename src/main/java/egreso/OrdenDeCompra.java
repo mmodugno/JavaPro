@@ -25,6 +25,7 @@ public class OrdenDeCompra {
 	private List<Presupuesto> presupuestos;
 	private List<Usuario> revisores;
 	private int idOrden;
+	private CriterioSeleccion criterioSeleccion;
 
 	
 	public double valorTotal() throws SinItemsExcepcion{
@@ -37,8 +38,6 @@ public class OrdenDeCompra {
 	public void cerrarOrden() {
 		items.forEach(i -> i.fijarPrecio());
 	}
-	
-	
 	
 	public List<Item> getItems() {
 		return items;
@@ -76,5 +75,7 @@ public class OrdenDeCompra {
 		presupuestos.add(presupuesto);
 	}
 
-
+	public void setCriterioSeleccion(CriterioSeleccion unCriterio){
+		this.criterioSeleccion = unCriterio;
+	}
 }

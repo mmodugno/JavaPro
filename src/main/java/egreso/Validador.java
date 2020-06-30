@@ -1,6 +1,7 @@
 package egreso;
 
 import usuarios.Usuario;
+import auditoria.Reporte;
 
 public class Validador {
 
@@ -29,6 +30,8 @@ public class Validador {
 	}
 	
 	public void validarOrden(OrdenDeCompra ordenDeCompra) throws ErrorDeValidacion {
+		
+		Reporte reporte = new Reporte();
 
 		if(ordenDeCompra.getNecesitaPresupuesto() == 0){
 			Egreso egreso = new Egreso(ordenDeCompra, null);
