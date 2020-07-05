@@ -2,6 +2,7 @@ package egreso;
 
 import static java.util.stream.Collectors.toList;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +15,6 @@ public class CondicionValidacion {
 
         int cantidadPresupuestos = ordenDeCompra.getPresupuestos().size();
         
-
         return ordenDeCompra.getNecesitaPresupuesto() <= cantidadPresupuestos;
     }
     
@@ -28,6 +28,17 @@ public class CondicionValidacion {
     public boolean validarMontoPresupuestoConCompra(OrdenDeCompra ordenDeCompra){
         
         return ordenDeCompra.presupuestoAceptado().valorTotal() == ordenDeCompra.valorTotal();
+    }
+    
+    public List<Item> obtenerItemsFaltantes(List<Item> listaConMasItems, List<Item> listaConMenosItems) {
+    	List<Item> itemsFaltantes;
+    	if(listaConMasItems.size() > listaConMenosItems.size()) {
+    		itemsFaltantes = listaConMasItems;
+    		itemsFaltantes.removeAll(listaConMenosItems);
+    		return itemsFaltantes;
+    		//reporteValidacion.itemsFaltantesPresupuesto(itemsFaltantesEnPresupuesto);
+    	}
+    	return Collections.emptyList();
     }
     
     public boolean presupuestoCorrecto(OrdenDeCompra ordenDeCompra, Presupuesto presupuesto) {
