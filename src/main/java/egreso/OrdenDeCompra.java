@@ -78,4 +78,8 @@ public class OrdenDeCompra {
 	public void setCriterioSeleccion(CriterioSeleccion unCriterio){
 		this.criterioSeleccion = unCriterio;
 	}
+	
+	public CriterioSeleccion getCriterioSeleccion(){
+		return this.criterioSeleccion;
+	}
 }
