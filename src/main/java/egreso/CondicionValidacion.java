@@ -18,6 +18,13 @@ public class CondicionValidacion {
         return ordenDeCompra.getNecesitaPresupuesto() <= cantidadPresupuestos;
     }
     
+    public boolean validarCantidadPresupuestos(OrdenDeCompra ordenDeCompra){
+
+        int cantidadPresupuestos = ordenDeCompra.getPresupuestos().size();
+        
+        return ordenDeCompra.getNecesitaPresupuesto() <= cantidadPresupuestos;
+    }
+    
     public boolean presupuestoCorrecto(OrdenDeCompra ordenDeCompra, Presupuesto presupuesto) {
     	
     	List<Item> itemsDeOrden = ordenDeCompra.getItems().stream().collect(Collectors.toList());
