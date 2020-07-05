@@ -1,6 +1,6 @@
 package organizacion;
 
-abstract class Rubro {
+public class Rubro {
 	
 public Rubro(double vtasMicro, double vtasPequenia, double vtasMedianaTramoUno, double vtasMedianaTramoDos,
 			int persMicro, int persPequenia, int persMedianaTramoUno, int persMedianaTramoDos) {

@@ -1,8 +1,6 @@
 package organizacion;
 
-import java.io.FileNotFoundException;
-import java.sql.SQLException;
-import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,32 +8,46 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import egreso.OrdenDeCompra;
-import egreso.Validador;
-import usuarios.CreationError;
-import usuarios.Usuario;
 
 
 public class OrganizacionTest {
 	
 	EntidadBase entidadBase;
 	List<EntidadBase> lista;
-	Servicios servicio;
+	
 	Empresa empresa;
 	Empresa empresaComercio;
 	Empresa empresaServicios;
+
+	Rubro IndustriaYMineria;
+	Rubro Servicios;
+	Rubro Agropecuario;
+	Rubro Construccion;
+	Rubro Comercio;
+	
+	
 	
 	  @Before
 	    public void init() {
 		  
-		  servicio = new Servicios();
+		  //Instanciamos los distintos tipos de Rubros:
+		IndustriaYMineria = new Rubro(33920000, 243290000, 1651750000, 2540380000.0, 15, 60 , 235, 655);
+		Servicios = new Rubro(9900000, 59710000, 494200000, 705790000, 7, 30 , 165, 535);
+		Agropecuario = new Rubro(17260000,71960000,426720000,676810000,5,10,50,215);
+		Construccion = new Rubro(19450000, 115370000, 643710000, 965460000, 12, 45, 200 ,590);
+		Comercio = new Rubro(36320000, 115370000, 643710000, 965460000, 7, 35, 125 ,345);
+			
+		 
 		  
 		  entidadBase = new EntidadBase("nombre","desc",null);
 		  lista = Arrays.asList(entidadBase);
 	
-		  empresa = new Empresa("razon","nombre","cuil",1514,1,lista,7,"abc",new Construccion(),170000000);
-		  empresaComercio = new Empresa("razon","nombre","cuil",1514,1,lista,346,"abc",new Comercio(),170000000);
-		  empresaServicios = new Empresa("razon","nombre","cuil",1514,1,lista,6,"abc",servicio,9900000);
+		  empresa = new Empresa("razon","nombre","cuil",1514,1,lista,7,"abc",Construccion,170000000);
+		  empresaComercio = new Empresa("razon","nombre","cuil",1514,1,lista,346,"abc",Comercio,170000000);
+		  empresaServicios = new Empresa("razon","nombre","cuil",1514,1,lista,6,"abc",Servicios,9900000);
+		  
+		 
+		  
 		  
 	    }
 	
@@ -76,7 +88,7 @@ public class OrganizacionTest {
 		
 		Assert.assertEquals(TipoEmpresa.MedianaTramo2, empresaServicios.getTipoEmpresa());
 		
-		servicio.setPersMedianaTramoDos(1000);
+		Servicios.setPersMedianaTramoDos(1000);
 		
 		empresaServicios.actualizarTipoEmpresa();
 		
