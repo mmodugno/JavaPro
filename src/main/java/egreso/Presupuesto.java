@@ -18,15 +18,12 @@ public class Presupuesto {
 		for(int i = 0;i<itemsoriginales.size();i++){
 			items.add(itemsoriginales.get(i).clone());
 		}
-
 	}
-
-
 
 	private List<Item> items;
 	private Proveedor proveedor;
 	private MedioDePago medioDePago;
-	
+	private boolean aceptado;
 	
 	
 	public List<Item> getItems() {
@@ -44,7 +41,9 @@ public class Presupuesto {
 			return items.stream().mapToDouble(Item::obtenerPrecio).sum();
 		}
 
-
+	public boolean getAceptado() {
+		return aceptado;
+	}
 
 	
 }
