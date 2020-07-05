@@ -51,4 +51,9 @@ public class CondicionValidacion {
     	
     }
     
+    public boolean validarCantidadItems(OrdenDeCompra ordenDeCompra, Presupuesto presupuesto) {
+    	return ordenDeCompra.getItems().size() == presupuesto.getItems().size();
+    }
+    
+    
 }
