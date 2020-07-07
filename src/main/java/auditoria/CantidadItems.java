@@ -1,7 +1,6 @@
 package auditoria;
 
 import egreso.OrdenDeCompra;
-import egreso.Presupuesto;
 
 public class CantidadItems implements CondicionValidacion {
 
