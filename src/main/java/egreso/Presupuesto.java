@@ -44,6 +44,10 @@ public class Presupuesto {
 	public boolean getAceptado() {
 		return aceptado;
 	}
+	
+	public void setAceptado() {
+		this.aceptado = true;
+	}
 
 	
 }
