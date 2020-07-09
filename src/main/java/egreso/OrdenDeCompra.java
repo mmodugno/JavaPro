@@ -3,7 +3,7 @@ package egreso;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
+import static java.util.stream.Collectors.toList;
 
 import producto.*;
 import usuarios.Usuario;
@@ -85,6 +85,6 @@ public class OrdenDeCompra {
 	}
 	
 	public Presupuesto presupuestoAceptado(){
-		return (Presupuesto) presupuestos.stream().filter(presupuesto -> presupuesto.getAceptado());
+		return presupuestos.stream().filter(presupuesto -> presupuesto.getAceptado()).collect(toList()).get(0);
 	}
 }
