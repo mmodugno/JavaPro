@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import egreso.Egreso;
+import egreso.OrdenDeCompra;
 
 public class EntidadJuridica {
 
@@ -31,8 +32,9 @@ public class EntidadJuridica {
 		entidadesBase.add(entidad);
 	}
 	
-	public void nuevoEgreso(Egreso nuevoEgreso) {
-		egresos.add(nuevoEgreso);
+	public void nuevoEgreso(OrdenDeCompra ordenDeCompra) {
+		Egreso egreso = new Egreso(ordenDeCompra, ordenDeCompra.presupuestoAceptado());
+		egresos.add(egreso);
 	}
 	
 	public List<Egreso> getEgresos() {
