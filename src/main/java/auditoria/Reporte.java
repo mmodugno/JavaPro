@@ -1,23 +1,22 @@
 package auditoria;
 
 import java.util.List;
+import java.util.Map;
 
 import producto.Item;
 import egreso.Egreso;;
 
 public class Reporte {
 	
-	Egreso egreso;
-	List<Boolean> resultadoValidaciones;
-	
-	private List<Item> itemsFaltantesCompra;
+	private Egreso egreso;
+	private Map<CondicionValidacion, Boolean> resultadoValidaciones;
 	
 	public void setEgreso(Egreso egreso) {
 		this.egreso = egreso;
 	}
 	
-	public void setValidaciones(List<Boolean> validaciones) {
-		this.resultadoValidaciones = validaciones;
+	public void agregarResultadoValidacion(CondicionValidacion validador, boolean validacion) {
+		resultadoValidaciones.put(validador, validacion);
 	}
 	
 
