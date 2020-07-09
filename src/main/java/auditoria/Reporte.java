@@ -19,5 +19,6 @@ public class Reporte {
 		resultadoValidaciones.put(validador, validacion);
 	}
 	
+	
 
 }
