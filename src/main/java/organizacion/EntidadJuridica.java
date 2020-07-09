@@ -1,5 +1,8 @@
 package organizacion;
+import java.util.ArrayList;
 import java.util.List;
+
+import egreso.Egreso;
 
 public class EntidadJuridica {
 
@@ -12,6 +15,8 @@ public class EntidadJuridica {
 		this.direccionPostal = direccionPostal;
 		this.codInscripcion = codInscripcion;
 		this.entidadesBase = entidadesBase;
+		this.egresos = new ArrayList<Egreso>();
+		
 	}
 	private String razonSocial;
 	private String nombre;
@@ -19,9 +24,18 @@ public class EntidadJuridica {
 	private int direccionPostal;
 	private int codInscripcion;
 	private List<EntidadBase> entidadesBase;
+	private List<Egreso> egresos;
 	
 	
 	public void agregarEntidadBase(EntidadBase entidad) {
 		entidadesBase.add(entidad);
+	}
+	
+	public void nuevoEgreso(Egreso nuevoEgreso) {
+		egresos.add(nuevoEgreso);
+	}
+	
+	public List<Egreso> getEgresos() {
+		return egresos;
 	}
 }
