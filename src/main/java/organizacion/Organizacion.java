@@ -23,4 +23,8 @@ public class Organizacion {
 		ordenesPendientes.removeIf(unaOrden->unaOrden.getIdOrden() == ordenDeCompra.getIdOrden());
 	}
 	
+	public List<EntidadJuridica>  getEntidades() {
+		return entidades;
+	}
+	
 }
