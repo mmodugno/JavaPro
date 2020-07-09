@@ -1,6 +1,7 @@
 package usuarios;
 
 import egreso.*;
+import auditoria.Reporte;
 import organizacion.Organizacion;
 import producto.*;
 
@@ -25,6 +26,7 @@ public abstract class Usuario {
 	private List<OrdenDeCompra> suscripciones;
 	private List<Egreso> egresosValidados;
 	private boolean creadoConExito;
+	private Reporte reporteValidacion;
 	
 	public List<OrdenDeCompra> getSuscripciones() {
 		return suscripciones;
@@ -43,9 +45,10 @@ public abstract class Usuario {
 		ordenASuscribir.agregarRevisor(this);
 	}
 
-	public void egresoValidado(Egreso unEgreso) {
-		organizacion.nuevoEgreso(unEgreso);
-		organizacion.sacarOrden(unEgreso.getOrdenDeCompra());
+	public void egresoValidado(Reporte reporteValidacion) {
+		this.reporteValidacion = reporteValidacion;
+		//organizacion.nuevoEgreso(unEgreso);
+		//organizacion.sacarOrden(unEgreso.getOrdenDeCompra());
 	}
 	
 	public boolean creadoConExito() {
