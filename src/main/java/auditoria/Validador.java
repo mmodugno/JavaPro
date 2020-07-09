@@ -16,12 +16,17 @@ public class Validador {
 		
 		reporteValidacion.setEgreso(egresoAvalidar);
 		
+		boolean resultadoValidacion;
+		
 		OrdenDeCompra ordenDeCompra;
 		
 		ordenDeCompra = egresoAvalidar.getOrdenDeCompra();
 		
-		return condicionesValidacion.stream().allMatch(unaCondicion -> this.ejecutarCondicion(unaCondicion, ordenDeCompra));
+		resultadoValidacion = condicionesValidacion.stream().allMatch(unaCondicion -> this.ejecutarCondicion(unaCondicion, ordenDeCompra));
 		
+		ordenDeCompra.getRevisores().forEach(usuario -> usuario.egresoValidado(reporteValidacion));
+		
+		return resultadoValidacion;
 	}
 	
 	public void agregarCondicionValidacion(CondicionValidacion condicionValidacion) {
