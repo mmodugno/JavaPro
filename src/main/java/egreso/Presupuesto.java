@@ -3,8 +3,9 @@ package egreso;
 import java.util.ArrayList;
 import java.util.List;
 import producto.*;
+import usuarios.CategoriaDelSistema;
 
-public class Presupuesto {
+public class Presupuesto implements Categorizable{
 
 	public Presupuesto(List<Item> itemsoriginal, Proveedor proveedor, MedioDePago medioDePago) throws CloneNotSupportedException {
 		super();
@@ -24,7 +25,7 @@ public class Presupuesto {
 	private Proveedor proveedor;
 	private MedioDePago medioDePago;
 	private boolean aceptado;
-	
+	private CategoriaDelSistema categoria = null;
 	
 	public List<Item> getItems() {
 		return items;
@@ -49,5 +50,9 @@ public class Presupuesto {
 		this.aceptado = true;
 	}
 
+@Override
+public void categorizar(CategoriaDelSistema categoria) {
+	this.categoria = categoria;
+}
 	
 }
