@@ -2,7 +2,9 @@ package egreso;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import organizacion.*;
 import producto.*;
@@ -65,11 +67,24 @@ public class CrearEgresoTest {
     	ordenDeCompra.cerrarOrden();
     	primerOrganizacion.getEntidades().get(0).nuevoEgreso(ordenDeCompra); // Obtengo primera Entidad para agregarle los Egresos
     	
-    	Assert.assertEquals(1, primerOrganizacion.getEntidades().size());
-    	Assert.assertEquals(1, primerOrganizacion.getEntidades().get(0).getEgresos().size());
-    	Assert.assertEquals(2, primerOrganizacion.getEntidades().get(0).getEgresos().get(0).getOrdenDeCompra().getItems().size());
-    	Assert.assertEquals(80.00, primerOrganizacion.getEntidades().get(0).getEgresos().get(0).getOrdenDeCompra().getItems().get(0).getPrecioUnitario(), 0.1);
-    	//Assert.assertEquals(110.00, primerOrganizacion.getEntidades().get(0).getEgresos().get(0).valorTotal(), 0.1);
+    	Assert.assertEquals(140.00, primerOrganizacion.getEntidades().get(0).getEgresos().get(0).getOrdenDeCompra().valorTotal(), 0.1);
     }
+    
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
+    
+    @Test
+    public void setearPrecioConOrdenCerrada() throws CloneNotSupportedException {
+    	
+    	ordenDeCompra.cerrarOrden();
+    	exception.expect(RuntimeException.class);
+    	ordenDeCompra.getItems().get(0).setPrecioUnitario(80.00);
+    	//ordenDeCompra.getItems().get(1).setPrecioUnitario(30.00);
+    	//primerOrganizacion.getEntidades().get(0).nuevoEgreso(ordenDeCompra);
+    	
+    	//Assert.assertEquals(80.00, primerOrganizacion.getEntidades().get(0).getEgresos().get(0).getOrdenDeCompra().getItems().get(0).getPrecioUnitario(), 0.1);
+    }
+    
+    
     
 }
