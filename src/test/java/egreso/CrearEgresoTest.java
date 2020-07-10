@@ -13,20 +13,17 @@ import usuarios.Usuario;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
-import static org.junit.Assert.fail;
 
 public class CrearEgresoTest {
 //PRODUCTOS-ITEM-PROVEEDOR
-    Producto p1 = new Producto(1,"Televisor", "Televisor", TipoItem.ARTICULO);
-    Producto p2 = new Producto(2,"Tostadora", "Tostadora", TipoItem.ARTICULO);
-    Proveedor proveedor1 = new Proveedor("carlos","22412145696", "6725");
-    Proveedor proveedor2 = new Proveedor("Juan","21123214569","1419");
-    Item item1 = new Item(p1, 1,0.00);
-    Item item2 = new Item(p2,2,0.00);
+    Producto p1 = new Producto(1,"Monitor", "Monitor 32", TipoItem.ARTICULO);
+    Producto p2 = new Producto(2,"Notebook", "Notebook Lenovo", TipoItem.ARTICULO);
+    Proveedor proveedor1 = new Proveedor("Info Tech","22412145696", "6725");
+    Proveedor proveedor2 = new Proveedor("Juan Computación","21123214569","1419");
+    Item item1 = new Item(p1, 1, 0.00);
+    Item item2 = new Item(p2, 2, 0.00);
 
 //    CondicionValidacion condicionValidacion = new CondicionValidacion();
 //    ElMasBarato elMasBarato = new ElMasBarato();
@@ -36,7 +33,6 @@ public class CrearEgresoTest {
     Organizacion primerOrganizacion = new Organizacion();
     
     EntidadJuridica entidadJuridica = new EntidadJuridica("Web Social ONG", "Web Social", "90-61775331-4", 1143, 01, Collections.emptyList());
-	
     
     CreadorUsuario userMaker = new CreadorUsuario();
     Presupuesto presupuesto1;
@@ -64,11 +60,15 @@ public class CrearEgresoTest {
     @Test
     public void crearEgreso() throws CloneNotSupportedException {
     	
+    	ordenDeCompra.getItems().get(0).setPrecioUnitario(80.00);
+    	ordenDeCompra.getItems().get(1).setPrecioUnitario(30.00);
     	ordenDeCompra.cerrarOrden();
-    	primerOrganizacion.getEntidades().get(0).nuevoEgreso(ordenDeCompra); ; // Obtengo primera Entidad para agregarle los Egresos
+    	primerOrganizacion.getEntidades().get(0).nuevoEgreso(ordenDeCompra); // Obtengo primera Entidad para agregarle los Egresos
     	
     	Assert.assertEquals(1, primerOrganizacion.getEntidades().size());
     	Assert.assertEquals(1, primerOrganizacion.getEntidades().get(0).getEgresos().size());
+    	Assert.assertEquals(2, primerOrganizacion.getEntidades().get(0).getEgresos().get(0).getOrdenDeCompra().getItems().size());
+    	Assert.assertEquals(80.00, primerOrganizacion.getEntidades().get(0).getEgresos().get(0).getOrdenDeCompra().getItems().get(0).getPrecioUnitario(), 0.1);
     	//Assert.assertEquals(110.00, primerOrganizacion.getEntidades().get(0).getEgresos().get(0).valorTotal(), 0.1);
     }
     

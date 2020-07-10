@@ -21,7 +21,7 @@ public class Egreso {
 	
 	
 	public double valorTotal() {
-		return ordenDeCompra.valorTotal();
+		return this.ordenDeCompra.valorTotal();
 	}
 	
 	public void agregarDocumentoComercial(DocumentoComercial documento) {
