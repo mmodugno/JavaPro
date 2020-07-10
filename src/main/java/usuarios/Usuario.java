@@ -54,7 +54,10 @@ public abstract class Usuario {
 	public boolean creadoConExito() {
 		return creadoConExito;
 	}
-	
+	public Organizacion getOrganizacion() {
+		return organizacion;
+	}
+
 /*
 	public boolean creadoConExito() {
 		return true;

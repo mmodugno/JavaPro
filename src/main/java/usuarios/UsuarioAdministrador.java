@@ -18,6 +18,7 @@ public class UsuarioAdministrador extends Usuario {
 		CategoriaCompuesta nuevaCategoria = new CategoriaCompuesta(nombreCategoria,criterio);
 		
 		nuevaCategoria.setSubCategorias(lista);
+		this.getOrganizacion().agregarCategoria(nuevaCategoria);
 	}
 
 	public void crearCategoria(String nombreCategoria, String criterio) {
@@ -25,5 +26,6 @@ public class UsuarioAdministrador extends Usuario {
 	}
 
 
+	
 	
 }

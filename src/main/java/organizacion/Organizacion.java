@@ -3,6 +3,7 @@ package organizacion;
 import java.util.ArrayList;
 import java.util.List;
 import egreso.*;
+import usuarios.CategoriaDelSistema;
 
 public class Organizacion {
 
@@ -14,6 +15,7 @@ public class Organizacion {
 	
 	private List<EntidadJuridica> entidades;
 	private List<OrdenDeCompra> ordenesPendientes;
+	private List<CategoriaDelSistema> categorias = new ArrayList<CategoriaDelSistema>();
 	
 	public void agregarEntidad(EntidadJuridica entidad) {
 		entidades.add(entidad);
@@ -26,5 +28,10 @@ public class Organizacion {
 	public List<EntidadJuridica>  getEntidades() {
 		return entidades;
 	}
+	
+	public void agregarCategoria(CategoriaDelSistema categoria) {
+		categorias.add(categoria);
+	}
+	
 	
 }
