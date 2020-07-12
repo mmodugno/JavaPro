@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import egreso.Egreso;
+import egreso.Ingreso;
 import egreso.OrdenDeCompra;
 
 public class EntidadJuridica {
@@ -17,6 +18,8 @@ public class EntidadJuridica {
 		this.codInscripcion = codInscripcion;
 		this.entidadesBase = entidadesBase;
 		this.egresos = new ArrayList<Egreso>();
+		this.ordenesPendientes = new ArrayList<OrdenDeCompra>();
+		this.ingresos = new ArrayList<Ingreso>();
 		
 	}
 	private String razonSocial;
@@ -26,6 +29,13 @@ public class EntidadJuridica {
 	private int codInscripcion;
 	private List<EntidadBase> entidadesBase;
 	private List<Egreso> egresos;
+	private List<OrdenDeCompra> ordenesPendientes;
+
+	public List<Ingreso> getIngresos() {
+		return ingresos;
+	}
+
+	private List<Ingreso> ingresos;
 	
 	
 	public void agregarEntidadBase(EntidadBase entidad) {
@@ -39,5 +49,9 @@ public class EntidadJuridica {
 	
 	public List<Egreso> getEgresos() {
 		return egresos;
+	}
+
+	public void sacarOrden(OrdenDeCompra ordenDeCompra) {
+		ordenesPendientes.removeIf(unaOrden->unaOrden.getIdOrden() == ordenDeCompra.getIdOrden());
 	}
 }
