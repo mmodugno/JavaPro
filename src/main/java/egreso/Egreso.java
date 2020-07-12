@@ -1,6 +1,8 @@
 package egreso;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import producto.*;
@@ -14,12 +16,19 @@ public class Egreso implements Categorizable{
 		this.documentosComerciales = new ArrayList<DocumentoComercial>();
 		this.ordenDeCompra = ordenDeCompra;
 		this.presupuesto = presupuesto;
+		fecha = LocalDate.now();
 	}
 
 	private List<DocumentoComercial> documentosComerciales;
 	private OrdenDeCompra ordenDeCompra;
 	private Presupuesto presupuesto;
 	private CategoriaDelSistema categoria = null;
+
+	public LocalDate getFecha() {
+		return fecha;
+	}
+
+	private LocalDate fecha;
 	
 	public double valorTotal() {
 		return this.ordenDeCompra.valorTotal();
