@@ -5,6 +5,7 @@ import organizacion.Organizacion;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Vinculador {
 
@@ -13,18 +14,26 @@ public class Vinculador {
     private EntidadJuridica entidadJuridica;
 
 
-    public Vinculador(Organizacion organizacion) {
+    public Vinculador(EntidadJuridica entidadJuridica) {
         this.egresosSinVincular = new ArrayList<Egreso>();
         this.ingresosSinVincular = new ArrayList<Ingreso>();
-        organizacion = organizacion;
+        entidadJuridica = entidadJuridica;
     }
 
     void obtenerIngresosEgresos(){
-        egresosSinVincular = entidadJuridica.getEgresos();//ACA EL FILTRO
-        ingresosSinVincular = entidadJuridica.getIngresos();//ACA EL FILTRO
-        //TODO FILTRAR
+        egresosSinVincular = filtrarEgresos(entidadJuridica.getEgresos());
+        ingresosSinVincular = filtrarIngresos(entidadJuridica.getIngresos());
 
     }
+
+    private List<Ingreso> filtrarIngresos(List<Ingreso> ingresos) {
+        return ingresos.stream().filter(ingreso -> ingreso.getEgresosAsociados().size() == 0).collect(Collectors.toList());
+    }
+
+    private List<Egreso> filtrarEgresos(List<Egreso> egresos) {
+        return egresos.stream().filter(egreso -> egreso.getIngresoAsociado() == null).collect(Collectors.toList());
+    }
+
     void vincular(CriterioDeVinculacion criterio){
         criterio.vincular(egresosSinVincular,ingresosSinVincular);
     }

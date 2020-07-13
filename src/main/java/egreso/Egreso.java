@@ -23,12 +23,22 @@ public class Egreso implements Categorizable{
 	private OrdenDeCompra ordenDeCompra;
 	private Presupuesto presupuesto;
 	private CategoriaDelSistema categoria = null;
+	private LocalDate fecha;
+	private Ingreso ingresoAsociado = null;
+
+	public Ingreso getIngresoAsociado() {
+		return ingresoAsociado;
+	}
+
+	public void setIngresoAsociado(Ingreso ingresoAsociado) {
+		this.ingresoAsociado = ingresoAsociado;
+	}
 
 	public LocalDate getFecha() {
 		return fecha;
 	}
 
-	private LocalDate fecha;
+
 	
 	public double valorTotal() {
 		return this.ordenDeCompra.valorTotal();
