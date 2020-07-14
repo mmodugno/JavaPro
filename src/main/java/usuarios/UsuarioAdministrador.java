@@ -22,7 +22,9 @@ public class UsuarioAdministrador extends Usuario {
 	}
 
 	public void crearCategoria(String nombreCategoria, String criterio) {
-		new Categoria(nombreCategoria,criterio);
+		
+		
+		this.getOrganizacion().agregarCategoria(new Categoria(nombreCategoria,criterio));
 	}
 
 

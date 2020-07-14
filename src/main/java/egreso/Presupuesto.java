@@ -27,6 +27,10 @@ public class Presupuesto implements Categorizable{
 	private boolean aceptado;
 	private CategoriaDelSistema categoria = null;
 	
+	public CategoriaDelSistema getCategoria() {
+		return this.categoria;
+	}
+	
 	public List<Item> getItems() {
 		return items;
 	}

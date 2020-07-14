@@ -29,5 +29,10 @@ public class Organizacion {
 		categorias.add(categoria);
 	}
 	
+	public List<CategoriaDelSistema> getCategorias() {
+		return this.categorias;
+	}
+	
+	
 	
 }
