@@ -42,6 +42,7 @@ public class VincularTest {
     CreadorUsuario userMaker = new CreadorUsuario();
     Presupuesto presupuesto1;
     MedioDePago medioDePago = new MedioDePago(TipoMedioPago.Argencard, 221144);
+    Egreso egreso;
 
     //VINCULADOR
     Vinculador vinculador;
@@ -74,6 +75,7 @@ public class VincularTest {
         ordenDeCompra.getItems().get(1).setPrecioUnitario(30.00);
         ordenDeCompra.cerrarOrden();
         primerOrganizacion.getEntidades().get(0).nuevoEgreso(ordenDeCompra); // Obtengo primera Entidad para agregarle los Egresos
+        egreso = entidadJuridica.getEgresos().get(0);
 
         //INSTANCIO VINCULADOR
         condicionFecha = new CondicionFecha();
@@ -83,14 +85,24 @@ public class VincularTest {
         primeroEgreso = new PrimeroEgreso(condicionesObligatorias);
         primeroIngreso = new PrimeroIngreso(condicionesObligatorias);
         mix = new Mix(condicionesObligatorias);
+        vinculador = new Vinculador(entidadJuridica);
 
         //INGRESO
         ingreso = new Ingreso("Donacion",1000.0);
+
+        entidadJuridica.getIngresos().add(ingreso);
 
     }
 
     @Test
     public void vincularIngresoEgreso(){
+        vinculador.obtenerIngresosEgresos();
+        Assert.assertEquals(0,ingreso.getEgresosAsociados().size());
+        vinculador.vincular(primeroEgreso);
+        Assert.assertEquals(1,ingreso.getEgresosAsociados().size());
+
+        Assert.assertEquals(ingreso, egreso.getIngresoAsociado());
+
 
 
     }
