@@ -15,7 +15,11 @@ public class PrimeroEgreso extends CriterioDeVinculacion {
 
     @Override
     void ordenar(List<Ingreso> ingresos, List<Egreso> egresos) {
-        ingresos.sort((Ingreso unIngreso, Ingreso otroIngreso) -> unIngreso.getMonto().compareTo(otroIngreso.getMonto()));
+        ingresos.sort((Ingreso unIngreso, Ingreso otroIngreso) -> {
+            if (unIngreso.getMonto() > otroIngreso.getMonto()) return 1;
+            if (unIngreso.getMonto() < otroIngreso.getMonto()) return -1;
+            return 0;
+        });
         egresos.sort((Egreso unEgreso, Egreso otroEgreso) -> {
         	if (unEgreso.valorTotal() > otroEgreso.valorTotal()) return 1;
         	if (unEgreso.valorTotal() < otroEgreso.valorTotal()) return -1;
@@ -30,7 +34,11 @@ public class PrimeroEgreso extends CriterioDeVinculacion {
             List<Integer> indexDestruir = new ArrayList<Integer>();
             for(int j = 0; j<egresos.size(); j++){
                 if(pasaCondiciones(ingresos.get(i),egresos.get(j))){
+
                     ingresos.get(i).asociarEgreso(egresos.get(j));
+
+                     egresos.get(j).setIngresoAsociado(ingresos.get(i));//AGREGO INGRESO A EGRESO
+
                     indexDestruir.add(j);
                 }
                 for(int z = 0; z<indexDestruir.size(); z++)

@@ -24,7 +24,7 @@ public class Egreso implements Categorizable{
 	private Presupuesto presupuesto;
 	private CategoriaDelSistema categoria = null;
 	private LocalDate fecha;
-	private Ingreso ingresoAsociado = null;
+	private Ingreso ingresoAsociado;
 
 	public Ingreso getIngresoAsociado() {
 		return ingresoAsociado;
