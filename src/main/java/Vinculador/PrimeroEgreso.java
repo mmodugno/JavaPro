@@ -15,9 +15,12 @@ public class PrimeroEgreso extends CriterioDeVinculacion {
 
     @Override
     void ordenar(List<Ingreso> ingresos, List<Egreso> egresos) {
-        //TODO QUEDA ORDENAR
-        //Collections.sort(egresos, (x,y) -> {return x.valorTotal() > y.valorTotal()});
-        //Collections.sort(egresos);
+        ingresos.sort((Ingreso unIngreso, Ingreso otroIngreso) -> unIngreso.getMonto().compareTo(otroIngreso.getMonto()));
+        egresos.sort((Egreso unEgreso, Egreso otroEgreso) -> {
+        	if (unEgreso.valorTotal() > otroEgreso.valorTotal()) return 1;
+        	if (unEgreso.valorTotal() < otroEgreso.valorTotal()) return -1;
+        	return 0;
+        });
     }
 
     @Override

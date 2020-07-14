@@ -14,10 +14,10 @@ public class Vinculador {
     private EntidadJuridica entidadJuridica;
 
 
-    public Vinculador(EntidadJuridica entidadJuridica) {
+    public Vinculador(EntidadJuridica unaEntidadJuridica) {
         this.egresosSinVincular = new ArrayList<Egreso>();
         this.ingresosSinVincular = new ArrayList<Ingreso>();
-        entidadJuridica = entidadJuridica;
+        entidadJuridica = unaEntidadJuridica;
     }
 
     void obtenerIngresosEgresos(){
