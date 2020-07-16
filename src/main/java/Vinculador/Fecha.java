@@ -15,7 +15,7 @@ public class Fecha extends CriterioDeVinculacion {
 	
 	@Override
     public void vincular(List<Egreso> egresos, List<Ingreso> ingresos) {
-        ordenar(ingresos, egresos);
+        ordenarFecha(ingresos, egresos);
         for(int i = 0; i<ingresos.size(); i++){
             List<Integer> indexDestruir = new ArrayList<Integer>();
             for(int j = 0; j<egresos.size(); j++){
@@ -31,8 +31,8 @@ public class Fecha extends CriterioDeVinculacion {
         }
     }
 	
-	@Override
-    public void ordenar(List<Ingreso> ingresos, List<Egreso> egresos) {
+
+    public void ordenarFecha(List<Ingreso> ingresos, List<Egreso> egresos) {
 		egresos.sort(Comparator.comparing(Egreso::getFecha));
 		ingresos.sort(Comparator.comparing(Ingreso::getFecha));
     }

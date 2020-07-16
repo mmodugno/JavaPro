@@ -56,6 +56,20 @@ public class VincularTest {
     //INGRESO
     Ingreso ingreso;
 
+    //MAS INGRESOS Y EGRESOS
+    OrdenDeCompra ordenDeCompra2;
+    Presupuesto presupuesto2;
+    Item item3 = new Item(p1, 10, 0.00);
+    Item item4 = new Item(p2, 20, 0.00);
+    OrdenDeCompra ordenDeCompra3;
+    Presupuesto presupuesto3;
+    Item item5 = new Item(p1, 50, 0.00);
+    Egreso egreso2;
+    Egreso egreso3;
+    Ingreso ingreso2;
+    Ingreso ingreso3;
+
+
     @Before
     public void init() throws ClassNotFoundException, FileNotFoundException, SQLException, CreationError, CloneNotSupportedException {
 
@@ -74,8 +88,10 @@ public class VincularTest {
         ordenDeCompra.getItems().get(0).setPrecioUnitario(80.00);
         ordenDeCompra.getItems().get(1).setPrecioUnitario(30.00);
         ordenDeCompra.cerrarOrden();
+        //TODO ATENTOS QUE EN NINGUN MOMENTO AGREGO UNA ORDEN DE COMPRA A LA ORGANIZACION POR ESO NUNCA NOS TIRO ERROR NADA. (TAMPOCO LO PROBAMOS NNCA)
         primerOrganizacion.getEntidades().get(0).nuevoEgreso(ordenDeCompra); // Obtengo primera Entidad para agregarle los Egresos
         egreso = entidadJuridica.getEgresos().get(0);
+
 
         //INSTANCIO VINCULADOR
         condicionFecha = new CondicionFecha();
@@ -87,10 +103,36 @@ public class VincularTest {
         mix = new Mix(condicionesObligatorias);
         vinculador = new Vinculador(entidadJuridica);
 
-        //INGRESO
+        //INGRESOS
         ingreso = new Ingreso("Donacion",1000.0);
 
+
+
         entidadJuridica.getIngresos().add(ingreso);
+
+
+        //EGRESO 2
+        ordenDeCompra2 = new OrdenDeCompra(0,6);
+        ordenDeCompra2.agregarItem(item3);
+        ordenDeCompra2.agregarItem(item4);
+
+        presupuesto2 = new Presupuesto(ordenDeCompra2.getItems(),proveedor1,medioDePago);
+        presupuesto2.getItems().get(0).setPrecioUnitario(80.00);
+        presupuesto2.getItems().get(1).setPrecioUnitario(60.00);
+        ordenDeCompra2.agregarPresupuesto(presupuesto2);
+        presupuesto2.setAceptado();
+
+
+        //EGRESO 3
+        ordenDeCompra3 = new OrdenDeCompra(0,6);
+        ordenDeCompra3.agregarItem(item5);
+
+        presupuesto3 = new Presupuesto(ordenDeCompra2.getItems(),proveedor1,medioDePago);
+        presupuesto3.getItems().get(0).setPrecioUnitario(100.00);
+        ordenDeCompra3.agregarPresupuesto(presupuesto3);
+        presupuesto3.setAceptado();
+
+
 
     }
 
@@ -103,8 +145,43 @@ public class VincularTest {
 
         Assert.assertEquals(ingreso, egreso.getIngresoAsociado());
 
+    }
+
+
+    @Test
+    public void criterioPrimeroEgreso()
+
+    {
+        //LOS NUEVOS INGRESOS
+        ingreso2 = new Ingreso("Donacion",2000.0);
+        ingreso3 = new Ingreso("Donacion",10000.0);
+        entidadJuridica.getIngresos().add(ingreso3);
+        entidadJuridica.getIngresos().add(ingreso2);
+
+        //ACOMODO LOS EGRESOS
+        primerOrganizacion.getEntidades().get(0).nuevoEgreso(ordenDeCompra2); // Obtengo primera Entidad para agregarle los Egresos
+        egreso2 = entidadJuridica.getEgresos().get(1);
+        primerOrganizacion.getEntidades().get(0).nuevoEgreso(ordenDeCompra3); // Obtengo primera Entidad para agregarle los Egresos
+        egreso3 = entidadJuridica.getEgresos().get(2);
+
+        vinculador.obtenerIngresosEgresos();
+        vinculador.vincular(primeroEgreso);
+
+        /*si ordena a MENOR A MAYOR egreso 3 a nadie
+        egreso 3 null
+        egreso = ingreso
+        egreso2 = ingreso2
+        ingreso 3 no le aueda nada*/
+
+        Assert.assertEquals(ingreso3, egreso2.getIngresoAsociado());
+        Assert.assertEquals(ingreso2, egreso.getIngresoAsociado());
+        Assert.assertEquals(0,ingreso3.getEgresosAsociados().size());
+        Assert.assertTrue(egreso3.getIngresoAsociado() == null); //TENDRIAMOS QUE TENER UN EGRESO/INGRESO EQUIVALENTE A NULL
+
+    }
+
 
 
     }
 
-}
+
