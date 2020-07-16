@@ -16,12 +16,17 @@ public abstract class CriterioDeVinculacion {
 
     void vincular(List<Egreso> egresos, List<Ingreso> ingresos) {}
 
+    //TODO LA EXEPCION SI LAS LISTAS ESTAN VACIAS. ASÍ NO TIRA ERROR MAS ADELANTE SI UNA LISTA QUEDO VACIA.
     void ordenarValor(List<Ingreso> ingresos, List<Egreso> egresos) {
         ingresos.sort((Ingreso unIngreso, Ingreso otroIngreso) -> {
-            return ordenarDouble(unIngreso.getMonto(),otroIngreso.getMonto());
+            if (unIngreso.getMonto() > otroIngreso.getMonto()) return 1;
+            if (unIngreso.getMonto() < otroIngreso.getMonto()) return -1;
+            return 0;
         });
         egresos.sort((Egreso unEgreso, Egreso otroEgreso) -> {
-            return ordenarDouble(unEgreso.valorTotal(), otroEgreso.valorTotal());
+            if (unEgreso.valorTotal() > otroEgreso.valorTotal()) return 1;
+            if (unEgreso.valorTotal() < otroEgreso.valorTotal()) return -1;
+            return 0;
         });
     }
 
@@ -29,11 +34,13 @@ public abstract class CriterioDeVinculacion {
 
         return condicionesObligatorias.stream().allMatch(c -> c.cumpleCondicion(ingreso, egreso));
     }
-
+/*
     int ordenarDouble(double primero,double segundo){
         if (primero > segundo) return 1;
         if (primero < segundo) return -1;
         return 0;
 
     }
+*/
+
 }
