@@ -28,8 +28,8 @@ public class PrimeroEgreso extends CriterioDeVinculacion {
                 for (int j = 0; j < egresosTamaño ; j++) {
                     if (pasaCondiciones(ingresos.get(i), egresos.get(j-egresosRetirados))) {
 
-                        ingresos.get(i).asociarEgreso(egresos.get(j));//AGREGO EGRESO A INGRESO
-                        egresos.get(j).setIngresoAsociado(ingresos.get(i));//AGREGO INGRESO A EGRESO
+                        ingresos.get(i).asociarEgreso(egresos.get(j-egresosRetirados));//AGREGO EGRESO A INGRESO
+                        egresos.get(j-egresosRetirados).setIngresoAsociado(ingresos.get(i));//AGREGO INGRESO A EGRESO
                         seAsigno = true;//SE AVISA QUE SE ASIGNA PARA QUE NO SALGA DEL WHILE
                         egresosRetirados += 1;//SE SUMA UN EGRESO POR SI TIENE QUE VOLVER A REVISAR, LO DEJO AUNQUE CREO QUE YA NO ES NECESARIO
                         egresos.remove(j-egresosRetirados);//SE RETIRA EGRESO
