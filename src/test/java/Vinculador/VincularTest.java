@@ -121,7 +121,9 @@ public class VincularTest {
         presupuesto2.getItems().get(1).setPrecioUnitario(60.00);
         ordenDeCompra2.agregarPresupuesto(presupuesto2);
         presupuesto2.setAceptado();
-
+        ordenDeCompra2.getItems().get(0).setPrecioUnitario(80.00);
+        ordenDeCompra2.getItems().get(1).setPrecioUnitario(60.00);
+        ordenDeCompra.cerrarOrden();
 
         //EGRESO 3
         ordenDeCompra3 = new OrdenDeCompra(0,6);
@@ -131,6 +133,8 @@ public class VincularTest {
         presupuesto3.getItems().get(0).setPrecioUnitario(100.00);
         ordenDeCompra3.agregarPresupuesto(presupuesto3);
         presupuesto3.setAceptado();
+        ordenDeCompra3.getItems().get(0).setPrecioUnitario(100.00);
+        ordenDeCompra.cerrarOrden();
 
 
 
@@ -172,11 +176,22 @@ public class VincularTest {
         egreso = ingreso
         egreso2 = ingreso2
         ingreso 3 no le aueda nada*/
-
-        Assert.assertEquals(ingreso3, egreso2.getIngresoAsociado());
-        Assert.assertEquals(ingreso2, egreso.getIngresoAsociado());
-        Assert.assertEquals(0,ingreso3.getEgresosAsociados().size());
-        Assert.assertTrue(egreso3.getIngresoAsociado() == null); //TENDRIAMOS QUE TENER UN EGRESO/INGRESO EQUIVALENTE A NULL
+        
+        /* --------- 
+         * List<Ingreso> ingresos = { 1000.0, 10000.0, 2000.0 }
+         * List<Egreso> egresos = { 140, 2000.0, 5000.0 } 
+         * Ingresos 3 : 2000.0 
+         * 
+         * Vincula Ingreso 1000 con Egreso 140
+         * Vincula Ingreso 2000 con Egreso 2000
+         * Vincula Ingreso 10000 con Egreso 5000
+         * */
+        
+        Assert.assertEquals(ingreso, egreso.getIngresoAsociado());
+        Assert.assertEquals(ingreso2, egreso2.getIngresoAsociado());
+        Assert.assertEquals(ingreso3, egreso3.getIngresoAsociado());
+        Assert.assertEquals(1,ingreso3.getEgresosAsociados().size());
+        //Assert.assertTrue(egreso3.getIngresoAsociado() == null); //TENDRIAMOS QUE TENER UN EGRESO/INGRESO EQUIVALENTE A NULL
 
     }
 
