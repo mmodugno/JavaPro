@@ -10,6 +10,8 @@ import egreso.OrdenDeCompra;
 import producto.Item;
 
 public class Items implements CondicionValidacion {
+	
+	String nombre = "Validador de Items";
 
 	@Override
 	public boolean validar(OrdenDeCompra ordenDeCompra) {
@@ -37,5 +39,9 @@ public class Items implements CondicionValidacion {
     	}
     	return Collections.emptyList();
     }
+	
+	public String getNombre() {
+		return nombre;
+	}
     
 }
