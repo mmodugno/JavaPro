@@ -5,19 +5,36 @@ import egreso.OrdenDeCompra;
 import egreso.Presupuesto;
 
 public class Criterios implements CondicionValidacion {
+	
+	String nombre = "Criterio de Selección de Presupuesto";
 
 	@Override
 	public boolean validar(OrdenDeCompra ordenDeCompra) {
+		
 		CriterioSeleccion criterioDeSeleccion;
 		Presupuesto presupuestoCriterio;
 		Presupuesto presupuestoOrdenDeCompra;
-		criterioDeSeleccion = ordenDeCompra.getCriterioSeleccion();
 		
-		presupuestoCriterio = criterioDeSeleccion.seleccionar(ordenDeCompra);
+		if(ordenDeCompra.getPresupuestos().size() > 1) {
+			
+			criterioDeSeleccion = ordenDeCompra.getCriterioSeleccion();
+			
+			presupuestoCriterio = criterioDeSeleccion.seleccionar(ordenDeCompra);
+			
+			presupuestoOrdenDeCompra = ordenDeCompra.presupuestoAceptado();
+			
+			return presupuestoCriterio.valorTotal() == presupuestoOrdenDeCompra.valorTotal();
+			
+		} else {
+			
+			return true;
+			
+		}
 		
-		presupuestoOrdenDeCompra = ordenDeCompra.presupuestoAceptado();
-		
-		return presupuestoCriterio.valorTotal() == presupuestoOrdenDeCompra.valorTotal();
+	}
+	
+	public String getNombre() {
+		return nombre;
 	}
 
 }
