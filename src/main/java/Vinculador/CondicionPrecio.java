@@ -12,7 +12,7 @@ public class CondicionPrecio implements CondicionObligatoria {
             montoIngreso -= ingreso.getEgresosAsociados().stream().mapToDouble(e -> e.valorTotal()).sum();
 
             }
-        return egreso.valorTotal() < montoIngreso;
+        return egreso.valorTotal() <= montoIngreso;
         }
 
 

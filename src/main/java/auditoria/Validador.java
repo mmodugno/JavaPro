@@ -1,5 +1,6 @@
 package auditoria;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import egreso.Egreso;
@@ -11,6 +12,11 @@ public class Validador {
 	Reporte reporteValidacion;
 	
 	private boolean resultadoValidacion;
+	
+	public Validador() {
+		condicionesValidacion = new ArrayList<CondicionValidacion>();
+		reporteValidacion = new Reporte();
+	}
 
 	public boolean validarEgreso(Egreso egresoAvalidar) {
 		

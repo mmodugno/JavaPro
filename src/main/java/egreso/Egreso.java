@@ -38,7 +38,9 @@ public class Egreso implements Categorizable{
 		return fecha;
 	}
 
-
+	public void setFecha(LocalDate fecha) {
+		this.fecha = fecha;
+	}
 	
 	public double valorTotal() {
 		return presupuesto.valorTotal();

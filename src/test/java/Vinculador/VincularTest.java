@@ -121,7 +121,9 @@ public class VincularTest {
         presupuesto2.getItems().get(1).setPrecioUnitario(60.00);
         ordenDeCompra2.agregarPresupuesto(presupuesto2);
         presupuesto2.setAceptado();
-
+        ordenDeCompra2.getItems().get(0).setPrecioUnitario(80.00);
+        ordenDeCompra2.getItems().get(1).setPrecioUnitario(60.00);
+        ordenDeCompra.cerrarOrden();
 
         //EGRESO 3
         ordenDeCompra3 = new OrdenDeCompra(0,7);
@@ -131,6 +133,8 @@ public class VincularTest {
         presupuesto3.getItems().get(0).setPrecioUnitario(100.0);
         ordenDeCompra3.agregarPresupuesto(presupuesto3);
         presupuesto3.setAceptado();
+        ordenDeCompra3.getItems().get(0).setPrecioUnitario(100.00);
+        ordenDeCompra.cerrarOrden();
 
 
 
@@ -199,16 +203,11 @@ public class VincularTest {
         vinculador.obtenerIngresosEgresos();
         vinculador.vincular(primeroEgreso);
 
-        /*si ordena a MENOR A MAYOR egreso 3 a nadie
-        egreso 3 null
-        egreso = ingreso
-        egreso2 = ingreso2
-        ingreso 3 no le aueda nada*/
-
         Assert.assertEquals(ingreso3, egreso2.getIngresoAsociado());
         Assert.assertEquals(ingreso2, egreso.getIngresoAsociado());
         Assert.assertEquals(0,ingreso.getEgresosAsociados().size());
         Assert.assertTrue(egreso3.getIngresoAsociado() == null); //TENDRIAMOS QUE TENER UN EGRESO/INGRESO EQUIVALENTE A NULL
+
 
     }
 
