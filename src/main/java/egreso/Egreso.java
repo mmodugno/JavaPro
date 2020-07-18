@@ -41,7 +41,7 @@ public class Egreso implements Categorizable{
 
 	
 	public double valorTotal() {
-		return this.ordenDeCompra.valorTotal();
+		return presupuesto.valorTotal();
 	}
 	
 	public void agregarDocumentoComercial(DocumentoComercial documento) {

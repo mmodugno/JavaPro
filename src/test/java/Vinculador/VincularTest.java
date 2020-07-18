@@ -63,7 +63,7 @@ public class VincularTest {
     Item item4 = new Item(p2, 20, 0.00);
     OrdenDeCompra ordenDeCompra3;
     Presupuesto presupuesto3;
-    Item item5 = new Item(p1, 50, 0.00);
+    Item item5 = new Item(p1, 100, 0.00);
     Egreso egreso2;
     Egreso egreso3;
     Ingreso ingreso2;
@@ -112,7 +112,7 @@ public class VincularTest {
 
 
         //EGRESO 2
-        ordenDeCompra2 = new OrdenDeCompra(0,6);
+        ordenDeCompra2 = new OrdenDeCompra(0,8);
         ordenDeCompra2.agregarItem(item3);
         ordenDeCompra2.agregarItem(item4);
 
@@ -124,11 +124,11 @@ public class VincularTest {
 
 
         //EGRESO 3
-        ordenDeCompra3 = new OrdenDeCompra(0,6);
+        ordenDeCompra3 = new OrdenDeCompra(0,7);
         ordenDeCompra3.agregarItem(item5);
 
-        presupuesto3 = new Presupuesto(ordenDeCompra2.getItems(),proveedor1,medioDePago);
-        presupuesto3.getItems().get(0).setPrecioUnitario(100.00);
+        presupuesto3 = new Presupuesto(ordenDeCompra3.getItems(),proveedor1,medioDePago);
+        presupuesto3.getItems().get(0).setPrecioUnitario(100.0);
         ordenDeCompra3.agregarPresupuesto(presupuesto3);
         presupuesto3.setAceptado();
 
@@ -147,7 +147,39 @@ public class VincularTest {
 
     }
 
+/*
+    @Test
+    public void ordenarEgresoIngreso(){
+        //LOS NUEVOS INGRESOS
+        ingreso2 = new Ingreso("Donacion",2000.0);
+        ingreso3 = new Ingreso("Donacion",10000.0);
+        entidadJuridica.getIngresos().add(ingreso3);
+        entidadJuridica.getIngresos().add(ingreso2);
 
+        //ACOMODO LOS EGRESOS
+        primerOrganizacion.getEntidades().get(0).nuevoEgreso(ordenDeCompra2); // Obtengo primera Entidad para agregarle los Egresos
+        egreso2 = new Egreso(ordenDeCompra2, presupuesto2);
+        egreso3 = new Egreso(ordenDeCompra3, presupuesto3);
+
+        List<Egreso> egresos = new ArrayList<Egreso>();
+        List<Ingreso> ingresos = new ArrayList<Ingreso>();
+        egresos.add(egreso);
+        egresos.add(egreso3);
+        egresos.add(egreso2);
+
+        ingresos.add(ingreso3);
+        ingresos.add(ingreso);
+        ingresos.add(ingreso2);
+
+        primeroEgreso.ordenarValor(ingresos, egresos);
+        Assert.assertEquals(ingreso.getMonto(), ingresos.get(0).getMonto(),0);
+        Assert.assertEquals(ingreso3.getMonto(), ingresos.get(2).getMonto(),0);
+        Assert.assertEquals(egreso.valorTotal(), egresos.get(0).valorTotal(),0);
+        Assert.assertEquals(egreso3.valorTotal(), egresos.get(2).valorTotal(),0);
+
+
+
+    }*/
     @Test
     public void criterioPrimeroEgreso()
 
@@ -175,7 +207,7 @@ public class VincularTest {
 
         Assert.assertEquals(ingreso3, egreso2.getIngresoAsociado());
         Assert.assertEquals(ingreso2, egreso.getIngresoAsociado());
-        Assert.assertEquals(0,ingreso3.getEgresosAsociados().size());
+        Assert.assertEquals(0,ingreso.getEgresosAsociados().size());
         Assert.assertTrue(egreso3.getIngresoAsociado() == null); //TENDRIAMOS QUE TENER UN EGRESO/INGRESO EQUIVALENTE A NULL
 
     }
