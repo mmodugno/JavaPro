@@ -3,6 +3,7 @@ package Vinculador;
 import egreso.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public abstract class CriterioDeVinculacion {
@@ -19,28 +20,30 @@ public abstract class CriterioDeVinculacion {
     //TODO LA EXEPCION SI LAS LISTAS ESTAN VACIAS. ASÍ NO TIRA ERROR MAS ADELANTE SI UNA LISTA QUEDO VACIA.
     void ordenarValor(List<Ingreso> ingresos, List<Egreso> egresos) {
         ingresos.sort((Ingreso unIngreso, Ingreso otroIngreso) -> {
-            if (unIngreso.getMonto() > otroIngreso.getMonto()) return 1;
-            if (unIngreso.getMonto() < otroIngreso.getMonto()) return -1;
-            return 0;
+                return ordenarDouble(unIngreso.getMonto(),otroIngreso.getMonto());
         });
         egresos.sort((Egreso unEgreso, Egreso otroEgreso) -> {
-            if (unEgreso.valorTotal() > otroEgreso.valorTotal()) return 1;
-            if (unEgreso.valorTotal() < otroEgreso.valorTotal()) return -1;
-            return 0;
+            return ordenarDouble(unEgreso.valorTotal(),otroEgreso.valorTotal());
         });
     }
 
     boolean pasaCondiciones(Ingreso ingreso, Egreso egreso){
 
-        return condicionesObligatorias.stream().allMatch(c -> c.cumpleCondicion(ingreso, egreso));
+        for(int i = 0;i<condicionesObligatorias.size();i++){
+            if(!condicionesObligatorias.get(i).cumpleCondicion(ingreso, egreso)){
+                return false;
+            }
+
+        }
+        return true;
     }
-/*
+
     int ordenarDouble(double primero,double segundo){
-        if (primero > segundo) return 1;
-        if (primero < segundo) return -1;
+        if (primero > segundo) return -1;
+        if (primero < segundo) return 1;
         return 0;
 
     }
-*/
+
 
 }
