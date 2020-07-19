@@ -2,9 +2,13 @@ package auditoria;
 
 import egreso.OrdenDeCompra;
 
-public interface CondicionValidacion {
+public abstract class CondicionValidacion {
 	
-	public boolean validar(OrdenDeCompra ordenDeCompra);
+	protected String nombre;
 	
-	public String getNombre();
+	public abstract boolean validar(OrdenDeCompra ordenDeCompra, Reporte reporte);
+
+	public String getNombre() {
+		return nombre;
+	}
 }
