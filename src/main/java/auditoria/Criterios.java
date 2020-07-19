@@ -4,37 +4,55 @@ import egreso.CriterioSeleccion;
 import egreso.OrdenDeCompra;
 import egreso.Presupuesto;
 
-public class Criterios implements CondicionValidacion {
+public class Criterios extends CondicionValidacion {
 	
-	String nombre = "Criterio de Selección de Presupuesto";
+	private int idPresupuestoCriterio;
+	private int idPresupuestoAceptado;
 
-	@Override
-	public boolean validar(OrdenDeCompra ordenDeCompra) {
+	public boolean validar(OrdenDeCompra ordenDeCompra, Reporte reporte) {
 		
+		nombre = "Criterio de Selección de Presupuesto";
+		boolean validacion;
 		CriterioSeleccion criterioDeSeleccion;
 		Presupuesto presupuestoCriterio;
-		Presupuesto presupuestoOrdenDeCompra;
+		Presupuesto presupuestoAceptado;
 		
-		if(ordenDeCompra.getPresupuestos().size() > 1) {
+		criterioDeSeleccion = ordenDeCompra.getCriterioSeleccion();
+		
+		presupuestoCriterio = criterioDeSeleccion.seleccionar(ordenDeCompra);
+		
+		presupuestoAceptado = ordenDeCompra.presupuestoAceptado();
+		
+		if(ordenDeCompra.getPresupuestos().size() > 1) {		
 			
-			criterioDeSeleccion = ordenDeCompra.getCriterioSeleccion();
+			validacion = (presupuestoCriterio == presupuestoAceptado);
 			
-			presupuestoCriterio = criterioDeSeleccion.seleccionar(ordenDeCompra);
+			this.idPresupuestoCriterio = ordenDeCompra.getPresupuestos().indexOf(presupuestoCriterio);
 			
-			presupuestoOrdenDeCompra = ordenDeCompra.presupuestoAceptado();
-			
-			return presupuestoCriterio.valorTotal() == presupuestoOrdenDeCompra.valorTotal();
+			this.idPresupuestoAceptado = ordenDeCompra.getPresupuestos().indexOf(presupuestoAceptado);
 			
 		} else {
 			
-			return true;
+			return presupuestoCriterio == presupuestoAceptado;
 			
 		}
 		
+		reporte.resultadoValidacionCriterios(this, validacion);
+		
+		return validacion;
+		
+	}
+
+	public int getIdPresupuestoCriterio() {
+		return idPresupuestoCriterio;
+	}
+
+	public int getIdPresupuestoAceptado() {
+		return idPresupuestoAceptado;
 	}
 	
-	public String getNombre() {
-		return nombre;
-	}
+	
+	
+	
 
 }
