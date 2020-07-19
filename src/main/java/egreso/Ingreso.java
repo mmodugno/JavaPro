@@ -9,13 +9,7 @@ import usuarios.CategoriaDelSistema;
 
 public class Ingreso implements Categorizable{
 
-	public double getMonto() {
-		return monto;
-	}
 
-	public void asociarEgreso(Egreso egreso) {
-		egresosAsociados.add(egreso);
-	}
 
 	public List<Egreso> getEgresosAsociados() {
 		return egresosAsociados;
@@ -34,6 +28,10 @@ private double monto;
 private List<Egreso> egresosAsociados;
 private CategoriaDelSistema categoria = null;
 
+
+
+	private double montoVinculado = 0.00;
+
 	public LocalDate getFecha() {
 		return fecha;
 	}
@@ -44,6 +42,43 @@ private CategoriaDelSistema categoria = null;
 public void categorizar(CategoriaDelSistema categoria) {
 	this.categoria = categoria;
 }
+
+//CREO ESTO PARA SABER RAPIDO QUE MONTO ME QUEDA SIN VINCULAR (FUTURO USO BALANCE)
+public double getMontoSinVincular(){
+
+	return monto - montoVinculado;
+}
+
+//CUANDO ASOCIO EGRESO MODIFICO EL MONTO VINCULADO
+public void asociarEgreso(Egreso egreso){
+
+
+	montoVinculado += egreso.valorTotal();
+	egresosAsociados.add(egreso);
+}
+
+	public double getMonto() {
+		return monto;
+	}
+
+	//POR SI NECESITO EL GET Y SET PARA HACER EL BALANCE
+	public double getMontoVinculado() {
+		return montoVinculado;
+	}
+
+	public void setMontoVinculado(double montoVinculado) throws MontoSuperadoExcepcion {
+
+		if(montoVinculado > monto){
+			throw new MontoSuperadoExcepcion("No podes poner una cantidad que supere "+ monto);
+		}
+		this.montoVinculado = montoVinculado;
+	}
+	//PARA CUANDO HAGA LOS FILTROS
+	public boolean puedoVincular(){
+		return this.getMontoSinVincular()>0;
+	}
+
+
 
 
 

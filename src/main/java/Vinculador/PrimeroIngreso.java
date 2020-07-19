@@ -13,7 +13,7 @@ public class PrimeroIngreso extends CriterioDeVinculacion {
     }
 
     @Override
-    void vincular(List<Egreso> egresos, List<Ingreso> ingresos) {
+    void vincular(List<Egreso> egresos, List<Ingreso> ingresos) throws ListaVaciaExcepcion {
         ordenarValor(ingresos, egresos);
         for(int i = 0; i<egresos.size(); i++){
             List<Integer> indexDestruir = new ArrayList<Integer>();

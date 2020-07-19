@@ -15,16 +15,23 @@ public abstract class CriterioDeVinculacion {
     }
 
 
-    void vincular(List<Egreso> egresos, List<Ingreso> ingresos) {}
+    void vincular(List<Egreso> egresos, List<Ingreso> ingresos) throws ListaVaciaExcepcion {}
 
-    //TODO LA EXEPCION SI LAS LISTAS ESTAN VACIAS. ASÍ NO TIRA ERROR MAS ADELANTE SI UNA LISTA QUEDO VACIA.
-    void ordenarValor(List<Ingreso> ingresos, List<Egreso> egresos) {
+
+    void ordenarValor(List<Ingreso> ingresos, List<Egreso> egresos) throws ListaVaciaExcepcion{
+        if(ingresos.isEmpty()) {
+            throw new ListaVaciaExcepcion("La lista de ingresos esta vacia");
+        }
+        if(egresos.isEmpty()) {
+            throw new ListaVaciaExcepcion("La lista de egresos esta vacia");
+        }
         ingresos.sort((Ingreso unIngreso, Ingreso otroIngreso) -> {
-                return ordenarDouble(unIngreso.getMonto(),otroIngreso.getMonto());
+            return ordenarDouble(unIngreso.getMontoSinVincular(), otroIngreso.getMontoSinVincular());
         });
         egresos.sort((Egreso unEgreso, Egreso otroEgreso) -> {
-            return ordenarDouble(unEgreso.valorTotal(),otroEgreso.valorTotal());
+            return ordenarDouble(unEgreso.valorTotal(), otroEgreso.valorTotal());
         });
+
     }
 
     boolean pasaCondiciones(Ingreso ingreso, Egreso egreso){
