@@ -1,10 +1,5 @@
 package auditoria;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import producto.Item;
 import egreso.Egreso;;
 
 public class Reporte {
@@ -18,7 +13,7 @@ public class Reporte {
 	
 	public void setEgreso(Egreso egreso) {
 		this.egreso = egreso;
-		informe += " \n\nEgreso Nro : \n\n" ;
+		informe += " \n\nEgreso Nro : \n" ;
 	}
 	
 	public void resultadoValidacionPresupuestos(CantidadPresupuestos condValidacion, boolean resultado) {
@@ -91,7 +86,5 @@ public class Reporte {
 	public String getInforme() {
 		return informe;
 	}
-	
-	
 
 }
