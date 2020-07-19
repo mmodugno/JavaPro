@@ -9,39 +9,64 @@ import java.util.stream.Collectors;
 import egreso.OrdenDeCompra;
 import producto.Item;
 
-public class Items implements CondicionValidacion {
+public class Items extends CondicionValidacion {
 	
-	String nombre = "Validador de Items";
+	private int cantidadItemsCompra;
+	private int cantidadItemsPresupuesto;
+	List<Item> itemsNoValidadosOrdenCompra;
+	
 
-	@Override
-	public boolean validar(OrdenDeCompra ordenDeCompra) {
-		boolean cantidadItems;
-		boolean itemsCompra;
-		cantidadItems = (ordenDeCompra.getItems().size() == ordenDeCompra.presupuestoAceptado().getItems().size());
-		itemsCompra = this.verificarItems(ordenDeCompra);
-	    return cantidadItems || itemsCompra;
+	public boolean validar(OrdenDeCompra ordenDeCompra, Reporte reporte) {
+		nombre = "Validador de Items de Compra y Presupuesto\n\n";
+		boolean verificarCantidadItems;
+		boolean verificarItemsCompra;
+		boolean validacion;
+		
+		verificarCantidadItems = (ordenDeCompra.getItems().size() == ordenDeCompra.presupuestoAceptado().getItems().size());
+		verificarItemsCompra = this.verificarItems(ordenDeCompra);
+		
+		// Verificar Items en Orden de Compra por Id Producto
+		if(!verificarItemsCompra)
+			itemsNoValidadosOrdenCompra = obtenerItemsFaltantes(ordenDeCompra.getItems(), ordenDeCompra.presupuestoAceptado().getItems());
+	    
+		validacion = verificarCantidadItems || verificarItemsCompra;
+		
+		reporte.resultadoValidacionItems(this, validacion);
+		
+		return validacion;
 	}
 	
 	private boolean verificarItems(OrdenDeCompra ordenDeCompra) {
+		
+		List<Integer> codigosDeItemsCompra;
+		List<Integer> codigosDeItemsPresupuesto;
     	
-    	List<Integer> codigosDeItemsCompra = ordenDeCompra.getItems().stream().map(Item::obtenerCodigoProducto).collect(toList());
-    	List<Integer> codigosDeItemsPresupuesto = ordenDeCompra.presupuestoAceptado().getItems().stream().map(Item::obtenerCodigoProducto).collect(toList());
+    	codigosDeItemsCompra = ordenDeCompra.getItems().stream().map(Item::obtenerCodigoProducto).collect(toList());
+    	codigosDeItemsPresupuesto = ordenDeCompra.presupuestoAceptado().getItems().stream().map(Item::obtenerCodigoProducto).collect(toList());
     	
     	return codigosDeItemsPresupuesto.containsAll(codigosDeItemsCompra) && codigosDeItemsCompra.containsAll(codigosDeItemsPresupuesto);
 	}
 	
-	public List<Item> obtenerItemsFaltantes(List<Item> listaConMasItems, List<Item> listaConMenosItems) {
+	public List<Item> obtenerItemsFaltantes(List<Item> listaOrdenCompra, List<Item> listaPresupuesto) {
     	List<Item> itemsFaltantes;
-    	if(listaConMasItems.size() > listaConMenosItems.size()) {
-    		itemsFaltantes = listaConMasItems;
-    		itemsFaltantes.removeAll(listaConMenosItems);
-    		return itemsFaltantes;
-    	}
-    	return Collections.emptyList();
+		itemsFaltantes = listaOrdenCompra;
+		listaOrdenCompra.removeAll(listaPresupuesto);
+		return itemsFaltantes;
+
     }
-	
-	public String getNombre() {
-		return nombre;
+
+	public int getCantidadItemsCompra() {
+		return cantidadItemsCompra;
 	}
+
+	public int getCantidadItemsPresupuesto() {
+		return cantidadItemsPresupuesto;
+	}
+
+	public List<Item> getItemsNoValidadosOrdenCompra() {
+		return itemsNoValidadosOrdenCompra;
+	}
+	
+	
     
 }
