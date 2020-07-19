@@ -40,6 +40,7 @@ public class ValidarEgresoTest {
     Item item4 = new Item(producto4, 1, 0.00);
 
     OrdenDeCompra ordenDeCompra;
+    OrdenDeCompra ordenDeCompra2;
 
     Organizacion primerONG = new Organizacion();
     
@@ -59,25 +60,33 @@ public class ValidarEgresoTest {
     	
     	primerONG.agregarEntidad(entidadJuridica);
     	
-    	ordenDeCompra = new OrdenDeCompra(1,5);
-    	ordenDeCompra.setCriterioSeleccion(new ElMasBarato() );
+    	ordenDeCompra = new OrdenDeCompra(1,1);
+    	ordenDeCompra2 = new OrdenDeCompra(3,2); // Orden De Compra con 3 Presupuestos
+    	ordenDeCompra.setCriterioSeleccion(new ElMasBarato());
+    	ordenDeCompra2.setCriterioSeleccion(new ElMasBarato());
         ordenDeCompra.agregarItem(item1);
         ordenDeCompra.agregarItem(item2);
+        ordenDeCompra2.agregarItem(item1);
+        ordenDeCompra2.agregarItem(item2);
         presupuesto1 = new Presupuesto(ordenDeCompra.getItems(),proveedor1,medioDePago);
         presupuesto1.getItems().get(0).setPrecioUnitario(80.00);
         presupuesto1.getItems().get(1).setPrecioUnitario(30.00);
         ordenDeCompra.agregarPresupuesto(presupuesto1);
+        ordenDeCompra2.agregarPresupuesto(presupuesto1);
         presupuesto1.setAceptado();
+        ordenDeCompra.getItems().get(0).setPrecioUnitario(80.00);
+        ordenDeCompra.getItems().get(1).setPrecioUnitario(30.00);
         Usuario userAdmin = userMaker.crearUsuario("guidoAdmin", "pru3b@tesT", "admin",primerONG);
         ordenDeCompra.agregarRevisor(userAdmin);
+        ordenDeCompra2.agregarRevisor(userAdmin);
         
         // Se instancia un Validador
         
         validador = new Validador();
-        validador.agregarCondicionValidacion(new NecesitaPresupuesto());
         validador.agregarCondicionValidacion(new CantidadPresupuestos());
-        validador.agregarCondicionValidacion(new Criterios());
-        validador.agregarCondicionValidacion(new Items());
+        validador.agregarCondicionValidacion(new MontoPresupuesto());
+        //validador.agregarCondicionValidacion(new Criterios());
+        //validador.agregarCondicionValidacion(new Items());
     }
     
     @Test
@@ -88,10 +97,18 @@ public class ValidarEgresoTest {
     	egreso = new Egreso(ordenDeCompra, presupuesto1);
     	
     	Assert.assertTrue(validador.validarEgreso(egreso));
+
+    }
+    
+    @Test
+    public void validarEgresoConMenosPresupuestos() throws CloneNotSupportedException {
     	
-    	//ordenDeCompra.getItems().get(1).setPrecioUnitario(30.00);
-    	//primerOrganizacion.getEntidades().get(0).nuevoEgreso(ordenDeCompra);
-    	//Assert.assertEquals(80.00, primerOrganizacion.getEntidades().get(0).getEgresos().get(0).getOrdenDeCompra().getItems().get(0).getPrecioUnitario(), 0.1);
+    	ordenDeCompra2.cerrarOrden();
+    	
+    	egreso = new Egreso(ordenDeCompra2, presupuesto1);
+    	
+    	Assert.assertFalse(validador.validarEgreso(egreso));
+    	
     }
     
 }
