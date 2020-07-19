@@ -32,18 +32,18 @@ public class Validador {
 		
 		ordenDeCompra.getRevisores().forEach(usuario -> usuario.egresoValidado(reporteValidacion));
 		
+		System.out.println(reporteValidacion.getInforme());
+		
 		return resultadoValidacion;
 	}
-	
+
 	public void agregarCondicionValidacion(CondicionValidacion condicionValidacion) {
 		condicionesValidacion.add(condicionValidacion);
 	}
 	
 	private boolean ejecutarCondicion(CondicionValidacion unaCondicion, OrdenDeCompra ordenDeCompra) {
 		boolean validacion;
-		validacion = unaCondicion.validar(ordenDeCompra);
-		
-		reporteValidacion.agregarResultadoValidacion(unaCondicion, validacion);
+		validacion = unaCondicion.validar(ordenDeCompra, reporteValidacion);
 		
 		return validacion;
 	}
