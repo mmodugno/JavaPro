@@ -20,21 +20,27 @@ public class Vinculador {
         entidadJuridica = unaEntidadJuridica;
     }
 
-    void obtenerIngresosEgresos(){
+    void obtenerIngresosEgresos() throws ListaVaciaExcepcion{
+        if(entidadJuridica.getIngresos().isEmpty()) {
+            throw new ListaVaciaExcepcion("La lista de ingresos de la entidad juruidica esta vacia");
+        }
+        if(entidadJuridica.getEgresos().isEmpty()) {
+            throw new ListaVaciaExcepcion("La lista de egresos de la entidad juridica esta vacia");
+        }
         egresosSinVincular = filtrarEgresos(entidadJuridica.getEgresos());
         ingresosSinVincular = filtrarIngresos(entidadJuridica.getIngresos());
 
     }
 
     private List<Ingreso> filtrarIngresos(List<Ingreso> ingresos) {
-        return ingresos.stream().filter(ingreso -> ingreso.getEgresosAsociados().size() == 0).collect(Collectors.toList());
+        return ingresos.stream().filter(ingreso -> ingreso.puedoVincular()).collect(Collectors.toList());
     }
 
     private List<Egreso> filtrarEgresos(List<Egreso> egresos) {
-        return egresos.stream().filter(egreso -> egreso.getIngresoAsociado() == null).collect(Collectors.toList());
+        return egresos.stream().filter(egreso -> egreso.puedoVincular()).collect(Collectors.toList());
     }
 
-    void vincular(CriterioDeVinculacion criterio){
+    void vincular(CriterioDeVinculacion criterio) throws ListaVaciaExcepcion {
         criterio.vincular(egresosSinVincular,ingresosSinVincular);
     }
 }

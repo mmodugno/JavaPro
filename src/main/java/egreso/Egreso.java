@@ -29,6 +29,7 @@ public class Egreso implements Categorizable{
 	public Ingreso getIngresoAsociado() {
 		return ingresoAsociado;
 	}
+	public boolean puedoVincular(){ return ingresoAsociado == null; }
 
 	public void setIngresoAsociado(Ingreso ingresoAsociado) {
 		this.ingresoAsociado = ingresoAsociado;

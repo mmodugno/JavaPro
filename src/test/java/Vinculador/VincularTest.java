@@ -141,7 +141,7 @@ public class VincularTest {
     }
 
     @Test
-    public void vincularIngresoEgreso(){
+    public void vincularIngresoEgreso() throws ListaVaciaExcepcion {
         vinculador.obtenerIngresosEgresos();
         Assert.assertEquals(0,ingreso.getEgresosAsociados().size());
         vinculador.vincular(primeroEgreso);
@@ -185,9 +185,7 @@ public class VincularTest {
 
     }*/
     @Test
-    public void criterioPrimeroEgreso()
-
-    {
+    public void criterioPrimeroEgreso() throws ListaVaciaExcepcion {
         //LOS NUEVOS INGRESOS
         ingreso2 = new Ingreso("Donacion",2000.0);
         ingreso3 = new Ingreso("Donacion",10000.0);
@@ -206,7 +204,7 @@ public class VincularTest {
         Assert.assertEquals(ingreso3, egreso2.getIngresoAsociado());
         Assert.assertEquals(ingreso2, egreso.getIngresoAsociado());
         Assert.assertEquals(0,ingreso.getEgresosAsociados().size());
-        Assert.assertTrue(egreso3.getIngresoAsociado() == null); //TENDRIAMOS QUE TENER UN EGRESO/INGRESO EQUIVALENTE A NULL
+        Assert.assertTrue(egreso3.getIngresoAsociado() == null); 
 
 
     }

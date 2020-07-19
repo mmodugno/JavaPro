@@ -14,7 +14,7 @@ public class PrimeroEgreso extends CriterioDeVinculacion {
     }
 
     @Override
-    void vincular(List<Egreso> egresos, List<Ingreso> ingresos) {
+    void vincular(List<Egreso> egresos, List<Ingreso> ingresos) throws ListaVaciaExcepcion {
         ordenarValor(ingresos, egresos);
 
         boolean seAsigno = true; //PARA QUE SALGA DEL WHILE CUANDO YA NO SE PUEDA ASIGNAR MAS
