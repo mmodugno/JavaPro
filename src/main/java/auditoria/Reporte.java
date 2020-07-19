@@ -26,9 +26,9 @@ public class Reporte {
 		nombreYResultado(condValidacion, resultado);
 		
 		if(resultado)
-			informe += "\n\t Cantidad Presupuestos : " + condValidacion.getCantidadPresupuestos();
+			informe += "\n Cantidad Presupuestos : " + condValidacion.getCantidadPresupuestos();
 		else
-			informe += "\n\t Tiene " + condValidacion.getCantidadPresupuestos() + " Presupuestos y requiere " + condValidacion.getPresupuestosRequeridos();
+			informe += "\n Tiene " + condValidacion.getCantidadPresupuestos() + " Presupuestos y requiere " + condValidacion.getPresupuestosRequeridos();
 	}
 	
 	public void resultadoValidacionMontoPresupuestos(MontoPresupuesto condValidacion, boolean resultado) {
@@ -36,9 +36,9 @@ public class Reporte {
 		nombreYResultado(condValidacion, resultado);
 		
 		if(resultado)
-			informe += "\n\t Monto Total de la Compra : " + condValidacion.getMontoCompra();
+			informe += "\n Monto Total de la Compra : " + condValidacion.getMontoCompra();
 		else
-			informe += "\n\t Monto de la Compra : " + condValidacion.getMontoCompra() + "\nMonto del Presupuesto Aceptado : " + condValidacion.getMontoPresupuestoAceptado();
+			informe += "\n Monto de la Compra : " + condValidacion.getMontoCompra() + "\nMonto del Presupuesto Aceptado : " + condValidacion.getMontoPresupuestoAceptado();
 	}
 	
 	public void resultadoValidacionCriterios(Criterios condValidacion, boolean resultado) {
@@ -46,9 +46,9 @@ public class Reporte {
 		nombreYResultado(condValidacion, resultado);
 		
 		if(resultado)
-			informe += "\n\t El Presupuesto Aceptado es el Seleccionado por el Criterio ";
+			informe += "\n El Presupuesto Aceptado es el Seleccionado por el Criterio ";
 		else {
-			informe += "\n\t El Presupuesto Aceptado difiere del Seleccionado por el Criterio : ";
+			informe += "\n El Presupuesto Aceptado difiere del Seleccionado por el Criterio : ";
 			informe += "\n\t Id Presupuesto Aceptado : " + condValidacion.getIdPresupuestoAceptado();
 			informe += "\n\t Id Presupuesto que debió Aceptarse :" + condValidacion.getIdPresupuestoCriterio();
 		}
@@ -77,7 +77,7 @@ public class Reporte {
 	}
 	
 	private void nombreYResultado(CondicionValidacion condValidacion, boolean resultado) {
-		informe += condValidacion.getNombre() + " \n\n";
+		informe += "\n\n" + condValidacion.getNombre() + " \n\n";
 		informe += "Resultado : " + resultadoString(resultado);
 	}
 	
