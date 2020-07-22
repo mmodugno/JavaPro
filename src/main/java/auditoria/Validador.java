@@ -28,7 +28,9 @@ public class Validador {
 		
 		ordenDeCompra = egresoAvalidar.getOrdenDeCompra();
 		
-		resultadoValidacion = condicionesValidacion.stream().allMatch(unaCondicion -> this.ejecutarCondicion(unaCondicion, ordenDeCompra));
+		resultadoValidacion = condicionesValidacion.stream().map(unaCondicion -> this.ejecutarCondicion(unaCondicion, ordenDeCompra)).reduce(Boolean::logicalAnd).orElse(false);
+		
+		reporteValidacion.setResultadoValidacion(resultadoValidacion);
 		
 		ordenDeCompra.getRevisores().forEach(usuario -> usuario.egresoValidado(reporteValidacion));
 		
