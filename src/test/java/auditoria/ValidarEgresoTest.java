@@ -49,6 +49,7 @@ public class ValidarEgresoTest {
     CreadorUsuario userMaker = new CreadorUsuario();
     Presupuesto presupuesto1;
     Presupuesto presupuesto2;
+    Presupuesto presupuesto3;
     MedioDePago medioDePago = new MedioDePago(TipoMedioPago.Argencard, 221144);
     
     Validador validador;
@@ -79,6 +80,14 @@ public class ValidarEgresoTest {
         Usuario userAdmin = userMaker.crearUsuario("guidoAdmin", "pru3b@tesT", "admin",primerONG);
         ordenDeCompra.agregarRevisor(userAdmin);
         ordenDeCompra2.agregarRevisor(userAdmin);
+        
+        presupuesto2 = new Presupuesto(ordenDeCompra.getItems(),proveedor1,medioDePago);
+        presupuesto2.getItems().get(0).setPrecioUnitario(90.00);
+        presupuesto2.getItems().get(1).setPrecioUnitario(40.00);
+        
+        presupuesto3 = new Presupuesto(ordenDeCompra.getItems(),proveedor1,medioDePago);
+        presupuesto3.getItems().get(0).setPrecioUnitario(70.00);
+        presupuesto3.getItems().get(1).setPrecioUnitario(20.00);
         
         // Se instancia un Validador
         
@@ -112,10 +121,24 @@ public class ValidarEgresoTest {
     }
     
     @Test
-    public void validarMontosOrdenCompraPresupuestoAceptado() throws CloneNotSupportedException {
+    public void validarMontosDiferentesOrdenCompraPresupuestoAceptado() throws CloneNotSupportedException {
     	
     	ordenDeCompra.getItems().get(0).setPrecioUnitario(180.00);
         ordenDeCompra.getItems().get(1).setPrecioUnitario(300.00);
+    	
+    	ordenDeCompra.cerrarOrden();
+    	
+    	egreso = new Egreso(ordenDeCompra, presupuesto1);
+    	
+    	Assert.assertFalse(validador.validarEgreso(egreso));
+
+    }
+    
+    @Test
+    public void validarPresupuestoAceptadoDiferentePresupuestoValidado() throws CloneNotSupportedException {
+    	
+    	ordenDeCompra.agregarPresupuesto(presupuesto2);
+    	ordenDeCompra.agregarPresupuesto(presupuesto3);
     	
     	ordenDeCompra.cerrarOrden();
     	
