@@ -1,6 +1,7 @@
 package auditoria;
 
-import egreso.Egreso;;
+import egreso.Egreso;
+import producto.Item;;
 
 public class Reporte {
 	
@@ -58,15 +59,25 @@ public class Reporte {
 		if(resultado)
 			informe += "\n\nLos Items de Compra se validaron Correctamente ";
 		else {
-			informe += "\n\t Hay diferencias entre Items de Compra y Presupuesto";
+			informe += "\n\tHay diferencias entre Items de Compra y Presupuesto\n";
 			informe += "\n\t Cantidad Items Compra : " + condValidacion.getCantidadItemsCompra();
-			informe += "\n\t Cantidad Items Presupuesto :" + condValidacion.getCantidadItemsPresupuesto();
+			informe += "\n\t Cantidad Items Presupuesto : " + condValidacion.getCantidadItemsPresupuesto() + "\n";
 			
 			if(condValidacion.getItemsNoValidadosOrdenCompra().size() > 0) {
-				informe += "\n\t Items No Validados";
-				for (int i = 0; i < condValidacion.getItemsNoValidadosOrdenCompra().size(); i++) {
-					informe +=  "\n\t Código Producto : " + condValidacion.getItemsNoValidadosOrdenCompra().get(i).obtenerCodigoProducto();
+				informe += "\n\t Items No Validados en la Orden de Compra";
+				for (Item itemCompra : condValidacion.getItemsNoValidadosOrdenCompra()) {
+					informe +=  "\n\t Código Producto : " + itemCompra.obtenerCodigoProducto();
+					informe +=  "  -   Producto : " + itemCompra.getProducto().getNombre();
+					informe +=  "  -   Descripción : " + itemCompra.getProducto().getDescripcion();
 		        }
+				
+				for(Item unItem : condValidacion.getItemsFaltantesPresupuesto()) {
+					informe += "\n\n\t Items del Presupuesto que no están en la Orden de Compra";
+					informe +=  "\n\t Código Producto : " + unItem.obtenerCodigoProducto();
+					informe +=  "  -   Producto : " + unItem.getProducto().getNombre();
+					informe +=  "  -   Descripción : " + unItem.getProducto().getDescripcion();
+					
+				}
 				
 			}
 		}
