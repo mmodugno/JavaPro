@@ -44,9 +44,10 @@ public class Reporte {
 		if(resultado)
 			informe += "\n\nEl Presupuesto Aceptado es el Seleccionado por el Criterio " + "\n";
 		else {
-			informe += "\n El Presupuesto Aceptado difiere del Seleccionado por el Criterio : ";
+			informe += "\n\nEl Presupuesto Aceptado difiere del Seleccionado por el Criterio : ";
 			informe += "\n\t Id Presupuesto Aceptado : " + condValidacion.getIdPresupuestoAceptado();
-			informe += "\n\t Id Presupuesto que debió Aceptarse :" + condValidacion.getIdPresupuestoCriterio();
+			informe += "\n\t Id Presupuesto que debió Aceptarse : " + condValidacion.getIdPresupuestoCriterio();
+			informe += " - Con Monto :" + condValidacion.getPresupuestoCriterio().valorTotal() + "\n";
 		}
 	}
 	
