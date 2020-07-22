@@ -2,10 +2,8 @@ package auditoria;
 
 import static java.util.stream.Collectors.toList;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import egreso.OrdenDeCompra;
 import producto.Item;
 
@@ -14,6 +12,7 @@ public class Items extends CondicionValidacion {
 	private int cantidadItemsCompra;
 	private int cantidadItemsPresupuesto;
 	List<Item> itemsNoValidadosOrdenCompra;
+	List<Item> itemsFaltantesPresupuesto;
 	
 
 	public boolean validar(OrdenDeCompra ordenDeCompra, Reporte reporte) {
@@ -22,14 +21,20 @@ public class Items extends CondicionValidacion {
 		boolean verificarItemsCompra;
 		boolean validacion;
 		
-		verificarCantidadItems = (ordenDeCompra.getItems().size() == ordenDeCompra.presupuestoAceptado().getItems().size());
+		cantidadItemsCompra = ordenDeCompra.getItems().size();
+		cantidadItemsPresupuesto = ordenDeCompra.presupuestoAceptado().getItems().size();
+		
+		verificarCantidadItems = ( cantidadItemsCompra == cantidadItemsPresupuesto);
 		verificarItemsCompra = this.verificarItems(ordenDeCompra);
 		
 		// Verificar Items en Orden de Compra por Id Producto
-		if(!verificarItemsCompra)
+		if(!verificarItemsCompra) {
 			itemsNoValidadosOrdenCompra = obtenerItemsFaltantes(ordenDeCompra.getItems(), ordenDeCompra.presupuestoAceptado().getItems());
+			itemsFaltantesPresupuesto = obtenerItemsFaltantes(ordenDeCompra.presupuestoAceptado().getItems(), ordenDeCompra.getItems());
+		}
+			
 	    
-		validacion = verificarCantidadItems || verificarItemsCompra;
+		validacion = verificarCantidadItems && verificarItemsCompra;
 		
 		reporte.resultadoValidacionItems(this, validacion);
 		
@@ -47,12 +52,19 @@ public class Items extends CondicionValidacion {
     	return codigosDeItemsPresupuesto.containsAll(codigosDeItemsCompra) && codigosDeItemsCompra.containsAll(codigosDeItemsPresupuesto);
 	}
 	
-	public List<Item> obtenerItemsFaltantes(List<Item> listaOrdenCompra, List<Item> listaPresupuesto) {
-    	List<Item> itemsFaltantes;
-		itemsFaltantes = listaOrdenCompra;
-		listaOrdenCompra.removeAll(listaPresupuesto);
-		return itemsFaltantes;
-
+	public List<Item> obtenerItemsFaltantes(List<Item> listaSemilla, List<Item> listaAComparar) {
+    	List<Item> IdsItemsNoValidados = new ArrayList<Item>();    	
+		List<Integer> codigosDeItemsPresupuesto;
+    	
+    	codigosDeItemsPresupuesto = listaAComparar.stream().map(Item::obtenerCodigoProducto).collect(toList());
+		
+    	for(Item unItem : listaSemilla) {
+    		if(!codigosDeItemsPresupuesto.contains(unItem.obtenerCodigoProducto())) {
+    			IdsItemsNoValidados.add(unItem);
+    		}	
+    	}
+    			
+		return IdsItemsNoValidados;
     }
 
 	public int getCantidadItemsCompra() {
@@ -65,6 +77,10 @@ public class Items extends CondicionValidacion {
 
 	public List<Item> getItemsNoValidadosOrdenCompra() {
 		return itemsNoValidadosOrdenCompra;
+	}
+
+	public List<Item> getItemsFaltantesPresupuesto() {
+		return itemsFaltantesPresupuesto;
 	}
 	
 	
