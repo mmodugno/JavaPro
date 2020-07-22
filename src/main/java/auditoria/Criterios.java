@@ -8,14 +8,14 @@ public class Criterios extends CondicionValidacion {
 	
 	private int idPresupuestoCriterio;
 	private int idPresupuestoAceptado;
+	private Presupuesto presupuestoCriterio;
+	private Presupuesto presupuestoAceptado;
 
 	public boolean validar(OrdenDeCompra ordenDeCompra, Reporte reporte) {
 		
 		nombre = "Criterio de Selección de Presupuesto";
 		boolean validacion;
 		CriterioSeleccion criterioDeSeleccion;
-		Presupuesto presupuestoCriterio;
-		Presupuesto presupuestoAceptado;
 		
 		criterioDeSeleccion = ordenDeCompra.getCriterioSeleccion();
 		
@@ -45,6 +45,10 @@ public class Criterios extends CondicionValidacion {
 
 	public int getIdPresupuestoCriterio() {
 		return idPresupuestoCriterio;
+	}
+	
+	public Presupuesto getPresupuestoCriterio() {
+		return presupuestoCriterio;
 	}
 
 	public int getIdPresupuestoAceptado() {
