@@ -85,8 +85,8 @@ public class ValidarEgresoTest {
         validador = new Validador();
         validador.agregarCondicionValidacion(new CantidadPresupuestos());
         validador.agregarCondicionValidacion(new MontoPresupuesto());
-        //validador.agregarCondicionValidacion(new Criterios());
-        //validador.agregarCondicionValidacion(new Items());
+        validador.agregarCondicionValidacion(new Criterios());
+        validador.agregarCondicionValidacion(new Items());
     }
     
     @Test
@@ -101,7 +101,7 @@ public class ValidarEgresoTest {
     }
     
     @Test
-    public void validarEgresoConMenosPresupuestos() throws CloneNotSupportedException {
+    public void validarOrdenCompraConMenosPresupuestos() throws CloneNotSupportedException {
     	
     	ordenDeCompra2.cerrarOrden();
     	
@@ -109,6 +109,20 @@ public class ValidarEgresoTest {
     	
     	Assert.assertFalse(validador.validarEgreso(egreso));
     	
+    }
+    
+    @Test
+    public void validarMontosOrdenCompraPresupuestoAceptado() throws CloneNotSupportedException {
+    	
+    	ordenDeCompra.getItems().get(0).setPrecioUnitario(180.00);
+        ordenDeCompra.getItems().get(1).setPrecioUnitario(300.00);
+    	
+    	ordenDeCompra.cerrarOrden();
+    	
+    	egreso = new Egreso(ordenDeCompra, presupuesto1);
+    	
+    	Assert.assertFalse(validador.validarEgreso(egreso));
+
     }
     
 }
