@@ -17,7 +17,7 @@ public class Items extends CondicionValidacion {
 	
 
 	public boolean validar(OrdenDeCompra ordenDeCompra, Reporte reporte) {
-		nombre = "Validador de Items de Compra y Presupuesto\n\n";
+		nombre = "Validación de Items de Compra y Presupuesto";
 		boolean verificarCantidadItems;
 		boolean verificarItemsCompra;
 		boolean validacion;
