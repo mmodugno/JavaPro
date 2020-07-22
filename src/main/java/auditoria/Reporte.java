@@ -6,14 +6,15 @@ public class Reporte {
 	
 	private Egreso egreso;
 	private String informe = "";
+	private boolean resultadoValidacion;
 	
 	public Reporte() {
-		informe += " ----- Reporte Validacion -------";
+		informe += "\n\n##### Reporte Validación de Egreso #####\n\n";
 	}
 	
 	public void setEgreso(Egreso egreso) {
 		this.egreso = egreso;
-		informe += " \n\nEgreso Nro : \n" ;
+		informe += "Egreso Nro : \n" ;
 	}
 	
 	public void resultadoValidacionPresupuestos(CantidadPresupuestos condValidacion, boolean resultado) {
@@ -21,9 +22,9 @@ public class Reporte {
 		nombreYResultado(condValidacion, resultado);
 		
 		if(resultado)
-			informe += "\n Cantidad Presupuestos : " + condValidacion.getCantidadPresupuestos();
+			informe += "\n\nCantidad Presupuestos : " + condValidacion.getCantidadPresupuestos() + "\n";
 		else
-			informe += "\n Tiene " + condValidacion.getCantidadPresupuestos() + " Presupuestos y requiere " + condValidacion.getPresupuestosRequeridos();
+			informe += "\n\n - Tiene " + condValidacion.getCantidadPresupuestos() + " Presupuestos y requiere " + condValidacion.getPresupuestosRequeridos();
 	}
 	
 	public void resultadoValidacionMontoPresupuestos(MontoPresupuesto condValidacion, boolean resultado) {
@@ -31,9 +32,9 @@ public class Reporte {
 		nombreYResultado(condValidacion, resultado);
 		
 		if(resultado)
-			informe += "\n Monto Total de la Compra : " + condValidacion.getMontoCompra();
+			informe += "\n\nMonto Total de la Compra : " + condValidacion.getMontoCompra() + "\n";
 		else
-			informe += "\n Monto de la Compra : " + condValidacion.getMontoCompra() + "\nMonto del Presupuesto Aceptado : " + condValidacion.getMontoPresupuestoAceptado();
+			informe += "\n\nMonto de la Compra : " + condValidacion.getMontoCompra() + "\nMonto del Presupuesto Aceptado : " + condValidacion.getMontoPresupuestoAceptado() + "\n";
 	}
 	
 	public void resultadoValidacionCriterios(Criterios condValidacion, boolean resultado) {
@@ -41,7 +42,7 @@ public class Reporte {
 		nombreYResultado(condValidacion, resultado);
 		
 		if(resultado)
-			informe += "\n El Presupuesto Aceptado es el Seleccionado por el Criterio ";
+			informe += "\n\nEl Presupuesto Aceptado es el Seleccionado por el Criterio " + "\n";
 		else {
 			informe += "\n El Presupuesto Aceptado difiere del Seleccionado por el Criterio : ";
 			informe += "\n\t Id Presupuesto Aceptado : " + condValidacion.getIdPresupuestoAceptado();
@@ -54,7 +55,7 @@ public class Reporte {
 		nombreYResultado(condValidacion, resultado);
 		
 		if(resultado)
-			informe += "\n\t Los Items de Compra se validaron Correctamente ";
+			informe += "\n\nLos Items de Compra se validaron Correctamente ";
 		else {
 			informe += "\n\t Hay diferencias entre Items de Compra y Presupuesto";
 			informe += "\n\t Cantidad Items Compra : " + condValidacion.getCantidadItemsCompra();
@@ -72,19 +73,26 @@ public class Reporte {
 	}
 	
 	private void nombreYResultado(CondicionValidacion condValidacion, boolean resultado) {
-		informe += "\n\n" + condValidacion.getNombre() + " \n\n";
-		informe += "Resultado : " + resultadoString(resultado);
+		informe += "\n ----- " + condValidacion.getNombre() + " -----\n";
+		informe += "\nResultado : " + resultadoString(resultado);
 	}
 	
 	private String resultadoString(boolean resultado) {
 		if (resultado)
-			return " Válido ";
+			return " Válido";
 		else
-			return " No Válido "; 
+			return " No Válido"; 
 	}
 
 	public String getInforme() {
 		return informe;
 	}
+
+	public void setResultadoValidacion(boolean resultadoValidacion) {
+		this.resultadoValidacion = resultadoValidacion;
+		informe += "\n\n### Resultado Validación Egreso : " + resultadoString(resultadoValidacion) + " ###\n";
+	}
+	
+	
 
 }
