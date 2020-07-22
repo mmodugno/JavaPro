@@ -33,7 +33,7 @@ public class Criterios extends CondicionValidacion {
 			
 		} else {
 			
-			return presupuestoCriterio == presupuestoAceptado;
+			validacion = (presupuestoCriterio == presupuestoAceptado);
 			
 		}
 		
