@@ -7,6 +7,7 @@ import egreso.Categorizable;
 import egreso.Egreso;
 import egreso.Ingreso;
 import egreso.OrdenDeCompra;
+import egreso.Presupuesto;
 import usuarios.CategoriaDelSistema;
 
 public class EntidadJuridica {
@@ -59,17 +60,36 @@ public class EntidadJuridica {
 	}
 	
 	
+
 	
 	//TODO falta ver lo de presupuestos
 	public void devolverCategorias( List<Categorizable> listaALlenar , CategoriaDelSistema unaCategoria){
 		
-		List<Categorizable> listaEgresos = egresos.stream().filter(e->e.esDeCategoria(unaCategoria)).collect(Collectors.toList()) ;
+		List<Categorizable> listaEgresos = egresos.stream().filter(e->e.esDeCategoria(unaCategoria)).collect(Collectors.toList());
+		
 		listaEgresos.forEach(e -> listaALlenar.add(e));
 		
-		List<Categorizable> listaIngresos = ingresos.stream().filter(i->i.esDeCategoria(unaCategoria)).collect(Collectors.toList()) ;
+		List<Presupuesto> listaPresupuestos = egresos.stream().map(e->e.getPresupuesto()).collect(Collectors.toList());
+		
+		listaPresupuestos.stream().filter(p->p.esDeCategoria(unaCategoria)).collect(Collectors.toList());
+	
+		listaPresupuestos.forEach(p -> listaALlenar.add(p));
+		
+		List<Categorizable> listaIngresos = ingresos.stream().filter(i->i.esDeCategoria(unaCategoria)).collect(Collectors.toList());
+		
 		listaIngresos.forEach(i -> listaALlenar.add(i));
 		
 	
+	}
+
+
+//LO USAMOS SOLO PARA LOS TESTS
+	public void setEgresos(List<Egreso> egresos) {
+		this.egresos = egresos;
+	}
+
+	public void setIngresos(List<Ingreso> ingresos) {
+		this.ingresos = ingresos;
 	}
 	
 	

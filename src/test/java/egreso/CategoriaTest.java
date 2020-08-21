@@ -3,12 +3,15 @@ package egreso;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import organizacion.EntidadBase;
+import organizacion.EntidadJuridica;
 import organizacion.Organizacion;
 import producto.Item;
 import producto.Proveedor;
@@ -31,7 +34,13 @@ public class CategoriaTest {
 	Presupuesto presupuesto2;
 	OrdenDeCompra ordenDeCompra;
 	
+	Ingreso ingreso;
+	
+	Egreso egreso;
+	
 	Item item1 = new Item(null, 1, 0.00);
+	
+	EntidadJuridica entidad;
 
 
 	 
@@ -48,6 +57,10 @@ public class CategoriaTest {
 	    presupuesto = new Presupuesto(ordenDeCompra.getItems(),null,null);
 			
 		argentina = new Categoria("argentina","pais");
+		
+		ingreso = new Ingreso("ingreso de prueba", 100);
+		
+		egreso = new Egreso(ordenDeCompra, presupuesto);
 			
 	    }
 	 
@@ -83,6 +96,41 @@ public class CategoriaTest {
 		 
 		Assert.assertEquals(organizacion.getCategorias().size() > 1,true);
 		 
+		 
+	 }
+	 
+	 
+	 @Test
+	 public void devolverListaDeCategorizables() {
+	 
+		 
+		 
+		 	userStandard.categorizar(presupuesto,argentina);
+		 	userStandard.categorizar(egreso,argentina);
+		 	userStandard.categorizar(ingreso,argentina);
+		 
+		
+		 	
+		 	entidad = new EntidadJuridica("Web Social ONG", "Web Social", "90-61775331-4", 1143, 01, Collections.emptyList());
+		     
+		 	
+			List<Egreso> listaConEgreso = new ArrayList<Egreso>();
+			listaConEgreso.add(egreso);
+		 	entidad.setEgresos(listaConEgreso);
+		 	
+		 	List<Ingreso> listaConIngreso = new ArrayList<Ingreso>();
+		 	listaConIngreso.add(ingreso);
+		 	entidad.setIngresos(listaConIngreso);
+		 
+		     	
+		 	organizacion.agregarEntidad(entidad);
+		 	
+		 	
+		 	
+		 	Assert.assertEquals(organizacion.obtenerCategorizables(argentina).size() , 3);
+		 	//organizacion
+		 	
+		 	
 		 
 	 }
 	 
