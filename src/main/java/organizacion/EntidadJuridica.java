@@ -1,10 +1,13 @@
 package organizacion;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import egreso.Categorizable;
 import egreso.Egreso;
 import egreso.Ingreso;
 import egreso.OrdenDeCompra;
+import usuarios.CategoriaDelSistema;
 
 public class EntidadJuridica {
 
@@ -54,4 +57,23 @@ public class EntidadJuridica {
 	public void sacarOrden(OrdenDeCompra ordenDeCompra) {
 		ordenesPendientes.removeIf(unaOrden->unaOrden.getIdOrden() == ordenDeCompra.getIdOrden());
 	}
+	
+	
+	
+	//TODO falta ver lo de presupuestos
+	public void devolverCategorias( List<Categorizable> listaALlenar , CategoriaDelSistema unaCategoria){
+		
+		List<Categorizable> listaEgresos = egresos.stream().filter(e->e.esDeCategoria(unaCategoria)).collect(Collectors.toList()) ;
+		listaEgresos.forEach(e -> listaALlenar.add(e));
+		
+		List<Categorizable> listaIngresos = ingresos.stream().filter(i->i.esDeCategoria(unaCategoria)).collect(Collectors.toList()) ;
+		listaIngresos.forEach(i -> listaALlenar.add(i));
+		
+	
+	}
+	
+	
+	
+	
+	
 }

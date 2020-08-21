@@ -5,5 +5,5 @@ import usuarios.CategoriaDelSistema;
 public interface Categorizable {
 
 		void categorizar(CategoriaDelSistema categoria);
-	
+		
 }

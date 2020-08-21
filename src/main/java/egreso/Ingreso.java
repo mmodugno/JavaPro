@@ -80,7 +80,9 @@ public void asociarEgreso(Egreso egreso){
 
 
 
-
+	public boolean esDeCategoria(CategoriaDelSistema unaCategoria) {
+		return categoria.equals(unaCategoria);
+	}
 
 
 

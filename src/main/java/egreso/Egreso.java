@@ -64,9 +64,15 @@ public class Egreso implements Categorizable{
 	}
 	
 	@Override
-	public void categorizar(CategoriaDelSistema categoria) {
+	public void categorizar(CategoriaDelSistema unaCategoria) {
 		this.categoria = categoria;
 	}
 
+	
+	
+	public boolean esDeCategoria(CategoriaDelSistema unaCategoria) {
+		return categoria.equals(unaCategoria);
+	}
+	
 	
 }

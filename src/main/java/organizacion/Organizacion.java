@@ -32,7 +32,17 @@ public class Organizacion {
 	public List<CategoriaDelSistema> getCategorias() {
 		return this.categorias;
 	}
+
 	
+	
+	
+	public List<Categorizable> obtenerCategorizables(CategoriaDelSistema unaCategoria){
+		List<Categorizable> listaCat = new ArrayList<Categorizable>();
+		
+		entidades.forEach(e->e.devolverCategorias(listaCat, unaCategoria));
+		
+		return listaCat;
+	}
 	
 	
 }

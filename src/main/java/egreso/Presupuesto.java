@@ -59,4 +59,8 @@ public void categorizar(CategoriaDelSistema categoria) {
 	this.categoria = categoria;
 }
 	
+public boolean esDeCategoria(CategoriaDelSistema unaCategoria) {
+	return categoria.equals(unaCategoria);
+}
+
 }
