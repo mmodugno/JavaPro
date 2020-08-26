@@ -103,17 +103,12 @@ public class CategoriaTest {
 	 @Test
 	 public void devolverListaDeCategorizables() {
 	 
-		 
-		 
 		 	userStandard.categorizar(presupuesto,argentina);
 		 	userStandard.categorizar(egreso,argentina);
 		 	userStandard.categorizar(ingreso,argentina);
-		 
-		
 		 	
 		 	entidad = new EntidadJuridica("Web Social ONG", "Web Social", "90-61775331-4", 1143, 01, Collections.emptyList());
-		     
-		 	
+		     	 	
 			List<Egreso> listaConEgreso = new ArrayList<Egreso>();
 			listaConEgreso.add(egreso);
 		 	entidad.setEgresos(listaConEgreso);
@@ -121,12 +116,9 @@ public class CategoriaTest {
 		 	List<Ingreso> listaConIngreso = new ArrayList<Ingreso>();
 		 	listaConIngreso.add(ingreso);
 		 	entidad.setIngresos(listaConIngreso);
-		 
-		     	
+		 	
 		 	organizacion.agregarEntidad(entidad);
-		 	
-		 	
-		 	
+		 		
 		 	Assert.assertEquals(organizacion.obtenerCategorizables(argentina).size() , 3);
 		 	//organizacion
 		 	

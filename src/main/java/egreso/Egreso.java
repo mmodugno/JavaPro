@@ -65,7 +65,7 @@ public class Egreso implements Categorizable{
 	
 	@Override
 	public void categorizar(CategoriaDelSistema unaCategoria) {
-		this.categoria = categoria;
+		this.categoria = unaCategoria;
 	}
 
 	
