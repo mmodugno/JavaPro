@@ -15,7 +15,7 @@ public abstract class CriterioDeVinculacion {
     }
 
 
-    void vincular(List<Egreso> egresos, List<Ingreso> ingresos) throws ListaVaciaExcepcion {}
+    void vincular(List<Egreso> egresos, List<Ingreso> ingresos) throws ListaVaciaExcepcion, MontoSuperadoExcepcion {}
 
 
     void ordenarValor(List<Ingreso> ingresos, List<Egreso> egresos) throws ListaVaciaExcepcion{

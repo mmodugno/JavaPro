@@ -43,4 +43,5 @@ public class Vinculador {
     void vincular(CriterioDeVinculacion criterio) throws ListaVaciaExcepcion {
         criterio.vincular(egresosSinVincular,ingresosSinVincular);
     }
+
 }

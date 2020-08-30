@@ -73,6 +73,7 @@ public void asociarEgreso(Egreso egreso){
 		}
 		this.montoVinculado = montoVinculado;
 	}
+
 	//PARA CUANDO HAGA LOS FILTROS
 	public boolean puedoVincular(){
 		return this.getMontoSinVincular()>0;
