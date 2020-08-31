@@ -40,8 +40,8 @@ public class Vinculador {
         return egresos.stream().filter(egreso -> egreso.puedoVincular()).collect(Collectors.toList());
     }
 
-    void vincular(CriterioDeVinculacion criterio) throws ListaVaciaExcepcion {
-        criterio.vincular(egresosSinVincular,ingresosSinVincular);
+    void vincular(CriterioDeVinculacion criterio) throws ListaVaciaExcepcion, MontoSuperadoExcepcion {
+        criterio.vincular(egresosSinVincular,ingresosSinVincular,entidadJuridica);
     }
 
 }

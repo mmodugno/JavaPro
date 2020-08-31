@@ -10,12 +10,12 @@ public class Balance {
 
 
     /*ATRIBUTOS*/
-    Egreso egreso;
+    private Egreso egreso;
 
 
 
-    List<Ingreso> ingresosVinculados = new ArrayList<Ingreso>();
-    List<Double> valorIngresos = new ArrayList<Double>();
+    private List<Ingreso> ingresosVinculados = new ArrayList<Ingreso>();
+    private List<Double> valorIngresos = new ArrayList<Double>();
 
     /*SETTERS/ADD*/
 
