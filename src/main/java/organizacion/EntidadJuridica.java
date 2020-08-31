@@ -3,11 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import egreso.Categorizable;
-import egreso.Egreso;
-import egreso.Ingreso;
-import egreso.OrdenDeCompra;
-import egreso.Presupuesto;
+import egreso.*;
 import usuarios.CategoriaDelSistema;
 
 public class EntidadJuridica {
@@ -24,7 +20,7 @@ public class EntidadJuridica {
 		this.egresos = new ArrayList<Egreso>();
 		this.ordenesPendientes = new ArrayList<OrdenDeCompra>();
 		this.ingresos = new ArrayList<Ingreso>();
-		
+		balances = new ArrayList<Balance>();
 	}
 	private String razonSocial;
 	private String nombre;
@@ -34,10 +30,16 @@ public class EntidadJuridica {
 	private List<EntidadBase> entidadesBase;
 	private List<Egreso> egresos;
 	private List<OrdenDeCompra> ordenesPendientes;
+	private List<Balance> balances;
 
 	public List<Ingreso> getIngresos() {
 		return ingresos;
 	}
+
+	public List<Balance> getBalances() {
+		return balances;
+	}
+
 
 	private List<Ingreso> ingresos;
 	

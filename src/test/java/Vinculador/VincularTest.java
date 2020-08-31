@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.theories.suppliers.TestedOn;
 import org.junit.rules.ExpectedException;
 
 import organizacion.*;
@@ -141,7 +142,7 @@ public class VincularTest {
     }
 
     @Test
-    public void vincularIngresoEgreso() throws ListaVaciaExcepcion {
+    public void vincularIngresoEgreso() throws ListaVaciaExcepcion, MontoSuperadoExcepcion {
         vinculador.obtenerIngresosEgresos();
         Assert.assertEquals(0,ingreso.getEgresosAsociados().size());
         vinculador.vincular(primeroEgreso);
@@ -185,7 +186,7 @@ public class VincularTest {
 
     }*/
     @Test
-    public void criterioPrimeroEgreso() throws ListaVaciaExcepcion {
+    public void criterioPrimeroEgreso() throws ListaVaciaExcepcion, MontoSuperadoExcepcion {
         //LOS NUEVOS INGRESOS
         ingreso2 = new Ingreso("Donacion",2000.0);
         ingreso3 = new Ingreso("Donacion",10000.0);
@@ -205,6 +206,32 @@ public class VincularTest {
         Assert.assertEquals(ingreso2, egreso.getIngresoAsociado());
         Assert.assertEquals(0,ingreso.getEgresosAsociados().size());
         Assert.assertTrue(egreso3.getIngresoAsociado() == null); 
+
+
+    }
+
+    @Test
+    public void crearBalance() throws MontoSuperadoExcepcion {
+        //INSTANCIO UNA ENTIDAD JURIDICA NUEVA
+        entidadJuridica.setEgresos(new ArrayList<Egreso>());
+        entidadJuridica.setIngresos(new ArrayList<Ingreso>());
+        entidadJuridica.getEgresos().add(egreso); //80 + 30 + 30 = 140
+        Ingreso ingresoB1 = new Ingreso("PruebaBalance", 30.00);
+        Ingreso ingresoB2 = new Ingreso("PruebaBalance", 100.00);//50
+        ingresoB2.setMontoVinculado(50.0);
+        Ingreso ingresoB3 = new Ingreso("PruebaBalance", 300.00);//200
+        ingresoB3.setMontoVinculado(100.0);
+        List<Ingreso> ingresosPruebaBalance = new ArrayList<Ingreso>();
+        ingresosPruebaBalance.add(ingresoB1);
+        ingresosPruebaBalance.add(ingresoB2);
+        ingresosPruebaBalance.add(ingresoB3);
+        entidadJuridica.setIngresos(ingresosPruebaBalance);//280
+
+        primeroEgreso.formarBalance(entidadJuridica.getEgresos(),entidadJuridica.getIngresos(),entidadJuridica);
+
+        Assert.assertEquals(1,entidadJuridica.getBalances().size());
+        Assert.assertEquals(140.00, ingresoB3.getMontoSinVincular(),0.1);
+
 
 
     }

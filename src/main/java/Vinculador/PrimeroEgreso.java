@@ -1,7 +1,10 @@
 package Vinculador;
 
+import egreso.Balance;
 import egreso.Egreso;
 import egreso.Ingreso;
+import egreso.MontoSuperadoExcepcion;
+import organizacion.EntidadJuridica;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,7 +17,7 @@ public class PrimeroEgreso extends CriterioDeVinculacion {
     }
 
     @Override
-    void vincular(List<Egreso> egresos, List<Ingreso> ingresos) throws ListaVaciaExcepcion {
+    void vincular(List<Egreso> egresos, List<Ingreso> ingresos, EntidadJuridica entidadJuridica) throws ListaVaciaExcepcion, MontoSuperadoExcepcion {
         ordenarValor(ingresos, egresos);
 
         boolean seAsigno = true; //PARA QUE SALGA DEL WHILE CUANDO YA NO SE PUEDA ASIGNAR MAS
@@ -38,6 +41,12 @@ public class PrimeroEgreso extends CriterioDeVinculacion {
                 }
             }
         }
-
+        /*Esto se tendria que ejecutar despues de que se haya dado toda la vuelta y no se pueda vincular mas uno a uno*/
+        formarBalance(egresos,ingresos,entidadJuridica);
     }
+
+
+
+
+
 }

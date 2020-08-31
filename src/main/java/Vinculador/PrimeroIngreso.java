@@ -5,6 +5,7 @@ import java.util.List;
 
 import egreso.Egreso;
 import egreso.Ingreso;
+import organizacion.EntidadJuridica;
 
 public class PrimeroIngreso extends CriterioDeVinculacion {
 
@@ -13,7 +14,7 @@ public class PrimeroIngreso extends CriterioDeVinculacion {
     }
 
     @Override
-    void vincular(List<Egreso> egresos, List<Ingreso> ingresos) throws ListaVaciaExcepcion {
+    void vincular(List<Egreso> egresos, List<Ingreso> ingresos, EntidadJuridica entidadJuridica) throws ListaVaciaExcepcion {
         ordenarValor(ingresos, egresos);
         for(int i = 0; i<egresos.size(); i++){
             List<Integer> indexDestruir = new ArrayList<Integer>();
