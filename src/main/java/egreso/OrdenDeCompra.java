@@ -11,6 +11,7 @@ import usuarios.Usuario;
 
 public class OrdenDeCompra {
 
+	/*CONSTRUCTOR*/
 	public OrdenDeCompra(int necesitaPresupuesto,int idOrden) {
 		this.fecha = new Date();
 		this.items = new ArrayList<Item>();
@@ -19,7 +20,13 @@ public class OrdenDeCompra {
 		this.revisores = new ArrayList<Usuario>();
 		this.idOrden = idOrden;
 	}
+	/*
+	***Así tendria que ser
+	* orden.setNecesitaPresupuesto(necesita);//esto le pasas la cantidad y si necesita va a ser mayor a 1
+	* orden.setIdOrden(id)//TODO Tranquilamente podria ser autoincremental charlar en la entrega de persistencia
+	 */
 
+	/*ATRIBUTOS*/
 	private List<Item> items;
 	private Date fecha; 
 	private int necesitaPresupuesto;
@@ -28,40 +35,51 @@ public class OrdenDeCompra {
 	private int idOrden;
 	private CriterioSeleccion criterioSeleccion;
 
-	
-	public double valorTotal() throws SinItemsExcepcion{
-        if(items.isEmpty()){
-            throw new SinItemsExcepcion();
-        }
-        return items.stream().mapToDouble(Item::obtenerPrecio).sum();
-    }
-
-	public void cerrarOrden() {
-		items.forEach(i -> i.fijarPrecio());
-	}
-	
+	/*GETTERS*/
 	public List<Item> getItems() {
 		return items;
 	}
-
 	public Date getFecha() {
 		return fecha;
 	}
-
 	public int getNecesitaPresupuesto() {
 		return necesitaPresupuesto;
 	}
 	public int getIdOrden() {
 		return idOrden;
 	}
-
 	public List<Presupuesto> getPresupuestos() {
 		return presupuestos;
 	}
-
 	public List<Usuario> getRevisores() {
 
 		return revisores;
+	}
+	public CriterioSeleccion getCriterioSeleccion(){
+		return this.criterioSeleccion;
+	}
+
+	/*SETTERS*/
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+	public void setNecesitaPresupuesto(int necesitaPresupuesto) {
+		this.necesitaPresupuesto = necesitaPresupuesto;
+	}
+	public void setPresupuestos(List<Presupuesto> presupuestos) {
+		this.presupuestos = presupuestos;
+	}
+	public void setRevisores(List<Usuario> revisores) {
+		this.revisores = revisores;
+	}
+	public void setIdOrden(int idOrden) {
+		this.idOrden = idOrden;
+	}
+	public void setCriterioSeleccion(CriterioSeleccion unCriterio){
+		this.criterioSeleccion = unCriterio;
 	}
 
 	public void agregarItem(Item item){
@@ -76,12 +94,16 @@ public class OrdenDeCompra {
 		presupuestos.add(presupuesto);
 	}
 
-	public void setCriterioSeleccion(CriterioSeleccion unCriterio){
-		this.criterioSeleccion = unCriterio;
-	}
-	
-	public CriterioSeleccion getCriterioSeleccion(){
-		return this.criterioSeleccion;
+
+	public double valorTotal() throws SinItemsExcepcion{
+        if(items.isEmpty()){
+            throw new SinItemsExcepcion();
+        }
+        return items.stream().mapToDouble(Item::obtenerPrecio).sum();
+    }
+
+	public void cerrarOrden() {
+		items.forEach(i -> i.fijarPrecio());
 	}
 	
 	public Presupuesto presupuestoAceptado(){

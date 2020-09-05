@@ -21,7 +21,8 @@ public class Egreso implements Categorizable{
 	}
 	/*
 	***Se tendria que hacer así***
-	* egreso.set
+	* egreso.setOrdenDeCompra(ordenDeComrpra);
+	* egreso.setPresupuesto(presupuesto);
 	 */
 
 	/*ATRIBUTOS*/
