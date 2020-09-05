@@ -12,64 +12,80 @@ import usuarios.CreadorUsuario;
 
 public class Egreso implements Categorizable{
 
+	/*CONSTRUCTOR*/
 	public Egreso(OrdenDeCompra ordenDeCompra, Presupuesto presupuesto) {
 		this.documentosComerciales = new ArrayList<DocumentoComercial>();
 		this.ordenDeCompra = ordenDeCompra;
 		this.presupuesto = presupuesto;
 		fecha = LocalDate.now();
 	}
+	/*
+	***Se tendria que hacer así***
+	* egreso.set
+	 */
 
+	/*ATRIBUTOS*/
 	private List<DocumentoComercial> documentosComerciales;
 	private OrdenDeCompra ordenDeCompra;
 	private Presupuesto presupuesto;
 	private CategoriaDelSistema categoria = null;
 	private LocalDate fecha;
-	private Ingreso ingresoAsociado;
+	private boolean vinculado = false;
 
-	public Ingreso getIngresoAsociado() {
-		return ingresoAsociado;
+	/*GETTERS*/
+	public CategoriaDelSistema getCategoria() {
+		return categoria;
 	}
-	public boolean puedoVincular(){ return ingresoAsociado == null; }
-
-	public void setIngresoAsociado(Ingreso ingresoAsociado) {
-		this.ingresoAsociado = ingresoAsociado;
-	}
-
 	public LocalDate getFecha() {
 		return fecha;
 	}
+	public boolean isVinculado() {
+		return vinculado;
+	}
+	public List<DocumentoComercial> getDocumentosComerciales() {
+		return documentosComerciales;
+	}
+	public OrdenDeCompra getOrdenDeCompra() {
+		return ordenDeCompra;
+	}
+	public Presupuesto getPresupuesto() {
+		return presupuesto;
+	}
 
+	public double valorTotal() {
+		return presupuesto.valorTotal();
+	}//Yo lo considero un get
+
+	/*SETTERS*/
 	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
-	
-	public double valorTotal() {
-		return presupuesto.valorTotal();
+	public void setDocumentosComerciales(List<DocumentoComercial> documentosComerciales) {
+		this.documentosComerciales = documentosComerciales;
 	}
-	
+	public void setOrdenDeCompra(OrdenDeCompra ordenDeCompra) {
+		this.ordenDeCompra = ordenDeCompra;
+	}
+	public void setPresupuesto(Presupuesto presupuesto) {
+		this.presupuesto = presupuesto;
+	}
+	public void setCategoria(CategoriaDelSistema categoria) {
+		this.categoria = categoria;
+	}
+	public void setVinculado(boolean vinculado) {
+		this.vinculado = vinculado;
+	}
+
+	/*Para agregar de a uno solo*/
 	public void agregarDocumentoComercial(DocumentoComercial documento) {
 		documentosComerciales.add(documento);
 	}
 
-	public List<DocumentoComercial> getDocumentosComerciales() {
-		return documentosComerciales;
-	}
-
-	public OrdenDeCompra getOrdenDeCompra() {
-		return ordenDeCompra;
-	}
-
-	public Presupuesto getPresupuesto() {
-		return presupuesto;
-	}
-	
 	@Override
 	public void categorizar(CategoriaDelSistema unaCategoria) {
 		this.categoria = unaCategoria;
 	}
 
-	
-	
 	public boolean esDeCategoria(CategoriaDelSistema unaCategoria) {
 		return categoria.equals(unaCategoria);
 	}
