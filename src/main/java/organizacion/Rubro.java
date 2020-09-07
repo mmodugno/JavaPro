@@ -13,7 +13,8 @@ public Rubro(double vtasMicro, double vtasPequenia, double vtasMedianaTramoUno, 
 		this.persMedianaTramoUno = persMedianaTramoUno;
 		this.persMedianaTramoDos = persMedianaTramoDos;
 	}
-	
+
+	/*ATRIBUTOS*/
 	double vtasMicro ;
 	double vtasPequenia ;
 	double vtasMedianaTramoUno ;
@@ -22,10 +23,34 @@ public Rubro(double vtasMicro, double vtasPequenia, double vtasMedianaTramoUno, 
 	int persPequenia ;
 	int persMedianaTramoUno ;
 	int persMedianaTramoDos ;
-	
-	
-	
-	// GETTERS PARA CAMBIAR VALORES EN EJECUCION
+
+	/*GETTERS*/
+	public double getVtasMicro() {
+		return vtasMicro;
+	}
+	public double getVtasPequenia() {
+		return vtasPequenia;
+	}
+	public double getVtasMedianaTramoUno() {
+		return vtasMedianaTramoUno;
+	}
+	public double getVtasMedianaTramoDos() {
+		return vtasMedianaTramoDos;
+	}
+	public int getPersMicro() {
+		return persMicro;
+	}
+	public int getPersPequenia() {
+		return persPequenia;
+	}
+	public int getPersMedianaTramoUno() {
+		return persMedianaTramoUno;
+	}
+	public int getPersMedianaTramoDos() {
+		return persMedianaTramoDos;
+	}
+
+	/*SETTERS*/
 	public void setVtasMicro(double vtasMicro) {
 		this.vtasMicro = vtasMicro;
 	}
@@ -50,9 +75,6 @@ public Rubro(double vtasMicro, double vtasPequenia, double vtasMedianaTramoUno, 
 	public void setPersMedianaTramoDos(int persMedianaTramoDos) {
 		this.persMedianaTramoDos = persMedianaTramoDos;
 	}
-	
-	
-	
 	
 	public TipoEmpresa reClasificar(Double promedioDeVentas) {
 		

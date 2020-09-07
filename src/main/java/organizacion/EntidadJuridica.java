@@ -8,6 +8,7 @@ import usuarios.CategoriaDelSistema;
 
 public class EntidadJuridica {
 
+	/*CONSTRUCTOR*/
 	public EntidadJuridica(String razonSocial, String nombre, String cuit, int direccionPostal, int codInscripcion,
 			List<EntidadBase> entidadesBase) {
 		super();
@@ -22,6 +23,16 @@ public class EntidadJuridica {
 		this.ingresos = new ArrayList<Ingreso>();
 		balances = new ArrayList<Balance>();
 	}
+	/*
+	 * setRazonSocial(razonSocial);
+	 * setNombre(nombre);
+	 * setCuit(cuit);
+	 * setDireccionPostal(direccionPostal);
+	 * setCodInscripcion(codInscripcion);
+	 * setEntidadesBase(entidadesBase);
+	 */
+
+	/*ATRIBUTOS*/
 	private String razonSocial;
 	private String nombre;
 	private String cuit;
@@ -31,19 +42,73 @@ public class EntidadJuridica {
 	private List<Egreso> egresos;
 	private List<OrdenDeCompra> ordenesPendientes;
 	private List<Balance> balances;
+	private List<Ingreso> ingresos;
 
+	/*GETTERS*/
 	public List<Ingreso> getIngresos() {
 		return ingresos;
 	}
-
 	public List<Balance> getBalances() {
 		return balances;
 	}
+	public String getRazonSocial() {
+		return razonSocial;
+	}
+	public String getNombre() {
+		return nombre;
+	}
+	public String getCuit() {
+		return cuit;
+	}
+	public int getDireccionPostal() {
+		return direccionPostal;
+	}
+	public int getCodInscripcion() {
+		return codInscripcion;
+	}
+	public List<EntidadBase> getEntidadesBase() {
+		return entidadesBase;
+	}
+	public List<OrdenDeCompra> getOrdenesPendientes() {
+		return ordenesPendientes;
+	}
+	public List<Egreso> getEgresos() {
+		return egresos;
+	}
+
+	/*SETTERS*/
+	public void setRazonSocial(String razonSocial) {
+		this.razonSocial = razonSocial;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	public void setCuit(String cuit) {
+		this.cuit = cuit;
+	}
+	public void setDireccionPostal(int direccionPostal) {
+		this.direccionPostal = direccionPostal;
+	}
+	public void setCodInscripcion(int codInscripcion) {
+		this.codInscripcion = codInscripcion;
+	}
+	public void setEntidadesBase(List<EntidadBase> entidadesBase) {
+		this.entidadesBase = entidadesBase;
+	}
+	public void setOrdenesPendientes(List<OrdenDeCompra> ordenesPendientes) {
+		this.ordenesPendientes = ordenesPendientes;
+	}
+	public void setBalances(List<Balance> balances) {
+		this.balances = balances;
+	}
+	public void setEgresos(List<Egreso> egresos) {
+		this.egresos = egresos;
+	}
+	public void setIngresos(List<Ingreso> ingresos) {
+		this.ingresos = ingresos;
+	}
 
 
-	private List<Ingreso> ingresos;
-	
-	
 	public void agregarEntidadBase(EntidadBase entidad) {
 		entidadesBase.add(entidad);
 	}
@@ -52,18 +117,11 @@ public class EntidadJuridica {
 		Egreso egreso = new Egreso(ordenDeCompra, ordenDeCompra.presupuestoAceptado());
 		egresos.add(egreso);
 	}
-	
-	public List<Egreso> getEgresos() {
-		return egresos;
-	}
 
 	public void sacarOrden(OrdenDeCompra ordenDeCompra) {
 		ordenesPendientes.removeIf(unaOrden->unaOrden.getIdOrden() == ordenDeCompra.getIdOrden());
 	}
-	
-	
 
-	
 	//TODO falta ver lo de presupuestos
 	public void devolverCategorias( List<Categorizable> listaALlenar , CategoriaDelSistema unaCategoria){
 		
@@ -84,18 +142,6 @@ public class EntidadJuridica {
 	
 	}
 
-
-//LO USAMOS SOLO PARA LOS TESTS
-	public void setEgresos(List<Egreso> egresos) {
-		this.egresos = egresos;
-	}
-
-	public void setIngresos(List<Ingreso> ingresos) {
-		this.ingresos = ingresos;
-	}
-	
-	
-	
 	
 	
 }
