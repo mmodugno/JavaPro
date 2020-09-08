@@ -9,16 +9,43 @@ import java.util.stream.Collectors;
 
 public class Vinculador {
 
-    private List<Egreso> egresosSinVincular;
-    private List<Ingreso> ingresosSinVincular;
-    private EntidadJuridica entidadJuridica;
-
-
+    /*CONSTRUCTOR*/
     public Vinculador(EntidadJuridica unaEntidadJuridica) {
         this.egresosSinVincular = new ArrayList<Egreso>();
         this.ingresosSinVincular = new ArrayList<Ingreso>();
         entidadJuridica = unaEntidadJuridica;
     }
+    /*setEntidadJuridica(entidadJuridica)*/
+
+    /*ATRIBUTOS*/
+    private List<Egreso> egresosSinVincular;
+    private List<Ingreso> ingresosSinVincular;
+    private EntidadJuridica entidadJuridica;
+
+    /*GETTERS*/
+
+    public List<Egreso> getEgresosSinVincular() {
+        return egresosSinVincular;
+    }
+    public List<Ingreso> getIngresosSinVincular() {
+        return ingresosSinVincular;
+    }
+    public EntidadJuridica getEntidadJuridica() {
+        return entidadJuridica;
+    }
+
+    /*SETTERS*/
+    public void setEgresosSinVincular(List<Egreso> egresosSinVincular) {
+        this.egresosSinVincular = egresosSinVincular;
+    }
+    public void setIngresosSinVincular(List<Ingreso> ingresosSinVincular) {
+        this.ingresosSinVincular = ingresosSinVincular;
+    }
+    public void setEntidadJuridica(EntidadJuridica entidadJuridica) {
+        this.entidadJuridica = entidadJuridica;
+    }
+
+
 
     void obtenerIngresosEgresos() throws ListaVaciaExcepcion{
         if(entidadJuridica.getIngresos().isEmpty()) {
@@ -37,7 +64,7 @@ public class Vinculador {
     }
 
     private List<Egreso> filtrarEgresos(List<Egreso> egresos) {
-        return egresos.stream().filter(egreso -> egreso.puedoVincular()).collect(Collectors.toList());
+        return egresos.stream().filter(egreso -> egreso.isVinculado()).collect(Collectors.toList());
     }
 
     void vincular(CriterioDeVinculacion criterio) throws ListaVaciaExcepcion, MontoSuperadoExcepcion {

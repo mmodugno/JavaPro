@@ -4,20 +4,38 @@ import egreso.Egreso;
 import producto.Item;;
 
 public class Reporte {
-	
+
+	/*ATRIBUTOS*/
 	private Egreso egreso;
 	private String informe = "";
 	private boolean resultadoValidacion;
-	
-	public Reporte() {
-		informe += "\n\n##### Reporte Validación de Egreso #####\n\n";
+
+	/*GETTERS*/
+	public String getInforme() {
+		return informe;
 	}
-	
+	public Egreso getEgreso() {
+		return egreso;
+	}
+	public boolean isResultadoValidacion() {
+		return resultadoValidacion;
+	}
+
+	/*SETTERS*/
 	public void setEgreso(Egreso egreso) {
 		this.egreso = egreso;
 		informe += "Egreso Nro : \n" ;
 	}
-	
+	public void setInforme(String informe) {
+		this.informe = informe;
+	}
+
+
+
+	public Reporte() {
+		informe += "\n\n##### Reporte Validación de Egreso #####\n\n";
+	}
+
 	public void resultadoValidacionPresupuestos(CantidadPresupuestos condValidacion, boolean resultado) {
 		
 		nombreYResultado(condValidacion, resultado);
@@ -96,9 +114,7 @@ public class Reporte {
 			return " No Válido"; 
 	}
 
-	public String getInforme() {
-		return informe;
-	}
+
 
 	public void setResultadoValidacion(boolean resultadoValidacion) {
 		this.resultadoValidacion = resultadoValidacion;

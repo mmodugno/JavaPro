@@ -11,39 +11,32 @@ public class Balance {
 
     /*ATRIBUTOS*/
     private Egreso egreso;
-
-
-
     private List<Ingreso> ingresosVinculados = new ArrayList<Ingreso>();
     private List<Double> valorIngresos = new ArrayList<Double>();
 
-    /*SETTERS/ADD*/
+    /*GETTERS*/
+    public Egreso getEgreso() {
+        return egreso;
+    }
+    public List<Ingreso> getIngresosVinculados() {
+        return ingresosVinculados;
+    }
+    public List<Double> getValorIngresos() {
+        return valorIngresos;
+    }
 
+    /*SETTERS*/
     public void setEgreso(Egreso egreso) {
         this.egreso = egreso;
     }
-
     public void setIngresosVinculados(List<Ingreso> ingresosVinculados) {
         this.ingresosVinculados = ingresosVinculados;
     }
-
     public void setValorIngresos(List<Double> valorIngresos) {
         this.valorIngresos = valorIngresos;
     }
 
-    /*GETTERS*/
 
-    public Egreso getEgreso() {
-        return egreso;
-    }
-
-    public List<Ingreso> getIngresosVinculados() {
-        return ingresosVinculados;
-    }
-
-    public List<Double> getValorIngresos() {
-        return valorIngresos;
-    }
 
 
 }

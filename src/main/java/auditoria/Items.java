@@ -8,12 +8,40 @@ import egreso.OrdenDeCompra;
 import producto.Item;
 
 public class Items extends CondicionValidacion {
-	
+
+	/*ATRIBUTOS*/
 	private int cantidadItemsCompra;
 	private int cantidadItemsPresupuesto;
 	List<Item> itemsNoValidadosOrdenCompra;
 	List<Item> itemsFaltantesPresupuesto;
-	
+
+	/*GETTERS*/
+	public int getCantidadItemsCompra() {
+		return cantidadItemsCompra;
+	}
+	public int getCantidadItemsPresupuesto() {
+		return cantidadItemsPresupuesto;
+	}
+	public List<Item> getItemsNoValidadosOrdenCompra() {
+		return itemsNoValidadosOrdenCompra;
+	}
+	public List<Item> getItemsFaltantesPresupuesto() {
+		return itemsFaltantesPresupuesto;
+	}
+
+	/*SETTERS*/
+	public void setCantidadItemsCompra(int cantidadItemsCompra) {
+		this.cantidadItemsCompra = cantidadItemsCompra;
+	}
+	public void setCantidadItemsPresupuesto(int cantidadItemsPresupuesto) {
+		this.cantidadItemsPresupuesto = cantidadItemsPresupuesto;
+	}
+	public void setItemsNoValidadosOrdenCompra(List<Item> itemsNoValidadosOrdenCompra) {
+		this.itemsNoValidadosOrdenCompra = itemsNoValidadosOrdenCompra;
+	}
+	public void setItemsFaltantesPresupuesto(List<Item> itemsFaltantesPresupuesto) {
+		this.itemsFaltantesPresupuesto = itemsFaltantesPresupuesto;
+	}
 
 	public boolean validar(OrdenDeCompra ordenDeCompra, Reporte reporte) {
 		nombre = "Validación de Items de Compra y Presupuesto";
@@ -67,21 +95,7 @@ public class Items extends CondicionValidacion {
 		return IdsItemsNoValidados;
     }
 
-	public int getCantidadItemsCompra() {
-		return cantidadItemsCompra;
-	}
 
-	public int getCantidadItemsPresupuesto() {
-		return cantidadItemsPresupuesto;
-	}
-
-	public List<Item> getItemsNoValidadosOrdenCompra() {
-		return itemsNoValidadosOrdenCompra;
-	}
-
-	public List<Item> getItemsFaltantesPresupuesto() {
-		return itemsFaltantesPresupuesto;
-	}
 	
 	
     

@@ -32,7 +32,7 @@ public class PrimeroEgreso extends CriterioDeVinculacion {
                     if (pasaCondiciones(ingresos.get(i), egresos.get(j))) {
 
                         ingresos.get(i).asociarEgreso(egresos.get(j));//AGREGO EGRESO A INGRESO
-                        egresos.get(j).setIngresoAsociado(ingresos.get(i));//AGREGO INGRESO A EGRESO
+                        egresos.get(j).setVinculado(true);//AGREGO INGRESO A EGRESO
                         seAsigno = true;//SE AVISA QUE SE ASIGNA PARA QUE NO SALGA DEL WHILE
                         egresos.remove(j);//SE RETIRA EGRESO
                         j = egresosTamanio;

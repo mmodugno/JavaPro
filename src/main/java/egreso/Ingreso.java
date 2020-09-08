@@ -15,6 +15,7 @@ public class Ingreso implements Categorizable{
 		return egresosAsociados;
 	}
 
+	/*CONSTRUCTOR*/
 	public Ingreso(String descripcion, double monto) {
 		super();
 		this.descripcion = descripcion;
@@ -22,48 +23,53 @@ public class Ingreso implements Categorizable{
 		this.egresosAsociados = new ArrayList<Egreso>();
 		this.fecha = LocalDate.now();
 	}
+	/*
+	*** se tendría que hacer as0
+	* ingreso.setDescripcion(descripcion);
+	* ingreso.setMonto(mkonto);
+	*
+	 */
 
-private String descripcion;
-private double monto;
-private List<Egreso> egresosAsociados;
-private CategoriaDelSistema categoria = null;
 
-
-
+	/*ATRIBUTOS*/
+	private String descripcion;
+	private double monto;
+	private List<Egreso> egresosAsociados;
+	private CategoriaDelSistema categoria = null;
 	private double montoVinculado = 0.00;
+	private LocalDate fecha;
 
+	/*GETTERS*/
 	public LocalDate getFecha() {
 		return fecha;
 	}
-
-	private LocalDate fecha;
-
-@Override
-public void categorizar(CategoriaDelSistema categoria) {
-	this.categoria = categoria;
-}
-
-//CREO ESTO PARA SABER RAPIDO QUE MONTO ME QUEDA SIN VINCULAR (FUTURO USO BALANCE)
-public double getMontoSinVincular(){
-
-	return monto - montoVinculado;
-}
-
-//CUANDO ASOCIO EGRESO MODIFICO EL MONTO VINCULADO
-public void asociarEgreso(Egreso egreso){
-
-
-	montoVinculado += egreso.valorTotal();
-	egresosAsociados.add(egreso);
-}
-
 	public double getMonto() {
 		return monto;
 	}
-
-	//POR SI NECESITO EL GET Y SET PARA HACER EL BALANCE
 	public double getMontoVinculado() {
 		return montoVinculado;
+	}
+	public double getMontoSinVincular(){
+
+		return monto - montoVinculado;
+	}
+
+	/*SETTERS*/
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	public void setMonto(double monto) {
+		this.monto = monto;
+	}
+	public void setEgresosAsociados(List<Egreso> egresosAsociados) {
+		this.egresosAsociados = egresosAsociados;
+	}
+	public void setCategoria(CategoriaDelSistema categoria) {
+		this.categoria = categoria;
+	}
+	public void setFecha(LocalDate fecha) {
+		this.fecha = fecha;
 	}
 
 	public void setMontoVinculado(double montoVinculado) throws MontoSuperadoExcepcion {
@@ -74,12 +80,22 @@ public void asociarEgreso(Egreso egreso){
 		this.montoVinculado = montoVinculado;
 	}
 
-	//PARA CUANDO HAGA LOS FILTROS
+	@Override
+	public void categorizar(CategoriaDelSistema categoria) {
+		this.categoria = categoria;
+	}
+
+	//CUANDO ASOCIO EGRESO MODIFICO EL MONTO VINCULADO
+	public void asociarEgreso(Egreso egreso){
+
+
+		montoVinculado += egreso.valorTotal();
+		egresosAsociados.add(egreso);
+	}
+
 	public boolean puedoVincular(){
 		return this.getMontoSinVincular()>0;
 	}
-
-
 
 	public boolean esDeCategoria(CategoriaDelSistema unaCategoria) {
 		return categoria.equals(unaCategoria);
