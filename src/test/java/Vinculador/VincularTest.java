@@ -148,7 +148,7 @@ public class VincularTest {
         vinculador.vincular(primeroEgreso);
         Assert.assertEquals(1,ingreso.getEgresosAsociados().size());
 
-        Assert.assertEquals(ingreso, egreso.getIngresoAsociado());
+        Assert.assertTrue(egreso.isVinculado());
 
     }
 
@@ -202,10 +202,10 @@ public class VincularTest {
         vinculador.obtenerIngresosEgresos();
         vinculador.vincular(primeroEgreso);
 
-        Assert.assertEquals(ingreso3, egreso2.getIngresoAsociado());
-        Assert.assertEquals(ingreso2, egreso.getIngresoAsociado());
-        Assert.assertEquals(0,ingreso.getEgresosAsociados().size());
-        Assert.assertTrue(egreso3.getIngresoAsociado() == null); 
+        Assert.assertTrue(egreso2.isVinculado());
+        Assert.assertTrue(egreso.isVinculado());
+        Assert.assertEquals(0,ingreso.getEgresosAsociados().size()); //Vincula 1 a cada 1 hay que ver esto todo
+        Assert.assertFalse(egreso3.isVinculado());
 
 
     }

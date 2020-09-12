@@ -64,7 +64,7 @@ public class Vinculador {
     }
 
     private List<Egreso> filtrarEgresos(List<Egreso> egresos) {
-        return egresos.stream().filter(egreso -> egreso.isVinculado()).collect(Collectors.toList());
+        return egresos.stream().filter(egreso -> !egreso.isVinculado()).collect(Collectors.toList());
     }
 
     void vincular(CriterioDeVinculacion criterio) throws ListaVaciaExcepcion, MontoSuperadoExcepcion {

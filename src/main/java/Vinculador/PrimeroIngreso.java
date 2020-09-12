@@ -21,7 +21,7 @@ public class PrimeroIngreso extends CriterioDeVinculacion {
             for(int j = 0; j<ingresos.size(); j++){
                 if(pasaCondiciones(ingresos.get(j),egresos.get(i))){
                     ingresos.get(j).asociarEgreso(egresos.get(i));
-                    egresos.get(i).setIngresoAsociado(ingresos.get(j));//       AGREGO INGRESO A EGRESO
+                    egresos.get(i).setVinculado(true);//       AGREGO INGRESO A EGRESO
                     indexDestruir.add(i);
                 }
                 for(int z = 0; z<indexDestruir.size(); z++)
