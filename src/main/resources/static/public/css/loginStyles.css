@@ -1,0 +1,10 @@
+.logo-header {
+    background-color: white;
+}
+
+.logo-header img {
+    max-width: 300px;
+    padding-top: 40px;
+    display: block;
+    margin: auto;
+}
