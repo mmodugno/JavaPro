@@ -11,10 +11,7 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 
 
 public class Server {
-
-
-
-
+    
     public static void main(String[] args) {
         enableDebugScreen();
         port(9000);
