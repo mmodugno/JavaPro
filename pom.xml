@@ -32,27 +32,27 @@
 		  <groupId>com.sparkjava</groupId>
 		  <artifactId>spark-core</artifactId>
 		  <version>2.7.2</version>
-	  </dependency>//VAMOS A ESTAR USANDO ESTA VERSION DE JAVA SPARK
+	  </dependency><!-- //VAMOS A ESTAR USANDO ESTA VERSION DE JAVA SPARK -->
 
 	  <dependency>
 		  <groupId>com.sparkjava</groupId>
 		  <artifactId>spark-template-handlebars</artifactId>
 		  <version>2.7.1</version>
-	  </dependency>//Implementacion de motor de templates
+	  </dependency><!--/*Implementacion de motor de templates*/-->
 
 
-	  <dependency>/*Es el Log*/
+	  <dependency><!--/*Es el Log*/-->
 		  <groupId>org.slf4j</groupId>
 		  <artifactId>slf4j-simple</artifactId>
 		  <version>1.7.21</version>
-	  </dependency>//Voy dejando nota de los elementos interesantes de la app
+	  </dependency><!--//Voy dejando nota de los elementos interesantes de la app-->
 
-	  <dependency>/*UTIL PROYECTO*/
+	  <dependency><!--/*UTIL PROYECTO*/-->
 		  <groupId>com.sparkjava</groupId>
 		  <artifactId>spark-debug-tools</artifactId>
 		  <version>0.5</version>
-	  </dependency>//Cada vez que haya error vamos a ver en la pantalla bastantes detalles
-	  <dependency>/*SERIALIZR EN JSON*/
+	  </dependency><!--//Cada vez que haya error vamos a ver en la pantalla bastantes detalles-->
+	  <dependency><!--/*SERIALIZR EN JSON*/-->
 		  <groupId>com.fasterxml.jackson.core</groupId>
 		  <artifactId>jackson-core</artifactId>
 		  <version>2.5.1</version>
