@@ -3,7 +3,7 @@ package server;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import spark.Spark;
+
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import static spark.Spark.*;
@@ -12,6 +12,7 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Server {
 
+	
     public static void main(String[] args) {
         enableDebugScreen();
         port(9000);
@@ -30,6 +31,7 @@ public class Server {
         get("/hola",((request, response) -> "Yoel"));
         get("/inicio",Server::mostrarIndex, engine );
         get("/login" ,Server::login, engine);
+        get("/egresos.html" ,Server::egresos, engine);
 
     }
 
@@ -39,5 +41,9 @@ public class Server {
 
     public static ModelAndView  login(Request request, Response response){
         return new ModelAndView(null,"login.html");
+    }
+
+    public static ModelAndView  egresos(Request request, Response response){
+        return new ModelAndView(null,"egresos.html");
     }
 }
