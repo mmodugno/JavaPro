@@ -10,8 +10,11 @@ import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
 
+
 public class Server {
 
+	
+	
 	
     public static void main(String[] args) {
         enableDebugScreen();
@@ -25,13 +28,16 @@ public class Server {
             staticFiles.location("/resources");
         }
 
-        // Ejemplo de acceso: http://localhost:9000/auto
+        
+        
+        // Ejemplo de acceso: http://localhost:9000/inicio
         HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
 
         get("/hola",((request, response) -> "Yoel"));
         get("/inicio",Server::mostrarIndex, engine );
         get("/login" ,Server::login, engine);
         get("/egresos.html" ,Server::egresos, engine);
+        get("/crearEgreso.html" ,Server::crearEgreso, engine);
 
     }
 
@@ -45,5 +51,9 @@ public class Server {
 
     public static ModelAndView  egresos(Request request, Response response){
         return new ModelAndView(null,"egresos.html");
+    }
+    
+    public static ModelAndView crearEgreso(Request request, Response response){
+        return new ModelAndView(null,"formularioEgresos.html");
     }
 }

@@ -1,0 +1,12 @@
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.lh-condensed { line-height: 1.25; }
+
+
+.aLaDerecha{
+  align-items: right;
+}
