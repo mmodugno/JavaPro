@@ -37,7 +37,9 @@ public class Server {
         get("/inicio",Server::mostrarIndex, engine );
         get("/login" ,Server::login, engine);
         get("/egresos.html" ,Server::egresos, engine);
+        get("/detalleEgreso.html" ,Server::detalleEgreso, engine);
         get("/crearEgreso.html" ,Server::crearEgreso, engine);
+        get("/modificarEgreso",Server::modificarEgreso, engine);
 
     }
 
@@ -54,6 +56,12 @@ public class Server {
     }
     
     public static ModelAndView crearEgreso(Request request, Response response){
+        return new ModelAndView(null,"formularioEgresos.html");
+    }
+    public static ModelAndView detalleEgreso(Request request, Response response){
+        return new ModelAndView(null,"detalleEgreso.html");
+    }
+    public static ModelAndView modificarEgreso(Request request, Response response){
         return new ModelAndView(null,"formularioEgresos.html");
     }
 }

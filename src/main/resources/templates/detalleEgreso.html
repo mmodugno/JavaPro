@@ -1,1 +1,130 @@
-<h1>Dale que dale</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Bienvenidos a GeSoc</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="public/css/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom imagen-logo">
+            <a href="/inicio">
+                <img src="public/img/pruebalogosoc.png" alt="Logo GeSoc">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+             <span class="navbar-toggler-icon"></span>
+        </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Usuario</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Dropdown
+                    </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+    </header>
+
+    <div class="d-flex" id="wrapper">
+
+
+        <!-- Sidebar -->
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading color-gris">Operaciones con:</div>
+            <div class="list-group list-group-flush color-gris">
+                <a href="ordenDeCompra.html" class="list-group-item list-group-item-action bg-light color-gris">Ordenes de Compra</a>
+                <a href="egresos.html" class="list-group-item list-group-item-action bg-light color-gris">Egresos</a>
+                <a href="ingresos.html" class="list-group-item list-group-item-action bg-light">Ingresos</a>
+                <a href="" class="list-group-item list-group-item-action bg-light">Presupuestos</a>
+                <a href="#" class="list-group-item list-group-item-action bg-light">Categorizaciones</a>
+                <a href="#" class="list-group-item list-group-item-action bg-light">Vinculaciones</a>
+                <a href="https://www.campusvirtual.frba.utn.edu.ar/especialidad/pluginfile.php/218810/mod_resource/content/1/TP%20DDS%202020.pdf
+                " target="_blank" class="list-group-item list-group-item-action bg-light">Trabajo Practico</a>
+
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+
+        <div id="page-content-wrapper">
+            <h1 class="mt-4 text-center">Detalle de Egreso</h1>
+            <div class="contenido-centrado-detalle">
+
+                <ul class="list-group color-none">
+                    <li class="list-group-item color-none">Número egreso:</li>
+                    <li class="list-group-item color-none">Fecha:</li>
+                    <li class="list-group-item color-none">Monto:</li>
+                    <li class="list-group-item color-none">Categoría:</li>
+                    <li class="list-group-item color-none">Orden de Compra</li>
+                    <li class="list-group-item color-none">Presupuesto</li>
+                    <li class="list-group-item color-none">Documentos comerciales:</li>
+                    <!--Para ver los items hay que ir a la orden de compra!-->
+                </ul>
+                <a href="/modificarEgreso">
+                    <button type="button" class="btn btn-warning">Modificar</button>
+                </a>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+
+</body>
+
+</html>
