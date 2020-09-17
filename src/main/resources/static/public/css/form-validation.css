@@ -10,3 +10,15 @@
 .aLaDerecha{
   align-items: right;
 }
+
+.botones-centrados{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buscadores{
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+}

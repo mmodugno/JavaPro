@@ -27,9 +27,9 @@ public class Server {
         } else {
             staticFiles.location("/resources");
         }
-
+    
         
-        
+   
         // Ejemplo de acceso: http://localhost:9000/inicio
         HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
 
@@ -40,6 +40,7 @@ public class Server {
         get("/detalleEgreso.html" ,Server::detalleEgreso, engine);
         get("/crearEgreso.html" ,Server::crearEgreso, engine);
         get("/modificarEgreso",Server::modificarEgreso, engine);
+        get("/categorias",Server::mostrarCategorias, engine);
 
     }
 
@@ -64,4 +65,8 @@ public class Server {
     public static ModelAndView modificarEgreso(Request request, Response response){
         return new ModelAndView(null,"formularioEgresos.html");
     }
+    public static ModelAndView mostrarCategorias(Request request, Response response){
+        return new ModelAndView(null,"categorias.html");
+    }
+    
 }
