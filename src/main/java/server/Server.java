@@ -42,6 +42,8 @@ public class Server {
         get("/modificarEgreso",Server::modificarEgreso, engine);
         get("/categorias",Server::mostrarCategorias, engine);
 
+        get("/CrearProducto",Server::nuevoProducto, engine);
+
     }
 
     public static ModelAndView  mostrarIndex(Request request, Response response){
@@ -67,6 +69,10 @@ public class Server {
     }
     public static ModelAndView mostrarCategorias(Request request, Response response){
         return new ModelAndView(null,"categorias.html");
+    }
+
+    public static ModelAndView nuevoProducto(Request request, Response response){
+        return new ModelAndView(null,"nuevoProducto.html");
     }
     
 }
