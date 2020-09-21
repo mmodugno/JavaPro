@@ -32,5 +32,4 @@ public class RepositorioIngreso {
     public void crear(Ingreso ingreso) {
     	ingresos.add(ingreso);
     }
-
 }
