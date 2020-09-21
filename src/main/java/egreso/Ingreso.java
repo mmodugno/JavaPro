@@ -53,6 +53,10 @@ public class Ingreso implements Categorizable{
 
 		return monto - montoVinculado;
 	}
+	
+	public String getDescripcion() {
+		return descripcion;
+	}
 
 	/*SETTERS*/
 
