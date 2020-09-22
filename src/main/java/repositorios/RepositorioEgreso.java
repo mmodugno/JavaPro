@@ -20,6 +20,8 @@ import usuarios.Usuario;
 public class RepositorioEgreso {
 	
 	 static List<Egreso> egresos = null;
+
+
 	 
 	 public RepositorioEgreso() throws CloneNotSupportedException {
 		 
@@ -49,12 +51,17 @@ public class RepositorioEgreso {
         presupuesto2.getItems().get(1).setPrecioUnitario(40.00);
 		 
 		Egreso egreso1= new Egreso(ordenDeCompra, presupuesto1);
+		egreso1.setId(1);
 		Egreso egreso2= new Egreso(ordenDeCompra2, presupuesto2);
+		egreso2.setId(2);
 		Egreso egreso3= new Egreso(ordenDeCompra, presupuesto1);
+		 egreso3.setId(3);
 
+		 if (egresos == null) {
+			 egresos = new ArrayList<>();
 		egresos.add(egreso1);
 		 egresos.add(egreso2);
-		 egresos.add(egreso3);
+		 egresos.add(egreso3);}
 
 		
 	       

@@ -44,7 +44,7 @@ public class Server {
         get("/inicio",Server::mostrarIndex, engine );
         get("/login" ,Server::login, engine);
         get("/egresos.html" ,Server::egresos, engine);
-        get("/detalleEgreso.html" ,Server::detalleEgreso, engine);
+        get("/egreso/:id" ,Server::detalleEgreso, engine);
         get("/crearEgreso.html" ,Server::crearEgreso, engine);
         get("/modificarEgreso",Server::modificarEgreso, engine);
         get("/categorias",Server::mostrarCategorias, engine);

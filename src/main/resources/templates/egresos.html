@@ -100,11 +100,11 @@
                     {{#each egresos}}
                         <tr class="ultimo-final">
                             <th scope="row">1</th>
-                            <td>0303456</td>
-                            <td>ValorTotal</td>
-                            <td>Fecha</td>
+                            <td>{{id}}</td>
+                            <td>{{valorTotal}}</td>
+                            <td>{{fecha}}</td>
                             <td>
-                                <a href="detalleEgreso.html">
+                                <a href="/egreso/{{id}}">
                                     <button class="btn btn-yoel">DETALLE</button>
                                 </a>
                             </td>

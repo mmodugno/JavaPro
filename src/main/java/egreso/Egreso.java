@@ -18,6 +18,7 @@ public class Egreso implements Categorizable{
 		this.ordenDeCompra = ordenDeCompra;
 		this.presupuesto = presupuesto;
 		fecha = LocalDate.now();
+		valorTotal = presupuesto.valorTotal();
 	}
 	/*
 	***Se tendria que hacer así***
@@ -26,12 +27,14 @@ public class Egreso implements Categorizable{
 	 */
 
 	/*ATRIBUTOS*/
+	private int id;
 	private List<DocumentoComercial> documentosComerciales;
 	private OrdenDeCompra ordenDeCompra;
 	private Presupuesto presupuesto;
 	private CategoriaDelSistema categoria = null;
 	private LocalDate fecha;
 	private boolean vinculado = false;
+	private Double valorTotal;
 
 	/*GETTERS*/
 	public CategoriaDelSistema getCategoria() {
@@ -52,10 +55,13 @@ public class Egreso implements Categorizable{
 	public Presupuesto getPresupuesto() {
 		return presupuesto;
 	}
+	public int getId() {
+		return id;
+	}
 
 	public double getValorTotal() {
-		return presupuesto.valorTotal();
-	}//Yo lo considero un get
+		return valorTotal;
+	}
 
 	/*SETTERS*/
 	public void setFecha(LocalDate fecha) {
@@ -75,6 +81,9 @@ public class Egreso implements Categorizable{
 	}
 	public void setVinculado(boolean vinculado) {
 		this.vinculado = vinculado;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	/*Para agregar de a uno solo*/
