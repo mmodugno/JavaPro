@@ -53,7 +53,7 @@ public class Egreso implements Categorizable{
 		return presupuesto;
 	}
 
-	public double valorTotal() {
+	public double getValorTotal() {
 		return presupuesto.valorTotal();
 	}//Yo lo considero un get
 

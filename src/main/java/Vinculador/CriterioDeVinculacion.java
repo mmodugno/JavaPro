@@ -31,7 +31,7 @@ public abstract class CriterioDeVinculacion {
             return ordenarDouble(unIngreso.getMontoSinVincular(), otroIngreso.getMontoSinVincular());
         });
         egresos.sort((Egreso unEgreso, Egreso otroEgreso) -> {
-            return ordenarDouble(unEgreso.valorTotal(), otroEgreso.valorTotal());
+            return ordenarDouble(unEgreso.getValorTotal(), otroEgreso.getValorTotal());
         });
 
     }
@@ -64,7 +64,7 @@ public abstract class CriterioDeVinculacion {
             //ESTAS VARIABLES SE REINICIARIAN DESPUES DE CADA INTERACCION CON EL WHILE
             List<Ingreso> ingresosUsados = new ArrayList<Ingreso>();
             List<Double> montoUsado = new ArrayList<Double>();
-            double montoEgreso = egresos.get(0).valorTotal();
+            double montoEgreso = egresos.get(0).getValorTotal();
             double montoIngresos = 0.00;
 
             while (!ingresos.isEmpty() && !salir) {//While para no quedarme sin ingresos

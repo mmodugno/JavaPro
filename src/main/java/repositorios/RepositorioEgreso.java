@@ -51,6 +51,11 @@ public class RepositorioEgreso {
 		Egreso egreso1= new Egreso(ordenDeCompra, presupuesto1);
 		Egreso egreso2= new Egreso(ordenDeCompra2, presupuesto2);
 		Egreso egreso3= new Egreso(ordenDeCompra, presupuesto1);
+
+		egresos.add(egreso1);
+		 egresos.add(egreso2);
+		 egresos.add(egreso3);
+
 		
 	       
 	 }

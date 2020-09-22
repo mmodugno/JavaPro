@@ -93,7 +93,7 @@ public class Ingreso implements Categorizable{
 	public void asociarEgreso(Egreso egreso){
 
 
-		montoVinculado += egreso.valorTotal();
+		montoVinculado += egreso.getValorTotal();
 		egresosAsociados.add(egreso);
 	}
 

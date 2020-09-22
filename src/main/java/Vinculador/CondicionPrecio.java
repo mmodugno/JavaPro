@@ -8,7 +8,7 @@ public class CondicionPrecio implements CondicionObligatoria {
     @Override
     public boolean cumpleCondicion(Ingreso ingreso, Egreso egreso) {
 
-        return egreso.valorTotal() <= ingreso.getMontoSinVincular();
+        return egreso.getValorTotal() <= ingreso.getMontoSinVincular();
         }
 
 

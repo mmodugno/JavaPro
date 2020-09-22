@@ -86,6 +86,7 @@
             <div class="contenido-centrado">
                 <table class="table  gradual ">
                     <thead class="thead-dark">
+
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Nro</th>
@@ -93,64 +94,25 @@
                             <th scope="col">Fecha</th>
                             <th scope="col"></th>
                         </tr>
+
                     </thead>
                     <tbody>
+                    {{#each egresos}}
                         <tr class="ultimo-final">
                             <th scope="row">1</th>
-                            <td>00334</td>
-                            <td>570.00</td>
-                            <td>04/08/2002</td>
+                            <td>0303456</td>
+                            <td>ValorTotal</td>
+                            <td>Fecha</td>
                             <td>
                                 <a href="detalleEgreso.html">
                                     <button class="btn btn-yoel">DETALLE</button>
                                 </a>
                             </td>
 
+
                         </tr>
-                        <tr class="ultimo-final">
-                            <th scope="row">2</th>
-                            <td>23422</td>
-                            <td>270.00</td>
-                            <td>04/08/2002</td>
-                            <td>
-                                <a href="detalleEgreso.html">
-                                    <button class="btn btn-yoel">DETALLE</button>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr class="ultimo-final">
-                            <th scope="row">3</th>
-                            <td>23422</td>
-                            <td>270.00</td>
-                            <td>04/08/2002</td>
-                            <td>
-                                <a href="detalleEgreso.html">
-                                    <button class="btn btn-yoel">DETALLE</button>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr class="ultimo-final">
-                            <th scope="row">4</th>
-                            <td>23422</td>
-                            <td>270.00</td>
-                            <td>04/08/2002</td>
-                            <td>
-                                <a href="detalleEgreso.html">
-                                    <button class="btn btn-yoel">DETALLE</button>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr class="ultimo-final">
-                            <th scope="row">5</th>
-                            <td>23422</td>
-                            <td>270.00</td>
-                            <td>04/08/2002</td>
-                            <td>
-                                <a href="detalleEgreso.html">
-                                    <button class="btn btn-yoel">DETALLE</button>
-                                </a>
-                            </td>
-                        </tr>
+                    {{/each}}
+
 
                     </tbody>
 

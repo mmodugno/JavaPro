@@ -1,10 +1,16 @@
 package server;
 
+import egreso.Egreso;
+import repositorios.RepositorioEgreso;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
 import spark.template.handlebars.HandlebarsTemplateEngine;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
@@ -33,7 +39,8 @@ public class Server {
         // Ejemplo de acceso: http://localhost:9000/inicio
         HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
 
-        get("/hola",((request, response) -> "Yoel"));
+
+        //get("/hola",((request, response) -> "Yoel"));
         get("/inicio",Server::mostrarIndex, engine );
         get("/login" ,Server::login, engine);
         get("/egresos.html" ,Server::egresos, engine);
@@ -54,8 +61,19 @@ public class Server {
         return new ModelAndView(null,"login.html");
     }
 
-    public static ModelAndView  egresos(Request request, Response response){
-        return new ModelAndView(null,"egresos.html");
+    public static ModelAndView  egresos(Request request, Response response) throws CloneNotSupportedException {
+
+        //INIT
+        RepositorioEgreso repo = new RepositorioEgreso();
+
+        //DOMINIO
+        List<Egreso> egresos = repo.todos();
+
+        //OUTPUT
+        Map<String, Object> map = new HashMap<>();
+        map.put("egresos", egresos);
+
+        return new ModelAndView(map,"egresos.html");
     }
     
     public static ModelAndView crearEgreso(Request request, Response response){
@@ -74,5 +92,7 @@ public class Server {
     public static ModelAndView nuevoProducto(Request request, Response response){
         return new ModelAndView(null,"nuevoProducto.html");
     }
+
+
     
 }
