@@ -82,16 +82,24 @@
             <h1 class="mt-4 text-center">Detalle de Egreso</h1>
             <div class="contenido-centrado-detalle">
 
+			
+
                 <ul class="list-group color-none">
-                    <li class="list-group-item color-none">Número egreso:</li>
-                    <li class="list-group-item color-none">Fecha:</li>
-                    <li class="list-group-item color-none">Monto:</li>
-                    <li class="list-group-item color-none">Categoría:</li>
-                    <li class="list-group-item color-none">Orden de Compra</li>
-                    <li class="list-group-item color-none">Presupuesto</li>
-                    <li class="list-group-item color-none">Documentos comerciales:</li>
+                              
+                    <li class="list-group-item color-none"> ID: {{egreso.id}}</li>
+                    <li class="list-group-item color-none">Fecha: {{egreso.fecha}}</li>
+                    <li class="list-group-item color-none">Monto: {{egreso.valorTotal}}</li>
+                    <li class="list-group-item color-none">Categoría: {{egreso.categoria.categoria}}</li>
+                    <li class="list-group-item color-none">Orden de Compra {{egreso.ordenDeCompra.idOrden}}</li>
+                    <li class="list-group-item color-none">Presupuesto {{egreso.ordenDeCompra.idOrden}} </li>
+                    <li class="list-group-item color-none">Documentos comerciales: {{egreso.documentosComerciales}}</li>
                     <!--Para ver los items hay que ir a la orden de compra!-->
+                            
                 </ul>
+                
+                
+                
+                
                 <a href="/modificarEgreso">
                     <button type="button" class="btn btn-warning">Modificar</button>
                 </a>

@@ -2,6 +2,7 @@ package repositorios;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import egreso.Egreso;
@@ -14,6 +15,7 @@ import producto.Item;
 import producto.Producto;
 import producto.Proveedor;
 import producto.TipoItem;
+import usuarios.Categoria;
 import usuarios.CategoriaDelSistema;
 import usuarios.Usuario;
 
@@ -42,6 +44,8 @@ public class RepositorioEgreso {
 	    ordenDeCompra2.agregarItem(item1);
 	    ordenDeCompra2.agregarItem(item2);
 	    
+	    Categoria categoriaBSAS = new Categoria("Buenos Aires","Provincia");
+	    
 		Presupuesto presupuesto1 = new Presupuesto(ordenDeCompra.getItems(),proveedor1,medioDePago);
         presupuesto1.getItems().get(0).setPrecioUnitario(80.00);
         presupuesto1.getItems().get(1).setPrecioUnitario(30.00);
@@ -56,6 +60,8 @@ public class RepositorioEgreso {
 		egreso2.setId(2);
 		Egreso egreso3= new Egreso(ordenDeCompra, presupuesto1);
 		 egreso3.setId(3);
+		 
+		 egreso1.setCategoria(categoriaBSAS);
 
 		 if (egresos == null) {
 			 egresos = new ArrayList<>();
@@ -79,7 +85,16 @@ public class RepositorioEgreso {
 	   
 	public void crear(Egreso egreso) {
 	    	egresos.add(egreso);
-	    } 
+	    }
+
+	public Egreso byID(int id) {
+		Optional<Egreso> egreso = egresos.stream().filter(e -> e.getId() == id).findFirst();
+		
+		 if (egreso.isPresent()) {
+	            return egreso.get();
+	        } 
+		 else return null;
+	} 
 	    
 	   
 

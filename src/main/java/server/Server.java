@@ -79,8 +79,21 @@ public class Server {
     public static ModelAndView crearEgreso(Request request, Response response){
         return new ModelAndView(null,"formularioEgresos.html");
     }
-    public static ModelAndView detalleEgreso(Request request, Response response){
-        return new ModelAndView(null,"detalleEgreso.html");
+    public static ModelAndView detalleEgreso(Request request, Response response) throws CloneNotSupportedException{
+    	
+    	
+    	RepositorioEgreso repo = new RepositorioEgreso();
+    	
+    	String strID = request.params("id");
+    	
+    	int id = Integer.parseInt(strID);
+    	
+    	Egreso egreso = repo.byID(id);
+    	
+    	Map<String, Object> map = new HashMap<>();
+        map.put("egreso", egreso);
+    	
+        return new ModelAndView(map,"detalleEgreso.html");
     }
     public static ModelAndView modificarEgreso(Request request, Response response){
         return new ModelAndView(null,"formularioEgresos.html");
