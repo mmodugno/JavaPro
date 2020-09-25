@@ -20,8 +20,6 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 public class Server {
 
 	
-
-	
     public static void main(String[] args) {
         enableDebugScreen();
         port(9000);
@@ -33,9 +31,8 @@ public class Server {
         } else {
             staticFiles.location("/resources");
         }
-    
-        
-     
+   
+      
         
         
         // Ejemplo de acceso: http://localhost:9000/inicio
