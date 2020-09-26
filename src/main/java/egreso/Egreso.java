@@ -7,6 +7,7 @@ import java.util.List;
 
 import producto.*;
 import egreso.*;
+import usuarios.Categoria;
 import usuarios.CategoriaDelSistema;
 import usuarios.CreadorUsuario;
 
@@ -38,7 +39,9 @@ public class Egreso implements Categorizable{
 
 	/*GETTERS*/
 	public CategoriaDelSistema getCategoria() {
+		if(categoria != null)
 		return categoria;
+		else return new Categoria("sin categoria","sin categoria");
 	}
 	public LocalDate getFecha() {
 		return fecha;

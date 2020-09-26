@@ -21,7 +21,6 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Server {
 
-
     public static void main(String[] args) {
         enableDebugScreen();
         port(9000);
@@ -45,7 +44,7 @@ public class Server {
         get("/egresos.html", Server::egresos, engine);
         get("/egreso/:id", Server::detalleEgreso, engine);
         get("/crearEgreso.html", Server::crearEgreso, engine);
-        get("/modificarEgreso", Server::modificarEgreso, engine);
+        //get("/modificarEgreso", Server::modificarEgreso, engine);
         get("/categorias", Server::mostrarCategorias, engine);
 
 
@@ -78,16 +77,24 @@ public class Server {
         return new ModelAndView(map, "egresos.html");
     }
 
-    public static ModelAndView crearEgreso(Request request, Response response) {
-        return new ModelAndView(null, "formularioEgresos.html");
+    
+    public static ModelAndView crearEgreso(Request request, Response response){
+        return new ModelAndView(null,"formularioEgresos.html");
     }
-
-    public static ModelAndView detalleEgreso(Request request, Response response) {
-        return new ModelAndView(null, "detalleEgreso.html");
-    }
-
-    public static ModelAndView modificarEgreso(Request request, Response response) {
-        return new ModelAndView(null, "formularioEgresos.html");
+    public static ModelAndView detalleEgreso(Request request, Response response) throws CloneNotSupportedException{
+    	
+    	RepositorioEgreso repo = new RepositorioEgreso();
+    	
+    	String strID = request.params("id");
+    	
+    	int id = Integer.parseInt(strID);
+    	
+    	Egreso egreso = repo.byID(id);
+    	
+    	Map<String, Object> map = new HashMap<>();
+        map.put("egreso", egreso);
+    	
+        return new ModelAndView(map,"detalleEgreso.html");
     }
 
     public static ModelAndView mostrarCategorias(Request request, Response response) {
