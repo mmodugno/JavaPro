@@ -50,7 +50,7 @@ public class Server {
 
         get("/productos",Server::productos,engine);
         get("/CrearProducto", Server::nuevoProducto, engine);
-        get( "/productos /:id", Server::detalleProducto, engine);
+        get( "/producto/:id", Server::detalleProducto, engine);
 
     }
 
@@ -118,11 +118,25 @@ public class Server {
         return new ModelAndView(map, "productos.html");
 
     }
-    public static ModelAndView detalleProducto(Request request, Response response){
-    return new ModelAndView(null,"detalleProducto.html");}
 
     public static ModelAndView nuevoProducto(Request request, Response response){
         return new ModelAndView(null,"nuevoProducto.html");
+    }
+
+    public static ModelAndView detalleProducto(Request request, Response response) throws CloneNotSupportedException{
+
+        RepositorioProducto repo = new RepositorioProducto();
+
+        String strID = request.params("id");
+
+        int id = Integer.parseInt(strID);
+
+        Producto producto = repo.byID(id);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("producto", producto);
+
+        return new ModelAndView(map,"nuevoProducto.html");
     }
 
 

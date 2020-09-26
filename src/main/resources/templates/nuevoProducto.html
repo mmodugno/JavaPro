@@ -14,19 +14,24 @@
 
         <form action="">
             <fieldset class="">
-                <legend class="centrar-texto">Nuevo Producto</legend>
-                <label for="codigo">Código</label>
-                <input type="number" id="codigo" placeholder="Código Producto" requiered>
+                <legend class="centrar-texto">{{#if producto}} Modificando {{producto.nombre}}
+                    {{else}} Nuevo Producto {{/if}}</legend>
+
+                <label>Id Producto: {{producto.idProducto}}</label>
+
+                <label for="codigo"><br>Código</label>
+                <input type="text" id="codigo" {{#if producto}}placeholder= {{producto.codProducto}}{{else}}placeholder="Código Producto"{{/if}} requiered>
 
                 <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" placeholder="Nombre Producto" required>
+                <input type="text" id="nombre" {{#if producto}}placeholder= {{producto.nombre}}{{else}}placeholder="Nombre Producto"{{/if}} required>
 
                 <label for="descripcion">descripcion</label>
-                <input type="text" id="descripcion" placeholder="Breve Descripcion" required>
+                <input type="text" id="descripcion" {{#if producto}}placeholder= {{producto.descripcion}}{{else}}placeholder="Breve Descripción"{{/if}} required>
 
 
                 <select id="opciones">
-                    <option value="" disabled selected>-- Tipo Producto --</option>
+                    {{#if producto}} <option>{{producto.tipoProducto}}</option>{{else}}
+                    <option value="" disabled selected>-- Tipo Producto --</option>{{/if}}
                     <option value="articulo">Articulo</option>
                     <option value="licencia">Licencia</option>
                 </select>

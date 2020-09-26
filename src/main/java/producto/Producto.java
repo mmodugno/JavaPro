@@ -18,12 +18,17 @@ public class Producto {
 	*/
 
 	/*ATRIBUTOS*/
+	private int idProducto;
 	private int codProducto;
 	private String nombre;
 	private String descripcion;
 	private TipoItem tipoProducto;
 		
 	/*GETTERS*/
+
+	public int getIdProducto() {
+		return idProducto;
+	}
 	public int getCodProducto() {
 		return codProducto;
 	}
@@ -38,6 +43,10 @@ public class Producto {
 	}
 
 	/*SETTERS*/
+
+	public void setIdProducto(int idProducto) {
+		this.idProducto = idProducto;
+	}
 	public void setCodProducto(int codProducto) {
 		this.codProducto = codProducto;
 	}
