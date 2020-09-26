@@ -12,7 +12,7 @@
 <body>
     <main class="contenido-centrado contenedor">
 
-        <form action="">
+        <form {{#if producto}} action= "/producto/{{producto.idProducto}}" {{else}} action= "/producto" {{/if}} method="post">
             <fieldset class="">
                 <legend class="centrar-texto">{{#if producto}} Modificando {{producto.nombre}}
                     {{else}} Nuevo Producto {{/if}}</legend>
@@ -20,29 +20,30 @@
                 <label>Id Producto: {{producto.idProducto}}</label>
 
                 <label for="codigo"><br>Código</label>
-                <input type="text" id="codigo" {{#if producto}}placeholder= {{producto.codProducto}}{{else}}placeholder="Código Producto"{{/if}} requiered>
+                <input type= "" id="codigo" name="codigo"{{#if producto}}value="{{producto.codProducto}}"{{else}}placeholder="Código Producto"{{/if}} requiered>
 
                 <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" {{#if producto}}placeholder= {{producto.nombre}}{{else}}placeholder="Nombre Producto"{{/if}} required>
+                <input type="" id="nombre" name="nombre" {{#if producto}}value= "{{producto.nombre}}" {{else}}placeholder="Nombre Producto"{{/if}} required>
 
                 <label for="descripcion">descripcion</label>
-                <input type="text" id="descripcion" {{#if producto}}placeholder= {{producto.descripcion}}{{else}}placeholder="Breve Descripción"{{/if}} required>
+                <input type="" id="descripcion" name="descripcion" {{#if producto}} value= "{{producto.descripcion}}" {{else}}placeholder="Breve Descripción"{{/if}} required>
 
 
-                <select id="opciones">
+                <select name="opciones">
                     {{#if producto}} <option>{{producto.tipoProducto}}</option>{{else}}
                     <option value="" disabled selected>-- Tipo Producto --</option>{{/if}}
-                    <option value="articulo">Articulo</option>
-                    <option value="licencia">Licencia</option>
+                    <option value="Articulo">Articulo</option>
+                    <option value="Servicio">Servicio</option>
                 </select>
 
             </fieldset>
+
             <div class="">
-                <a href="detalleEgreso.html" class = "btn btn-primary ">Crear Producto</a>
-                <a href="egresos.html" class = "btn btn-danger">Cancelar</a>
+                <input type="submit" class="btn btn-primary"{{#if producto}} value="Modificar Producto" {{else}} value="Crear Producto" {{/if}}>
+                <a href="/productos" class = "btn btn-borrar">Borrar</a>
+                <a href="/productos" class = "btn btn-danger">Cancelar</a>
             </div>
 
-            <!--<input type="submit" class="boton">-->
         </form>
     </main>
 

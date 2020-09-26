@@ -23,7 +23,11 @@ public class Producto {
 	private String nombre;
 	private String descripcion;
 	private TipoItem tipoProducto;
-		
+
+    public Producto() {
+
+    }
+
 	/*GETTERS*/
 
 	public int getIdProducto() {

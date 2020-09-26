@@ -21,6 +21,8 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Server {
 
+    private static ControllerProductos controllerProductos= new ControllerProductos();
+
     public static void main(String[] args) {
         enableDebugScreen();
         port(9000);
@@ -47,10 +49,12 @@ public class Server {
         //get("/modificarEgreso", Server::modificarEgreso, engine);
         get("/categorias", Server::mostrarCategorias, engine);
 
-
-        get("/productos",Server::productos,engine);
-        get("/CrearProducto", Server::nuevoProducto, engine);
-        get( "/producto/:id", Server::detalleProducto, engine);
+        //acciones productos
+        get("/productos",controllerProductos::productos,engine);
+        get("/producto", controllerProductos::nuevoProducto, engine);
+        get( "/producto/:id", controllerProductos::detalleProducto, engine);
+        post("/producto", controllerProductos::guardarProducto);
+        post("/producto/:id",controllerProductos::modificarProducto);
 
     }
 
@@ -103,41 +107,7 @@ public class Server {
 
     //PRODUCTOS
 
-    public static ModelAndView productos(Request request, Response response){
 
-        //INIT
-        RepositorioProducto repo = new RepositorioProducto();
-
-        //DOMINIO
-        List<Producto> productos = repo.todos();
-
-        //OUTPUT
-        Map<String, Object> map = new HashMap<>();
-        map.put("productos", productos);
-
-        return new ModelAndView(map, "productos.html");
-
-    }
-
-    public static ModelAndView nuevoProducto(Request request, Response response){
-        return new ModelAndView(null,"nuevoProducto.html");
-    }
-
-    public static ModelAndView detalleProducto(Request request, Response response) throws CloneNotSupportedException{
-
-        RepositorioProducto repo = new RepositorioProducto();
-
-        String strID = request.params("id");
-
-        int id = Integer.parseInt(strID);
-
-        Producto producto = repo.byID(id);
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("producto", producto);
-
-        return new ModelAndView(map,"nuevoProducto.html");
-    }
 
 
 
