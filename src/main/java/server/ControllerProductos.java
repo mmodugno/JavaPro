@@ -99,4 +99,17 @@ public class ControllerProductos {
 
         return response;
     }
+
+    public Response eliminarProducto(Request request, Response response){
+
+        String strID = request.params("id");
+        int id = new Integer(strID);
+        Producto producto = repo.byID(id);
+
+        repo.eliminar(producto);
+
+        //response.redirect("/productos");
+
+        return response;
+    }
 }

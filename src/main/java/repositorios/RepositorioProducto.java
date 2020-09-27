@@ -63,4 +63,8 @@ public class RepositorioProducto {
 
     }
 
+    public static void eliminar(Producto producto){
+        productos.remove(producto);
+    }
+
 }

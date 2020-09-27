@@ -5,7 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
+    <link rel="stylesheet" href="/public/vendor/bootstrap/css/bootstrap.css">
+
+    <script src="/public/vendor/jquery/jquery.min.js"></script>
+    <script src="/public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
     <link rel="stylesheet" href="/public/css/styles-nuevo.css">
+    <script src="/public/js/functions.js"></script>
     <title>Nuevo Producto</title>
 </head>
 
@@ -40,7 +47,9 @@
 
             <div class="">
                 <input type="submit" class="btn btn-primary"{{#if producto}} value="Modificar Producto" {{else}} value="Crear Producto" {{/if}}>
-                <a href="/productos" class = "btn btn-borrar">Borrar</a>
+                {{#if producto}}
+                <button type="button" class="btn btn-borrar" onclick="confirmarBorrar('{{producto.idProducto}}')">Borrar</button>
+                 {{/if}}
                 <a href="/productos" class = "btn btn-danger">Cancelar</a>
             </div>
 
@@ -48,5 +57,20 @@
     </main>
 
 </body>
+
+<!-- ================= ELIMINACION ================== -->
+<div class="modalEliminar modal" id="eliminarProductoVentana">
+    <div class="modalContent">
+        <input type="hidden" value="" id="productoId">
+        <p>¿Realmente desea eliminar el producto?</p>
+        <button type="button" name="button" class="btn-close-modal" onclick="cerrarConfirmacionBorrar()" ><i class="fas fa-times-circle"></i></button>
+        <br>
+        <div class="">
+            <button type="button" name="button" class="btn-rojo" onclick="eliminarProducto()">Eliminar</button>
+            <button type="button" name="button" class="btn-cancelar" onclick="cerrarConfirmacionBorrar()">Cancelar</button>
+        </div>
+    </div>
+</div>
+<!-- ================= FIN ELIMINACION ================== -->
 
 </html>

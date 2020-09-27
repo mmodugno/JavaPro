@@ -55,6 +55,7 @@ public class Server {
         get( "/producto/:id", controllerProductos::detalleProducto, engine);
         post("/producto", controllerProductos::guardarProducto);
         post("/producto/:id",controllerProductos::modificarProducto);
+        delete("/producto/:id",controllerProductos::eliminarProducto);
 
     }
 
