@@ -40,19 +40,32 @@ public class RepositorioPresupuesto {
         presupuesto1.getItems().get(0).setPrecioUnitario(80.00);
         presupuesto1.getItems().get(1).setPrecioUnitario(30.00);
         
+        presupuesto1.setId(6);
+        
+        
         Presupuesto presupuesto2 = new Presupuesto(ordenDeCompra.getItems(),proveedor1,medioDePago);
         presupuesto2.getItems().get(0).setPrecioUnitario(90.00);
         presupuesto2.getItems().get(1).setPrecioUnitario(40.00);
         
+        presupuesto2.setId(7);
+        
+        if (presupuestos == null) {
+        presupuestos = new ArrayList<>();
         presupuestos.add(presupuesto1);
         presupuestos.add(presupuesto2);
-	       
+        }
 	 }
     
     public List<Presupuesto> byCategoria(CategoriaDelSistema unaCategoria) {
         return presupuestos.stream().filter(a ->
                 a.esDeCategoria(unaCategoria)
         ).collect(Collectors.toList());
+    }
+    
+    public Presupuesto byID(int id) {
+        return presupuestos.stream().filter(a ->
+                a.getId() == id
+        ).findFirst().get();
   }
 
 

@@ -1,8 +1,14 @@
 package server;
 
 import egreso.Egreso;
+import egreso.OrdenDeCompra;
+import egreso.Presupuesto;
 import producto.Producto;
+import producto.TipoItem;
+import repositorios.RepositorioCategoria;
 import repositorios.RepositorioEgreso;
+import repositorios.RepositorioOrdenDeCompra;
+import repositorios.RepositorioPresupuesto;
 import repositorios.RepositorioProducto;
 import spark.ModelAndView;
 import spark.Request;
@@ -22,10 +28,11 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 public class Server {
 
     private static ControllerProductos controllerProductos= new ControllerProductos();
+    private static ControllerEgresos controllerEgresos= new ControllerEgresos();
 
     public static void main(String[] args) {
         enableDebugScreen();
-        port(9000);
+        port(1133);
         boolean localhost = true;
         if (localhost) {
             String projectDir = System.getProperty("user.dir");
@@ -48,7 +55,8 @@ public class Server {
         get("/crearEgreso.html", Server::crearEgreso, engine);
         //get("/modificarEgreso", Server::modificarEgreso, engine);
         get("/categorias", Server::mostrarCategorias, engine);
-
+        
+        post("/egreso",controllerEgresos::guardarEgreso);
         //acciones productos
         get("/productos",controllerProductos::productos,engine);
         get("/producto", controllerProductos::nuevoProducto, engine);
@@ -81,6 +89,23 @@ public class Server {
 
         return new ModelAndView(map, "egresos.html");
     }
+    
+
+ /*   private static void asignarParametrosEgreso(Egreso egreso,Request request) {
+
+      /*  producto.setCodProducto(new Integer(request.queryParams("codigo")));
+        producto.setNombre(request.queryParams("nombre"));
+        producto.setDescripcion(request.queryParams("descripcion"));
+
+
+        if(request.queryParams("opciones").equals("Articulo")){
+            producto.setTipoProducto(TipoItem.ARTICULO);
+        }
+        else if(request.queryParams("opciones").equals("Servicio")){
+            producto.setTipoProducto(TipoItem.SERVICIO);
+        }*/
+    
+    
 
     
     public static ModelAndView crearEgreso(Request request, Response response){

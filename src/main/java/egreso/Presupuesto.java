@@ -22,7 +22,7 @@ public class Presupuesto implements Categorizable{
 	*   llenarItems(ordenDeCompra.getItems());
 	* */
 
-	private String id = "FALTA CREAR CAMPO ID EN PRESUPUESTO";
+	private int id;
 
 	/*ATRIBUTOS*/
     private List<Item> items;
@@ -31,7 +31,7 @@ public class Presupuesto implements Categorizable{
     private boolean aceptado;
     private CategoriaDelSistema categoria = null;
     
-    public String getId() {
+    public int getId() {
     	return this.id;
     }
 	/*getters*/
@@ -97,5 +97,9 @@ public class Presupuesto implements Categorizable{
     public boolean esDeCategoria(CategoriaDelSistema unaCategoria) {
         return categoria.equals(unaCategoria);
     }
+	public void setId(int i) {
+		this.id = i;
+		
+	}
 
 }
