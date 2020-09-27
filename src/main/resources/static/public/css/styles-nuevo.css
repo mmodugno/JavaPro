@@ -17,7 +17,7 @@ html {
 }
 
 .contenido-centrado {
-    max-width: 90rem;
+    max-width: 900px;
 }
 
 
@@ -204,3 +204,4 @@ select {
 }
 
 /**FIN ESTILOS PARA ELIMINARmodalEliminar**/
+
