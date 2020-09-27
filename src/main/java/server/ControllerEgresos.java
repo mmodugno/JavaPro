@@ -128,7 +128,7 @@ public class ControllerEgresos {
     
     public Response guardarEgreso(Request request, Response response) throws CloneNotSupportedException{
     	
-       	
+       	//todo los repositorios no tendrian que estar aca
    	 	RepositorioEgreso repoEgreso = new RepositorioEgreso();
    	 	RepositorioOrdenDeCompra repoOrden = new RepositorioOrdenDeCompra();
    	 	RepositorioPresupuesto repoPresupuesto = new RepositorioPresupuesto();
@@ -165,7 +165,7 @@ public class ControllerEgresos {
         
         repoEgreso.crear(new_egreso);
         
-        response.redirect("/egresos.html");
+        response.redirect("/egresos");
 
         return response;
     }

@@ -99,3 +99,114 @@
 .color-none {
     background-image: #fffff0;
 }
+
+.separar-arriba {
+    margin-top: 5px;
+}
+
+.btn-borrar{
+    color: #fff;
+    background-color: orange;
+    border-color: #007bff;
+}
+
+
+/**ESTILOS PARA ELIMINAR**/
+#modalEliminar{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.modalContent{
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+.btn-close-modal {
+    cursor:pointer;
+    float:right;
+    background-color: grey;
+    border:0px;
+    color:white;
+    padding: 7px;
+    border-radius: 5px;
+    font-size:16px;
+}
+.btn-cancelar{
+    border:0px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: grey;
+    border-radius: 5px;
+    color:white;
+    cursor:pointer;
+
+}
+.btn-rojo{
+    border:0px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: grey;
+    border-radius: 5px;
+    background-color:rgb(199, 13, 0);
+    cursor:pointer;
+    color:white;
+}
+.btn-verde{
+    border:0px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: grey;
+    border-radius: 5px;
+    margin:5px;
+    background-color:rgb(68, 168, 68);
+    cursor:pointer;
+    color:white;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    outline: 0;
+}
+
+.modal-content {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0.3rem;
+    outline: 0;
+}
+
+/**FIN ESTILOS PARA ELIMINARmodalEliminar**/
+
+.contenido-centrado {
+    max-width: 900px;
+}
+
+.contenedor {
+    max-width: 1000px;
+    margin: 100px auto;
+}

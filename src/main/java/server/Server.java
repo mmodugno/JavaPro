@@ -50,9 +50,9 @@ public class Server {
         //get("/hola",((request, response) -> "Yoel"));
         get("/inicio", Server::mostrarIndex, engine);
         get("/login", Server::login, engine);
-        get("/egresos.html", Server::egresos, engine);
+        get("/egresos", Server::egresos, engine);
         get("/egreso/:id", Server::detalleEgreso, engine);
-        get("/crearEgreso.html", Server::crearEgreso, engine);
+        get("/crearEgreso", Server::crearEgreso, engine);
         //get("/modificarEgreso", Server::modificarEgreso, engine);
         get("/categorias", Server::mostrarCategorias, engine);
         
