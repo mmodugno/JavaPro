@@ -49,6 +49,8 @@ public class Server {
 
         //get("/hola",((request, response) -> "Yoel"));
         get("/inicio", Server::mostrarIndex, engine);
+        get("/inicio2", Server::mostrarIndex2, engine);
+        get("/pageblank", Server::mostrarPageBlank, engine);
         get("/login", Server::login, engine);
         get("/egresos", Server::egresos, engine);
         get("/egreso/:id", Server::detalleEgreso, engine);
@@ -70,6 +72,15 @@ public class Server {
     public static ModelAndView mostrarIndex(Request request, Response response) {
         return new ModelAndView(null, "index.html");
     }
+    
+    public static ModelAndView mostrarIndex2(Request request, Response response) {
+        return new ModelAndView(null, "index2.html");
+    }
+    
+    public static ModelAndView mostrarPageBlank(Request request, Response response) {
+        return new ModelAndView(null, "pageBlank.html");
+    }
+
 
     public static ModelAndView login(Request request, Response response) {
         return new ModelAndView(null, "login.html");
