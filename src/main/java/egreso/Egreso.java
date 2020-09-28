@@ -20,6 +20,11 @@ public class Egreso implements Categorizable{
 		this.presupuesto = presupuesto;
 		fecha = LocalDate.now();
 		valorTotal = presupuesto.valorTotal();
+		ordenDeCompra.setCerrado(true);
+	}
+
+	public Egreso(){
+		this.documentosComerciales = new ArrayList<DocumentoComercial>();
 	}
 	/*
 	***Se tendria que hacer así***
@@ -38,6 +43,7 @@ public class Egreso implements Categorizable{
 	private Double valorTotal;
 
 	/*GETTERS*/
+
 	public CategoriaDelSistema getCategoria() {
 		if(categoria != null)
 		return categoria;
@@ -75,6 +81,7 @@ public class Egreso implements Categorizable{
 	}
 	public void setOrdenDeCompra(OrdenDeCompra ordenDeCompra) {
 		this.ordenDeCompra = ordenDeCompra;
+		ordenDeCompra.setCerrado(true);
 	}
 	public void setPresupuesto(Presupuesto presupuesto) {
 		this.presupuesto = presupuesto;

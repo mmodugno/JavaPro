@@ -62,6 +62,7 @@ static List<OrdenDeCompra> ordenes = null;
     public void crear(OrdenDeCompra orden) {
     	ordenes.add(orden);
     }
+
 	
 	
 }

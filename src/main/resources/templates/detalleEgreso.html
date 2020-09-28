@@ -9,6 +9,9 @@
 
    <!-- Bootstrap core CSS -->
    <link href="/public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/public/vendor/jquery/jquery.min.js"></script>
+    <script src="/public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/public/js/functions.js"></script>
 
    <!-- Custom styles for this template -->
    <link href="/public/css/simple-sidebar.css" rel="stylesheet">
@@ -95,8 +98,8 @@
                 </ul>
 
                 <div class="separar-arriba">
-                    <a href="/modificarEgreso" class="btn btn-primary">Modificar</a>
-                    <!--button type="button" class="btn btn-borrar" onclick="confirmarBorrar('{{producto.idProducto}}')">Borrar</--button-->
+                    <a href="/modificarEgreso/{{egreso.id}}" class="btn btn-primary">Modificar</a>
+                    <button type="button" class="btn btn-borrar" onclick="confirmarBorrarEgreso('{{egreso.id}}')">Borrar</button>
                     <a href="/egresos" class = "btn btn-danger">Volver</a>
                 </div>
 
@@ -124,18 +127,18 @@
 </body>
 
 <!-- ================= ELIMINACION ================== -->
-<!--div class="modalEliminar modal" id="ACA VA COMO QUIERO QUE SE LLAME EL MODAL"> 1
+<div class="modalEliminar modal" id="eliminarEgreso">
     <div class="modalContent">
-        <input type="hidden" value="" id="ACA VA EL ID DE LO QUE QUIERO BORRAR"> 2
-        <p>¿Realmente desea eliminar el producto?</p> 3 - modificar el nombre.. abajo en el onclick modificar la confirmacion para que diga lo que quiero
+        <input type="hidden" value="" id="egresoId">
+        <p>¿Realmente desea eliminar el egreso?</p>
         <button type="button" name="button" class="btn-close-modal" onclick="cerrarConfirmacionBorrar()" ><i class="fas fa-times-circle"></i></button>
         <br>
         <div class="">
-            <button type="button" name="button" class="btn-rojo" onclick="eliminarProducto()">Eliminar</button> 4- aca va la funcion eliminar
-            <button type="button" name="button" class="btn-cancelar" onclick="cerrarConfirmacionBorrar()">Cancelar</button> 5- aca el cancelar
+            <button type="button" name="button" class="btn-rojo" onclick="eliminarEgreso()">Eliminar</button>
+            <button type="button" name="button" class="btn-cancelar" onclick="cerrarConfirmacionBorrar()">Cancelar</button>
         </div>
     </div>
-</--div>
+</div>
 <!-- ================= FIN ELIMINACION ================== -->
 
 </html>

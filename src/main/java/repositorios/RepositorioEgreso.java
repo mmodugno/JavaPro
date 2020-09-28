@@ -89,12 +89,31 @@ public class RepositorioEgreso {
 
 	public Egreso byID(int id) {
 		Optional<Egreso> egreso = egresos.stream().filter(e -> e.getId() == id).findFirst();
-		
-		 if (egreso.isPresent()) {
-	            return egreso.get();
-	        } 
-		 else return null;
-	} 
+
+		if (egreso.isPresent()) {
+			return egreso.get();
+		}
+		else return null;
+	}
+
+	public void eliminar(Egreso egreso){
+	 	egresos.remove(egreso);
+	}
+
+	int ordenarInt(int primero,int segundo){
+		if (primero > segundo) return -1;
+		if (primero < segundo) return 1;
+		return 0;
+
+	}
+
+	public int proximoId(){
+		egresos.sort((Egreso egreso1, Egreso egreso2) -> {
+			return ordenarInt(egreso1.getId(),egreso2.getId());
+		});
+		return egresos.get(0).getId() + 1;
+	}
+
 	    
 	   
 

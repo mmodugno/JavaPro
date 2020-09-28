@@ -49,6 +49,7 @@ public class ControllerProductos {
         Map<String, Object> map = new HashMap<>();
         map.put("producto", producto);
 
+
         return new ModelAndView(map,"nuevoProducto.html");
     }
 

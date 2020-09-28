@@ -52,13 +52,19 @@ public class Server {
         get("/inicio2", Server::mostrarIndex2, engine);
         get("/pageblank", Server::mostrarPageBlank, engine);
         get("/login", Server::login, engine);
+
+        //EGRESOS
         get("/egresos", Server::egresos, engine);
         get("/egreso/:id", Server::detalleEgreso, engine);
         get("/crearEgreso", Server::crearEgreso, engine);
-        //get("/modificarEgreso", Server::modificarEgreso, engine);
+
+        get("/modificarEgreso/:id", controllerEgresos::modificarEgresoGet,engine);
+
         get("/categorias", Server::mostrarCategorias, engine);
-        
         post("/egreso",controllerEgresos::guardarEgreso);
+        delete("/egreso/:id", controllerEgresos::eliminarEgreso);
+        post("/egreso/:id", controllerEgresos::modificarEgreso);
+
         //acciones productos
         get("/productos",controllerProductos::productos,engine);
         get("/producto", controllerProductos::nuevoProducto, engine);
@@ -68,6 +74,7 @@ public class Server {
         delete("/producto/:id",controllerProductos::eliminarProducto);
 
     }
+
 
     public static ModelAndView mostrarIndex(Request request, Response response) {
         return new ModelAndView(null, "index.html");

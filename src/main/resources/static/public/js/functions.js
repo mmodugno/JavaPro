@@ -40,3 +40,22 @@ function cerrarConfirmacionBorrar(){
 }
 
 /**Fin lógica para eliminar**/
+
+/**elimar egreso**/
+function confirmarBorrarEgreso(id){
+    document.getElementById("egresoId").value = id;
+    document.getElementById("eliminarEgreso").style.display = 'block';
+
+}
+
+function eliminarEgreso(){
+    var id = document.getElementById("egresoId").value;
+    $.ajax({
+        type: "delete",
+        url: id,
+        success: function(resultado){
+            window.location.href = "/egresos";
+        }
+
+    });
+}

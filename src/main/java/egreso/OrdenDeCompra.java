@@ -34,6 +34,7 @@ public class OrdenDeCompra {
 	private List<Usuario> revisores;
 	private int idOrden;
 	private CriterioSeleccion criterioSeleccion;
+	private boolean cerrado = false; //esto es para saber cuando tiene un egreso y cuando no
 
 	/*GETTERS*/
 	public List<Item> getItems() {
@@ -57,6 +58,10 @@ public class OrdenDeCompra {
 	}
 	public CriterioSeleccion getCriterioSeleccion(){
 		return this.criterioSeleccion;
+	}
+
+	public boolean isCerrado() {
+		return cerrado;
 	}
 
 	/*SETTERS*/
@@ -108,5 +113,9 @@ public class OrdenDeCompra {
 	
 	public Presupuesto presupuestoAceptado(){
 		return presupuestos.stream().filter(presupuesto -> presupuesto.getAceptado()).collect(toList()).get(0);
+	}
+
+	public void setCerrado(boolean cerrado) {
+		this.cerrado = cerrado;
 	}
 }

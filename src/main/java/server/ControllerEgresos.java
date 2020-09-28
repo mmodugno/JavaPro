@@ -113,60 +113,85 @@ public class ControllerEgresos {
         return response;
     }
 
-    public Response eliminarProducto(Request request, Response response){
+*/
 
-        String strID = request.params("id");
-        int id = new Integer(strID);
-        Producto producto = repo.byID(id);
+    public ModelAndView modificarEgresoGet(Request request, Response response) throws CloneNotSupportedException {
 
-        repo.eliminar(producto);
+		String strID = request.params("id");
+		int id = Integer.parseInt(strID);
+		Egreso egreso = repo.byID(id);
 
-        //response.redirect("/productos");
+		RepositorioOrdenDeCompra ordenes = new RepositorioOrdenDeCompra();
 
-        return response;
-    }*/
-    
+		Map<String, Object> map = new HashMap<>();
+		map.put("egreso", egreso);
+
+		//HAY QUE VER COMO PASAR TODOS LOS REPOS, LO UNICO QUE SE ME OCURRE PASARLE TODOS LOS REPOS AL HTML. todo Charlar
+
+		return new ModelAndView(map,"formularioEgresos.html");
+	}
+
+    public static void asignarParametros(Egreso egreso, Request request) throws CloneNotSupportedException {
+
+		RepositorioOrdenDeCompra repoOrden = new RepositorioOrdenDeCompra();
+		RepositorioPresupuesto repoPresupuesto = new RepositorioPresupuesto();
+		RepositorioCategoria repoCategoria = new RepositorioCategoria();
+
+		String ordenDeCompra = request.queryParams("orden");
+		String pres = request.queryParams("presupuesto");
+		String categoria = request.queryParams("categoria");
+		//String fecha = request.queryParams("fecha");
+
+		int idOrden = Integer.parseInt(ordenDeCompra);
+		OrdenDeCompra orden = repoOrden.byID(idOrden);
+
+		int idPresupuesto = Integer.parseInt(pres);
+		Presupuesto presupuesto = repoPresupuesto.byID(idPresupuesto);
+
+		egreso.setOrdenDeCompra(orden);
+		//egreso.setDocumentosComerciales();
+		//egreso.setCategoria();
+		egreso.setPresupuesto(presupuesto);
+		//egreso.setFecha();
+
+
+	}
+
+	public Response modificarEgreso(Request request, Response response) throws CloneNotSupportedException {
+		String strID = request.params("id");
+		int id = new Integer(strID);
+		Egreso egreso = repo.byID(id);
+
+		asignarParametros(egreso, request);
+
+		response.redirect("/egresos");
+
+		return response;
+
+	}
+    //ESTE ES EL QUE CREA
     public Response guardarEgreso(Request request, Response response) throws CloneNotSupportedException{
-    	
-       	//todo los repositorios no tendrian que estar aca
-   	 	RepositorioEgreso repoEgreso = new RepositorioEgreso();
-   	 	RepositorioOrdenDeCompra repoOrden = new RepositorioOrdenDeCompra();
-   	 	RepositorioPresupuesto repoPresupuesto = new RepositorioPresupuesto();
-   	 	RepositorioCategoria repoCategoria = new RepositorioCategoria();
-   	 	
-   	 	String ordenDeCompra = request.queryParams("orden");
-   	 	
-   	 	String pres = request.queryParams("presupuesto");
-   	 	
-   	 	String categoria = request.queryParams("categoria");
-      
-   	 	//String fecha = request.queryParams("fecha");
-      
-     
-   	 	int idOrden = Integer.parseInt(ordenDeCompra);
-     
-   	 	OrdenDeCompra orden = repoOrden.byID(idOrden);
-     
-   	 	
-     
-   	 	int idPresupuesto = Integer.parseInt(pres);
-     
-   	 	Presupuesto presupuesto = repoPresupuesto.byID(idPresupuesto);
-     
-        Egreso egreso = new Egreso(orden,presupuesto);
-        //producto.setIdProducto(repo.proximoId());
+
+        Egreso egreso = new Egreso();
+        egreso.setId(repo.proximoId());
+
+		asignarParametros(egreso, request);
         
-        String monto = request.queryParams("monto");
-        
-        int idMonto = Integer.parseInt(monto);
-        
-      
-        Egreso new_egreso = new Egreso(orden,presupuesto);
-        
-        repoEgreso.crear(new_egreso);
+        repo.crear(egreso);
         
         response.redirect("/egresos");
 
         return response;
     }
+
+	public Response eliminarEgreso(Request request, Response response){
+
+		String strID = request.params("id");
+		int id = new Integer(strID);
+		Egreso egreso = repo.byID(id);
+
+		repo.eliminar(egreso);
+
+		return response;
+	}
 }
