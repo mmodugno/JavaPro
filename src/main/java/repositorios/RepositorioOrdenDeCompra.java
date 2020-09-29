@@ -63,6 +63,10 @@ static List<OrdenDeCompra> ordenes = null;
     	ordenes.add(orden);
     }
 
+    public void ordenesSinVincular(){
+
+    }
+
 	
 	
 }

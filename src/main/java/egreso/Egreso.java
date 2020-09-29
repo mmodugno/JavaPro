@@ -21,6 +21,7 @@ public class Egreso implements Categorizable{
 		fecha = LocalDate.now();
 		valorTotal = presupuesto.valorTotal();
 		ordenDeCompra.setCerrado(true);
+
 	}
 
 	public Egreso(){
