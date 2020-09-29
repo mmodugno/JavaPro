@@ -1,0 +1,66 @@
+{{>header.hbs}}
+<!-- /#sidebar-wrapper -->
+
+<!-- Page Content -->
+<div id="page-content-wrapper">
+
+
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+        <h1 class="mt-4 text-center">Egresos</h1>
+
+        <div class="row py-5"></div>
+
+        <div class="contenido-centrado">
+            <table class="table  gradual ">
+                <thead class="thead-dark">
+
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nro</th>
+                    <th scope="col">¿Cerrado?</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col"></th>
+                </tr>
+
+                </thead>
+                <tbody>
+                {{#each ordenes}}
+                <tr class="ultimo-final">
+                    <th scope="row">1</th>
+                    <td>{{id}}</td>
+                    <td>{{#if cerrado}} Si {{else}} No {{/if}}</td>
+                    <td>{{fecha}}</td>
+                    <td>
+                        <a href="/orden/{{id}}">
+                            <button class="btn btn-yoel">DETALLE</button>
+                        </a>
+                    </td>
+
+
+                </tr>
+                {{/each}}
+
+
+                </tbody>
+
+            </table>
+            <a href="/crearOrden">
+                <button type="button" class="btn btn-warning">Crear Orden</button>
+            </a>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+</div>
+<!-- /#page-content-wrapper -->
+{{>footer.hbs}}

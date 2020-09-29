@@ -29,6 +29,15 @@ public class Server {
 
     private static ControllerProductos controllerProductos= new ControllerProductos();
     private static ControllerEgresos controllerEgresos= new ControllerEgresos();
+    private static ControllerOrdenes controllerOrdenes;
+
+    static {
+        try {
+            controllerOrdenes = new ControllerOrdenes();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         enableDebugScreen();
@@ -72,6 +81,17 @@ public class Server {
         post("/producto", controllerProductos::guardarProducto);
         post("/producto/:id",controllerProductos::modificarProducto);
         delete("/producto/:id",controllerProductos::eliminarProducto);
+
+        //ORDENES DE COMPRA
+
+        get("/ordenes",controllerOrdenes::ordenes,engine);/*
+        get("/crearOrden",,engine);
+        get("/orden/:id",,engine);
+        post("/orden/");
+        post("orden:id");
+
+         */
+
 
     }
 
