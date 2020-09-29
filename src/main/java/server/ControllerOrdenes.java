@@ -24,12 +24,20 @@ public class ControllerOrdenes {
 
         //DOMINIO
         List<OrdenDeCompra> ordenes = repo.todos();
+        /** **PARA PROBAR SI ANDA EL CERRAR** **/
+        repo.todos().get(0).setCerrado(true);
+        /** No las marca como cerrada si o no porque técnicamente las creamos de 0 y no son creadas con el egreso.
+         Tener en cuenta a la hora de probar la funcionalidad completa **/
 
         //OUTPUT
         Map<String, Object> map = new HashMap<>();
         map.put("ordenes", ordenes);
 
         return new ModelAndView(map, "ordenes.html");
+    }
+
+    public ModelAndView nuevaOrden(Request request, Response response){
+        return new ModelAndView(null,"formularioOrden.html");
     }
 
 

@@ -84,8 +84,8 @@ public class Server {
 
         //ORDENES DE COMPRA
 
-        get("/ordenes",controllerOrdenes::ordenes,engine);/*
-        get("/crearOrden",,engine);
+        get("/ordenes",controllerOrdenes::ordenes,engine);
+        get("/crearOrden",controllerOrdenes::nuevaOrden,engine);/*
         get("/orden/:id",,engine);
         post("/orden/");
         post("orden:id");
