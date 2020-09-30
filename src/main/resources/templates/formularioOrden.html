@@ -3,14 +3,15 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Crear Egreso</title>
+    <title>Crear Orden</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/checkout/">
 
     <!-- Bootstrap core CSS -->
     <link href="public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 
     <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet" />
@@ -36,7 +37,6 @@
         }
         .selected:hover{
             background-color: #0585C0;
-            color: white;
         }
         .selected:hover button {
             color: black;
@@ -44,18 +44,8 @@
     </style>
 
 
-    <script src="/public/vendor/jquery/jquery.min.js"></script>
     <script src="/public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script>
-        window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')
-    </script>
-    <script src="/public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="/public/vendor/bootstrap/js/calendar.js"></script>
+
     <script>
         $(document).ready(function() {
             var cont = 0;
@@ -71,7 +61,7 @@
 
             function agregar() {
                 cont++;
-                var fila = '<tr class="selected" id="fila' + cont + '" onclick="seleccionar(this.id)"><td>' + cont + '</td><td>ProductoX</td><td>$0.00</td>' +
+                var fila = '<tr class="selected" id="fila' + cont + '" onclick="seleccionar(this.id)"><td>' + cont + '</td><td> <select> <option> Producto1 </option> <option> Producto2 </option> </select> </td>  <td> $<input type="number" name="monto" id="monto" placeholder="0.00"></td>  ' +
                     '<td><button id="btn-del" class="borrar">Eliminar</button></td></tr>'
                 $('#items').append(fila);
 
@@ -109,19 +99,19 @@
     <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4" src="public/img/logoIcon.png" alt="" width="72" height="72">
         <h2>Detalle de Orden de Compra</h2>
-        <p class="lead">Para modificar la roden, haga doble click en el texto a modificar</p>
+        <p class="lead">Para modificar la Orden, haga doble click en el texto a modificar</p>
     </div>
 
 
     <div class="contenido-centrado contenedor">
 
         <h4 class="mb-3">Orden de Compra:{{#if orden}} {{orden.idOrden}}{{/if}}</h4>
-        <form class="needs-validation contenido-centrado contenedor"> <!--action="/orden" method="post" novalidate-->
+        <form class="needs-validation contenido-centrado contenedor" action="/orden" method="post">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <div class="form-group">
-                        <label for="presupuesto" class="text-center">Cantidad de Presupuestos Necesarios</label>
-                        <input type="number" id="presupuesto" required {{#if orden}} value={{orden.necesitaPresupuesto}} {{else}}
+                        <label for="presupuesto"  class="text-center">Cantidad de Presupuestos Necesarios</label>
+                        <input type="number" id="presupuesto" name="presupuesto" required {{#if orden}} value={{orden.necesitaPresupuesto}} {{else}}
                                placeholder="Cantidad Presupuestos" {{/if}}>
                         </div>
                 </div>
@@ -158,17 +148,8 @@
             <div class="row">
 
                 <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' class="form-control " name="fecha" placeholder="DD/MM/AAAA" />
-                    <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
+                    <input type='date' class="form-control " name="fecha" id="fecha" placeholder="DD/MM/AAAA" />
                 </div>
-
-                <script type="text/javascript">
-                    $(function() {
-                        $('#datetimepicker1').datetimepicker();
-                    });
-                </script>
 
             </div>
 
@@ -178,9 +159,9 @@
 
             <div class="botones-centrados">
 
-                <button type="submit" class="btn btn-primary">Confirmar Egreso</button>
+                <button type="submit" class="btn btn-primary">Confirmar Orden</button>
 
-                <a {{#if egreso}}href="/egreso/{{egreso.id}}"{{else}} href="/egresos" {{/if}} class="btn btn-danger"> Cancelar </a>
+                <a {{#if egreso}}href="/egreso/{{egreso.id}}"{{else}} href="/ordenes" {{/if}} class="btn btn-danger"> Cancelar </a>
 
             </div>
         </form>

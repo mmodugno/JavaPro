@@ -85,13 +85,11 @@ public class Server {
         //ORDENES DE COMPRA
 
         get("/ordenes",controllerOrdenes::ordenes,engine);
-        get("/crearOrden",controllerOrdenes::nuevaOrden,engine);/*
-        get("/orden/:id",,engine);
-        post("/orden/");
-        post("orden:id");
-
-         */
-
+        get("/crearOrden",controllerOrdenes::nuevaOrden,engine);
+       // get("/orden/:id",,engine);
+        post("/orden", controllerOrdenes::crear);
+       // post("orden:id");
+        
 
     }
 
@@ -120,7 +118,9 @@ public class Server {
 
         //DOMINIO
         List<Egreso> egresos = repo.todos();
-
+ 
+         
+   
         //OUTPUT
         Map<String, Object> map = new HashMap<>();
         map.put("egresos", egresos);

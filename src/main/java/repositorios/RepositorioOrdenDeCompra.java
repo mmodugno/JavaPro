@@ -67,6 +67,23 @@ static List<OrdenDeCompra> ordenes = null;
 
     }
 
+    public int proximoId(){
+        ordenes.sort((OrdenDeCompra orden1, OrdenDeCompra orden2) -> {
+            return ordenarInt(orden1.getIdOrden(),orden2.getIdOrden());
+        });
+        return ordenes.get(0).getIdOrden() + 1;
+    }
 	
+    int ordenarInt(int primero,int segundo){
+        if (primero > segundo) return -1;
+        if (primero < segundo) return 1;
+        return 0;
+
+    }
+
+	public void agregar(OrdenDeCompra nuevaOrden) {
+		ordenes.add(nuevaOrden);
+		
+	}
 	
 }

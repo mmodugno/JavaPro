@@ -20,7 +20,19 @@ public class OrdenDeCompra {
 		this.revisores = new ArrayList<Usuario>();
 		this.idOrden = idOrden;
 	}
+	
+	public OrdenDeCompra() {
+		this.items = new ArrayList<Item>();
+		this.presupuestos = new ArrayList<Presupuesto>();
+		this.revisores = new ArrayList<Usuario>();
+	}
+	
+	
 	/*
+	 * 
+	 * 
+	 * 
+	 * 
 	***Así tendria que ser
 	* orden.setNecesitaPresupuesto(necesita);//esto le pasas la cantidad y si necesita va a ser mayor a 1
 	* orden.setIdOrden(id)//TODO Tranquilamente podria ser autoincremental charlar en la entrega de persistencia
