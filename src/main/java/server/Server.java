@@ -17,6 +17,7 @@ import spark.Request;
 import spark.Response;
 
 import spark.template.handlebars.HandlebarsTemplateEngine;
+import usuarios.Categoria;
 import usuarios.CategoriaDelSistema;
 
 import java.util.HashMap;
@@ -178,13 +179,16 @@ public class Server {
     	
     	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra();
     	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto();
+    	RepositorioCategoria repoCategorias = new RepositorioCategoria();
     	
     	List<OrdenDeCompra> ordenes = repoOrdenesCompra.todos();
     	List<Presupuesto> presupuestos = repoPresupuestos.todos();
+    	List<CategoriaDelSistema> categorias = repoCategorias.todos();
     	
     	Map<String, Object> map = new HashMap<>();
         map.put("ordenes", ordenes);
         map.put("presupuestos", presupuestos);
+        map.put("categorias", categorias);
     	
         return new ModelAndView(map ,"crearEgreso.html");
     }

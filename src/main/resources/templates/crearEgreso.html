@@ -88,7 +88,8 @@
                         <div class="form-group">
                             <label for="categoria">Categoria</label>
                             <select class="form-control" name="categoria" id="categoria">
-                              {{#each categorias}}
+                            	<option value = "">Seleccionar...</option>
+                              	{{#each categorias}}
                               	<option value = "{{categoria}}">{{categoria}}</option>
                                 {{/each}}
                             </select>
