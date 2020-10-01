@@ -30,8 +30,14 @@ public class Server {
     private static ControllerProductos controllerProductos= new ControllerProductos();
     private static ControllerEgresos controllerEgresos= new ControllerEgresos();
     private static ControllerOrdenes controllerOrdenes;
+    private static ControllerVinculador controllerVinculador;
 
     static {
+        try {
+            controllerVinculador = new ControllerVinculador();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
         try {
             controllerOrdenes = new ControllerOrdenes();
         } catch (CloneNotSupportedException e) {
@@ -89,6 +95,10 @@ public class Server {
        // get("/orden/:id",,engine);
         post("/orden", controllerOrdenes::crear);
        // post("orden:id");
+
+        //VINCULADOR
+
+        get("/vinculaciones", controllerVinculador::vinculaciones, engine);
         
 
     }

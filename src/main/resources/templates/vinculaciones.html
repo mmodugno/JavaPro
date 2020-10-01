@@ -1,0 +1,69 @@
+{{>header.hbs}}
+
+
+
+<!-- /#sidebar-wrapper -->
+
+<!-- Page Content -->
+<div id="page-content-wrapper">
+    <h1>Vinculaciones</h1>
+
+    <form action="">
+        <fieldset>
+        <div>
+
+            <label>Criterio de Viculacion</label>
+                <select>
+                    <option>OP1</option>
+                    <option>OP2</option>
+                </select>
+        </div>
+        <div>
+            <label>Condiciones Para Vinculacion</label>
+                <select>
+                    <option>OP1</option>
+                    <option>OP2</option>
+                </select>
+        </div>
+        </fieldset>
+    </form>
+
+    <div class="show-vinculacion">
+
+        <label for="por-balance">Balance</label>
+        <input type="radio" name="vinculaciones" value="balances" id="por-balance">
+
+        <label for="por-ingreso">Ingresos</label>
+        <input type="radio" name="vinculaciones" value="ingresos" id="por-ingreso">
+
+        <input type="button" onclick="mostrarSeleccionado()" value="Mostrar Tabla">
+
+        <table id="vincu-table">
+        </table>
+
+
+
+    </div>
+
+</div>
+<!-- /#page-content-wrapper -->
+{{>footer.hbs}}
+<script src="/public/js/functions.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+<script>
+
+    let tabla = document.querySelector('table');
+    function mostrarSeleccionado() {
+        $("#vincu-table tr").remove();
+        if(document.getElementById('por-balance').checked){
+            let fila = '<tr><td>#</td><td>Balance</td><td></td></tr>'
+            $('#vincu-table').append(fila);
+
+        }
+        if(document.getElementById('por-ingreso').checked){
+            let fila = '<tr><td>#</td><td>Ingreso</td><td></td></tr>'
+            $('#vincu-table').append(fila);
+        }
+    }
+
+</script>

@@ -10,7 +10,7 @@ import usuarios.CategoriaDelSistema;
 
 public class RepositorioIngreso {
 	
-	static List<Ingreso> ingresos = null;
+	static List<Ingreso> ingresos = new ArrayList<>();
 
     public RepositorioIngreso() {
         if (ingresos == null) {
