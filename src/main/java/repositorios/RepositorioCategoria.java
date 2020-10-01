@@ -2,7 +2,9 @@ package repositorios;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import egreso.Egreso;
 import usuarios.Categoria;
 import usuarios.CategoriaCompuesta;
 import usuarios.CategoriaDelSistema;
@@ -34,6 +36,7 @@ public class RepositorioCategoria {
         }
     }
 	
+	
 
     public List<CategoriaDelSistema> todos() {
         return new ArrayList<>(categorias);
@@ -42,5 +45,18 @@ public class RepositorioCategoria {
     public void crear(CategoriaDelSistema categoria) {
     	categorias.add(categoria);
     }
+
+
+
+	public CategoriaDelSistema buscar(String categoriaString) {
+		
+		Optional<CategoriaDelSistema> categoria = categorias.stream().filter(e -> e.getCategoria() == categoriaString).findFirst();
+		
+		if (categoria.isPresent()) {
+			return categoria.get();
+		}
+		else return null;
+		
+	}
 	
 }

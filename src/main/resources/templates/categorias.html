@@ -82,25 +82,32 @@
 
         <div id="page-content-wrapper">
 
-            
+
             <h1 class="mt-4 text-center">Documentos</h1>
 
             <div class="col-xs-3">
-            <label for="opciones" class="  h5">Categoria  </label>
-        
-            <select id="opciones" class="btn btn-secondary btn-lg ">
+                <label for="opciones" class="  h5">Categoria  </label>
+
+                <select id="categoria" class="btn btn-secondary btn-lg ">
                 <option value="" class="btn btn-secondary btn-lg" disabled selected>Seleccionar Categoria</option>
-                <option value="Compra">Categoria 1</option>
-                <option value="Vende">Categoria 2</option>
+                {{#each categorias}}
+                    <option value="{{categoria}}">{{categoria}}</option>
+                {{/each}}
             </select>
 
-            <label for="opciones" class=" h5" >Tipo Documento  </label>
-            <select id="opciones" class="btn btn-secondary btn-lg">
+                <label for="opciones" class=" h5">Tipo Documento  </label>
+                <select id="filtro" class="btn btn-secondary btn-lg">
                 <option value="" class="btn btn-secondary btn-lg" disabled selected>Seleccionar Doc</option>
-                <option value="Compra">Egresos</option>
-                <option value="Vende">Ingresos</option>
+                <option value="Egresos">Egresos</option>
+                <option value="Ingresos">Ingresos</option>
+
             </select>
-        </div>
+
+
+                <button type="button" class="btn btn-warning" onclick="filtrarTipoPorCategoria('filtro','categoria')">Categorizar</button>
+
+
+            </div>
 
 
             <div class="row py-5"></div>
@@ -117,69 +124,24 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {{#each documentos}}
                         <tr class="ultimo-final">
                             <th scope="row">1</th>
-                            <td>00334</td>
-                            <td>570.00</td>
-                            <td>04/08/2002</td>
-                            <td>
-                                <a href="detalleEgreso.html">
-                                    <button class="btn btn-yoel">Seleccionar</button>
-                                </a>
-                            </td>
-
-                        </tr>
-                        <tr class="ultimo-final">
-                            <th scope="row">2</th>
-                            <td>23422</td>
-                            <td>270.00</td>
-                            <td>04/08/2002</td>
+                            <td>{{id}}</td>
+                            <td>{{monto}}</td>
+                            <td>{{fecha}}</td>
                             <td>
                                 <a href="detalleEgreso.html">
                                     <button class="btn btn-yoel">Seleccionar</button>
                                 </a>
                             </td>
                         </tr>
-                        <tr class="ultimo-final">
-                            <th scope="row">3</th>
-                            <td>23422</td>
-                            <td>270.00</td>
-                            <td>04/08/2002</td>
-                            <td>
-                                <a href="detalleEgreso.html">
-                                    <button class="btn btn-yoel">Seleccionar</button>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr class="ultimo-final">
-                            <th scope="row">4</th>
-                            <td>23422</td>
-                            <td>270.00</td>
-                            <td>04/08/2002</td>
-                            <td>
-                                <a href="detalleEgreso.html">
-                                    <button class="btn btn-yoel">Seleccionar</button>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr class="ultimo-final">
-                            <th scope="row">5</th>
-                            <td>23422</td>
-                            <td>270.00</td>
-                            <td>04/08/2002</td>
-                            <td>
-                                <a href="detalleEgreso.html">
-                                    <button class="btn btn-yoel">Seleccionar</button>
-                                </a>
-                            </td>
-                        </tr>
+                        {{/each}}
 
                     </tbody>
 
                 </table>
-                <a href="nuevaCategoria.html">
-                    <button type="button" class="btn btn-warning">Categorizar</button>
-                </a>
+
             </div>
         </div>
 
