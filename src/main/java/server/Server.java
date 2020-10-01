@@ -176,12 +176,15 @@ public class Server {
     
     public static ModelAndView crearEgreso(Request request, Response response) throws CloneNotSupportedException{
     	
-    	RepositorioOrdenDeCompra repo = new RepositorioOrdenDeCompra();
+    	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra();
+    	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto();
     	
-    	List<OrdenDeCompra> ordenes = repo.todos();
+    	List<OrdenDeCompra> ordenes = repoOrdenesCompra.todos();
+    	List<Presupuesto> presupuestos = repoPresupuestos.todos();
     	
     	Map<String, Object> map = new HashMap<>();
         map.put("ordenes", ordenes);
+        map.put("presupuestos", presupuestos);
     	
         return new ModelAndView(map ,"crearEgreso.html");
     }
