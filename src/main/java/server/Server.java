@@ -147,7 +147,7 @@ public class Server {
 
     
     public static ModelAndView crearEgreso(Request request, Response response){
-        return new ModelAndView(null,"formularioEgresos.html");
+        return new ModelAndView(null,"crearEgreso.html");
     }
     public static ModelAndView detalleEgreso(Request request, Response response) throws CloneNotSupportedException{
     	
