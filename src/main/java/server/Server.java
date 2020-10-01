@@ -174,9 +174,18 @@ public class Server {
     
 
     
-    public static ModelAndView crearEgreso(Request request, Response response){
-        return new ModelAndView(null,"crearEgreso.html");
+    public static ModelAndView crearEgreso(Request request, Response response) throws CloneNotSupportedException{
+    	
+    	RepositorioOrdenDeCompra repo = new RepositorioOrdenDeCompra();
+    	
+    	List<OrdenDeCompra> ordenes = repo.todos();
+    	
+    	Map<String, Object> map = new HashMap<>();
+        map.put("ordenes", ordenes);
+    	
+        return new ModelAndView(map ,"crearEgreso.html");
     }
+    
     public static ModelAndView detalleEgreso(Request request, Response response) throws CloneNotSupportedException{
     	
     	RepositorioEgreso repo = new RepositorioEgreso();

@@ -49,8 +49,7 @@
     <div class="container contenido-centrado-detalle">
         <div class="py-5 text-center">
             <img class="d-block mx-auto mb-4" src="public/img/logoIcon.png" alt="" width="72" height="72">
-            <h2>Detalle de Egreso</h2>
-            <p class="lead">Para modificar el egreso, haga doble click en el texto a modificar</p>
+            <h2>Crear Egreso</h2>
         </div>
 
 
@@ -63,13 +62,9 @@
                         <div class="form-group">
                             <label for="orden">Orden de Compra</label>
                             <select class="form-control" name="orden" id="orden">
-                              {{#if egreso}}<option>{{egreso.ordenDeCompra.idOrden}}</option>{{/if}}
-                                {{#each}}
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
+                            	<option value = "">Seleccionar...</option>
+                                {{#each ordenes}}
+                              	<option value = "{{idOrden}}">{{idOrden}}</option>
                                 {{/each}}
                             </select>
                         </div>
