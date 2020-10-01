@@ -12,7 +12,7 @@ function deleteAuto(id) {
 function filtrarTipoPorCategoria(tipoDoc, categoria) {
 
 
-    window.location = "/categoria?tipoDoc=" + $("#filtro").val() + "&categoria=" + $("#categoria").val();
+    window.location = "/categoria?tipoDoc=" + $("#tipoDoc").val() + "&categoria=" + $("#categoria").val();
 }
 
 /**Arranco lógica para eliminar, seminario Catedra**/

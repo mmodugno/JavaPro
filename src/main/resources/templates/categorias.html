@@ -104,35 +104,35 @@
             </select>
 
 
-                <button type="button" class="btn btn-warning" onclick="filtrarTipoPorCategoria('filtro','categoria')">Categorizar</button>
+                <button type="button" class="btn btn-info" onclick="filtrarTipoPorCategoria()">BUSCAR</button>
 
 
             </div>
 
 
-            <div class="row py-5"></div>
+            <div class="row py-5 "></div>
 
-            <div class="contenido-centrado">
-                <table class="table  gradual ">
-                    <thead class="thead-dark">
+            <div class="contenido-centrado ">
+                <table class="table gradual ">
+                    <thead class="thead-dark ">
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Nro</th>
-                            <th scope="col">Monto</th>
-                            <th scope="col">Fecha</th>
-                            <th scope="col"></th>
+                            <th scope="col ">#</th>
+                            <th scope="col ">Nro</th>
+                            <th scope="col ">Monto</th>
+                            <th scope="col ">Fecha</th>
+                            <th scope="col "></th>
                         </tr>
                     </thead>
                     <tbody>
                         {{#each documentos}}
-                        <tr class="ultimo-final">
-                            <th scope="row">1</th>
+                        <tr class="ultimo-final ">
+                            <th scope="row ">1</th>
                             <td>{{id}}</td>
-                            <td>{{monto}}</td>
+                            <td>{{valorTotal}}</td>
                             <td>{{fecha}}</td>
                             <td>
-                                <a href="detalleEgreso.html">
-                                    <button class="btn btn-yoel">Seleccionar</button>
+                                <a href="detalleEgreso.html ">
+                                    <button class="btn btn-yoel ">Seleccionar</button>
                                 </a>
                             </td>
                         </tr>
@@ -160,15 +160,23 @@
     <!-- /#wrapper -->
 
     <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+    <script src="vendor/jquery/jquery.min.js "></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js "></script>
+    <script src="/public/js/functions.js "></script>
     <!-- Menu Toggle Script -->
     <script>
-        $("#menu-toggle").click(function(e) {
+        $("#menu-toggle ").click(function(e) {
             e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
+            $("#wrapper ").toggleClass("toggled ");
         });
+
+        function filtrarTipoPorCategoria() {
+
+            filtro = document.getElementById('filtro').value;
+            categoria = document.getElementById('categoria').value;
+
+            window.location = "/categoria?tipoDoc=" + filtro + "&categoria=" + categoria;
+        };
     </script>
 
 </body>

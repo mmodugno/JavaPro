@@ -35,6 +35,8 @@ public class RepositorioIngreso {
         }
     }
     
+ 
+    
     public List<Ingreso> byCategoria(CategoriaDelSistema unaCategoria) {
         return ingresos.stream().filter(a ->
                 a.esDeCategoria(unaCategoria)

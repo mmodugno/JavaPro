@@ -46,6 +46,8 @@ public class RepositorioEgreso {
 	    
 	    Categoria categoriaBSAS = new Categoria("Buenos Aires","Provincia");
 	    
+	    Categoria categoriaMendoza = new Categoria("Mendoza","Provincia");
+	    
 		Presupuesto presupuesto1 = new Presupuesto(ordenDeCompra.getItems(),proveedor1,medioDePago);
         presupuesto1.getItems().get(0).setPrecioUnitario(80.00);
         presupuesto1.getItems().get(1).setPrecioUnitario(30.00);
@@ -63,6 +65,8 @@ public class RepositorioEgreso {
 		 
 		 egreso1.setCategoria(categoriaBSAS);
 
+		 egreso2.setCategoria(categoriaMendoza);
+		 
 		 if (egresos == null) {
 			 egresos = new ArrayList<>();
 		egresos.add(egreso1);

@@ -102,8 +102,11 @@ public class Ingreso implements Categorizable{
 		return this.getMontoSinVincular()>0;
 	}
 
+
 	public boolean esDeCategoria(CategoriaDelSistema unaCategoria) {
-		return categoria.equals(unaCategoria);
+		if(categoria == null) return false;
+		else return categoria.getCategoria().equals(unaCategoria.getCategoria());
+		
 	}
 
 	public void setId(int i) {

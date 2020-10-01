@@ -217,20 +217,27 @@ public class Server {
     	
     	List<CategoriaDelSistema> categorias = repoCategoria.todos();
     	
-    	String categoriaString = request.queryParams("categoria");
-    	String tipoDocumentoString = request.queryParams("tipoDoc");
+    	String categoriaString = (request.queryParams("categoria") != null) ? request.queryParams("categoria") : "";
     	
+    	String tipoDocumentoString = (request.queryParams("tipoDoc") != null) ? request.queryParams("tipoDoc") : "";
+    	
+    	if(!categoriaString.contains("%20")) {
+    		categoriaString = categoriaString.replace("%20"," ");
+    	};
+    	
+
     	CategoriaDelSistema categoria = repoCategoria.buscar(categoriaString);
+    	
     	
     	Map<String, Object> map = new HashMap<>();
     	
-    	if(tipoDocumentoString == "Egreso") {
+    	if(tipoDocumentoString.equals("Egresos")) {
     		RepositorioEgreso repoEgresos = new RepositorioEgreso();
     		List<Egreso> egresos = repoEgresos.todos().stream().filter(a -> a.esDeCategoria(categoria)).collect(Collectors.toList());
     		map.put("documentos",egresos);
     	}
     	
-    	if(tipoDocumentoString == "Ingreso") {
+    	if(tipoDocumentoString.equals("Ingresos")) {
     		RepositorioIngreso repoIngresos = new RepositorioIngreso();
     		List<Ingreso> ingresos = repoIngresos.todos().stream().filter(a -> a.esDeCategoria(categoria)).collect(Collectors.toList());
     		map.put("documentos",ingresos);

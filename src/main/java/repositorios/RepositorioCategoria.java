@@ -20,19 +20,22 @@ public class RepositorioCategoria {
         	Categoria categoriaBSAS = new Categoria("Buenos Aires","Provincia");
         	Categoria categoriaMENDOZA = new Categoria("Mendoza","Provincia");
         	
+        	
         	List<CategoriaDelSistema> listaSubCategorias = new ArrayList<CategoriaDelSistema>();
     		
     		listaSubCategorias.add(categoriaBSAS);
     		listaSubCategorias.add(categoriaMENDOZA);
     		
+    		
         	CategoriaCompuesta categoriaARGENTINA = new CategoriaCompuesta("argentina","pais");
         	
         	categoriaARGENTINA.setSubCategorias(listaSubCategorias);
 
-
         	categorias.add(categoriaBSAS);
         	categorias.add(categoriaMENDOZA);
         	categorias.add(categoriaARGENTINA);
+        	
+        	
         }
     }
 	
@@ -50,7 +53,7 @@ public class RepositorioCategoria {
 
 	public CategoriaDelSistema buscar(String categoriaString) {
 		
-		Optional<CategoriaDelSistema> categoria = categorias.stream().filter(e -> e.getCategoria() == categoriaString).findFirst();
+		Optional<CategoriaDelSistema> categoria = categorias.stream().filter(e -> categoriaString.equals(e.getCategoria())).findFirst();
 		
 		if (categoria.isPresent()) {
 			return categoria.get();

@@ -108,7 +108,9 @@ public class Egreso implements Categorizable{
 	}
 
 	public boolean esDeCategoria(CategoriaDelSistema unaCategoria) {
-		return categoria.equals(unaCategoria);
+		if(categoria == null) return false;
+		else return categoria.getCategoria().equals(unaCategoria.getCategoria());
+		
 	}
 	
 	
