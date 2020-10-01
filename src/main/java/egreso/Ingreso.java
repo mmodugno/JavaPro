@@ -38,6 +38,7 @@ public class Ingreso implements Categorizable{
 	private CategoriaDelSistema categoria = null;
 	private double montoVinculado = 0.00;
 	private LocalDate fecha;
+	private int id;
 
 	/*GETTERS*/
 	public LocalDate getFecha() {
@@ -103,6 +104,16 @@ public class Ingreso implements Categorizable{
 
 	public boolean esDeCategoria(CategoriaDelSistema unaCategoria) {
 		return categoria.equals(unaCategoria);
+	}
+
+	public void setId(int i) {
+		this.id = i;
+		
+	}
+	
+	public int getId() {
+		return this.id;
+		
 	}
 
 

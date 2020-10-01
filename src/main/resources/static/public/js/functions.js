@@ -9,32 +9,33 @@ function deleteAuto(id) {
     });
 }
 
-function filtrarAutos(marca) {
-    window.location = "/auto?marca=" + $("#filtroMarca").val();
-}
+function filtrarTipoPorCategoria(tipoDoc, categoria) {
 
+
+    window.location = "/categoria?tipoDoc=" + $("#filtro").val() + "&categoria=" + $("#categoria").val();
+}
 
 /**Arranco lógica para eliminar, seminario Catedra**/
 
-function confirmarBorrar(id){
+function confirmarBorrar(id) {
     document.getElementById("productoId").value = id;
     document.getElementById("eliminarProductoVentana").style.display = 'block';
 
 }
 
-    function eliminarProducto(){
-        var id = document.getElementById("productoId").value;
-        $.ajax({
-                type: "delete",
-                url: id,
-                success: function(resultado){
-                    window.location.href = "/productos";
-                }
+function eliminarProducto() {
+    var id = document.getElementById("productoId").value;
+    $.ajax({
+        type: "delete",
+        url: id,
+        success: function(resultado) {
+            window.location.href = "/productos";
+        }
 
-            });
-    }
+    });
+}
 
-function cerrarConfirmacionBorrar(){
+function cerrarConfirmacionBorrar() {
     document.getElementsByClassName("modal")[0].style.display = 'none';
 
 }
@@ -42,18 +43,18 @@ function cerrarConfirmacionBorrar(){
 /**Fin lógica para eliminar**/
 
 /**elimar egreso**/
-function confirmarBorrarEgreso(id){
+function confirmarBorrarEgreso(id) {
     document.getElementById("egresoId").value = id;
     document.getElementById("eliminarEgreso").style.display = 'block';
 
 }
 
-function eliminarEgreso(){
+function eliminarEgreso() {
     var id = document.getElementById("egresoId").value;
     $.ajax({
         type: "delete",
         url: id,
-        success: function(resultado){
+        success: function(resultado) {
             window.location.href = "/egresos";
         }
 

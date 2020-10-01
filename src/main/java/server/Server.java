@@ -1,12 +1,14 @@
 package server;
 
 import egreso.Egreso;
+import egreso.Ingreso;
 import egreso.OrdenDeCompra;
 import egreso.Presupuesto;
 import producto.Producto;
 import producto.TipoItem;
 import repositorios.RepositorioCategoria;
 import repositorios.RepositorioEgreso;
+import repositorios.RepositorioIngreso;
 import repositorios.RepositorioOrdenDeCompra;
 import repositorios.RepositorioPresupuesto;
 import repositorios.RepositorioProducto;
@@ -15,10 +17,12 @@ import spark.Request;
 import spark.Response;
 
 import spark.template.handlebars.HandlebarsTemplateEngine;
+import usuarios.CategoriaDelSistema;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
@@ -70,9 +74,13 @@ public class Server {
         get("/modificarEgreso/:id", controllerEgresos::modificarEgresoGet,engine);
 
         get("/categorias", Server::mostrarCategorias, engine);
+        get("/categoria", Server::mostrarCategorias, engine);
         post("/egreso",controllerEgresos::guardarEgreso);
         delete("/egreso/:id", controllerEgresos::eliminarEgreso);
         post("/egreso/:id", controllerEgresos::modificarEgreso);
+        
+        get("/ingresos", Server::ingresos, engine);
+        get("/crearIngreso", Server::crearIngreso, engine);
 
         //acciones productos
         get("/productos",controllerProductos::productos,engine);
@@ -98,6 +106,7 @@ public class Server {
         return new ModelAndView(null, "index.html");
     }
     
+    
     public static ModelAndView mostrarIndex2(Request request, Response response) {
         return new ModelAndView(null, "index2.html");
     }
@@ -109,6 +118,25 @@ public class Server {
 
     public static ModelAndView login(Request request, Response response) {
         return new ModelAndView(null, "login.html");
+    }
+    
+    public static ModelAndView crearIngreso(Request request, Response response){
+        return new ModelAndView(null,"formularioIngresos.html");
+    }
+    
+    public static ModelAndView ingresos(Request request, Response response) throws CloneNotSupportedException {
+
+        //INIT
+        RepositorioIngreso repo = new RepositorioIngreso();
+
+        //DOMINIO
+        List<Ingreso> ingresos = repo.todos();
+
+        //OUTPUT
+        Map<String, Object> map = new HashMap<>();
+        map.put("ingresos", ingresos);
+
+        return new ModelAndView(map, "ingresos.html");
     }
 
     public static ModelAndView egresos(Request request, Response response) throws CloneNotSupportedException {
@@ -165,8 +193,54 @@ public class Server {
         return new ModelAndView(map,"detalleEgreso.html");
     }
 
-    public static ModelAndView mostrarCategorias(Request request, Response response) {
-        return new ModelAndView(null, "categorias.html");
+    /*public static ModelAndView mostrarCategorias(Request request, Response response) throws CloneNotSupportedException {
+    	
+    	RepositorioCategoria repoCategoria = new RepositorioCategoria();
+    	//RepositorioEgreso repoEgresos = new RepositorioEgreso();
+    	//RepositorioIngreso repoIngresos = new RepositorioIngreso();
+    	
+    	List<CategoriaDelSistema> categorias = repoCategoria.todos();
+    	//List<Egreso> ingresos = repoEgresos.todos();
+    	//List<Ingreso> egresos = repoIngresos.todos();
+    	
+    	Map<String, Object> map = new HashMap<>();
+        map.put("categorias", categorias);
+   //     map.put("ingresos", ingresos);
+    //    map.put("egresos", egresos);
+    	
+        return new ModelAndView(map, "categorias.html");
+    }*/
+    
+    public static ModelAndView mostrarCategorias(Request request, Response response) throws CloneNotSupportedException {
+    	
+    	RepositorioCategoria repoCategoria = new RepositorioCategoria();
+    	
+    	List<CategoriaDelSistema> categorias = repoCategoria.todos();
+    	
+    	String categoriaString = request.queryParams("categoria");
+    	String tipoDocumentoString = request.queryParams("tipoDoc");
+    	
+    	CategoriaDelSistema categoria = repoCategoria.buscar(categoriaString);
+    	
+    	Map<String, Object> map = new HashMap<>();
+    	
+    	if(tipoDocumentoString == "Egreso") {
+    		RepositorioEgreso repoEgresos = new RepositorioEgreso();
+    		List<Egreso> egresos = repoEgresos.todos().stream().filter(a -> a.esDeCategoria(categoria)).collect(Collectors.toList());
+    		map.put("documentos",egresos);
+    	}
+    	
+    	if(tipoDocumentoString == "Ingreso") {
+    		RepositorioIngreso repoIngresos = new RepositorioIngreso();
+    		List<Ingreso> ingresos = repoIngresos.todos().stream().filter(a -> a.esDeCategoria(categoria)).collect(Collectors.toList());
+    		map.put("documentos",ingresos);
+    	}
+    	
+    	map.put("categorias", categorias);
+    	
+		return new ModelAndView(map, "categorias.html");
+    	
+    	
     }
 
     //PRODUCTOS
