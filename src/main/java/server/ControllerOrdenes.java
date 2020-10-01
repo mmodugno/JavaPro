@@ -2,21 +2,19 @@ package server;
 
 import egreso.Egreso;
 import egreso.OrdenDeCompra;
+import producto.Item;
 import producto.Producto;
 import producto.TipoItem;
 import repositorios.RepositorioEgreso;
 import repositorios.RepositorioOrdenDeCompra;
+import repositorios.RepositorioProducto;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class ControllerOrdenes {
 
@@ -39,11 +37,17 @@ public class ControllerOrdenes {
         Map<String, Object> map = new HashMap<>();
         map.put("ordenes", ordenes);
 
+
         return new ModelAndView(map, "ordenes.html");
     }
 
     public ModelAndView nuevaOrden(Request request, Response response){
-        return new ModelAndView(null,"formularioOrden.html");
+
+        RepositorioProducto repoPro = new RepositorioProducto();
+        Map<String, Object> map = new HashMap<>();
+        List<Producto> productos = repoPro.todos();
+        map.put("productos", productos);
+        return new ModelAndView(map,"formularioOrden.html");
     }
 
     public Response crear(Request request, Response response) throws ParseException {
@@ -54,7 +58,7 @@ public class ControllerOrdenes {
     	
     	nuevaOrden.setIdOrden(repo.proximoId());
     	nuevaOrden.setNecesitaPresupuesto(Integer.parseInt(request.queryParams("presupuesto")));
-    	
+
     	//nuevaOrden.agregarItem(item);
     	
     	String fecha =  request.queryParams("fecha");   	

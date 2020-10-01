@@ -12,6 +12,10 @@ public class RepositorioProducto {
 
     private static List<Producto> productos;
 
+    public static List<Producto> getProductos() {
+        return productos;
+    }
+
     public RepositorioProducto() {
 
             Producto producto1 = new Producto(1, "Monitor", "Monitor 32", TipoItem.ARTICULO);

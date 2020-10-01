@@ -61,10 +61,11 @@
 
             function agregar() {
                 cont++;
-                var fila = '<tr class="selected" id="fila' + cont + '" onclick="seleccionar(this.id)">' +
+                var fila = '<tr class="selected" id="fila' + cont + '">' +
                     '<td>' + cont + '</td>' +
-                    '<td> <select> <option> Producto1 </option> <option> Producto2 </option> </select> </td>  ' +
-                    '<td> $<input type="number" name="monto" id="monto" placeholder="0.00"></td>  ' +
+                    '<td> <select id="product"> {{#each productos}}<option value="{{codProducto}}">{{nombre}}</option>{{/each}}</select> </td>  ' +
+                    '<td> $<input type="number" name="monto" id="monto" placeholder="0.00"></td>' +
+                    '<td><input type="number" min="1" max="100" placeholder="1-100" id="cantidad" required></td>  ' +
                     '<td><button id="btn-del" class="borrar">Eliminar</button></td>' +
                     '</tr>'
                 $('#items').append(fila);
@@ -131,6 +132,7 @@
                         <td>Nro</td>
                         <td>Producto</td>
                         <td>Valor</td>
+                        <td>Cantidad</td>
                         <td></td>
                     </tr>
                     {{#if orden}}
