@@ -74,11 +74,10 @@
                         <label for="presupuesto">Presupuesto:</label>
                         <div class="form-group">
                             <select class="form-control" name="presupuesto" id="presupuesto">
-                              <option>6</option>
-                              <option>7</option>
-                              <option>8</option>
-                              <option>9</option>
-                              <option>10</option>
+                              <option value = "">Seleccionar...</option>
+                                {{#each presupuestos}}
+                              	<option value = "{{id}}">{{id}}</option>
+                                {{/each}}
                             </select>
                         </div>
                     </div>
