@@ -88,11 +88,9 @@
                         <div class="form-group">
                             <label for="categoria">Categoria</label>
                             <select class="form-control" name="categoria" id="categoria">
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
+                              {{#each categorias}}
+                              	<option value = "{{categoria}}">{{categoria}}</option>
+                                {{/each}}
                             </select>
                         </div>
                     </div>
