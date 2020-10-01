@@ -183,7 +183,7 @@ public class Server {
     	Map<String, Object> map = new HashMap<>();
         map.put("ordenes", ordenes);
     	
-        return new ModelAndView(null,"crearEgreso.html");
+        return new ModelAndView(map ,"crearEgreso.html");
     }
     
     public static ModelAndView detalleEgreso(Request request, Response response) throws CloneNotSupportedException{
