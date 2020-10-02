@@ -14,6 +14,7 @@ import producto.Item;
 import producto.Producto;
 import producto.Proveedor;
 import producto.TipoItem;
+import usuarios.Categoria;
 import usuarios.CategoriaDelSistema;
 
 public class RepositorioPresupuesto {
@@ -22,6 +23,8 @@ public class RepositorioPresupuesto {
 	
     public RepositorioPresupuesto() throws CloneNotSupportedException {
 		 
+    	Categoria categoriaBSAS = new Categoria("Buenos Aires","Provincia");
+    	
     	Proveedor proveedor1 = new Proveedor("Info Tech","22412145696", "6725");
     	
     	MedioDePago medioDePago = new MedioDePago(TipoMedioPago.Argencard, 221144);
@@ -41,6 +44,8 @@ public class RepositorioPresupuesto {
         presupuesto1.getItems().get(1).setPrecioUnitario(30.00);
         
         presupuesto1.setId(6);
+        
+        presupuesto1.setCategoria(categoriaBSAS);
         
         
         Presupuesto presupuesto2 = new Presupuesto(ordenDeCompra.getItems(),proveedor1,medioDePago);

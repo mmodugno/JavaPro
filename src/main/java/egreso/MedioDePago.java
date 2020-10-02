@@ -22,6 +22,7 @@ public class MedioDePago {
 	public TipoMedioPago getPayment_type() {
 		return payment_type;
 	}
+	
 	public int getId() {
 		return id;
 	}

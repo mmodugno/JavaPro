@@ -100,7 +100,7 @@
                 <option value="" class="btn btn-secondary btn-lg" disabled selected>Seleccionar Doc</option>
                 <option value="Egresos">Egresos</option>
                 <option value="Ingresos">Ingresos</option>
-
+                <option value="Presupuestos">Presupuestos</option>   
             </select>
 
 
@@ -111,6 +111,9 @@
 
 
             <div class="row py-5 "></div>
+
+
+            {{#if documentos}}
 
             <div class="contenido-centrado ">
                 <table class="table gradual ">
@@ -140,9 +143,56 @@
 
                     </tbody>
 
+
+
                 </table>
 
             </div>
+
+            {{/if}} {{#if presupuestos}}
+
+            <div class="contenido-centrado ">
+                <table class="table gradual ">
+                    <thead class="thead-dark ">
+                        <tr>
+                            <th scope="col ">#</th>
+                            <th scope="col ">Nro</th>
+                            <th scope="col ">Proveedor</th>
+                            <th scope="col ">Monto</th>
+                            <th scope="col ">Items</th>
+                            <th scope="col "></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each presupuestos}}
+                        <tr class="ultimo-final ">
+                            <th scope="row ">1</th>
+                            <td>{{id}}</td>
+                            <td>{{proveedor.nombre}}</td>
+                            <td>{{valorTotal}}</td>
+                            <td>{{nombreItems}}</td>
+                            <td>
+                                <a href="detalleEgreso.html ">
+                                    <button class="btn btn-yoel ">Seleccionar</button>
+                                </a>
+                            </td>
+                        </tr>
+                        {{/each}}
+
+                    </tbody>
+
+
+
+                </table>
+
+            </div>
+
+            {{/if}}
+
+
+
+
+
         </div>
 
 

@@ -265,6 +265,12 @@ public class Server {
     		map.put("documentos",ingresos);
     	}
     	
+    	if(tipoDocumentoString.equals("Presupuestos")) {
+    		RepositorioPresupuesto repoPresupuesto = new RepositorioPresupuesto();
+    		List<Presupuesto> presupuestos = repoPresupuesto.todos().stream().filter(a -> a.esDeCategoria(categoria)).collect(Collectors.toList());
+    		map.put("presupuestos",presupuestos);
+    	}
+    	
     	map.put("categorias", categorias);
     	
 		return new ModelAndView(map, "categorias.html");
