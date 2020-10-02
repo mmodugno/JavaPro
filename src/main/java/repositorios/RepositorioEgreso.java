@@ -90,6 +90,14 @@ public class RepositorioEgreso {
 	public void crear(Egreso egreso) {
 	    	egresos.add(egreso);
 	    }
+	
+	public void reemplazar(Egreso egreso) {
+		
+		int index = egresos.indexOf(egreso);
+		
+		egresos.set(index,egreso);
+		
+	}
 
 	public Egreso byID(int id) {
 		Optional<Egreso> egreso = egresos.stream().filter(e -> e.getId() == id).findFirst();

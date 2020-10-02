@@ -51,7 +51,7 @@
         <div class="contenido-centrado contenedor">
             <!-- aca esta la clase container-->
             <h4 class="mb-3">Egreso:{{#if egreso}} {{egreso.id }}{{/if}}</h4>
-            <form class="needs-validation contenido-centrado contenedor" action="/egreso" method="post" novalidate>
+            <form class="needs-validation contenido-centrado contenedor" {{#if egreso}} action="/egreso/{{egreso.id}}" {{else}} action="/egreso" {{/if}} method="post" novalidate>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
@@ -104,10 +104,10 @@
                         </div>
                     </div> -->
                     <div class="col-md-6 mb-3">
-                    	<label for="documentos">Fecha</label>
+                        <label for="documentos">Fecha</label>
                         <div class='input-group date' id='datetimepicker1'>
-                        <input type='date' class="form-control" name="fecha" id="fecha" placeholder="DD/MM/AAAA" />
-                    	</div>
+                            <input type='date' class="form-control" name="fecha" id="fecha" placeholder="DD/MM/AAAA" />
+                        </div>
                     </div>
                 </div>
 
@@ -134,12 +134,12 @@
         window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')
     </script>
     <!-- <script src="/public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
-    
+
     <script type="text/javascript">
-    	$(function() {
-        	$('#datetimepicker1').datetimepicker();
-    	});
-	</script>
+        $(function() {
+            $('#datetimepicker1').datetimepicker();
+        });
+    </script>
 </body>
 
 </html>
