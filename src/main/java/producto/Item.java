@@ -19,9 +19,13 @@ public class Item implements Cloneable {
 	private int cantidad;
 	private double precioUnitario;
 	private boolean estaCerrada = false;
-	
 
-	/*GETTERS*/
+    public Item() {
+
+    }
+
+
+    /*GETTERS*/
 	public Producto getProducto() {
 		return producto;
 	}

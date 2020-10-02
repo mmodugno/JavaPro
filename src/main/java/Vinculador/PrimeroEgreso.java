@@ -16,6 +16,10 @@ public class PrimeroEgreso extends CriterioDeVinculacion {
         super(condicionesObligatorias);
     }
 
+    public PrimeroEgreso() {
+        super();
+    }
+
     @Override
     void vincular(List<Egreso> egresos, List<Ingreso> ingresos, EntidadJuridica entidadJuridica) throws ListaVaciaExcepcion, MontoSuperadoExcepcion {
         ordenarValor(ingresos, egresos);

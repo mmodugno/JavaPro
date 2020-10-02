@@ -30,7 +30,7 @@ public class ControllerIngresos {
         repo = new RepositorioIngreso();
     }
 
- 
+
 
     public ModelAndView nuevoIngreso(Request request, Response response){
     	
@@ -87,13 +87,14 @@ public class ControllerIngresos {
 		int id = new Integer(strID);
 		
 		Ingreso ingreso= repo.byID(id);
-		repo.borrar(ingreso.getDescripcion());
-		
+		repo.borrar(ingreso);
+
+		/*
 		//Borra segun la descripcion:
 		String desc = request.params("descripcion");
-		repo.borrar(desc);
+		repo.borrar(desc);*/
 		
-		response.redirect("/ingresos");
+		//response.redirect("/ingresos");
 		
 		return response;
 	}
@@ -128,6 +129,19 @@ public class ControllerIngresos {
 
 		return response;
 
+	}
+
+	public ModelAndView ingresos(Request request, Response response) throws CloneNotSupportedException {
+
+
+		//DOMINIO
+		List<Ingreso> ingresos = repo.todos();
+
+		//OUTPUT
+		Map<String, Object> map = new HashMap<>();
+		map.put("ingresos", ingresos);
+
+		return new ModelAndView(map, "ingresos.html");
 	}
 	
 	

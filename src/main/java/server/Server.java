@@ -36,8 +36,14 @@ public class Server {
     private static ControllerEgresos controllerEgresos= new ControllerEgresos();
     private static ControllerIngresos controllerIngresos= new ControllerIngresos();
     private static ControllerOrdenes controllerOrdenes;
+    private static ControllerVinculador controllerVinculador;
 
     static {
+        try {
+            controllerVinculador = new ControllerVinculador();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
         try {
             controllerOrdenes = new ControllerOrdenes();
         } catch (CloneNotSupportedException e) {
@@ -82,7 +88,7 @@ public class Server {
         post("/egreso/:id", controllerEgresos::modificarEgreso);
         
         //INGRESOS
-        get("/ingresos", Server::ingresos, engine);
+        get("/ingresos", controllerIngresos::ingresos, engine);
         get("/crearIngreso", Server::crearIngreso, engine);
         post("/ingreso",controllerIngresos::guardarIngreso);
         delete("/ingreso/:id", controllerIngresos::eliminarIngreso);
@@ -104,6 +110,10 @@ public class Server {
        // get("/orden/:id",,engine);
         post("/orden", controllerOrdenes::crear);
        // post("orden:id");
+
+        //VINCULADOR
+
+        get("/vinculaciones", controllerVinculador::vinculaciones, engine);
         
 
     }
@@ -131,20 +141,7 @@ public class Server {
         return new ModelAndView(null,"formularioIngresos.html");
     }
     
-    public static ModelAndView ingresos(Request request, Response response) throws CloneNotSupportedException {
 
-        //INIT
-        RepositorioIngreso repo = new RepositorioIngreso();
-
-        //DOMINIO
-        List<Ingreso> ingresos = repo.todos();
-
-        //OUTPUT
-        Map<String, Object> map = new HashMap<>();
-        map.put("ingresos", ingresos);
-
-        return new ModelAndView(map, "ingresos.html");
-    }
 
     public static ModelAndView egresos(Request request, Response response) throws CloneNotSupportedException {
 

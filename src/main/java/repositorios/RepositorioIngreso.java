@@ -10,9 +10,10 @@ import egreso.Ingreso;
 import usuarios.CategoriaDelSistema;
 
 public class RepositorioIngreso {
-	
+
 	static List<Ingreso> ingresos = null;
 	static int proximoId = 5;
+
 
     public RepositorioIngreso() {
         if (ingresos == null) {
@@ -61,8 +62,8 @@ public class RepositorioIngreso {
         Ingreso unIngreso = ingresos.stream().filter(ingreso -> ingreso.getDescripcion().equals(descripcion)).findFirst().get();
         return unIngreso;
     }
-    public void borrar(String descripcion) {
-        ingresos = ingresos.stream().filter(ingreso -> !ingreso.getDescripcion().equals(descripcion)).collect(Collectors.toList());
+    public void borrar(Ingreso ingreso) {
+        ingresos.remove(ingreso);
     }
 
     public void crear(Ingreso ingreso) {

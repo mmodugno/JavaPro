@@ -22,6 +22,10 @@ public class Vinculador {
     private List<Ingreso> ingresosSinVincular;
     private EntidadJuridica entidadJuridica;
 
+    public Vinculador() {
+
+    }
+
     /*GETTERS*/
 
     public List<Egreso> getEgresosSinVincular() {
