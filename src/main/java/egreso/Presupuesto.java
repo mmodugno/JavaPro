@@ -2,6 +2,8 @@ package egreso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import producto.*;
 import usuarios.CategoriaDelSistema;
 
@@ -53,6 +55,14 @@ public class Presupuesto implements Categorizable{
     public boolean isAceptado() {
         return aceptado;
     }
+    
+    public Double getValorTotal() {
+    	return this.valorTotal();
+    }
+    
+    public List<String> getNombreItems(){
+    	return items.stream().map(a -> a.getProducto()).collect(Collectors.toList()).stream().map(a -> a.getNombre()).collect(Collectors.toList());
+    }
 
     public Double valorTotal() throws SinItemsExcepcion{
 			if(items.isEmpty()){
@@ -93,10 +103,14 @@ public class Presupuesto implements Categorizable{
     public void categorizar(CategoriaDelSistema categoria) {
         this.categoria = categoria;
     }
-
+    
     public boolean esDeCategoria(CategoriaDelSistema unaCategoria) {
-        return categoria.equals(unaCategoria);
-    }
+		if(categoria == null) return false;
+		else return categoria.getCategoria().equals(unaCategoria.getCategoria());
+		
+	}
+
+    
 	public void setId(int i) {
 		this.id = i;
 		

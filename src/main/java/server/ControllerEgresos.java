@@ -10,7 +10,9 @@ import repositorios.RepositorioProducto;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import usuarios.CategoriaDelSistema;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -139,20 +141,29 @@ public class ControllerEgresos {
 
 		String ordenDeCompra = request.queryParams("orden");
 		String pres = request.queryParams("presupuesto");
-		String categoria = request.queryParams("categoria");
-		//String fecha = request.queryParams("fecha");
+		String categoriaString = (request.queryParams("categoria") != null) ? request.queryParams("categoria") : "";
+		String fecha = request.queryParams("fecha");
 
 		int idOrden = Integer.parseInt(ordenDeCompra);
 		OrdenDeCompra orden = repoOrden.byID(idOrden);
+		
+		if(!categoriaString.contains("%20")) {
+    		categoriaString = categoriaString.replace("%20"," ");
+    	};
+    	
+
+    	CategoriaDelSistema categoria = repoCategoria.buscar(categoriaString);
 
 		int idPresupuesto = Integer.parseInt(pres);
 		Presupuesto presupuesto = repoPresupuesto.byID(idPresupuesto);
-
+		orden.cerrarOrden();
 		egreso.setOrdenDeCompra(orden);
 		//egreso.setDocumentosComerciales();
-		//egreso.setCategoria();
+		egreso.setCategoria(categoria);
+		presupuesto.setAceptado();
 		egreso.setPresupuesto(presupuesto);
-		//egreso.setFecha();
+		egreso.setValorTotal(presupuesto.valorTotal());
+		egreso.setFecha(LocalDate.parse(fecha));
 
 
 	}

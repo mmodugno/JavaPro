@@ -23,6 +23,11 @@ public class Ingreso implements Categorizable{
 		this.egresosAsociados = new ArrayList<Egreso>();
 		this.fecha = LocalDate.now();
 	}
+	
+	
+	public Ingreso() {
+		
+	}
 	/*
 	*** se tendría que hacer as0
 	* ingreso.setDescripcion(descripcion);
@@ -38,6 +43,7 @@ public class Ingreso implements Categorizable{
 	private CategoriaDelSistema categoria = null;
 	private double montoVinculado = 0.00;
 	private LocalDate fecha;
+	private int id;
 
 	/*GETTERS*/
 	public LocalDate getFecha() {
@@ -101,8 +107,21 @@ public class Ingreso implements Categorizable{
 		return this.getMontoSinVincular()>0;
 	}
 
+
 	public boolean esDeCategoria(CategoriaDelSistema unaCategoria) {
-		return categoria.equals(unaCategoria);
+		if(categoria == null) return false;
+		else return categoria.getCategoria().equals(unaCategoria.getCategoria());
+		
+	}
+
+	public void setId(int i) {
+		this.id = i;
+		
+	}
+	
+	public int getId() {
+		return this.id;
+		
 	}
 
 

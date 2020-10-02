@@ -1,12 +1,14 @@
 package server;
 
 import egreso.Egreso;
+import egreso.Ingreso;
 import egreso.OrdenDeCompra;
 import egreso.Presupuesto;
 import producto.Producto;
 import producto.TipoItem;
 import repositorios.RepositorioCategoria;
 import repositorios.RepositorioEgreso;
+import repositorios.RepositorioIngreso;
 import repositorios.RepositorioOrdenDeCompra;
 import repositorios.RepositorioPresupuesto;
 import repositorios.RepositorioProducto;
@@ -15,10 +17,13 @@ import spark.Request;
 import spark.Response;
 
 import spark.template.handlebars.HandlebarsTemplateEngine;
+import usuarios.Categoria;
+import usuarios.CategoriaDelSistema;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
@@ -29,6 +34,7 @@ public class Server {
 
     private static ControllerProductos controllerProductos= new ControllerProductos();
     private static ControllerEgresos controllerEgresos= new ControllerEgresos();
+    private static ControllerIngresos controllerIngresos= new ControllerIngresos();
     private static ControllerOrdenes controllerOrdenes;
     private static ControllerVinculador controllerVinculador;
 
@@ -72,13 +78,22 @@ public class Server {
         get("/egresos", Server::egresos, engine);
         get("/egreso/:id", Server::detalleEgreso, engine);
         get("/crearEgreso", Server::crearEgreso, engine);
-
         get("/modificarEgreso/:id", controllerEgresos::modificarEgresoGet,engine);
 
         get("/categorias", Server::mostrarCategorias, engine);
+        get("/categoria", Server::mostrarCategorias, engine);
+        
         post("/egreso",controllerEgresos::guardarEgreso);
         delete("/egreso/:id", controllerEgresos::eliminarEgreso);
         post("/egreso/:id", controllerEgresos::modificarEgreso);
+        
+        //INGRESOS
+        get("/ingresos", Server::ingresos, engine);
+        get("/crearIngreso", Server::crearIngreso, engine);
+        post("/ingreso",controllerIngresos::guardarIngreso);
+        delete("/ingreso/:id", controllerIngresos::eliminarIngreso);
+        get("/ingreso/:id", controllerIngresos::modificarIngreso,engine); ///VER EL POST
+        post("/ingreso/:id", controllerIngresos::persistirIngreso);
 
         //acciones productos
         get("/productos",controllerProductos::productos,engine);
@@ -108,6 +123,7 @@ public class Server {
         return new ModelAndView(null, "index.html");
     }
     
+    
     public static ModelAndView mostrarIndex2(Request request, Response response) {
         return new ModelAndView(null, "index2.html");
     }
@@ -119,6 +135,25 @@ public class Server {
 
     public static ModelAndView login(Request request, Response response) {
         return new ModelAndView(null, "login.html");
+    }
+    
+    public static ModelAndView crearIngreso(Request request, Response response){
+        return new ModelAndView(null,"formularioIngresos.html");
+    }
+    
+    public static ModelAndView ingresos(Request request, Response response) throws CloneNotSupportedException {
+
+        //INIT
+        RepositorioIngreso repo = new RepositorioIngreso();
+
+        //DOMINIO
+        List<Ingreso> ingresos = repo.todos();
+
+        //OUTPUT
+        Map<String, Object> map = new HashMap<>();
+        map.put("ingresos", ingresos);
+
+        return new ModelAndView(map, "ingresos.html");
     }
 
     public static ModelAndView egresos(Request request, Response response) throws CloneNotSupportedException {
@@ -156,9 +191,24 @@ public class Server {
     
 
     
-    public static ModelAndView crearEgreso(Request request, Response response){
-        return new ModelAndView(null,"crearEgreso.html");
+    public static ModelAndView crearEgreso(Request request, Response response) throws CloneNotSupportedException{
+    	
+    	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra();
+    	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto();
+    	RepositorioCategoria repoCategorias = new RepositorioCategoria();
+    	
+    	List<OrdenDeCompra> ordenes = repoOrdenesCompra.todos();
+    	List<Presupuesto> presupuestos = repoPresupuestos.todos();
+    	List<CategoriaDelSistema> categorias = repoCategorias.todos();
+    	
+    	Map<String, Object> map = new HashMap<>();
+        map.put("ordenes", ordenes);
+        map.put("presupuestos", presupuestos);
+        map.put("categorias", categorias);
+    	
+        return new ModelAndView(map ,"crearEgreso.html");
     }
+    
     public static ModelAndView detalleEgreso(Request request, Response response) throws CloneNotSupportedException{
     	
     	RepositorioEgreso repo = new RepositorioEgreso();
@@ -175,8 +225,67 @@ public class Server {
         return new ModelAndView(map,"detalleEgreso.html");
     }
 
-    public static ModelAndView mostrarCategorias(Request request, Response response) {
-        return new ModelAndView(null, "categorias.html");
+    /*public static ModelAndView mostrarCategorias(Request request, Response response) throws CloneNotSupportedException {
+    	
+    	RepositorioCategoria repoCategoria = new RepositorioCategoria();
+    	//RepositorioEgreso repoEgresos = new RepositorioEgreso();
+    	//RepositorioIngreso repoIngresos = new RepositorioIngreso();
+    	
+    	List<CategoriaDelSistema> categorias = repoCategoria.todos();
+    	//List<Egreso> ingresos = repoEgresos.todos();
+    	//List<Ingreso> egresos = repoIngresos.todos();
+    	
+    	Map<String, Object> map = new HashMap<>();
+        map.put("categorias", categorias);
+   //     map.put("ingresos", ingresos);
+    //    map.put("egresos", egresos);
+    	
+        return new ModelAndView(map, "categorias.html");
+    }*/
+    
+    public static ModelAndView mostrarCategorias(Request request, Response response) throws CloneNotSupportedException {
+    	
+    	RepositorioCategoria repoCategoria = new RepositorioCategoria();
+    	
+    	List<CategoriaDelSistema> categorias = repoCategoria.todos();
+    	
+    	String categoriaString = (request.queryParams("categoria") != null) ? request.queryParams("categoria") : "";
+    	
+    	String tipoDocumentoString = (request.queryParams("tipoDoc") != null) ? request.queryParams("tipoDoc") : "";
+    	
+    	if(!categoriaString.contains("%20")) {
+    		categoriaString = categoriaString.replace("%20"," ");
+    	};
+    	
+
+    	CategoriaDelSistema categoria = repoCategoria.buscar(categoriaString);
+    	
+    	
+    	Map<String, Object> map = new HashMap<>();
+    	
+    	if(tipoDocumentoString.equals("Egresos")) {
+    		RepositorioEgreso repoEgresos = new RepositorioEgreso();
+    		List<Egreso> egresos = repoEgresos.todos().stream().filter(a -> a.esDeCategoria(categoria)).collect(Collectors.toList());
+    		map.put("documentos",egresos);
+    	}
+    	
+    	if(tipoDocumentoString.equals("Ingresos")) {
+    		RepositorioIngreso repoIngresos = new RepositorioIngreso();
+    		List<Ingreso> ingresos = repoIngresos.todos().stream().filter(a -> a.esDeCategoria(categoria)).collect(Collectors.toList());
+    		map.put("documentos",ingresos);
+    	}
+    	
+    	if(tipoDocumentoString.equals("Presupuestos")) {
+    		RepositorioPresupuesto repoPresupuesto = new RepositorioPresupuesto();
+    		List<Presupuesto> presupuestos = repoPresupuesto.todos().stream().filter(a -> a.esDeCategoria(categoria)).collect(Collectors.toList());
+    		map.put("presupuestos",presupuestos);
+    	}
+    	
+    	map.put("categorias", categorias);
+    	
+		return new ModelAndView(map, "categorias.html");
+    	
+    	
     }
 
     //PRODUCTOS
