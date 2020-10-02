@@ -1,11 +1,18 @@
 package server;
 
 import Vinculador.*;
+import egreso.Balance;
+import egreso.Ingreso;
 import repositorios.RepositorioEgreso;
 import repositorios.RepositorioIngreso;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ControllerVinculador {
 
@@ -46,6 +53,41 @@ public class ControllerVinculador {
 
     public ModelAndView vinculaciones(Request request, Response response){
 
-        return new ModelAndView(null, "vinculaciones.html");
+
+        Map<String, Object> map = new HashMap<>();
+        List<Balance> balances = new ArrayList<>();
+        List<Ingreso> ingresos = new ArrayList<>();
+        if(request.queryParams("mostrar") != null) {
+            String mostrar = request.queryParams("mostrar");
+            if (mostrar != null) {
+
+                if (mostrar.equals("balances")) {
+
+                    map.remove("ingresos", ingresos);
+
+                    Balance balance = new Balance();
+                    balance.setId(0303456);
+                    balances.add(balance);
+
+                    map.put("balances", balances);
+                } else if (mostrar.equals("ingresos")) {
+
+                    map.remove("balances", balances);
+
+                    ingresos = repositorioIngreso.todos();
+                    map.put("ingresos", ingresos);
+                }
+            }
+        }
+        List<CriterioDeVinculacion> criterios = new ArrayList<>();
+        CriterioDeVinculacion criterio1= new PrimeroEgreso();
+        criterio1.setNombre("Uno");
+        CriterioDeVinculacion criterio2= new PrimeroEgreso();
+        criterio2.setNombre("DOs");
+        criterios.add(criterio1);
+        criterios.add(criterio2);
+        map.put("criterios",criterios);
+
+        return new ModelAndView(map, "vinculaciones.html");
     }
 }

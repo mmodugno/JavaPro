@@ -1,21 +1,20 @@
 {{>header.hbs}}
 
 
-
-<!-- /#sidebar-wrapper -->
-
-<!-- Page Content -->
 <div id="page-content-wrapper">
-    <h1>Vinculaciones</h1>
 
-    <form action="">
+    <div class="contenido-centrado">
+    <h1 class="text-center">Vinculaciones</h1>
+
+    <form class="contenido-centrado"action="">
         <fieldset>
         <div>
 
             <label>Criterio de Viculacion</label>
                 <select>
-                    <option>OP1</option>
-                    <option>OP2</option>
+                    {{#each criterios}}
+                    <option>{{nombre}}</option>
+                    {{/each}}
                 </select>
         </div>
         <div>
@@ -37,17 +36,29 @@
         <input type="radio" name="vinculaciones" value="ingresos" id="por-ingreso">
 
         <input type="button" onclick="mostrarSeleccionado()" value="Mostrar Tabla">
-
-        <table id="vincu-table">
+    </div>
+        <div class="contenido-centrado">
+        <table id="vincu-table" class="table  gradual">
+            {{#if balances}}<thead class="thead-dark"><tr><th>#</th><th>Balance</th><th></th></tr></thead>{{/if}}
+            {{#each balances}}
+            <tr><td>#</td><td>{{id}}</td><td><button class="btn btn-yoel">Ver más</button></td></tr>
+            {{/each}}
+            {{#if ingresos}}<thead class="thead-dark"><tr><th>#</th><th>Ingreso</th><th></th></tr></thead>{{/if}}
+            {{#each ingresos}}
+            <tr><td>#</td><td>{{id}}</td><td><button class="btn btn-yoel">Ver más</button></td></tr>
+            {{/each}}
         </table>
+        </div>
 
 
 
     </div>
 
 </div>
-<!-- /#page-content-wrapper -->
+
 {{>footer.hbs}}
+
+
 <script src="/public/js/functions.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 <script>
@@ -56,13 +67,11 @@
     function mostrarSeleccionado() {
         $("#vincu-table tr").remove();
         if(document.getElementById('por-balance').checked){
-            let fila = '<tr><td>#</td><td>Balance</td><td></td></tr>'
-            $('#vincu-table').append(fila);
-
+            window.location = "/vinculaciones?mostrar=balances";
         }
         if(document.getElementById('por-ingreso').checked){
-            let fila = '<tr><td>#</td><td>Ingreso</td><td></td></tr>'
-            $('#vincu-table').append(fila);
+            window.location = "/vinculaciones?mostrar=ingresos";
+
         }
     }
 

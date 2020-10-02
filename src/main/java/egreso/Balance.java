@@ -10,6 +10,7 @@ public class Balance {
 
 
     /*ATRIBUTOS*/
+    private int id;
     private Egreso egreso;
     private List<Ingreso> ingresosVinculados = new ArrayList<Ingreso>();
     private List<Double> valorIngresos = new ArrayList<Double>();
@@ -25,6 +26,10 @@ public class Balance {
         return valorIngresos;
     }
 
+    public int getId() {
+        return id;
+    }
+
     /*SETTERS*/
     public void setEgreso(Egreso egreso) {
         this.egreso = egreso;
@@ -36,7 +41,7 @@ public class Balance {
         this.valorIngresos = valorIngresos;
     }
 
-
-
-
+    public void setId(int id) {
+        this.id = id;
+    }
 }

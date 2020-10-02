@@ -10,7 +10,22 @@ import java.util.stream.Collectors;
 
 public abstract class CriterioDeVinculacion {
 
+
+
     private List<CondicionObligatoria> condicionesObligatorias;
+    private String nombre = "";
+
+    public CriterioDeVinculacion() {
+
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
     public CriterioDeVinculacion(List<CondicionObligatoria> condicionesObligatorias) {
         this.condicionesObligatorias = condicionesObligatorias;
