@@ -66,13 +66,15 @@ public class Server {
 
         // Ejemplo de acceso: http://localhost:9000/inicio
         HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
-
+        
+        redirect.get("/", "/login");
 
         //get("/hola",((request, response) -> "Yoel"));
         get("/inicio", Server::mostrarIndex, engine);
         get("/inicio2", Server::mostrarIndex2, engine);
         get("/pageblank", Server::mostrarPageBlank, engine);
         get("/login", Server::login, engine);
+        post("/login", Server::validarLogin, engine);
 
         //EGRESOS
         get("/egresos", Server::egresos, engine);
@@ -134,6 +136,10 @@ public class Server {
 
 
     public static ModelAndView login(Request request, Response response) {
+        return new ModelAndView(null, "login.html");
+    }
+    
+    public static ModelAndView validarLogin(Request request, Response response) {
         return new ModelAndView(null, "login.html");
     }
     
