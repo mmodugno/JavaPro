@@ -34,6 +34,7 @@ public class Server {
 
     private static ControllerProductos controllerProductos= new ControllerProductos();
     private static ControllerEgresos controllerEgresos= new ControllerEgresos();
+    private static ControllerIngresos controllerIngresos= new ControllerIngresos();
     private static ControllerOrdenes controllerOrdenes;
 
     static {
@@ -71,17 +72,22 @@ public class Server {
         get("/egresos", Server::egresos, engine);
         get("/egreso/:id", Server::detalleEgreso, engine);
         get("/crearEgreso", Server::crearEgreso, engine);
-
         get("/modificarEgreso/:id", controllerEgresos::modificarEgresoGet,engine);
 
         get("/categorias", Server::mostrarCategorias, engine);
         get("/categoria", Server::mostrarCategorias, engine);
+        
         post("/egreso",controllerEgresos::guardarEgreso);
         delete("/egreso/:id", controllerEgresos::eliminarEgreso);
         post("/egreso/:id", controllerEgresos::modificarEgreso);
         
+        //INGRESOS
         get("/ingresos", Server::ingresos, engine);
         get("/crearIngreso", Server::crearIngreso, engine);
+        post("/ingreso",controllerIngresos::guardarIngreso);
+        delete("/ingreso/:id", controllerIngresos::eliminarIngreso);
+        get("/ingreso/:id", controllerIngresos::modificarIngreso,engine); ///VER EL POST
+        post("/ingreso/:id", controllerIngresos::persistirIngreso);
 
         //acciones productos
         get("/productos",controllerProductos::productos,engine);

@@ -79,6 +79,7 @@
                             <th scope="col">Fecha</th>
                             <th scope="col">Descripcion</th>
                             <th scope="col">Monto</th>
+                            <th scope="col"></th>
                         </tr>
 
                     </thead>
@@ -89,6 +90,11 @@
                             <td>{{fecha}}</td>
                             <td>{{descripcion}}</td>
                             <td>{{monto}}</td>
+                            <td>
+                                <a href="/ingreso/{{id}}">
+                                    <button class="btn btn-yoel">MODIFICAR</button>
+                                </a>
+                            </td>
                         </tr>
                         {{/each}}
 

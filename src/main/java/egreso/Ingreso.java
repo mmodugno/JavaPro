@@ -23,6 +23,11 @@ public class Ingreso implements Categorizable{
 		this.egresosAsociados = new ArrayList<Egreso>();
 		this.fecha = LocalDate.now();
 	}
+	
+	
+	public Ingreso() {
+		
+	}
 	/*
 	*** se tendría que hacer as0
 	* ingreso.setDescripcion(descripcion);

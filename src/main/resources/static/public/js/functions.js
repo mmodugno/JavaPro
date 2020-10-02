@@ -59,4 +59,15 @@ function eliminarEgreso() {
         }
 
     });
+
+    function eliminarIngreso() {
+        var id = document.getElementById("ingresoId").value;
+        $.ajax({
+            type: "delete",
+            url: id,
+            success: function(resultado) {
+                window.location.href = "/ingresos";
+            }
+    
+        });
 }

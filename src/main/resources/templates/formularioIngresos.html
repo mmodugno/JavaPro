@@ -26,10 +26,10 @@
                 <label>Id Ingreso: {{repos.proximoId}} </label>
 
                 <label for="descripcion">descripcion</label>
-                <input type="" id="descripcion" name="descripcion" {{#if ingreso}} value="{{ingreso.descripcion}}" {{else}}placeholder="Breve DescripciÃ³n" {{/if}} required>
+                <input type="" id="descripcion" name="descripcion" {{#if ingreso}} value="{{ingreso.descripcion}}" {{else}}placeholder="Breve Descripcion" {{/if}} required>
 
                 <label for="nombre">Monto</label>
-                <input type="" id="Monto" name="Monto" {{#if ingreso}}value="{{ingreso.monto}}" {{else}}placeholder="Monto Ingreso" {{/if}} required>
+                <input type="" id="monto" name="monto" {{#if ingreso}}value="{{ingreso.monto}}" {{else}} placeholder="0.00" {{/if}} required>
 
             </fieldset>
 
@@ -48,7 +48,7 @@
 <div class="modalEliminar modal" id="eliminarIngresoVentana">
     <div class="modalContent">
         <input type="hidden" value="" id="ingresoId">
-        <p>Â¿Realmente desea eliminar el ingreso?</p>
+        <p>¿Realmente desea eliminar el ingreso?</p>
         <button type="button" name="button" class="btn-close-modal" onclick="cerrarConfirmacionBorrar()"><i class="fas fa-times-circle"></i></button>
         <br>
         <div class="">
