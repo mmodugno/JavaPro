@@ -61,15 +61,22 @@ function eliminarEgreso() {
     });
 
 
-    function eliminarIngreso() {
-        var id = document.getElementById("ingresoId").value;
-        $.ajax({
-            type: "delete",
-            url: id,
-            success: function(resultado) {
-                window.location.href = "/ingresos";
-            }
-    
-        });}
+
 }
 
+/**Eliminar ingreso**/
+function confirmarBorrarIngreso(id) {
+    document.getElementById("ingresoId").value = id;
+    document.getElementById("eliminarIngresoVentana").style.display = 'block';
+
+}
+function eliminarIngreso() {
+    let id = document.getElementById("ingresoId").value;
+    $.ajax({
+        type: "delete",
+        url: id,
+        success: function(resultado) {
+            window.location.href = "/ingresos";
+        }
+
+    });}

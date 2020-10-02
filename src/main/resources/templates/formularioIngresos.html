@@ -34,8 +34,8 @@
             </fieldset>
 
             <div class="">
-                <input type="submit" class="btn btn-primary" {{#if ingreso}} value="Modificar Ingreso" {{else}} value="Crear Ingreso" {{/if}}> {{#if ingreso}}
-                <button type="button" class="btn btn-borrar" onclick="confirmarBorrar('{{ingreso.idIngreso}}')">Borrar</button> {{/if}}
+                <input type="submit" class="btn btn-primary" {{#if ingreso}} value="Modificar Ingreso" {{else}} value="Crear Ingreso" {{/if}}>
+                {{#if ingreso}}<button type="button" class="btn btn-borrar" onclick="confirmarBorrarIngreso('{{ingreso.id}}')">Borrar</button> {{/if}}
                 <a href="/ingresos" class="btn btn-danger">Cancelar</a>
             </div>
 
