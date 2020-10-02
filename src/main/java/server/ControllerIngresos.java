@@ -53,9 +53,9 @@ public class ControllerIngresos {
 		
 		String descripcion = request.queryParams("descripcion");
 		String montoString = request.queryParams("monto");
+
 		
-	
-		int monto = Integer.parseInt(montoString);
+		double monto = Double.parseDouble(montoString);;
 		
 		
 		ingreso.setDescripcion(descripcion);
