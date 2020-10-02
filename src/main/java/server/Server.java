@@ -116,6 +116,7 @@ public class Server {
         //VINCULADOR
 
         get("/vinculaciones", controllerVinculador::vinculaciones, engine);
+        get("/working",Server::work,engine);
         
 
     }
@@ -282,6 +283,9 @@ public class Server {
     }
 
     //PRODUCTOS
+    public static ModelAndView work(Request request, Response response){
+        return new ModelAndView(null,"index2.html");
+    }
 
 
 
