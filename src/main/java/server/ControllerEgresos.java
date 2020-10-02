@@ -118,19 +118,33 @@ public class ControllerEgresos {
 */
 
     public ModelAndView modificarEgresoGet(Request request, Response response) throws CloneNotSupportedException {
+    	
+    	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra();
+    	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto();
+    	RepositorioCategoria repoCategorias = new RepositorioCategoria();
+    	
+    	List<OrdenDeCompra> ordenes = repoOrdenesCompra.todos();
+    	List<Presupuesto> presupuestos = repoPresupuestos.todos();
+    	List<CategoriaDelSistema> categorias = repoCategorias.todos();
+    	
+    	Map<String, Object> map = new HashMap<>();
+        map.put("ordenes", ordenes);
+        map.put("presupuestos", presupuestos);
+        map.put("categorias", categorias);
+        
 
 		String strID = request.params("id");
 		int id = Integer.parseInt(strID);
 		Egreso egreso = repo.byID(id);
 
-		RepositorioOrdenDeCompra ordenes = new RepositorioOrdenDeCompra();
+		//RepositorioOrdenDeCompra ordenes = new RepositorioOrdenDeCompra();
 
-		Map<String, Object> map = new HashMap<>();
+		//Map<String, Object> map = new HashMap<>();
 		map.put("egreso", egreso);
 
 		//HAY QUE VER COMO PASAR TODOS LOS REPOS, LO UNICO QUE SE ME OCURRE PASARLE TODOS LOS REPOS AL HTML. todo Charlar
 
-		return new ModelAndView(map,"formularioEgresos.html");
+		return new ModelAndView(map,"crearEgreso.html");
 	}
 
     public static void asignarParametros(Egreso egreso, Request request) throws CloneNotSupportedException {
@@ -169,11 +183,18 @@ public class ControllerEgresos {
 	}
 
 	public Response modificarEgreso(Request request, Response response) throws CloneNotSupportedException {
+		
+		RepositorioEgreso repo = new RepositorioEgreso();
+		
 		String strID = request.params("id");
+		
 		int id = new Integer(strID);
+		
 		Egreso egreso = repo.byID(id);
-
+		
 		asignarParametros(egreso, request);
+		
+		repo.reemplazar(egreso);
 
 		response.redirect("/egresos");
 
