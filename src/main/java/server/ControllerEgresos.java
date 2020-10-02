@@ -11,6 +11,7 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -140,19 +141,21 @@ public class ControllerEgresos {
 		String ordenDeCompra = request.queryParams("orden");
 		String pres = request.queryParams("presupuesto");
 		String categoria = request.queryParams("categoria");
-		//String fecha = request.queryParams("fecha");
+		String fecha = request.queryParams("fecha");
 
 		int idOrden = Integer.parseInt(ordenDeCompra);
 		OrdenDeCompra orden = repoOrden.byID(idOrden);
 
 		int idPresupuesto = Integer.parseInt(pres);
 		Presupuesto presupuesto = repoPresupuesto.byID(idPresupuesto);
-
+		orden.cerrarOrden();
 		egreso.setOrdenDeCompra(orden);
 		//egreso.setDocumentosComerciales();
 		//egreso.setCategoria();
+		presupuesto.setAceptado();
 		egreso.setPresupuesto(presupuesto);
-		//egreso.setFecha();
+		egreso.setValorTotal(presupuesto.valorTotal());
+		egreso.setFecha(LocalDate.parse(fecha));
 
 
 	}
