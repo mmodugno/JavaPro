@@ -96,6 +96,10 @@ public class Egreso implements Categorizable{
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	public void setValorTotal(Double valor) {
+		this.valorTotal = valor;
+	}
 
 	/*Para agregar de a uno solo*/
 	public void agregarDocumentoComercial(DocumentoComercial documento) {
