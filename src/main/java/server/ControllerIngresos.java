@@ -87,9 +87,14 @@ public class ControllerIngresos {
 		int id = new Integer(strID);
 		
 		Ingreso ingreso= repo.byID(id);
-
 		repo.borrar(ingreso.getDescripcion());
-
+		
+		//Borra segun la descripcion:
+		String desc = request.params("descripcion");
+		repo.borrar(desc);
+		
+		response.redirect("/ingresos");
+		
 		return response;
 	}
 	

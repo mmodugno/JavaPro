@@ -42,7 +42,7 @@ function cerrarConfirmacionBorrar() {
 
 /**Fin lógica para eliminar**/
 
-/**elimar egreso**/
+/**eliminar egreso**/
 function confirmarBorrarEgreso(id) {
     document.getElementById("egresoId").value = id;
     document.getElementById("eliminarEgreso").style.display = 'block';
