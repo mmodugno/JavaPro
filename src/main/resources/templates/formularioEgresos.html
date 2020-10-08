@@ -48,7 +48,7 @@
 <body class="bg-light">
     <div class="container contenido-centrado-detalle">
         <div class="py-5 text-center">
-            <img class="d-block mx-auto mb-4" src="public/img/logoIcon.png" alt="" width="72" height="72">
+            <img class="d-block mx-auto mb-4" src="../static/public/img/logoIcon.png" alt="" width="72" height="72">
             <h2>Detalle de Egreso</h2>
             <p class="lead">Para modificar el egreso, haga doble click en el texto a modificar</p>
         </div>
@@ -62,9 +62,10 @@
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="orden">Orden de Compra</label>
-                            <select class="form-control" name="orden" id="orden">
-                              {{#if egreso}}<option>{{egreso.ordenDeCompra.idOrden}}</option>{{/if}}
+                            <select  class="form-control" name="orden" id="orden">
+                             
                                 {{#each}}
+                                {{#if egreso}}<option>{{egreso.ordenDeCompra.idOrden}}</option>{{/if}}
                               <option>1</option>
                               <option>2</option>
                               <option>3</option>

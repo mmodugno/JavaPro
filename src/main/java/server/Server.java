@@ -29,7 +29,6 @@ import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
 
-
 public class Server {
 
     private static ControllerProductos controllerProductos= new ControllerProductos();
@@ -148,7 +147,6 @@ public class Server {
         return new ModelAndView(null,"formularioIngresos.html");
     }
     
-
 
     public static ModelAndView egresos(Request request, Response response) throws CloneNotSupportedException {
 

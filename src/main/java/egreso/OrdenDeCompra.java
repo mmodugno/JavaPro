@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 
+import java.time.LocalDate;
+
 import producto.*;
 import usuarios.Usuario;
 
@@ -13,7 +15,7 @@ public class OrdenDeCompra {
 
 	/*CONSTRUCTOR*/
 	public OrdenDeCompra(int necesitaPresupuesto,int idOrden) {
-		this.fecha = new Date();
+		this.fecha = LocalDate.now();
 		this.items = new ArrayList<Item>();
 		this.necesitaPresupuesto = necesitaPresupuesto;
 		this.presupuestos = new ArrayList<Presupuesto>();
@@ -40,7 +42,7 @@ public class OrdenDeCompra {
 
 	/*ATRIBUTOS*/
 	private List<Item> items;
-	private Date fecha; 
+	private LocalDate fecha;
 	private int necesitaPresupuesto;
 	private List<Presupuesto> presupuestos;
 	private List<Usuario> revisores;
@@ -52,7 +54,7 @@ public class OrdenDeCompra {
 	public List<Item> getItems() {
 		return items;
 	}
-	public Date getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 	public int getNecesitaPresupuesto() {
@@ -80,7 +82,7 @@ public class OrdenDeCompra {
 	public void setItems(List<Item> items) {
 		this.items = items;
 	}
-	public void setFecha(Date fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 	public void setNecesitaPresupuesto(int necesitaPresupuesto) {

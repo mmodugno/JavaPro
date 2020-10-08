@@ -14,6 +14,7 @@ import spark.Response;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 public class ControllerOrdenes {
@@ -62,7 +63,7 @@ public class ControllerOrdenes {
     	//nuevaOrden.agregarItem(item);
     	
     	String fecha =  request.queryParams("fecha");   	
-    	Date fechaFinal = sdf.parse(fecha);
+    	LocalDate fechaFinal = LocalDate.parse(fecha);
     	nuevaOrden.setFecha(fechaFinal);
     	
     	repo.agregar(nuevaOrden);
