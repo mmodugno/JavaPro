@@ -2,6 +2,7 @@ package server;
 
 import egreso.Egreso;
 import egreso.OrdenDeCompra;
+import egreso.Presupuesto;
 import producto.Item;
 import producto.Producto;
 import producto.TipoItem;
@@ -12,10 +13,17 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
+
+import com.google.gson.Gson;
 
 public class ControllerOrdenes {
 
@@ -54,9 +62,9 @@ public class ControllerOrdenes {
     public Response crear(Request request, Response response) throws ParseException {
     	OrdenDeCompra nuevaOrden = new OrdenDeCompra();
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    	  	
     	
-    	
-    	
+       	
     	nuevaOrden.setIdOrden(repo.proximoId());
     	nuevaOrden.setNecesitaPresupuesto(Integer.parseInt(request.queryParams("presupuesto")));
 
@@ -66,6 +74,17 @@ public class ControllerOrdenes {
     	LocalDate fechaFinal = LocalDate.parse(fecha);
     	nuevaOrden.setFecha(fechaFinal);
     	
+    	//Prespuesto:
+    	try {
+    		Presupuesto pres = leerPresupuesto(request);
+    		nuevaOrden.agregarPresupuesto(pres);
+    	}
+    	catch(IOException e){
+    		e.printStackTrace();
+    		nuevaOrden.agregarPresupuesto(new Presupuesto());
+    	}
+    	    	
+    	
     	repo.agregar(nuevaOrden);
     	
     	response.redirect("/ordenes");
@@ -74,6 +93,25 @@ public class ControllerOrdenes {
     	return response;
     }
     
+    
+    public Presupuesto leerPresupuesto(Request request) throws IOException {
+    	File archivo = new File(request.queryParams("presupuestoDeOrden"));
+    	if (archivo.exists()) {
+    	 Gson gson = new Gson();
+    		 
+    		FileReader fr;
+			
+			fr = new FileReader(archivo);
+    		BufferedReader br = new BufferedReader(fr);
+    		String texto = br.readLine();
+    		
+    		Presupuesto pres = gson.fromJson(texto, Presupuesto.class);
+    		fr.close();
+    		
+    		return pres;
+    	}
+    	return new Presupuesto();
+    }
     
     
     

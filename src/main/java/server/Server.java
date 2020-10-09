@@ -37,6 +37,7 @@ public class Server {
     private static ControllerOrdenes controllerOrdenes;
     private static ControllerVinculador controllerVinculador;
 
+    
     static {
         try {
             controllerVinculador = new ControllerVinculador();
@@ -166,6 +167,7 @@ public class Server {
     }
     
 
+    
  /*   private static void asignarParametrosEgreso(Egreso egreso,Request request) {
 
       /*  producto.setCodProducto(new Integer(request.queryParams("codigo")));

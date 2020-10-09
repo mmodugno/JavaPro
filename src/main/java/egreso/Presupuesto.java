@@ -24,6 +24,10 @@ public class Presupuesto implements Categorizable{
 	*   llenarItems(ordenDeCompra.getItems());
 	* */
 
+	public Presupuesto() {
+		// TODO Auto-generated constructor stub
+	}
+
 	private int id;
 
 	/*ATRIBUTOS*/
