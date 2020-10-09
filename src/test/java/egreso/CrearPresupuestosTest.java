@@ -3,6 +3,7 @@ package egreso;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,6 +11,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Scanner;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,7 +54,7 @@ public class CrearPresupuestosTest {
 	        ordenDeCompra.agregarPresupuesto(presupuesto1);
 	        presupuesto1.setAceptado();
 	        
-	       
+	       presupuesto1.setId(3);
 	    }
 
 	
@@ -64,7 +67,7 @@ public class CrearPresupuestosTest {
 	        String JSON = gson.toJson(presupuesto1);
 	        
 	    	//RUTA PARA CREAR UNOS PRESUPUESTOS EN JSON
-	    	String ruta = "/C:\\Users/Maga/Desktop/Jsons/prueba.json";
+	    	String ruta = "presupuesto3.txt";
 	    	
 	         File file = new File(ruta);
 	         file.createNewFile();
@@ -74,22 +77,29 @@ public class CrearPresupuestosTest {
 	         bw.write(JSON);
 	         bw.close();
 	    	
-	    	System.out.println(JSON);
+	    	//System.out.println(JSON);
 	    }
 	 
 	 @Test
 	 public void leyendoUnArchivoJson() throws FileNotFoundException {
 		 	
+		Gson gson = new Gson();
 		 
-		 //File file = new File("/C:\\\\Users/Maga/Desktop/Jsons/prueba.txt");
-		 FileReader fr = new FileReader("/C:\\\\Users/Maga/Desktop/Jsons/prueba.json");
-	        
-		 String datos = gson.fromJson(fr, null);
-		 Presupuesto pres = gson.fromJson(JSON, Presupuesto.class);
-		 assertEquals(0, pres.getId());
+ 		String data;
+ 		 
+ 		File myObj = new File("presupuesto3.txt");
+ 		Scanner myReader = new Scanner(myObj);
+ 		
+ 		data = myReader.nextLine();
+      		
+ 		myReader.close();
+ 		
+ 		 Presupuesto pres = gson.fromJson(data, Presupuesto.class);
+	
+		 assertEquals(3, pres.getId());
 		 assertEquals(2,pres.getItems().size());
 		 assertTrue(pres.getAceptado());
-		    
+		   
 	 }
 	
 	

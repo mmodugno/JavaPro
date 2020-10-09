@@ -29,6 +29,8 @@ static List<OrdenDeCompra> ordenes = null;
     	Item item1 = new Item(producto1, 2, 0.00);
     	Item item2 = new Item(producto2, 3, 0.00);
     	
+    	Presupuesto presu = new Presupuesto(  );
+    	
     	OrdenDeCompra ordenDeCompra = new OrdenDeCompra(1,1);
     	
     	ordenDeCompra.agregarItem(item1);
@@ -39,6 +41,22 @@ static List<OrdenDeCompra> ordenes = null;
         
         ordenDeCompra2.agregarItem(item1);
         ordenDeCompra2.agregarItem(item2);
+        
+       Presupuesto presupuesto1 = new Presupuesto(ordenDeCompra.getItems(),proveedor1,medioDePago);
+        presupuesto1.getItems().get(0).setPrecioUnitario(80.00);
+        presupuesto1.getItems().get(1).setPrecioUnitario(30.00);
+        ordenDeCompra.agregarPresupuesto(presupuesto1);
+        presupuesto1.setAceptado();
+        
+        Presupuesto presupuesto2 = new Presupuesto(ordenDeCompra2.getItems(),proveedor1,medioDePago);
+        presupuesto2.getItems().get(0).setPrecioUnitario(50.00);
+        presupuesto2.getItems().get(1).setPrecioUnitario(10.00);
+        ordenDeCompra2.agregarPresupuesto(presupuesto2);
+        presupuesto2.setAceptado();
+        
+        
+        presupuesto1.setId(1);
+        presupuesto2.setId(2);   
         
         if (ordenes == null) {
         ordenes = new ArrayList<>();

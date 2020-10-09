@@ -29,6 +29,7 @@ import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
 
+
 public class Server {
 
     private static ControllerProductos controllerProductos= new ControllerProductos();
@@ -36,7 +37,6 @@ public class Server {
     private static ControllerIngresos controllerIngresos= new ControllerIngresos();
     private static ControllerOrdenes controllerOrdenes;
     private static ControllerVinculador controllerVinculador;
-
     
     static {
         try {

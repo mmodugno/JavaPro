@@ -24,6 +24,7 @@
                     <th scope="col">Nro</th>
                     <th scope="col">¿Cerrado?</th>
                     <th scope="col">Fecha</th>
+                    <th scope="col">Nro Presupuesto</th>
                     <th scope="col"></th>
                 </tr>
 
@@ -36,6 +37,7 @@
                     <td>{{idOrden}}</td>
                     <td>{{#if cerrado}} Si {{else}} No {{/if}}</td>
                     <td>{{fecha}}</td>
+                    <td>{{primerpresupuesto}}</td>
                     <td>
                         <a href="/orden/{{id}}">
                             <button class="btn btn-yoel">DETALLE</button>

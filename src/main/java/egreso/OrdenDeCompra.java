@@ -78,6 +78,12 @@ public class OrdenDeCompra {
 		return cerrado;
 	}
 
+	public int getPrimerpresupuesto() {
+		return presupuestos.get(0).getId(); 
+	}
+	
+	
+	
 	/*SETTERS*/
 	public void setItems(List<Item> items) {
 		this.items = items;
@@ -132,4 +138,6 @@ public class OrdenDeCompra {
 	public void setCerrado(boolean cerrado) {
 		this.cerrado = cerrado;
 	}
+	
+	
 }

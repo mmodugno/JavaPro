@@ -99,6 +99,7 @@ public class ControllerOrdenes {
     	if (archivo.exists()) {
     	 Gson gson = new Gson();
     		 
+    	 /*
     		FileReader fr;
 			
 			fr = new FileReader(archivo);
@@ -106,7 +107,19 @@ public class ControllerOrdenes {
     		String texto = br.readLine();
     		
     		Presupuesto pres = gson.fromJson(texto, Presupuesto.class);
+    		//pres.setId();
     		fr.close();
+    		*/
+   		 
+     		String data;
+     		 
+     		Scanner myReader = new Scanner(archivo);
+     		
+     		data = myReader.nextLine();
+          		
+     		myReader.close();
+     		
+     		Presupuesto pres = gson.fromJson(data, Presupuesto.class);
     		
     		return pres;
     	}
