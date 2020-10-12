@@ -37,6 +37,7 @@ public class Server {
     private static ControllerIngresos controllerIngresos= new ControllerIngresos();
     private static ControllerOrdenes controllerOrdenes;
     private static ControllerVinculador controllerVinculador;
+	private static ControllerLogin controllerLogin= new ControllerLogin();
     
     static {
         try {
@@ -73,8 +74,8 @@ public class Server {
         get("/inicio", Server::mostrarIndex, engine);
         get("/inicio2", Server::mostrarIndex2, engine);
         get("/pageblank", Server::mostrarPageBlank, engine);
-        get("/login", Server::login, engine);
-        post("/login", Server::validarLogin, engine);
+        get("/login", controllerLogin::login, engine);
+        post("/login", controllerLogin::validarLogin, engine);
 
         //EGRESOS
         get("/egresos", Server::egresos, engine);
