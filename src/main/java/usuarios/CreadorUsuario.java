@@ -28,7 +28,7 @@ public class CreadorUsuario {
 		
 		if(tipoUsuario == "admin") {
 			return new UsuarioAdministrador(newUser, newPassword, organizacion, true);
-		} else if (tipoUsuario == "estandard"){
+		} else if (tipoUsuario == "estandar"){
 			return new UsuarioEstandard(newUser, newPassword, organizacion, true);
 		}else {
 			throw new CreationError("No reconozco el tipo de usuario");
