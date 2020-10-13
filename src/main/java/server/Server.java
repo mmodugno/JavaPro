@@ -125,6 +125,9 @@ public class Server {
 
 
     public static ModelAndView mostrarIndex(Request request, Response response) {
+    	
+    	if(request.session().attribute("user") == null )
+    		response.redirect("/login");
         return new ModelAndView(null, "index.html");
     }
     
