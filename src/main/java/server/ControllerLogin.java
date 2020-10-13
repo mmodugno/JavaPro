@@ -18,6 +18,10 @@ public class ControllerLogin {
         return new ModelAndView(null, "login.html");
     }
     
+    public ModelAndView loginIncorrecto(Request request, Response response) {
+        return new ModelAndView(null, "loginIncorrecto.html");
+    }
+    
     public ModelAndView validarLogin(Request request, Response response) throws FileNotFoundException, ClassNotFoundException, CreationError, SQLException {
     	
     	String user = request.queryParams("username");
@@ -29,7 +33,7 @@ public class ControllerLogin {
 
         if(usuario == null) {
 	        response.status(401);
-	        response.redirect("/login/incorrecto");
+	        response.redirect("/loginIncorrecto");
         }
         
         if((usuario.getNombre().equals(user)) && (usuario.getPassword().equals(pass))) {
