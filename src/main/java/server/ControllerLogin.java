@@ -25,8 +25,6 @@ public class ControllerLogin {
         
         RepositorioUsuario repoUsuario = new RepositorioUsuario();
     	
-    	//List<Usuario> usuarios = repoUsuario.todos();
-        //Usuario usuario = repoUsuario.checkUser(user, pass);
         Usuario usuario = repoUsuario.buscarUsuario(user);
 
         if(usuario == null) {
@@ -45,7 +43,7 @@ public class ControllerLogin {
         }
         
         response.status(401);
-        response.redirect("/login/incorrecto");
+        response.redirect("/loginIncorrecto");
 
         return null;
     }
