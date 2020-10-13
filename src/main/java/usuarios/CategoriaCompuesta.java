@@ -23,6 +23,9 @@ public class CategoriaCompuesta implements CategoriaDelSistema{
 		subCategorias.add(categoria);
 	}
 	
+	public boolean esCompuesta() {
+		return true;
+	}
 	
 
 	public String getCriterio() {
@@ -41,7 +44,9 @@ public class CategoriaCompuesta implements CategoriaDelSistema{
 		this.subCategorias = subCategorias;
 	}
 
-
+	public List<CategoriaDelSistema> getSubCategorias() {
+		return this.subCategorias;
+	}
 
 	
 

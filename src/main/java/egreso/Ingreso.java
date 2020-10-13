@@ -110,9 +110,14 @@ public class Ingreso implements Categorizable{
 
 	public boolean esDeCategoria(CategoriaDelSistema unaCategoria) {
 		if(categoria == null) return false;
-		else return categoria.getCategoria().equals(unaCategoria.getCategoria());
-		
-	}
+		else {
+			if(unaCategoria.esCompuesta()) {
+				return unaCategoria.getSubCategorias().stream().anyMatch(c -> this.esDeCategoria(c));
+			} else {
+				return categoria.getCategoria().equals(unaCategoria.getCategoria());
+			}
+		}
+	}	
 
 	public void setId(int i) {
 		this.id = i;

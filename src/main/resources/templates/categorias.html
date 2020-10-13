@@ -74,18 +74,29 @@
                 <label for="opciones" class="  h5">Categoria  </label>
 
                 <select id="categoria" class="btn btn-secondary btn-lg ">
+                {{#if categoriaString}}
+                <option value={{categoriaString}} class="btn btn-secondary btn-lg" disabled selected>{{categoriaString}}</option>
+                {{else}}
                 <option value="" class="btn btn-secondary btn-lg" disabled selected>Seleccionar Categoria</option>
+                {{/if}}
                 {{#each categorias}}
                     <option value="{{categoria}}">{{categoria}}</option>
                 {{/each}}
+
             </select>
 
                 <label for="opciones" class=" h5">Tipo Documento  </label>
                 <select id="filtro" class="btn btn-secondary btn-lg">
+                {{#if tipoDocumento}}
+                <option value={{tipoDocumento}} class="btn btn-secondary btn-lg" disabled selected>{{tipoDocumento}}</option>
+                {{else}}
                 <option value="" class="btn btn-secondary btn-lg" disabled selected>Seleccionar Doc</option>
+                {{/if}}
                 <option value="Egresos">Egresos</option>
                 <option value="Ingresos">Ingresos</option>
-                <option value="Presupuestos">Presupuestos</option>   
+                <option value="Presupuestos">Presupuestos</option>  
+                
+                 
             </select>
 
 

@@ -263,7 +263,7 @@ public class Server {
     	Map<String, Object> map = new HashMap<>();
     	
     	if(tipoDocumentoString.equals("Egresos")) {
-    		RepositorioEgreso repoEgresos = new RepositorioEgreso();
+    		RepositorioEgreso repoEgresos = new RepositorioEgreso();	
     		List<Egreso> egresos = repoEgresos.todos().stream().filter(a -> a.esDeCategoria(categoria)).collect(Collectors.toList());
     		map.put("documentos",egresos);
     	}
@@ -276,8 +276,15 @@ public class Server {
     	
     	if(tipoDocumentoString.equals("Presupuestos")) {
     		RepositorioPresupuesto repoPresupuesto = new RepositorioPresupuesto();
+    		Presupuesto pre = repoPresupuesto.byID(6);
+    		Boolean resultado = pre.esDeCategoria(categoria);
     		List<Presupuesto> presupuestos = repoPresupuesto.todos().stream().filter(a -> a.esDeCategoria(categoria)).collect(Collectors.toList());
     		map.put("presupuestos",presupuestos);
+    	}
+    	
+    	if(categoria != null && tipoDocumentoString != null) {
+    		map.put("categoriaString",categoriaString);
+    		map.put("tipoDocumento",tipoDocumentoString);
     	}
     	
     	map.put("categorias", categorias);

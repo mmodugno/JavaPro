@@ -16,6 +16,7 @@ import producto.Producto;
 import producto.Proveedor;
 import producto.TipoItem;
 import usuarios.Categoria;
+import usuarios.CategoriaCompuesta;
 import usuarios.CategoriaDelSistema;
 import usuarios.Usuario;
 
@@ -23,8 +24,6 @@ public class RepositorioEgreso {
 	
 	 static List<Egreso> egresos = null;
 
-
-	 
 	 public RepositorioEgreso() throws CloneNotSupportedException {
 		 
 		Proveedor proveedor1 = new Proveedor("Info Tech","22412145696", "6725");
@@ -48,6 +47,17 @@ public class RepositorioEgreso {
 	    
 	    Categoria categoriaMendoza = new Categoria("Mendoza","Provincia");
 	    
+	    CategoriaCompuesta categoriaARGENTINA = new CategoriaCompuesta("argentina","pais");
+    	
+    	
+
+    	List<CategoriaDelSistema> listaSubCategorias = new ArrayList<CategoriaDelSistema>();
+		
+		listaSubCategorias.add(categoriaBSAS);
+		listaSubCategorias.add(categoriaMendoza);
+		
+		categoriaARGENTINA.setSubCategorias(listaSubCategorias);
+	    
 		Presupuesto presupuesto1 = new Presupuesto(ordenDeCompra.getItems(),proveedor1,medioDePago);
         presupuesto1.getItems().get(0).setPrecioUnitario(80.00);
         presupuesto1.getItems().get(1).setPrecioUnitario(30.00);
@@ -66,6 +76,8 @@ public class RepositorioEgreso {
 		 egreso1.setCategoria(categoriaBSAS);
 
 		 egreso2.setCategoria(categoriaMendoza);
+		 
+		 egreso3.setCategoria(categoriaARGENTINA);
 		 
 		 if (egresos == null) {
 			 egresos = new ArrayList<>();
