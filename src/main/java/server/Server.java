@@ -75,6 +75,7 @@ public class Server {
         get("/inicio2", Server::mostrarIndex2, engine);
         get("/pageblank", Server::mostrarPageBlank, engine);
         get("/login", controllerLogin::login, engine);
+        get("/loginIncorrecto", controllerLogin::loginIncorrecto, engine);
         post("/login", controllerLogin::validarLogin, engine);
 
         //EGRESOS
