@@ -27,8 +27,12 @@ public class RepositorioUsuario {
     }
 
     public Usuario buscarUsuario(String nombre) {
-        Usuario unUsuario = usuarios.stream().filter(usuario -> usuario.getNombre().equals(nombre)).findFirst().get();
-        return unUsuario;
+    	if(usuarios.stream().filter(usuario -> usuario.getNombre().equals(nombre)).count() > 0 ) {
+    		Usuario unUsuario = usuarios.stream().filter(usuario -> usuario.getNombre().equals(nombre)).findFirst().get();
+            return unUsuario;
+    	} else {
+    		return null;
+    	}
     }
 
     public List<Usuario> todos() {
