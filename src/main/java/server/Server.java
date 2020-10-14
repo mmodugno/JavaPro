@@ -20,13 +20,26 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import usuarios.Categoria;
 import usuarios.CategoriaDelSistema;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import auditoria.CantidadPresupuestos;
+import auditoria.Criterios;
+import auditoria.Items;
+import auditoria.MontoPresupuesto;
+import auditoria.Reporte;
+import auditoria.Validador;
+
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
+
+import com.google.gson.Gson;
 
 
 
@@ -69,7 +82,7 @@ public class Server {
         HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
         
         redirect.get("/", "/login");
-
+        
         //get("/hola",((request, response) -> "Yoel"));
         get("/inicio", Server::mostrarIndex, engine);
         get("/inicio2", Server::mostrarIndex2, engine);
@@ -107,6 +120,10 @@ public class Server {
         post("/producto/:id",controllerProductos::modificarProducto);
         delete("/producto/:id",controllerProductos::eliminarProducto);
 
+        //validaciones
+       get("/validacion/:id",Server::Validar,engine);
+       
+       
         //ORDENES DE COMPRA
 
         get("/ordenes",controllerOrdenes::ordenes,engine);
@@ -123,6 +140,52 @@ public class Server {
 
     }
 
+    
+    
+    public static ModelAndView Validar(Request request, Response response) throws CloneNotSupportedException, IOException {
+    	
+    	RepositorioEgreso repo = new RepositorioEgreso();
+    	
+    	String strID = request.params("id");
+
+        int id = Integer.parseInt(strID);
+
+        Egreso egreso = repo.byID(id);
+
+        Validador validador = new Validador(); 
+    
+        validador.agregarCondicionValidacion(new CantidadPresupuestos());
+       // validador.agregarCondicionValidacion(new MontoPresupuesto());
+       // validador.agregarCondicionValidacion(new Criterios());
+        // validador.agregarCondicionValidacion(new Items());
+        
+        validador.validarEgreso(egreso);
+    	
+        Reporte resultadoReporte = validador.getReporteValidacion();
+        
+        Gson gson = new Gson();
+        String JSON = gson.toJson(resultadoReporte);
+        
+        System.out.println(JSON); 
+      
+      //esto por si queres chequearlo no mas
+        
+        String ruta = "resultadoEgreso"+strID+"Validacion.json";
+    	
+        File file = new File(ruta);
+        file.createNewFile();
+        FileWriter fw = new FileWriter(file);
+        BufferedWriter bw = new BufferedWriter(fw);
+        
+        bw.write(JSON);
+        bw.close();
+        
+       response.redirect("/inicio"); 
+        
+        return new ModelAndView(null,"index.html");
+    }
+    
+    
 
     public static ModelAndView mostrarIndex(Request request, Response response) {
     	
