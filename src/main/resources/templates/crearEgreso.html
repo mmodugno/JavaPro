@@ -57,7 +57,11 @@
                         <div class="form-group">
                             <label for="orden">Orden de Compra</label>
                             <select class="form-control" name="orden" id="orden">
-                            	<option value = "">Seleccionar...</option>
+                                {{#if egreso}}
+                                <option value = {{egreso.ordenDeCompra.idOrden}}>{{egreso.ordenDeCompra.idOrden}}</option>
+                                {{else}}
+                                <option value = "">Seleccionar...</option>
+                                {{/if}}
                                 {{#each ordenes}}
                               	<option value = "{{idOrden}}">{{idOrden}}</option>
                                 {{/each}}
@@ -69,7 +73,11 @@
                         <label for="presupuesto">Presupuesto:</label>
                         <div class="form-group">
                             <select class="form-control" name="presupuesto" id="presupuesto">
-                              <option value = "">Seleccionar...</option>
+                                {{#if egreso}}
+                                <option value = {{egreso.presupuesto.id}}>{{egreso.presupuesto.id}}</option>
+                                {{else}}
+                                <option value = "">Seleccionar...</option>
+                                {{/if}}
                                 {{#each presupuestos}}
                               	<option value = "{{id}}">{{id}}</option>
                                 {{/each}}
@@ -83,7 +91,11 @@
                         <div class="form-group">
                             <label for="categoria">Categoria</label>
                             <select class="form-control" name="categoria" id="categoria">
-                            	<option value = "">Seleccionar...</option>
+                                {{#if egreso.categoria}}
+                                <option value = {{egreso.categoria.categoria}}>{{egreso.categoria.categoria}}</option>
+                                {{else}}
+                                <option value = "">Seleccionar...</option>
+                                {{/if}}
                               	{{#each categorias}}
                               	<option value = "{{categoria}}">{{categoria}}</option>
                                 {{/each}}

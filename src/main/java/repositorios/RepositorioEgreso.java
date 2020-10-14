@@ -65,6 +65,9 @@ public class RepositorioEgreso {
         Presupuesto presupuesto2 = new Presupuesto(ordenDeCompra.getItems(),proveedor1,medioDePago);
         presupuesto2.getItems().get(0).setPrecioUnitario(90.00);
         presupuesto2.getItems().get(1).setPrecioUnitario(40.00);
+        
+        presupuesto1.setId(6);
+        presupuesto2.setId(7);
 		 
 		Egreso egreso1= new Egreso(ordenDeCompra, presupuesto1);
 		egreso1.setId(1);
