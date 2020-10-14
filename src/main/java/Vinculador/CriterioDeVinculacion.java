@@ -59,7 +59,7 @@ public abstract class CriterioDeVinculacion {
 
     }
 
-    void formarBalance(List<Egreso> egresos, List<Ingreso> ingresos, EntidadJuridica entidadJuridica) throws MontoSuperadoExcepcion {
+    void formarBalanceEgreso(List<Egreso> egresos, List<Ingreso> ingresos, Vinculador vinculador) throws MontoSuperadoExcepcion {
 
 
         boolean salir = false;
@@ -101,13 +101,13 @@ public abstract class CriterioDeVinculacion {
                 for (int i = 0; i < ingresosUsados.size() - 1; i++) {
                     ingresosUsados.get(i).setMontoVinculado(ingresosUsados.get(i).getMonto());
                 }
-                Balance balance = new Balance();
+                BalanceEgreso balance = new BalanceEgreso();
                 balance.setIngresosVinculados(ingresosUsados);
                 balance.setValorIngresos(montoUsado);
                 balance.setEgreso(egresos.get(0));
-                entidadJuridica.getBalances().add(balance);
+                vinculador.getBalanceEgresos().add(balance);
 
-                //TODO TEST, DONDE GUARDAR BALANCE?
+                //TODO TEST
             }
             egresos.remove(0);
         }//While Egresos

@@ -1,18 +1,20 @@
 package Vinculador;
 import egreso.*;
 import organizacion.EntidadJuridica;
-import organizacion.Organizacion;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 public class Vinculador {
 
     /*CONSTRUCTOR*/
     public Vinculador(EntidadJuridica unaEntidadJuridica) {
+        balanceEgresos = new ArrayList<>();
+        balanceIngresos = new ArrayList<>();
         this.egresosSinVincular = new ArrayList<Egreso>();
         this.ingresosSinVincular = new ArrayList<Ingreso>();
+        this.condiciones = new ArrayList<CondicionObligatoria>();
         entidadJuridica = unaEntidadJuridica;
     }
     /*setEntidadJuridica(entidadJuridica)*/
@@ -110,6 +112,15 @@ public class Vinculador {
 
     void vincular(CriterioDeVinculacion criterio) throws ListaVaciaExcepcion, MontoSuperadoExcepcion {
         criterio.vincular(egresosSinVincular,ingresosSinVincular,this);
+    }
+
+    public BalanceIngreso byID(int id) {
+        Optional<BalanceIngreso> ingreso = balanceIngresos.stream().filter(e -> e.getIngreso().getId() == id).findFirst();
+
+        if (ingreso.isPresent()) {
+            return ingreso.get();
+        }
+        else return null;
     }
 
 
