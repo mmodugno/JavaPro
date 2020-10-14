@@ -50,7 +50,7 @@ public class VincularTest {
     CondicionPrecio condicionPrecio;
     CondicionFecha condicionFecha;
     List<CondicionObligatoria> condicionesObligatorias = new ArrayList<CondicionObligatoria>();
-    PrimeroIngreso primeroIngreso;
+    //PrimeroIngreso primeroIngreso;
     PrimeroEgreso primeroEgreso;
     Mix mix;
 
@@ -99,8 +99,8 @@ public class VincularTest {
         condicionPrecio = new CondicionPrecio();
         condicionesObligatorias.add(condicionFecha);
         condicionesObligatorias.add(condicionPrecio);
-        primeroEgreso = new PrimeroEgreso(condicionesObligatorias);
-        primeroIngreso = new PrimeroIngreso(condicionesObligatorias);
+        primeroEgreso = new PrimeroEgreso();
+        //primeroIngreso = new PrimeroIngreso(condicionesObligatorias);
         mix = new Mix(condicionesObligatorias);
         vinculador = new Vinculador(entidadJuridica);
 
@@ -144,11 +144,10 @@ public class VincularTest {
     @Test
     public void vincularIngresoEgreso() throws ListaVaciaExcepcion, MontoSuperadoExcepcion {
         vinculador.obtenerIngresosEgresos();
-        Assert.assertEquals(0,ingreso.getEgresosAsociados().size());
         vinculador.vincular(primeroEgreso);
-        Assert.assertEquals(1,ingreso.getEgresosAsociados().size());
+        Assert.assertEquals(1,vinculador.getBalanceIngresos().get(0).getEgresosVinculados().size());
+        Assert.assertEquals(vinculador.getBalanceIngresos().get(0).getEgresosVinculados().get(0),egreso);
 
-        Assert.assertTrue(egreso.isVinculado());
 
     }
 
@@ -202,10 +201,10 @@ public class VincularTest {
         vinculador.obtenerIngresosEgresos();
         vinculador.vincular(primeroEgreso);
 
-        Assert.assertTrue(egreso2.isVinculado());
+        /*Assert.assertTrue(egreso2.isVinculado());
         Assert.assertTrue(egreso.isVinculado());
         Assert.assertEquals(0,ingreso.getEgresosAsociados().size()); //Vincula 1 a cada 1 hay que ver esto todo
-        Assert.assertFalse(egreso3.isVinculado());
+        Assert.assertFalse(egreso3.isVinculado());*/
 
 
     }
@@ -227,9 +226,9 @@ public class VincularTest {
         ingresosPruebaBalance.add(ingresoB3);
         entidadJuridica.setIngresos(ingresosPruebaBalance);//280
 
-        primeroEgreso.formarBalance(entidadJuridica.getEgresos(),entidadJuridica.getIngresos(),entidadJuridica);
+        primeroEgreso.formarBalanceEgreso(entidadJuridica.getEgresos(),entidadJuridica.getIngresos(),vinculador);
 
-        Assert.assertEquals(1,entidadJuridica.getBalances().size());
+        Assert.assertEquals(1,vinculador.getBalanceEgresos().size());
         Assert.assertEquals(140.00, ingresoB3.getMontoSinVincular(),0.1);
 
 

@@ -1,7 +1,6 @@
 package server;
 
 import Vinculador.*;
-import egreso.Balance;
 import egreso.Ingreso;
 import repositorios.RepositorioEgreso;
 import repositorios.RepositorioIngreso;
@@ -55,7 +54,7 @@ public class ControllerVinculador {
 
 
         Map<String, Object> map = new HashMap<>();
-        List<Balance> balances = new ArrayList<>();
+        List<BalanceEgreso> balances = new ArrayList<>();
         List<Ingreso> ingresos = new ArrayList<>();
         if(request.queryParams("mostrar") != null) {
             String mostrar = request.queryParams("mostrar");
@@ -65,7 +64,7 @@ public class ControllerVinculador {
 
                     map.remove("ingresos", ingresos);
 
-                    Balance balance = new Balance();
+                    BalanceEgreso balance = new BalanceEgreso();
                     balance.setId(0303456);
                     balances.add(balance);
 
