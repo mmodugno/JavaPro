@@ -40,7 +40,6 @@ public class Egreso implements Categorizable{
 	private Presupuesto presupuesto;
 	private CategoriaDelSistema categoria = null;
 	private LocalDate fecha;
-	private boolean vinculado = false;
 	private Double valorTotal;
 
 	/*GETTERS*/
@@ -52,9 +51,6 @@ public class Egreso implements Categorizable{
 	}
 	public LocalDate getFecha() {
 		return fecha;
-	}
-	public boolean isVinculado() {
-		return vinculado;
 	}
 	public List<DocumentoComercial> getDocumentosComerciales() {
 		return documentosComerciales;
@@ -89,9 +85,6 @@ public class Egreso implements Categorizable{
 	}
 	public void setCategoria(CategoriaDelSistema categoria) {
 		this.categoria = categoria;
-	}
-	public void setVinculado(boolean vinculado) {
-		this.vinculado = vinculado;
 	}
 	public void setId(int id) {
 		this.id = id;

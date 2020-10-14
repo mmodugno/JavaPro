@@ -12,7 +12,7 @@ public abstract class CriterioDeVinculacion {
 
 
 
-    private List<CondicionObligatoria> condicionesObligatorias;
+
     private String nombre = "";
 
     public CriterioDeVinculacion() {
@@ -27,12 +27,8 @@ public abstract class CriterioDeVinculacion {
         this.nombre = nombre;
     }
 
-    public CriterioDeVinculacion(List<CondicionObligatoria> condicionesObligatorias) {
-        this.condicionesObligatorias = condicionesObligatorias;
-    }
 
-
-    void vincular(List<Egreso> egresos, List<Ingreso> ingresos, EntidadJuridica entidadJuridica) throws ListaVaciaExcepcion, MontoSuperadoExcepcion {}
+    void vincular(List<Egreso> egresos, List<Ingreso> ingresos, Vinculador vinculador) throws ListaVaciaExcepcion, MontoSuperadoExcepcion {}
 
 
     void ordenarValor(List<Ingreso> ingresos, List<Egreso> egresos) throws ListaVaciaExcepcion{
@@ -53,12 +49,6 @@ public abstract class CriterioDeVinculacion {
 
     boolean pasaCondiciones(Ingreso ingreso, Egreso egreso){
 
-        for(int i = 0;i<condicionesObligatorias.size();i++){
-            if(!condicionesObligatorias.get(i).cumpleCondicion(ingreso, egreso)){
-                return false;
-            }
-
-        }
         return true;
     }
 

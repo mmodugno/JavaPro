@@ -1,14 +1,12 @@
-package egreso;
+package Vinculador;
+
+import egreso.Egreso;
+import egreso.Ingreso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Balance {
-
-    /*No uso constructor por lo que se hablo en el seminario que dieron de persistencia
-      Trae problemas con el hibernate, si usamos otra cosa y queremos lo creo */
-
-
+public class BalanceEgreso {
     /*ATRIBUTOS*/
     private int id;
     private Egreso egreso;

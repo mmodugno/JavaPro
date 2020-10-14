@@ -9,18 +9,11 @@ import usuarios.CategoriaDelSistema;
 
 public class Ingreso implements Categorizable{
 
-
-
-	public List<Egreso> getEgresosAsociados() {
-		return egresosAsociados;
-	}
-
 	/*CONSTRUCTOR*/
 	public Ingreso(String descripcion, double monto) {
 		super();
 		this.descripcion = descripcion;
 		this.monto = monto;
-		this.egresosAsociados = new ArrayList<Egreso>();
 		this.fecha = LocalDate.now();
 	}
 	
@@ -39,7 +32,6 @@ public class Ingreso implements Categorizable{
 	/*ATRIBUTOS*/
 	private String descripcion;
 	private double monto;
-	private List<Egreso> egresosAsociados;
 	private CategoriaDelSistema categoria = null;
 	private double montoVinculado = 0.00;
 	private LocalDate fecha;
@@ -72,9 +64,6 @@ public class Ingreso implements Categorizable{
 	public void setMonto(double monto) {
 		this.monto = monto;
 	}
-	public void setEgresosAsociados(List<Egreso> egresosAsociados) {
-		this.egresosAsociados = egresosAsociados;
-	}
 	public void setCategoria(CategoriaDelSistema categoria) {
 		this.categoria = categoria;
 	}
@@ -96,11 +85,10 @@ public class Ingreso implements Categorizable{
 	}
 
 	//CUANDO ASOCIO EGRESO MODIFICO EL MONTO VINCULADO
-	public void asociarEgreso(Egreso egreso){
+	public void asociarEgreso(double valor){
 
 
-		montoVinculado += egreso.getValorTotal();
-		egresosAsociados.add(egreso);
+		montoVinculado += valor;
 	}
 
 	public boolean puedoVincular(){

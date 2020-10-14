@@ -21,9 +21,18 @@ public class Vinculador {
     private List<Egreso> egresosSinVincular;
     private List<Ingreso> ingresosSinVincular;
     private EntidadJuridica entidadJuridica;
+    /**Nuevos Balances y las condiciones**/
+    private List<BalanceEgreso> balanceEgresos;
+    private List<BalanceIngreso> balanceIngresos;
+    private List<CondicionObligatoria> condiciones;
+
 
     public Vinculador() {
-
+        balanceEgresos = new ArrayList<>();
+        balanceIngresos = new ArrayList<>();
+        this.egresosSinVincular = new ArrayList<Egreso>();
+        this.ingresosSinVincular = new ArrayList<Ingreso>();
+        this.condiciones = new ArrayList<CondicionObligatoria>();
     }
 
     /*GETTERS*/
@@ -38,6 +47,16 @@ public class Vinculador {
         return entidadJuridica;
     }
 
+    public List<BalanceEgreso> getBalanceEgresos() {
+        return balanceEgresos;
+    }
+    public List<BalanceIngreso> getBalanceIngresos() {
+        return balanceIngresos;
+    }
+    public List<CondicionObligatoria> getCondiciones() {
+        return condiciones;
+    }
+
     /*SETTERS*/
     public void setEgresosSinVincular(List<Egreso> egresosSinVincular) {
         this.egresosSinVincular = egresosSinVincular;
@@ -49,7 +68,15 @@ public class Vinculador {
         this.entidadJuridica = entidadJuridica;
     }
 
-
+    public void setBalanceEgresos(List<BalanceEgreso> balanceEgresos) {
+        this.balanceEgresos = balanceEgresos;
+    }
+    public void setBalanceIngresos(List<BalanceIngreso> balanceIngresos) {
+        this.balanceIngresos = balanceIngresos;
+    }
+    public void setCondiciones(List<CondicionObligatoria> condiciones) {
+        this.condiciones = condiciones;
+    }
 
     void obtenerIngresosEgresos() throws ListaVaciaExcepcion{
         if(entidadJuridica.getIngresos().isEmpty()) {
@@ -58,21 +85,33 @@ public class Vinculador {
         if(entidadJuridica.getEgresos().isEmpty()) {
             throw new ListaVaciaExcepcion("La lista de egresos de la entidad juridica esta vacia");
         }
+
+        /**Siempre traigo todos los ingresos/egresos acá**/
+        egresosSinVincular = entidadJuridica.getEgresos();
+        ingresosSinVincular = entidadJuridica.getIngresos();
+
+
+        /**Lo que hago aca es limpiar si algun ingreso, por algun motivo tenia algo ya vinculado**/
+
+        ingresosSinVincular.forEach( ingreso -> {
+            try {
+                ingreso.setMontoVinculado(0.00);
+            } catch (MontoSuperadoExcepcion montoSuperadoExcepcion) {
+                montoSuperadoExcepcion.printStackTrace();
+            }
+        });
+
+
+        /*
         egresosSinVincular = filtrarEgresos(entidadJuridica.getEgresos());
-        ingresosSinVincular = filtrarIngresos(entidadJuridica.getIngresos());
+        ingresosSinVincular = filtrarIngresos(entidadJuridica.getIngresos());*/
 
-    }
-
-    private List<Ingreso> filtrarIngresos(List<Ingreso> ingresos) {
-        return ingresos.stream().filter(ingreso -> ingreso.puedoVincular()).collect(Collectors.toList());
-    }
-
-    private List<Egreso> filtrarEgresos(List<Egreso> egresos) {
-        return egresos.stream().filter(egreso -> !egreso.isVinculado()).collect(Collectors.toList());
     }
 
     void vincular(CriterioDeVinculacion criterio) throws ListaVaciaExcepcion, MontoSuperadoExcepcion {
-        criterio.vincular(egresosSinVincular,ingresosSinVincular,entidadJuridica);
+        criterio.vincular(egresosSinVincular,ingresosSinVincular,this);
     }
+
+
 
 }

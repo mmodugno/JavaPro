@@ -21,7 +21,7 @@ public class EntidadJuridica {
 		this.egresos = new ArrayList<Egreso>();
 		this.ordenesPendientes = new ArrayList<OrdenDeCompra>();
 		this.ingresos = new ArrayList<Ingreso>();
-		balances = new ArrayList<Balance>();
+
 	}
 	/*
 	 * setRazonSocial(razonSocial);
@@ -41,15 +41,11 @@ public class EntidadJuridica {
 	private List<EntidadBase> entidadesBase;
 	private List<Egreso> egresos;
 	private List<OrdenDeCompra> ordenesPendientes;
-	private List<Balance> balances;
 	private List<Ingreso> ingresos;
 
 	/*GETTERS*/
 	public List<Ingreso> getIngresos() {
 		return ingresos;
-	}
-	public List<Balance> getBalances() {
-		return balances;
 	}
 	public String getRazonSocial() {
 		return razonSocial;
@@ -97,9 +93,6 @@ public class EntidadJuridica {
 	}
 	public void setOrdenesPendientes(List<OrdenDeCompra> ordenesPendientes) {
 		this.ordenesPendientes = ordenesPendientes;
-	}
-	public void setBalances(List<Balance> balances) {
-		this.balances = balances;
 	}
 	public void setEgresos(List<Egreso> egresos) {
 		this.egresos = egresos;
