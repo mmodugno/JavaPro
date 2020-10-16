@@ -145,13 +145,8 @@ public class Server {
 
     
     
-<<<<<<< HEAD
     public static String Validar(Request request, Response response) throws CloneNotSupportedException, IOException {
     	
-=======
-    public static ModelAndView Validar(Request request, Response response) throws CloneNotSupportedException, IOException {
-
->>>>>>> branch 'master' of https://github.com/dds-utn/2020-ma-no-group-09.git
     	RepositorioEgreso repo = new RepositorioEgreso();
 
     	String strID = request.params("id");
@@ -187,15 +182,8 @@ public class Server {
 
         bw.write(JSON);
         bw.close();
-<<<<<<< HEAD
              
        return JSON;
-=======
-
-       response.redirect("/inicio");
-
-        return new ModelAndView(null,"index.html");
->>>>>>> branch 'master' of https://github.com/dds-utn/2020-ma-no-group-09.git
     }
     
     
