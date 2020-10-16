@@ -42,7 +42,7 @@ public class Criterios extends CondicionValidacion {
 
 	public boolean validar(OrdenDeCompra ordenDeCompra, Reporte reporte) {
 		
-		nombre = "Criterio de SelecciÃ³n de Presupuesto";
+		nombre = "Criterio de Selección de Presupuesto";
 		boolean validacion;
 		CriterioSeleccion criterioDeSeleccion;
 		
