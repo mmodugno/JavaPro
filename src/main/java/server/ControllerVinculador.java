@@ -88,11 +88,13 @@ public class ControllerVinculador {
         }
         List<CriterioDeVinculacion> criterios = new ArrayList<>();
         CriterioDeVinculacion criterio1= new PrimeroEgreso();
-        criterio1.setNombre("Uno");
-        CriterioDeVinculacion criterio2= new PrimeroEgreso();
-        criterio2.setNombre("DOs");
+        criterio1.setNombre("primeroEgreso");
+        //CriterioDeVinculacion criterio2= new PrimeroIngreso();
+        //criterio2.setNombre("PrimeroIngreso");
         criterios.add(criterio1);
-        criterios.add(criterio2);
+        //criterios.add(criterio2);
+       // CriterioDeVinculacion criterio3= new Mix();
+        //criterio3.setNombre("Mix");
         map.put("criterios",criterios);
 
         return new ModelAndView(map, "vinculaciones.html");
@@ -137,7 +139,7 @@ public class ControllerVinculador {
             bw.write(JSON);
             bw.close();
 
-            response.redirect("/egresos");
+            response.redirect("/vinculaciones");
 
         }
 

@@ -14,8 +14,12 @@ public class Mix extends CriterioDeVinculacion {
 	}
 	
 	private List<CriterioDeVinculacion> criteriosVinculacion;
-	
-	@Override // Revisar si se debe buscar la lista de Egresos e Ingresos dentro del método
+
+    public Mix() {
+
+    }
+
+    @Override // Revisar si se debe buscar la lista de Egresos e Ingresos dentro del método
     public void vincular(List<Egreso> egresos, List<Ingreso> ingresos, Vinculador vinculador) {
 		
 		criteriosVinculacion.stream().forEach(criterioVinculacion -> {
