@@ -1,18 +1,25 @@
 package server;
 
 import Vinculador.*;
-import egreso.Balance;
+import auditoria.CantidadPresupuestos;
+import auditoria.Reporte;
+import auditoria.Validador;
+import com.google.gson.Gson;
+import egreso.Egreso;
 import egreso.Ingreso;
+import egreso.MontoSuperadoExcepcion;
+import organizacion.EntidadJuridica;
 import repositorios.RepositorioEgreso;
 import repositorios.RepositorioIngreso;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
 
 public class ControllerVinculador {
 
@@ -55,7 +62,7 @@ public class ControllerVinculador {
 
 
         Map<String, Object> map = new HashMap<>();
-        List<Balance> balances = new ArrayList<>();
+        List<BalanceEgreso> balances = new ArrayList<>();
         List<Ingreso> ingresos = new ArrayList<>();
         if(request.queryParams("mostrar") != null) {
             String mostrar = request.queryParams("mostrar");
@@ -65,7 +72,7 @@ public class ControllerVinculador {
 
                     map.remove("ingresos", ingresos);
 
-                    Balance balance = new Balance();
+                    BalanceEgreso balance = new BalanceEgreso();
                     balance.setId(0303456);
                     balances.add(balance);
 
@@ -89,5 +96,51 @@ public class ControllerVinculador {
         map.put("criterios",criterios);
 
         return new ModelAndView(map, "vinculaciones.html");
+    }
+
+    public ModelAndView vincular(Request request, Response response) throws CloneNotSupportedException, IOException, ListaVaciaExcepcion, MontoSuperadoExcepcion {
+
+
+
+        if(request.queryParams("criterio") != null) {
+            String criterio = request.queryParams("criterio");
+
+            Vinculador vinculador2 = new Vinculador();
+            PrimeroEgreso primeroEgreso = new PrimeroEgreso();
+            EntidadJuridica entidadJuridica = new EntidadJuridica("Web Social ONG", "Web Social", "90-61775331-4", 1143, 01, Collections.emptyList());
+            vinculador2.setEntidadJuridica(entidadJuridica);
+
+            RepositorioIngreso repoIngreso = new RepositorioIngreso();
+            RepositorioEgreso repoEgreso = new RepositorioEgreso();
+            entidadJuridica.setIngresos(repoIngreso.todos());
+            entidadJuridica.setEgresos(repoEgreso.todos());
+            vinculador2.obtenerIngresosEgresos();
+
+            if(criterio.equals("primeroEgreso")){
+                vinculador2.vincular(primeroEgreso);
+            }
+
+            Gson gson = new Gson();
+            String JSON1 = gson.toJson(vinculador2.getBalanceIngresos());
+            String JSON2 = gson.toJson(vinculador2.getBalanceEgresos());
+
+            String JSON = JSON1 + JSON2;
+
+            System.out.println(JSON);
+            String ruta = "resultadoValidacion.json";
+
+            File file = new File(ruta);
+            file.createNewFile();
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            bw.write(JSON);
+            bw.close();
+
+            response.redirect("/egresos");
+
+        }
+
+        return new ModelAndView(null,"index.html");
     }
 }

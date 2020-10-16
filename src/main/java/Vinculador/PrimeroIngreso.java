@@ -1,5 +1,5 @@
 package Vinculador;
-
+/*
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,3 +33,4 @@ public class PrimeroIngreso extends CriterioDeVinculacion {
 
     }
 }
+*/

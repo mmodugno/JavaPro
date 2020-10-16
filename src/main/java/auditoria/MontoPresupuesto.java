@@ -26,7 +26,7 @@ public class MontoPresupuesto extends CondicionValidacion {
 	}
 
 	public boolean validar(OrdenDeCompra ordenDeCompra, Reporte reporte) {
-		nombre = "ValidaciÃ³n de Monto Compra y Presupuesto";
+		nombre = "Validación de Monto Compra y Presupuesto";
 		boolean validacion;
 		this.montoCompra = ordenDeCompra.valorTotal();
 		this.montoPresupuestoAceptado = ordenDeCompra.presupuestoAceptado().valorTotal();

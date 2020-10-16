@@ -33,7 +33,7 @@ public class Reporte {
 
 
 	public Reporte() {
-		informe += "\n\n##### Reporte Validaci√≥n de Egreso #####\n\n";
+		informe += "\n\n##### Reporte ValidaciÛn de Egreso #####\n\n";
 	}
 
 	public void resultadoValidacionPresupuestos(CantidadPresupuestos condValidacion, boolean resultado) {
@@ -65,7 +65,7 @@ public class Reporte {
 		else {
 			informe += "\n\nEl Presupuesto Aceptado difiere del Seleccionado por el Criterio : ";
 			informe += "\n\t Id Presupuesto Aceptado : " + condValidacion.getIdPresupuestoAceptado();
-			informe += "\n\t Id Presupuesto que debi√≥ Aceptarse : " + condValidacion.getIdPresupuestoCriterio();
+			informe += "\n\t Id Presupuesto que debiÛ Aceptarse : " + condValidacion.getIdPresupuestoCriterio();
 			informe += " - Con Monto :" + condValidacion.getPresupuestoCriterio().valorTotal() + "\n";
 		}
 	}
@@ -84,16 +84,16 @@ public class Reporte {
 			if(condValidacion.getItemsNoValidadosOrdenCompra().size() > 0) {
 				informe += "\n\t Items No Validados en la Orden de Compra";
 				for (Item itemCompra : condValidacion.getItemsNoValidadosOrdenCompra()) {
-					informe +=  "\n\t C√≥digo Producto : " + itemCompra.obtenerCodigoProducto();
+					informe +=  "\n\t CÛdigo Producto : " + itemCompra.obtenerCodigoProducto();
 					informe +=  "  -   Producto : " + itemCompra.getProducto().getNombre();
-					informe +=  "  -   Descripci√≥n : " + itemCompra.getProducto().getDescripcion();
+					informe +=  "  -   DescripciÛn : " + itemCompra.getProducto().getDescripcion();
 		        }
 				
 				for(Item unItem : condValidacion.getItemsFaltantesPresupuesto()) {
 					informe += "\n\n\t Items del Presupuesto que no est√°n en la Orden de Compra";
-					informe +=  "\n\t C√≥digo Producto : " + unItem.obtenerCodigoProducto();
+					informe +=  "\n\t CÛdigo Producto : " + unItem.obtenerCodigoProducto();
 					informe +=  "  -   Producto : " + unItem.getProducto().getNombre();
-					informe +=  "  -   Descripci√≥n : " + unItem.getProducto().getDescripcion();
+					informe +=  "  -   DescripciÛn : " + unItem.getProducto().getDescripcion();
 					
 				}
 				
@@ -109,16 +109,16 @@ public class Reporte {
 	
 	private String resultadoString(boolean resultado) {
 		if (resultado)
-			return " V√°lido";
+			return " V·lido";
 		else
-			return " No V√°lido"; 
+			return " No V·lido"; 
 	}
 
 
 
 	public void setResultadoValidacion(boolean resultadoValidacion) {
 		this.resultadoValidacion = resultadoValidacion;
-		informe += "\n\n### Resultado Validaci√≥n Egreso : " + resultadoString(resultadoValidacion) + " ###\n";
+		informe += "\n\n### Resultado ValidaciÛn Egreso : " + resultadoString(resultadoValidacion) + " ###\n";
 	}
 	
 	

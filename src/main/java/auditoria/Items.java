@@ -44,7 +44,7 @@ public class Items extends CondicionValidacion {
 	}
 
 	public boolean validar(OrdenDeCompra ordenDeCompra, Reporte reporte) {
-		nombre = "ValidaciÃ³n de Items de Compra y Presupuesto";
+		nombre = "Validación de Items de Compra y Presupuesto";
 		boolean verificarCantidadItems;
 		boolean verificarItemsCompra;
 		boolean validacion;
@@ -94,9 +94,5 @@ public class Items extends CondicionValidacion {
     			
 		return IdsItemsNoValidados;
     }
-
-
-	
-	
     
 }

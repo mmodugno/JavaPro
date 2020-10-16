@@ -137,6 +137,7 @@ public class Server {
         //VINCULADOR
 
         get("/vinculaciones", controllerVinculador::vinculaciones, engine);
+        get("/vincular", controllerVinculador::vincular, engine);
         get("/working",Server::work,engine);
         
 
@@ -144,45 +145,57 @@ public class Server {
 
     
     
+<<<<<<< HEAD
     public static String Validar(Request request, Response response) throws CloneNotSupportedException, IOException {
     	
+=======
+    public static ModelAndView Validar(Request request, Response response) throws CloneNotSupportedException, IOException {
+
+>>>>>>> branch 'master' of https://github.com/dds-utn/2020-ma-no-group-09.git
     	RepositorioEgreso repo = new RepositorioEgreso();
-    	
+
     	String strID = request.params("id");
 
         int id = Integer.parseInt(strID);
 
         Egreso egreso = repo.byID(id);
 
-        Validador validador = new Validador(); 
-    
+        Validador validador = new Validador();
+
         validador.agregarCondicionValidacion(new CantidadPresupuestos());
        // validador.agregarCondicionValidacion(new MontoPresupuesto());
        // validador.agregarCondicionValidacion(new Criterios());
         // validador.agregarCondicionValidacion(new Items());
-        
+
         validador.validarEgreso(egreso);
-    	
+
         Reporte resultadoReporte = validador.getReporteValidacion();
-        
+
         Gson gson = new Gson();
         String JSON = gson.toJson(resultadoReporte);
-        
-        System.out.println(JSON); 
-      
+
+        System.out.println(JSON);
+
       //esto por si queres chequearlo no mas
-        
+
         String ruta = "resultadoEgreso"+strID+"Validacion.json";
-    	
+
         File file = new File(ruta);
         file.createNewFile();
         FileWriter fw = new FileWriter(file);
         BufferedWriter bw = new BufferedWriter(fw);
-        
+
         bw.write(JSON);
         bw.close();
+<<<<<<< HEAD
              
        return JSON;
+=======
+
+       response.redirect("/inicio");
+
+        return new ModelAndView(null,"index.html");
+>>>>>>> branch 'master' of https://github.com/dds-utn/2020-ma-no-group-09.git
     }
     
     
