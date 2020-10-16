@@ -121,7 +121,9 @@ public class Server {
         delete("/producto/:id",controllerProductos::eliminarProducto);
 
         //validaciones
-       get("/validacion/:id",Server::Validar,engine);
+       get("/validacion/:id",(request,response) -> {
+    	   return Validar(request,response);
+       });
        
        
         //ORDENES DE COMPRA
@@ -142,7 +144,7 @@ public class Server {
 
     
     
-    public static ModelAndView Validar(Request request, Response response) throws CloneNotSupportedException, IOException {
+    public static String Validar(Request request, Response response) throws CloneNotSupportedException, IOException {
     	
     	RepositorioEgreso repo = new RepositorioEgreso();
     	
@@ -179,10 +181,8 @@ public class Server {
         
         bw.write(JSON);
         bw.close();
-        
-       response.redirect("/inicio"); 
-        
-        return new ModelAndView(null,"index.html");
+             
+       return JSON;
     }
     
     

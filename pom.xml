@@ -39,7 +39,12 @@
 		  <artifactId>spark-template-handlebars</artifactId>
 		  <version>2.7.1</version>
 	  </dependency><!--/*Implementacion de motor de templates*/-->
-
+	  
+	  <dependency>
+  		  <groupId>com.sparkjava</groupId>
+    	  <artifactId>spark-core</artifactId>
+    	  <version>2.9.3</version>
+	  </dependency>
 
 	  <dependency><!--/*Es el Log*/-->
 		  <groupId>org.slf4j</groupId>
