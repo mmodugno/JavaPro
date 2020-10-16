@@ -28,7 +28,7 @@ public class CantidadPresupuestos extends CondicionValidacion {
 	}
 
 	public boolean validar(OrdenDeCompra ordenDeCompra, Reporte reporte) {
-		nombre = "ValidaciÃ³n de Cantidad de Presupuestos Requeridos";
+		nombre = "Validación de Cantidad de Presupuestos Requeridos";
 		boolean validacion;
 
 		this.cantidadPresupuestos = ordenDeCompra.getPresupuestos().size();
