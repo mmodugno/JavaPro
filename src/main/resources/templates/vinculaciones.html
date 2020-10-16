@@ -67,7 +67,7 @@
     function mostrarSeleccionado() {
         $("#vincu-table tr").remove();
         if(document.getElementById('por-balance').checked){
-            window.location = "/vinculaciones?mostrar=balances";
+            window.location = "/vincular?criterio=primeroEgreso";
         }
         if(document.getElementById('por-ingreso').checked){
             window.location = "/vinculaciones?mostrar=ingresos";

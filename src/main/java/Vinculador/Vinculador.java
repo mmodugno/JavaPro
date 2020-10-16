@@ -80,7 +80,7 @@ public class Vinculador {
         this.condiciones = condiciones;
     }
 
-    void obtenerIngresosEgresos() throws ListaVaciaExcepcion{
+    public void obtenerIngresosEgresos() throws ListaVaciaExcepcion{
         if(entidadJuridica.getIngresos().isEmpty()) {
             throw new ListaVaciaExcepcion("La lista de ingresos de la entidad juruidica esta vacia");
         }
@@ -110,7 +110,7 @@ public class Vinculador {
 
     }
 
-    void vincular(CriterioDeVinculacion criterio) throws ListaVaciaExcepcion, MontoSuperadoExcepcion {
+    public void vincular(CriterioDeVinculacion criterio) throws ListaVaciaExcepcion, MontoSuperadoExcepcion {
         criterio.vincular(egresosSinVincular,ingresosSinVincular,this);
     }
 
