@@ -154,6 +154,21 @@ public class Server {
         int id = Integer.parseInt(strID);
 
         Egreso egreso = repo.byID(id);
+        
+        if (egreso == null) {
+        	Map<String, Object> map = new HashMap<>();
+        	map.put("egreso","No existe Egreso con id "+strID);
+        	
+        	map.put("informe","Egreso no válido");
+        	
+        	map.put("Resultado Validacion",false);
+        	
+        	Gson gson = new Gson();
+            String JSON = gson.toJson(map);
+
+            return JSON;
+        	
+        }
 
         Validador validador = new Validador();
 
