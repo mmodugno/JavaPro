@@ -173,6 +173,7 @@ public class Server {
 
       //esto por si queres chequearlo no mas
 
+        
         String ruta = "resultadoEgreso"+strID+"Validacion.json";
 
         File file = new File(ruta);
