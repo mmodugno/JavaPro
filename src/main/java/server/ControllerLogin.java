@@ -51,5 +51,11 @@ public class ControllerLogin {
 
         return null;
     }
-
+    
+    public ModelAndView logout(Request request, Response response) {
+        request.session().removeAttribute("user");
+        response.redirect("/login");
+        return null;
+    }
 }
+
