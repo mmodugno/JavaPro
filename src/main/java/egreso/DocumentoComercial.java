@@ -1,7 +1,13 @@
 package egreso;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-
+@Entity
+@Table
 public class DocumentoComercial {
 
 	/*CONSTRUCTOR*/
@@ -22,8 +28,11 @@ public class DocumentoComercial {
 
 
 	/*ATRIBUTOS*/
+	@Id
 	private int numero;
+	@ManyToOne //un egreso puede tener varios documentos pero un documento solo 1 egreso asociado
 	private Egreso egresoAsociado;
+	@Column
 	private String link;
 
 	/*GETTERS*/

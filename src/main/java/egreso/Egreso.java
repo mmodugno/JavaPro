@@ -5,12 +5,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import producto.*;
 import egreso.*;
 import usuarios.Categoria;
 import usuarios.CategoriaDelSistema;
 import usuarios.CreadorUsuario;
 
+@Entity
+@Table
 public class Egreso implements Categorizable{
 
 	/*CONSTRUCTOR*/
@@ -34,13 +45,31 @@ public class Egreso implements Categorizable{
 	 */
 
 	/*ATRIBUTOS*/
+	@Id
 	private int id;
-	private List<DocumentoComercial> documentosComerciales;
-	private OrdenDeCompra ordenDeCompra;
-	private Presupuesto presupuesto;
-	private CategoriaDelSistema categoria = null;
+	
+	@Column(columnDefinition = "DATE")
 	private LocalDate fecha;
+	
 	private Double valorTotal;
+	
+	
+	//siempre que hay una coleccion como atributo, la notation es algo to many (many to many / one to many)
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	//un egreso puede tener varios doc pero un doc esta solo en un egreso
+	private List<DocumentoComercial> documentosComerciales;
+	
+	@Transient
+	private OrdenDeCompra ordenDeCompra;
+	
+	@Transient
+	private Presupuesto presupuesto;
+	
+	@Transient
+	private CategoriaDelSistema categoria = null;
+	
+	
 
 	/*GETTERS*/
 
