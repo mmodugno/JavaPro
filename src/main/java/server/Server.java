@@ -90,6 +90,7 @@ public class Server {
         get("/login", controllerLogin::login, engine);
         get("/loginIncorrecto", controllerLogin::loginIncorrecto, engine);
         post("/login", controllerLogin::validarLogin, engine);
+        get("/logout", controllerLogin::logout, engine);
 
         //EGRESOS
         get("/egresos", Server::egresos, engine);
