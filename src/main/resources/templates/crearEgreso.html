@@ -76,15 +76,21 @@
                                 {{#if egreso}}
                                 <option value = {{egreso.presupuesto.id}}>{{egreso.presupuesto.id}}</option>
                                 {{else}}
-                                <option value = "">Seleccionar...</option>
+                                <option value = "visa">Seleccionar...</option>
                                 {{/if}}
                                 {{#each presupuestos}}
-                              	<option value = "{{id}}">{{id}}</option>
+                                <option value = {{id}} data-image={{medioDePago.tipoPago}}>{{id}} - {{medioDePago.tipoPago}}</option>
                                 {{/each}}
                             </select>
                         </div>
                     </div>
                 </div>
+
+
+
+                <input type="hidden" id="{{id}}" name="{{id}}" value="{{medioDePago.tipoPago}}">
+
+
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
@@ -134,6 +140,10 @@
         </div>
     </div>
 
+
+    <img id="imagenMedio" src="" alt="Presupuesto no seleccionado" width="55" height="50">
+
+
     <footer class="my-5 pt-5 text-muted text-center text-small">
         <p class="mb-1">&copy; 2020 GeSoc</p>
         <ul class="list-inline">
@@ -146,6 +156,14 @@
         window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')
     </script>
     <!-- <script src="/public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+
+
+    <script type="text/javascript">
+        $("#presupuesto").change(function() {
+            var val = ($(this).find(':selected').data('image'));
+            document.getElementById("imagenMedio").src = "http://img.mlstatic.com/org-img/MP3/API/logos/" + val + ".gif";
+        });
+    </script>
 
     <script type="text/javascript">
         $(function() {

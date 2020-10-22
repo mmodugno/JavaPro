@@ -24,6 +24,10 @@ public class MedioDePago {
 		return payment_type;
 	}
 	
+	public String getTipoPago() {
+		return payment_type.toString().toLowerCase();
+	}
+	
 	public int getId() {
 		return id;
 	}

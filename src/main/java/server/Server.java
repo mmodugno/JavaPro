@@ -290,6 +290,7 @@ public class Server {
         map.put("ordenes", ordenes);
         map.put("presupuestos", presupuestos);
         map.put("categorias", categorias);
+        map.put("repoPresupuesto", repoPresupuestos);
     	
         return new ModelAndView(map ,"crearEgreso.html");
     }
