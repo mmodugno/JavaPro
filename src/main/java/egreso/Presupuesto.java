@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import javax.persistence.*;
 
+import com.sun.xml.internal.ws.developer.StreamingAttachment;
 import producto.*;
 import usuarios.CategoriaDelSistema;
 
@@ -37,9 +38,10 @@ public class Presupuesto implements Categorizable{
 	private int id;
 
 	/*ATRIBUTOS*/
-	@ManyToMany()
+	@ManyToMany(cascade = CascadeType.ALL)
     private List<Item> items;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	//@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@Transient
     private Proveedor proveedor;
     @Transient
     private MedioDePago medioDePago;

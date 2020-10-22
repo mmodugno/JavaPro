@@ -21,21 +21,49 @@ import usuarios.Categoria;
 
 public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
 
-	
 	@Test
-	public void productoTest() {
-		
+	public void productoTest() throws CloneNotSupportedException {
+
+	    //PRODUCTOS
 		Producto producto1 = new Producto(1, "Monitor", "Monitor 32", TipoItem.ARTICULO);
         Producto producto2 = new Producto(2, "Notebook", "Notebook Lenovo", TipoItem.ARTICULO);
         Producto producto3 = new Producto(3, "Office", "Office365", TipoItem.SERVICIO);
-        producto1.setIdProducto(1231);
-        producto2.setIdProducto(3445);
-        producto3.setIdProducto(6621);
-    
+
+        //PROVEEDOR
+        Proveedor proveedor1 = new Proveedor("Info Tech","22412145696", "6725");
+
+        //ITEMS PRESUPUESTO PRUEBA
+        Item item1 = new Item(producto1, 1, 0.00);
+        Item item2 = new Item(producto2, 2, 0.00);
+
+        //ORDEN DE COMPRA
+        OrdenDeCompra ordenDeCompra;
+        ordenDeCompra = new OrdenDeCompra(1,5);
+        ordenDeCompra.agregarItem(item1);
+        ordenDeCompra.agregarItem(item2);
+
+        //un medio para el presupuesto
+        MedioDePago medioDePago = new MedioDePago(TipoMedioPago.Argencard, 221144);
+
+        //PRESUPUESTO
+        Presupuesto presupuesto1;
+        Presupuesto presupuesto2;
+
+        presupuesto1 = new Presupuesto(ordenDeCompra.getItems(),proveedor1,medioDePago);
+        presupuesto1.getItems().get(0).setPrecioUnitario(80.00);
+        presupuesto1.getItems().get(1).setPrecioUnitario(30.00);
+        ordenDeCompra.agregarPresupuesto(presupuesto1);
+        presupuesto1.setAceptado();
+
+
         EntityManagerHelper.beginTransaction();
         EntityManagerHelper.getEntityManager().persist(producto1);
         EntityManagerHelper.getEntityManager().persist(producto2);
         EntityManagerHelper.getEntityManager().persist(producto3);
+        EntityManagerHelper.commit();
+
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.persist(presupuesto1);
         EntityManagerHelper.commit();
         
 	}
