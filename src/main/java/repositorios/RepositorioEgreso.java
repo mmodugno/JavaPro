@@ -32,6 +32,8 @@ public class RepositorioEgreso {
 		
 		MedioDePago medioDePago = new MedioDePago(TipoMedioPago.Argencard, 221144);
 		 
+		MedioDePago medioDePago2 = new MedioDePago(TipoMedioPago.Visa, 221144);
+		
 		Producto producto1 = new Producto(1,"Monitor", "Monitor 32", TipoItem.ARTICULO);
 		Producto producto2 = new Producto(2,"Notebook", "Notebook Lenovo", TipoItem.ARTICULO);
 		Item item1 = new Item(producto1, 2, 0.00);
@@ -64,7 +66,7 @@ public class RepositorioEgreso {
         presupuesto1.getItems().get(0).setPrecioUnitario(80.00);
         presupuesto1.getItems().get(1).setPrecioUnitario(30.00);
         
-        Presupuesto presupuesto2 = new Presupuesto(ordenDeCompra.getItems(),proveedor1,medioDePago);
+        Presupuesto presupuesto2 = new Presupuesto(ordenDeCompra.getItems(),proveedor1,medioDePago2);
         presupuesto2.getItems().get(0).setPrecioUnitario(90.00);
         presupuesto2.getItems().get(1).setPrecioUnitario(40.00);
         

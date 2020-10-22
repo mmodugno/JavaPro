@@ -17,6 +17,7 @@ public class MedioDePago {
 	/*ATRIBUTOS*/
 	private TipoMedioPago payment_type;
 	private int id;
+	private String imageRoute;
 
 	/*GETTERS*/
 	public TipoMedioPago getPayment_type() {
@@ -33,5 +34,9 @@ public class MedioDePago {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public void setImageRoute(String route) {
+		this.imageRoute = route;
 	}
 }

@@ -2,8 +2,10 @@ package server;
 
 import egreso.Egreso;
 import egreso.Ingreso;
+import egreso.MedioDePago;
 import egreso.OrdenDeCompra;
 import egreso.Presupuesto;
+import meliApi.api;
 import producto.Producto;
 import producto.TipoItem;
 import repositorios.RepositorioCategoria;
@@ -41,6 +43,7 @@ import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
 import com.google.gson.Gson;
+import com.mercadopago.exceptions.MPRestException;
 
 
 
@@ -291,7 +294,7 @@ public class Server {
         return new ModelAndView(map ,"crearEgreso.html");
     }
     
-    public static ModelAndView detalleEgreso(Request request, Response response) throws CloneNotSupportedException{
+    public static ModelAndView detalleEgreso(Request request, Response response) throws CloneNotSupportedException, MPRestException{
     	
     	RepositorioEgreso repo = new RepositorioEgreso();
     	
@@ -301,13 +304,23 @@ public class Server {
     	
     	Egreso egreso = repo.byID(id);
     	
+    	MedioDePago medioPagoEgreso = egreso.getPresupuesto().getMedioDePago();
+    	
+    	String nombreMedioPago = medioPagoEgreso.getPayment_type().toString();
+    	
+    	String imagenMedioPago = new api().getRouteByName(nombreMedioPago);
+    	
+    	
     	Map<String, Object> map = new HashMap<>();
         map.put("egreso", egreso);
         
-        EntityManagerHelper.beginTransaction();
-        EntityManagerHelper.getEntityManager().persist(egreso);
-        EntityManagerHelper.commit();
-    	
+        if(medioPagoEgreso != null) {
+        map.put("nombreMedioPago", nombreMedioPago);
+        map.put("imagenMedioPago", imagenMedioPago);
+        
+        }
+        
+     
         return new ModelAndView(map,"detalleEgreso.html");
     }
 
