@@ -3,13 +3,15 @@ package egreso;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.*;
+
 import static java.util.stream.Collectors.toList;
 
 import java.time.LocalDate;
 
 import producto.*;
 import usuarios.Usuario;
-
 
 public class OrdenDeCompra {
 
@@ -41,12 +43,19 @@ public class OrdenDeCompra {
 	 */
 
 	/*ATRIBUTOS*/
+	@ManyToMany()
 	private List<Item> items;
+	@Column(columnDefinition = "DATE")
 	private LocalDate fecha;
 	private int necesitaPresupuesto;
+	@OneToMany()
 	private List<Presupuesto> presupuestos;
+	@Transient
+	//TODO
 	private List<Usuario> revisores;
 	private int idOrden;
+	@Transient
+	//TODO ver
 	private CriterioSeleccion criterioSeleccion;
 	private boolean cerrado = false; //esto es para saber cuando tiene un egreso y cuando no
 

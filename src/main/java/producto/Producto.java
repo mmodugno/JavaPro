@@ -1,5 +1,9 @@
 package producto;
 
+import javax.persistence.*;
+
+@Entity
+@Table
 public class Producto {
 
 
@@ -18,10 +22,14 @@ public class Producto {
 	*/
 
 	/*ATRIBUTOS*/
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idProducto;
 	private int codProducto;
 	private String nombre;
 	private String descripcion;
+	@Transient
+	//TODO hacer converter
 	private TipoItem tipoProducto;
 
     public Producto() {

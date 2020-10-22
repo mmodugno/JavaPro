@@ -17,7 +17,10 @@
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/gesoc" />
             <property name="hibernate.connection.username" value="root" /> 
             <property name="hibernate.connection.password" value="dds2020" />
+            
                         
+            <property name="dialect" value="org.hibernate.dialect.H2Dialect"/>
+
             <property name="hibernate.show_sql" value="true" /> 
             <property name="hibernate.format_sql" value="true" /> 
             <property name="use_sql_comments" value="true" /> 

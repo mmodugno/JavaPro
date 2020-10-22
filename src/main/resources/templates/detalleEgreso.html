@@ -7,14 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-   <!-- Bootstrap core CSS -->
-   <link href="/public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="/public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <script src="/public/vendor/jquery/jquery.min.js"></script>
     <script src="/public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/public/js/functions.js"></script>
 
-   <!-- Custom styles for this template -->
-   <link href="/public/css/simple-sidebar.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/public/css/simple-sidebar.css" rel="stylesheet">
 
     <title>Detalle Egreso</title>
 
@@ -70,7 +70,7 @@
             <div class="contenido-centrado contenedor">
 
                 <ul class="list-group color-none">
-                              
+
                     <li class="list-group-item color-none"> ID: {{egreso.id}}</li>
                     <li class="list-group-item color-none">Fecha: {{egreso.fecha}}</li>
                     <li class="list-group-item color-none">Monto: {{egreso.valorTotal}}</li>
@@ -79,13 +79,13 @@
                     <li class="list-group-item color-none">Presupuesto {{egreso.ordenDeCompra.idOrden}} </li>
                     <li class="list-group-item color-none">Documentos comerciales: {{egreso.documentosComerciales}}</li>
                     <!--Para ver los items hay que ir a la orden de compra!-->
-                            
+
                 </ul>
 
                 <div class="separar-arriba">
                     <a href="/modificarEgreso/{{egreso.id}}" class="btn btn-primary">Modificar</a>
                     <button type="button" class="btn btn-borrar" onclick="confirmarBorrarEgreso('{{egreso.id}}')">Borrar</button>
-                    <a href="/egresos" class = "btn btn-danger">Volver</a>
+                    <a href="/egresos" class="btn btn-danger">Volver</a>
                 </div>
 
             </div>
@@ -116,7 +116,7 @@
     <div class="modalContent">
         <input type="hidden" value="" id="egresoId">
         <p>¿Realmente desea eliminar el egreso?</p>
-        <button type="button" name="button" class="btn-close-modal" onclick="cerrarConfirmacionBorrar()" ><i class="fas fa-times-circle"></i></button>
+        <button type="button" name="button" class="btn-close-modal" onclick="cerrarConfirmacionBorrar()"><i class="fas fa-times-circle"></i></button>
         <br>
         <div class="">
             <button type="button" name="button" class="btn-rojo" onclick="eliminarEgreso()">Eliminar</button>

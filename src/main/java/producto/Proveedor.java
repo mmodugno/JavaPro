@@ -3,7 +3,10 @@ package producto;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.*;
 
+@Entity
+@Table
 public class Proveedor {
 
 
@@ -19,6 +22,8 @@ public class Proveedor {
 	* setCuilOCuit(cuil);
 	* setDireccionPostal(direccionPostal);
 	*/
+	@Id
+	private int id;
 
 	/*ATRIBUTOS*/
 	private String nombre;

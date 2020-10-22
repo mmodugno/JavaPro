@@ -20,6 +20,8 @@ import usuarios.CategoriaCompuesta;
 import usuarios.CategoriaDelSistema;
 import usuarios.Usuario;
 
+import db.EntityManagerHelper;
+
 public class RepositorioEgreso {
 	
 	 static List<Egreso> egresos = null;
@@ -78,7 +80,7 @@ public class RepositorioEgreso {
 		 
 		 egreso1.setCategoria(categoriaBSAS);
 
-		 egreso2.setCategoria(categoriaMendoza);
+		// egreso2.setCategoria(categoriaMendoza);
 		 
 		 egreso3.setCategoria(categoriaARGENTINA);
 		 
@@ -86,7 +88,10 @@ public class RepositorioEgreso {
 			 egresos = new ArrayList<>();
 		egresos.add(egreso1);
 		 egresos.add(egreso2);
-		 egresos.add(egreso3);}
+		 egresos.add(egreso3);
+		 
+		
+		 }
 
 		
 	       

@@ -1,5 +1,9 @@
 package producto;
 
+import javax.persistence.*;
+
+@Entity
+@Table
 public class Item implements Cloneable {
 
 	/*CONSTRUCTOR*/
@@ -13,8 +17,13 @@ public class Item implements Cloneable {
 	* setCantidad(cantidad);
 	* setPrecioUnitario(precioUnitario);
 	*/
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
 	/*Atributos*/
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Producto producto;
 	private int cantidad;
 	private double precioUnitario;
@@ -63,6 +72,7 @@ public class Item implements Cloneable {
 		return (Item) super.clone();
 	}
 	public  void fijarPrecio() {
+		//TODO query para que actualice en tabla
 		estaCerrada = true;
 	}
 	

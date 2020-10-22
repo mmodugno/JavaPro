@@ -35,6 +35,7 @@ import auditoria.Items;
 import auditoria.MontoPresupuesto;
 import auditoria.Reporte;
 import auditoria.Validador;
+import db.EntityManagerHelper;
 
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
@@ -119,10 +120,11 @@ public class Server {
         get( "/producto/:id", controllerProductos::detalleProducto, engine);
         post("/producto", controllerProductos::guardarProducto);
         post("/producto/:id",controllerProductos::modificarProducto);
+
         delete("/producto/:id",controllerProductos::eliminarProducto);
 
         //validaciones
-       get("/validacion/:id",(request,response) -> {
+       get("/egreso/:id/validacion",(request,response) -> {
     	   return Validar(request,response);
        });
        
@@ -301,6 +303,10 @@ public class Server {
     	
     	Map<String, Object> map = new HashMap<>();
         map.put("egreso", egreso);
+        
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.getEntityManager().persist(egreso);
+        EntityManagerHelper.commit();
     	
         return new ModelAndView(map,"detalleEgreso.html");
     }

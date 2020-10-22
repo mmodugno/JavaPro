@@ -10,6 +10,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
+//@Entity
+//@Table
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+//@DiscriminatorColumn(name = "tipo")
 public abstract class Usuario {
 	
 	public Usuario(String nombre, String password, Organizacion organizacion, boolean creadoConExito){
@@ -20,7 +31,13 @@ public abstract class Usuario {
 		this.creadoConExito = creadoConExito;
 	}
 
+	//@Id
+	//TODO @GeneratedValue()
+	private int id;
+	
+
 	private String nombre;
+	//TODO guardar passw como HASH
 	private String password;
 	private Organizacion organizacion;
 	private List<OrdenDeCompra> suscripciones;

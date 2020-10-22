@@ -3,19 +3,22 @@ package usuarios;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 
-public class CategoriaCompuesta implements CategoriaDelSistema{
+
+
+@Entity
+@DiscriminatorValue(value = "compuesta")
+public class CategoriaCompuesta extends CategoriaDelSistema{
 
 	public CategoriaCompuesta(String nombre, String criterio) {
-		super();
-		this.nombre = nombre;
-		this.criterio = criterio;
+		super(nombre,criterio);
 	}
 
 
-
-	private String nombre;
-	private String criterio;
+	@Transient
 	private List<CategoriaDelSistema> subCategorias = new ArrayList<CategoriaDelSistema>();
 	
 	
@@ -23,27 +26,18 @@ public class CategoriaCompuesta implements CategoriaDelSistema{
 		subCategorias.add(categoria);
 	}
 	
+	@Override
 	public boolean esCompuesta() {
 		return true;
 	}
 	
-
-	public String getCriterio() {
-		return criterio;
-	}
-	
-
-	@Override
-	public String getCategoria() {
-		return nombre;
-	}
-
 
 
 	public void setSubCategorias(List<CategoriaDelSistema> subCategorias) {
 		this.subCategorias = subCategorias;
 	}
 
+	@Override
 	public List<CategoriaDelSistema> getSubCategorias() {
 		return this.subCategorias;
 	}

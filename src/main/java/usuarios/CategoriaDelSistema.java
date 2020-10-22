@@ -2,13 +2,48 @@ package usuarios;
 
 import java.util.List;
 
-public interface CategoriaDelSistema {
+import javax.persistence.*;
 
-	String getCategoria();
+@Entity
+@Table
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo")
+public abstract class CategoriaDelSistema {
 	
-	public boolean esCompuesta();
+	@Id
+	private int id;
+
+	@Column
+	private String nombre;
 	
-	public List<CategoriaDelSistema> getSubCategorias();
+	@Column
+	private String criterio;
+	
+	public CategoriaDelSistema(String nombre, String criterio) {
+		this.nombre = nombre;
+		this.criterio = criterio;
+	}
+	
+
+
+	public String getCategoria() {
+		return nombre;
+	}
+	
+	public String getCriterio() {
+		return criterio;
+	}
+	
+	
+	public boolean esCompuesta() {
+		return false;
+	};
+	
+	public List<CategoriaDelSistema> getSubCategorias() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
 }

@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.*;
+
 import producto.*;
 import usuarios.CategoriaDelSistema;
 
+@Entity
+@Table
 public class Presupuesto implements Categorizable{
 
     /*CONSTRUCTOR*/
@@ -28,13 +32,19 @@ public class Presupuesto implements Categorizable{
 		// TODO Auto-generated constructor stub
 	}
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	/*ATRIBUTOS*/
+	@ManyToMany()
     private List<Item> items;
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Proveedor proveedor;
+    @Transient
     private MedioDePago medioDePago;
     private boolean aceptado;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private CategoriaDelSistema categoria = null;
     
     public int getId() {
