@@ -1,4 +1,5 @@
 <project>
+
   <modelVersion>4.0.0</modelVersion>
   <groupId>nombre-proyecto</groupId>
   <artifactId>nombre-proyecto</artifactId>
@@ -18,7 +19,6 @@
   </build>
 
 
-
   <dependencies>
 
       <dependency>
@@ -26,13 +26,19 @@
         <artifactId>junit</artifactId>
         <version>4.12</version>
       </dependency>
-
-<!-- Spark -->
+      
+      <dependency>
+		  <groupId>org.json</groupId>
+		  <artifactId>json</artifactId>
+		  <version>20090211</version>
+		</dependency>
+	
 	  <dependency>
 		  <groupId>com.sparkjava</groupId>
 		  <artifactId>spark-core</artifactId>
 		  <version>2.7.2</version>
 	  </dependency><!-- //VAMOS A ESTAR USANDO ESTA VERSION DE JAVA SPARK -->
+
 
 	  <dependency>
 		  <groupId>com.sparkjava</groupId>
@@ -45,17 +51,12 @@
     	<artifactId>hibernate-core</artifactId>
    	 <version>4.3.6.Final</version>
 	</dependency>
+	
 	<dependency>
     	<groupId>org.hibernate</groupId>
     	<artifactId>hibernate-entitymanager</artifactId>
     	<version>4.3.6.Final</version>
 	</dependency>
-
-	  <dependency>
-  		  <groupId>com.sparkjava</groupId>
-    	  <artifactId>spark-core</artifactId>
-    	  <version>2.9.3</version>
-	  </dependency>
 
 	  <dependency><!--/*Es el Log*/-->
 		  <groupId>org.slf4j</groupId>
@@ -82,7 +83,7 @@
 		<dependency>
 		    <groupId>com.google.code.gson</groupId>
 		    <artifactId>gson</artifactId>
-		    <version>2.8.5</version>
+		    <version>2.8.6</version>
 		</dependency>
 		
 		<dependency>
@@ -108,6 +109,12 @@
 		    <artifactId>commons-lang3</artifactId>
 		    <version>3.0</version>
 		</dependency>
+		
+			<dependency>
+          <groupId> com.mercadopago </groupId>
+          <artifactId> dx-java </artifactId>
+          <version> 1.7.1 </version>
+      </dependency>
 
 
    </dependencies>
