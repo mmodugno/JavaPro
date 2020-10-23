@@ -11,6 +11,7 @@ import javax.persistence.*;
 public abstract class CategoriaDelSistema {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@Column

@@ -13,6 +13,8 @@ import java.time.LocalDate;
 import producto.*;
 import usuarios.Usuario;
 
+@Entity
+@Table
 public class OrdenDeCompra {
 
 	/*CONSTRUCTOR*/
@@ -43,19 +45,23 @@ public class OrdenDeCompra {
 	 */
 
 	/*ATRIBUTOS*/
-	@ManyToMany()
-	private List<Item> items;
 	@Column(columnDefinition = "DATE")
 	private LocalDate fecha;
-	private int necesitaPresupuesto;
-	@OneToMany()
-	private List<Presupuesto> presupuestos;
-	@Transient
-	//TODO
-	private List<Usuario> revisores;
+	@Id
 	private int idOrden;
+	@ManyToMany(cascade = CascadeType.ALL)
+	private List<Item> items;
+	private int necesitaPresupuesto;
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Presupuesto> presupuestos;
+
+	//TODO
 	@Transient
+	private List<Usuario> revisores;
+
+
 	//TODO ver
+	@Transient
 	private CriterioSeleccion criterioSeleccion;
 	private boolean cerrado = false; //esto es para saber cuando tiene un egreso y cuando no
 

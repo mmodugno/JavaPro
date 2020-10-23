@@ -38,6 +38,7 @@ public class EntidadJuridica {
 	private String cuit;
 	private int direccionPostal;
 	private int codInscripcion;
+
 	private List<EntidadBase> entidadesBase;
 	private List<Egreso> egresos;
 	private List<OrdenDeCompra> ordenesPendientes;

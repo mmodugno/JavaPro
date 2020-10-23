@@ -61,14 +61,18 @@ public class RepositorioProducto {
 
     public static void agregar(Producto producto){
         productos.add(producto);
+
+        //todo Aca persisto
     }
 
     public static void modificar(Producto producto){
-
+        //todo Aca tengo que modificar en la base
     }
 
     public static void eliminar(Producto producto){
         productos.remove(producto);
+
+        //todo aca tengo que hacer el delete de la base
     }
 
 }

@@ -23,6 +23,7 @@ public class Proveedor {
 	* setDireccionPostal(direccionPostal);
 	*/
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	/*ATRIBUTOS*/
