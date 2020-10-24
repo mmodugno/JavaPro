@@ -5,16 +5,13 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import egreso.*;
 import org.hibernate.metamodel.binding.EntityIdentifier;
 import org.junit.Test;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 
 import db.EntityManagerHelper;
-import egreso.MedioDePago;
-import egreso.OrdenDeCompra;
-import egreso.Presupuesto;
-import egreso.TipoMedioPago;
 import producto.Item;
 import producto.Producto;
 import producto.Proveedor;
@@ -63,6 +60,10 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
         presupuesto1.getItems().get(0).setPrecioUnitario(80.00);
         presupuesto1.getItems().get(1).setPrecioUnitario(30.00);
 
+        presupuesto2 = new Presupuesto(ordenDeCompra.getItems(),proveedor2,medioDePago);
+        presupuesto2.getItems().get(0).setPrecioUnitario(90.00);
+        presupuesto2.getItems().get(1).setPrecioUnitario(40.00);
+
         //CATEGORIAS
         Categoria categoriaBSAS = new Categoria("Buenos Aires","Provincia");
         Categoria categoriaMendoza = new Categoria("Mendoza","Provincia");
@@ -74,6 +75,15 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
         categoriaARGENTINA.setSubCategorias(listaSubCategorias);
 
 
+        //EGRESOS
+        Egreso egreso1= new Egreso(ordenDeCompra, presupuesto1);
+        Egreso egreso2= new Egreso(ordenDeCompra2, presupuesto2);
+        Egreso egreso3= new Egreso(ordenDeCompra, presupuesto1);
+
+
+
+
+        //PERSISTIENDO
         EntityManagerHelper.beginTransaction();
         EntityManagerHelper.getEntityManager().persist(producto1);
         EntityManagerHelper.getEntityManager().persist(producto2);
@@ -94,15 +104,28 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
 
         EntityManagerHelper.beginTransaction();
         EntityManagerHelper.persist(presupuesto1);
+        EntityManagerHelper.persist(presupuesto2);
         EntityManagerHelper.commit();
 
         EntityManagerHelper.beginTransaction();
         EntityManagerHelper.getEntityManager().persist(ordenDeCompra);
         EntityManagerHelper.getEntityManager().persist(ordenDeCompra2);
         EntityManagerHelper.commit();
+
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.persist(egreso1);
+        EntityManagerHelper.persist(egreso2);
+        EntityManagerHelper.persist(egreso3);
+        EntityManagerHelper.commit();
         
 	}
-	
+	/*SCRIPT BORRAR TABLAS
+	    Use gesoc;
+        Drop TABLE gesoc.egreso_documentocomercial, gesoc.documentocomercial, gesoc.egreso,
+        gesoc.ordendecompra_item, gesoc.presupuesto_item,gesoc.ordendecompra_presupuesto,
+        gesoc.ordendecompra, gesoc.presupuesto, gesoc.item, gesoc.producto, gesoc.categoriadelsistema,
+        gesoc.proveedor;
+	*/
 	/*
 	@Test
 	public void presupuestoTest() throws CloneNotSupportedException {
