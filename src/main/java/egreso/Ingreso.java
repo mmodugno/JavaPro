@@ -7,6 +7,10 @@ import java.util.List;
 
 import usuarios.CategoriaDelSistema;
 
+import javax.persistence.*;
+
+@Entity
+@Table
 public class Ingreso implements Categorizable{
 
 	/*CONSTRUCTOR*/
@@ -30,12 +34,20 @@ public class Ingreso implements Categorizable{
 
 
 	/*ATRIBUTOS*/
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+
 	private String descripcion;
 	private double monto;
+	@ManyToOne(cascade = CascadeType.ALL)
 	private CategoriaDelSistema categoria = null;
+	//Esto lo voy a poner que lo ignore por la nueva forma en que vinculo! :)
+	@Transient
 	private double montoVinculado = 0.00;
+	@Column(columnDefinition = "DATE")
 	private LocalDate fecha;
-	private int id;
+
 
 	/*GETTERS*/
 	public LocalDate getFecha() {

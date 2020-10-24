@@ -80,6 +80,11 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
         Egreso egreso2= new Egreso(ordenDeCompra2, presupuesto2);
         Egreso egreso3= new Egreso(ordenDeCompra, presupuesto1);
 
+        //INGRESOS
+        Ingreso ingreso1 = new Ingreso("Donacion",1000.0);
+        Ingreso ingreso2 = new Ingreso("Venta",10000.0);
+        Ingreso ingreso3 = new Ingreso("Venta",500.0);
+
 
 
 
@@ -117,14 +122,20 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
         EntityManagerHelper.persist(egreso2);
         EntityManagerHelper.persist(egreso3);
         EntityManagerHelper.commit();
+
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.persist(ingreso1);
+        EntityManagerHelper.persist(ingreso2);
+        EntityManagerHelper.persist(ingreso3);
+        EntityManagerHelper.commit();
         
 	}
 	/*SCRIPT BORRAR TABLAS
 	    Use gesoc;
         Drop TABLE gesoc.egreso_documentocomercial, gesoc.documentocomercial, gesoc.egreso,
         gesoc.ordendecompra_item, gesoc.presupuesto_item,gesoc.ordendecompra_presupuesto,
-        gesoc.ordendecompra, gesoc.presupuesto, gesoc.item, gesoc.producto, gesoc.categoriadelsistema,
-        gesoc.proveedor;
+        gesoc.ordendecompra, gesoc.presupuesto, gesoc.item, gesoc.producto, gesoc.ingreso,
+        gesoc.categoriadelsistema, gesoc.proveedor;
 	*/
 	/*
 	@Test
