@@ -24,39 +24,7 @@
 <body>
 
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom imagen-logo">
-            <a href="/inicio">
-                <img src="public/img/pruebalogosoc.png" alt="Logo GeSoc">
-            </a>
-
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-             <span class="navbar-toggler-icon"></span>
-        </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Usuario</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Dropdown
-                    </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
-
+        {{>navbar.hbs}}
     </header>
 
     <div class="d-flex" id="wrapper">
@@ -85,8 +53,7 @@
                     </thead>
                     <tbody>
                     {{#each egresos}}
-                        <tr class="ultimo-final">
-                            
+                        <tr class="ultimo-final">                         
                             <td>{{id}}</td>
                             <td>{{valorTotal}}</td>
                             <td>{{fecha}}</td>
@@ -95,14 +62,9 @@
                                     <button class="btn btn-yoel">DETALLE</button>
                                 </a>
                             </td>
-
-
                         </tr>
                     {{/each}}
-
-
                     </tbody>
-
                 </table>
                 <a href="/crearEgreso">
                     <button type="button" class="btn btn-warning">Crear Egreso</button>
@@ -120,9 +82,9 @@
     <!-- <script src="public/vendor/jquery/jquery.min.js"></script> --->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap.min.js"></script>
-
+    <!-- Load Table Library -->
+    {{>loadTableLibrary.hbs}}
+	<!-- Load Table Library -->
 
     <!-- Menu Toggle Script -->
     <script>
@@ -131,18 +93,9 @@
             $("#wrapper").toggleClass("toggled");
         });
     </script>
-    <script>
-        $(document).ready(function() {
-        	$('#tabla_egresos').DataTable({
-        		"language": {
-    				"url": "/public/language/Spanish.json"
-  				}, 
-  				lengthMenu: [1, 5, 10, 20, 50],
-  				pageLength : 10
-        	});
-        });
-    </script>
-
+    <!-- Script Init Table -->
+    {{>tableInitScript.hbs}}
+	<!-- Script Init Table -->
 
 </body>
 
