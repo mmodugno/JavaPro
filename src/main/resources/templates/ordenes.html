@@ -1,6 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
 
-{{>header.hbs}}
+<head>
 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Ordenes</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Load Table CSS -->
+    {{>tableCss.hbs}}
+	<!-- Load Table CSS -->
+    <!-- Custom styles for this template -->
+    <link href="public/css/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <header>
+        {{>navbar.hbs}}
+    </header>
+
+    <div class="d-flex" id="wrapper">
+
+
+        <!-- Sidebar -->
+        {{>sidebar.hbs}}
+        <!-- /#sidebar-wrapper -->
 <!-- Page Content -->
 <div id="page-content-wrapper">
 
@@ -12,7 +43,7 @@
         <div class="row py-5"></div>
 
         <div class="contenido-centrado">
-            <table class="table  gradual ">
+            <table id="tabla_dinamica" class="table gradual display">
                 <thead class="thead-dark">
 
                 <tr>
@@ -54,10 +85,16 @@
         </div>
     </div>
 
-</div>
-</div>
-<!-- /#page-content-wrapper -->
-    <!-- /#wrapper -->
-{{>footer.hbs}}
+	</div>
+	</div>
+	<!-- /#page-content-wrapper -->
+	    <!-- /#wrapper -->
+	{{>footer.hbs}}
+    <!-- Load Table Library -->
+    {{>tableLibraries.hbs}}
+	<!-- Load Table Library -->
+	<!-- Script Init Table -->
+    {{>tableInitScript.hbs}}
+	<!-- Script Init Table -->
 </body>
 </html>
