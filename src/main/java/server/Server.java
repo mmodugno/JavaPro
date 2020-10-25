@@ -127,11 +127,11 @@ public class Server {
         //acciones productos
         get("/productos",TemplWithTransaction(controllerProductos::productos),engine);
         get("/producto", controllerProductos::nuevoProducto, engine);
-        get( "/producto/:id", controllerProductos::detalleProducto, engine);
+        get( "/producto/:id", TemplWithTransaction(controllerProductos::detalleProducto), engine);
         post("/producto", RouteWithTransaction(controllerProductos::guardarProducto));
         post("/producto/:id",controllerProductos::modificarProducto);
 
-        delete("/producto/:id",controllerProductos::eliminarProducto);
+        delete("/producto/:id",RouteWithTransaction(controllerProductos::eliminarProducto));
 
         //validaciones
        get("/egreso/:id/validacion",(request,response) -> {
