@@ -45,7 +45,7 @@ public class RepositorioProducto {
         return this.entityManager.createQuery(consulta.select(productos)).getResultList();
     }
 
-    public  Producto byID(int id) {
+    public Producto byID(int id) {
 
         CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
         CriteriaQuery<Producto> consulta = cb.createQuery(Producto.class);
@@ -62,18 +62,10 @@ public class RepositorioProducto {
 
     }
 
-    public int proximoId(){
-        productos.sort((Producto producto1, Producto producto2) -> {
-            return ordenarInt(producto1.getIdProducto(),producto2.getIdProducto());
-        });
-        return productos.get(0).getIdProducto() + 1;
-    }
-
     public void agregar(Producto producto){
 
-
         this.entityManager.persist(producto);
-        //todo Aca persisto
+
     }
 
     public static void modificar(Producto producto){
@@ -81,7 +73,8 @@ public class RepositorioProducto {
     }
 
     public void eliminar(int id){
-        this.entityManager.remove(byID(id));
+        Producto producto = this.byID(id);
+        this.entityManager.remove(producto);
 
         //todo aca tengo que hacer el delete de la base
     }
