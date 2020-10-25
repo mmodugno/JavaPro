@@ -40,9 +40,10 @@ public class Presupuesto implements Categorizable{
 	/*ATRIBUTOS*/
 	@ManyToMany(cascade = CascadeType.ALL)
     private List<Item> items;
-	//@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@Transient
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Proveedor proveedor;
+
     @Transient
     private MedioDePago medioDePago;
     private boolean aceptado;
@@ -52,6 +53,7 @@ public class Presupuesto implements Categorizable{
     public int getId() {
     	return this.id;
     }
+
 	/*getters*/
 	public CategoriaDelSistema getCategoria() {
 		return this.categoria;

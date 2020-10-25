@@ -5,16 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import producto.*;
 import egreso.*;
@@ -48,6 +39,7 @@ public class Egreso implements Categorizable{
 
 	/*ATRIBUTOS*/
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@Column(columnDefinition = "DATE")
@@ -62,10 +54,10 @@ public class Egreso implements Categorizable{
 	//un egreso puede tener varios doc pero un doc esta solo en un egreso
 	private List<DocumentoComercial> documentosComerciales;
 	
-	@Transient
+	@OneToOne(cascade = CascadeType.ALL)
 	private OrdenDeCompra ordenDeCompra;
-	
-	@Transient
+
+	@OneToOne(cascade = CascadeType.ALL)
 	private Presupuesto presupuesto;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

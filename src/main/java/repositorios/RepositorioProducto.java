@@ -1,14 +1,19 @@
 package repositorios;
 
-import egreso.Egreso;
 import producto.Producto;
 import producto.TipoItem;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class RepositorioProducto {
+
+    private EntityManager entityManager;
 
     private static List<Producto> productos;
 
@@ -16,9 +21,10 @@ public class RepositorioProducto {
         return productos;
     }
 
-    public RepositorioProducto() {
+    public RepositorioProducto(EntityManager entityManager) {
+        this.entityManager = entityManager;
 
-            Producto producto1 = new Producto(1, "Monitor", "Monitor 32", TipoItem.ARTICULO);
+        Producto producto1 = new Producto(1, "Monitor", "Monitor 32", TipoItem.ARTICULO);
             Producto producto2 = new Producto(2, "Notebook", "Notebook Lenovo", TipoItem.ARTICULO);
             Producto producto3 = new Producto(3, "Office", "Office365", TipoItem.SERVICIO);
             producto1.setIdProducto(1231);
@@ -32,7 +38,10 @@ public class RepositorioProducto {
     }
 
     public List<Producto> todos() {
-        return productos;
+        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Producto> consulta = cb.createQuery(Producto.class);
+        Root<Producto> productos = consulta.from(Producto.class);
+        return this.entityManager.createQuery(consulta.select(productos)).getResultList();
     }
 
     public static Producto byID(int id) {

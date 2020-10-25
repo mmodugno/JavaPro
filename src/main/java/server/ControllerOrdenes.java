@@ -1,22 +1,15 @@
 package server;
 
-import egreso.Egreso;
 import egreso.OrdenDeCompra;
 import egreso.Presupuesto;
-import producto.Item;
 import producto.Producto;
-import producto.TipoItem;
-import repositorios.RepositorioEgreso;
 import repositorios.RepositorioOrdenDeCompra;
 import repositorios.RepositorioProducto;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,6 +17,8 @@ import java.time.LocalDate;
 import java.util.*;
 
 import com.google.gson.Gson;
+
+import javax.persistence.EntityManager;
 
 public class ControllerOrdenes {
 
@@ -50,9 +45,10 @@ public class ControllerOrdenes {
         return new ModelAndView(map, "ordenes.html");
     }
 
-    public ModelAndView nuevaOrden(Request request, Response response){
+    public ModelAndView nuevaOrden(Request request, Response response, EntityManager entityManager){
 
-        RepositorioProducto repoPro = new RepositorioProducto();
+
+		RepositorioProducto repoPro = new RepositorioProducto(entityManager);
         Map<String, Object> map = new HashMap<>();
         List<Producto> productos = repoPro.todos();
         map.put("productos", productos);
