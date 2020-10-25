@@ -28,7 +28,6 @@
 
     <div class="d-flex" id="wrapper">
 
-
         <!-- Sidebar -->
         {{>sidebar.hbs}}
         <!-- /#sidebar-wrapper -->
@@ -87,6 +86,9 @@
     <!-- Bootstrap core JavaScript -->
     <script src="public/vendor/jquery/jquery.min.js"></script>
     <script src="public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Load Table Library -->
+    {{>tableLibraries.hbs}}
+	<!-- Load Table Library -->
 
     <!-- Menu Toggle Script -->
     <script>
@@ -95,6 +97,9 @@
             $("#wrapper").toggleClass("toggled");
         });
     </script>
+    <!-- Script Init Table -->
+    {{>tableInitScript.hbs}}
+	<!-- Script Init Table -->
 
 </body>
 
