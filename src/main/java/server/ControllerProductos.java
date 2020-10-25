@@ -35,14 +35,14 @@ public class ControllerProductos {
         return new ModelAndView(null,"nuevoProducto.html");
     }
 
-    public ModelAndView detalleProducto(Request request, Response response) throws CloneNotSupportedException{
+    public ModelAndView detalleProducto(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException{
 
-
+        RepositorioProducto repositorio = new RepositorioProducto(entityManager);
         String strID = request.params("id");
 
         int id = Integer.parseInt(strID);
 
-        Producto producto = repo.byID(id);
+        Producto producto = repositorio.byID(id);
 
         Map<String, Object> map = new HashMap<>();
         map.put("producto", producto);
@@ -99,15 +99,15 @@ public class ControllerProductos {
         return response;
     }
 
-    public Response eliminarProducto(Request request, Response response){
+    public Response eliminarProducto(Request request, Response response, EntityManager entityManager){
 
+        RepositorioProducto repositorio = new RepositorioProducto(entityManager);
         String strID = request.params("id");
         int id = new Integer(strID);
-        Producto producto = repo.byID(id);
 
-        repo.eliminar(producto);
+        repositorio.eliminar(id);
 
-        //response.redirect("/productos");
+        response.redirect("/productos");
 
         return response;
     }
