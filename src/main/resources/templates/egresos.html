@@ -12,6 +12,9 @@
 
     <!-- Bootstrap core CSS -->
     <link href="public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="public/css/tables.bootstrap.min.css" rel="stylesheet">
+    <link href="public/css/jquery.tables.min.css" rel="stylesheet">
+    <link href="public/css/custom.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="public/css/simple-sidebar.css" rel="stylesheet">
@@ -71,17 +74,14 @@
             <div class="row py-5"></div>
 
             <div class="contenido-centrado">
-                <table class="table  gradual ">
+                <table id="tabla_egresos" class="table gradual display">
                     <thead class="thead-dark">
-
-                        <tr>
-                            
+                    	<tr>
                             <th scope="col">Nro</th>
                             <th scope="col">Monto</th>
                             <th scope="col">Fecha</th>
                             <th scope="col"></th>
                         </tr>
-
                     </thead>
                     <tbody>
                     {{#each egresos}}
@@ -110,14 +110,6 @@
             </div>
         </div>
 
-
-
-
-
-
-
-
-
     </div>
     <!-- /#page-content-wrapper -->
 
@@ -125,8 +117,12 @@
     <!-- /#wrapper -->
 
     <!-- Bootstrap core JavaScript -->
-    <script src="public/vendor/jquery/jquery.min.js"></script>
+    <!-- <script src="public/vendor/jquery/jquery.min.js"></script> --->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap.min.js"></script>
+
 
     <!-- Menu Toggle Script -->
     <script>
@@ -135,6 +131,18 @@
             $("#wrapper").toggleClass("toggled");
         });
     </script>
+    <script>
+        $(document).ready(function() {
+        	$('#tabla_egresos').DataTable({
+        		"language": {
+    				"url": "/public/language/Spanish.json"
+  				}, 
+  				lengthMenu: [1, 5, 10, 20, 50],
+  				pageLength : 10
+        	});
+        });
+    </script>
+
 
 </body>
 
