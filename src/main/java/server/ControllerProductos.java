@@ -3,27 +3,25 @@ package server;
 import producto.Producto;
 import producto.TipoItem;
 import repositorios.RepositorioProducto;
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
+import spark.*;
 
+import javax.persistence.EntityManager;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class ControllerProductos {
 
     private static RepositorioProducto repo;
 
-    public ControllerProductos() {
-        repo = new RepositorioProducto();
-    }
+    public ControllerProductos(){}
 
-    public ModelAndView productos(Request request, Response response){
 
+    public ModelAndView productos(Request request, Response response, EntityManager entityManager){
+
+        RepositorioProducto repositorio = new RepositorioProducto(entityManager);
         //DOMINIO
-        List<Producto> productos = repo.todos();
+        List<Producto> productos = repositorio.todos();
 
         //OUTPUT
         Map<String, Object> map = new HashMap<>();
@@ -113,4 +111,6 @@ public class ControllerProductos {
 
         return response;
     }
+
+
 }

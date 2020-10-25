@@ -14,9 +14,7 @@ import repositorios.RepositorioIngreso;
 import repositorios.RepositorioOrdenDeCompra;
 import repositorios.RepositorioPresupuesto;
 import repositorios.RepositorioProducto;
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
+import spark.*;
 
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import usuarios.Categoria;
@@ -45,9 +43,14 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 import com.google.gson.Gson;
 import com.mercadopago.exceptions.MPRestException;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 
 public class Server {
+
+    static EntityManagerFactory entityManagerFactory;
 
     private static ControllerProductos controllerProductos= new ControllerProductos();
     private static ControllerEgresos controllerEgresos= new ControllerEgresos();
@@ -80,6 +83,10 @@ public class Server {
         } else {
             staticFiles.location("/resources");
         }
+
+        entityManagerFactory = Persistence.createEntityManagerFactory("db");
+
+        controllerProductos= new ControllerProductos();
 
 
         // Ejemplo de acceso: http://localhost:9000/inicio
@@ -118,7 +125,7 @@ public class Server {
         post("/ingreso/:id", controllerIngresos::persistirIngreso);
 
         //acciones productos
-        get("/productos",controllerProductos::productos,engine);
+        get("/productos",TemplWithTransaction(controllerProductos::productos),engine);
         get("/producto", controllerProductos::nuevoProducto, engine);
         get( "/producto/:id", controllerProductos::detalleProducto, engine);
         post("/producto", controllerProductos::guardarProducto);
@@ -135,7 +142,7 @@ public class Server {
         //ORDENES DE COMPRA
 
         get("/ordenes",controllerOrdenes::ordenes,engine);
-        get("/crearOrden",controllerOrdenes::nuevaOrden,engine);
+        get("/crearOrden",TemplWithTransaction(controllerOrdenes::nuevaOrden),engine);
        // get("/orden/:id",,engine);
         post("/orden", controllerOrdenes::crear);
        // post("orden:id");
@@ -165,7 +172,7 @@ public class Server {
         	Map<String, Object> map = new HashMap<>();
         	map.put("egreso","No existe Egreso con id "+strID);
         	
-        	map.put("informe","Egreso no válido");
+        	map.put("informe","Egreso no vï¿½lido");
         	
         	map.put("Resultado Validacion",false);
         	
@@ -402,6 +409,37 @@ public class Server {
 
 
 
+    private static TemplateViewRoute TemplWithTransaction(WithTransaction<ModelAndView> fn) {
+        TemplateViewRoute r = (req, res) -> {
+            EntityManager em = entityManagerFactory.createEntityManager();
+            em.getTransaction().begin();
+            try {
+                ModelAndView result = fn.method(req, res, em);
+                em.getTransaction().commit();
+                return result;
+            } catch (Exception ex) {
+                em.getTransaction().rollback();
+                throw ex;
+            }
+        };
+        return r;
+    }
+
+    private static Route RouteWithTransaction(WithTransaction<Object> fn) {
+        Route r = (req, res) -> {
+            EntityManager em = entityManagerFactory.createEntityManager();
+            em.getTransaction().begin();
+            try {
+                Object result = fn.method(req, res, em);
+                em.getTransaction().commit();
+                return result;
+            } catch (Exception ex) {
+                em.getTransaction().rollback();
+                throw ex;
+            }
+        };
+        return r;
+    }
 
 
 
