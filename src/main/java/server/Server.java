@@ -128,7 +128,7 @@ public class Server {
         get("/productos",TemplWithTransaction(controllerProductos::productos),engine);
         get("/producto", controllerProductos::nuevoProducto, engine);
         get( "/producto/:id", controllerProductos::detalleProducto, engine);
-        post("/producto", controllerProductos::guardarProducto);
+        post("/producto", RouteWithTransaction(controllerProductos::guardarProducto));
         post("/producto/:id",controllerProductos::modificarProducto);
 
         delete("/producto/:id",controllerProductos::eliminarProducto);

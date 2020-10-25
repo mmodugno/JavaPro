@@ -68,9 +68,10 @@ public class RepositorioProducto {
         return productos.get(0).getIdProducto() + 1;
     }
 
-    public static void agregar(Producto producto){
-        productos.add(producto);
+    public void agregar(Producto producto){
 
+
+        this.entityManager.persist(producto);
         //todo Aca persisto
     }
 

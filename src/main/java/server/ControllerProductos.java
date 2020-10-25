@@ -70,13 +70,13 @@ public class ControllerProductos {
 
     }
 
-    public Response guardarProducto(Request request, Response response){
+    public Response guardarProducto(Request request, Response response, EntityManager entityManager){
         Producto producto = new Producto();
-        producto.setIdProducto(repo.proximoId());
+        RepositorioProducto repositorio = new RepositorioProducto(entityManager);
 
         asignarParametrosProducto(producto, request);
 
-        repo.agregar(producto);
+        repositorio.agregar(producto);
         producto.setTipoProducto(TipoItem.ARTICULO);
 
         response.redirect("/productos");
