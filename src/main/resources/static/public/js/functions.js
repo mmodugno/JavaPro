@@ -24,7 +24,7 @@ function confirmarBorrar(id) {
 }
 
 function eliminarProducto() {
-    var id = document.getElementById("productoId").value;
+    let id = document.getElementById("productoId").value;
     $.ajax({
         type: "delete",
         url: id,

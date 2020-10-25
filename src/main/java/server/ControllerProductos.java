@@ -102,12 +102,13 @@ public class ControllerProductos {
     public Response eliminarProducto(Request request, Response response, EntityManager entityManager){
 
         RepositorioProducto repositorio = new RepositorioProducto(entityManager);
+
         String strID = request.params("id");
         int id = new Integer(strID);
 
         repositorio.eliminar(id);
 
-        response.redirect("/productos");
+        //response.redirect("/productos");
 
         return response;
     }
