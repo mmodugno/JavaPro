@@ -1,5 +1,6 @@
 package server;
 
+import org.apache.maven.artifact.repository.metadata.RepositoryMetadataStoreException;
 import producto.Producto;
 import producto.TipoItem;
 import repositorios.RepositorioProducto;
@@ -12,7 +13,6 @@ import java.util.Map;
 
 public class ControllerProductos {
 
-    private static RepositorioProducto repo;
 
     public ControllerProductos(){}
 
@@ -84,15 +84,14 @@ public class ControllerProductos {
         return response;
     }
 
-    public Response modificarProducto(Request request, Response response){
+    public Response modificarProducto(Request request, Response response, EntityManager entityManager){
 
+        RepositorioProducto repositorio = new RepositorioProducto(entityManager);
         String strID = request.params("id");
         int id = new Integer(strID);
-        Producto producto = repo.byID(id);
+        Producto producto = repositorio.byID(id);
 
         asignarParametrosProducto(producto, request);
-
-        repo.modificar(producto);//Esto va a hacer algo cuando tengamos la base
 
         response.redirect("/productos");
 
@@ -108,7 +107,6 @@ public class ControllerProductos {
 
         repositorio.eliminar(id);
 
-        //response.redirect("/productos");
 
         return response;
     }

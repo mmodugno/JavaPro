@@ -16,15 +16,15 @@ public class RepositorioProducto {
 
     private EntityManager entityManager;
 
-    private static List<Producto> productos;
+   /* private static List<Producto> productos;
 
     public static List<Producto> getProductos() {
         return productos;
-    }
+    }*/
 
     public RepositorioProducto(EntityManager entityManager) {
         this.entityManager = entityManager;
-
+/*
         Producto producto1 = new Producto(1, "Monitor", "Monitor 32", TipoItem.ARTICULO);
             Producto producto2 = new Producto(2, "Notebook", "Notebook Lenovo", TipoItem.ARTICULO);
             Producto producto3 = new Producto(3, "Office", "Office365", TipoItem.SERVICIO);
@@ -35,7 +35,7 @@ public class RepositorioProducto {
             productos.add(producto1);
             productos.add(producto2);
             productos.add(producto3);
-
+*/ //Aca esta el llenado de productos
     }
 
     public List<Producto> todos() {
@@ -66,10 +66,6 @@ public class RepositorioProducto {
 
         this.entityManager.persist(producto);
 
-    }
-
-    public static void modificar(Producto producto){
-        //todo Aca tengo que modificar en la base
     }
 
     public void eliminar(int id){

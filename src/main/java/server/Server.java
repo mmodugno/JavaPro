@@ -129,7 +129,7 @@ public class Server {
         get("/producto", controllerProductos::nuevoProducto, engine);
         get( "/producto/:id", TemplWithTransaction(controllerProductos::detalleProducto), engine);
         post("/producto", RouteWithTransaction(controllerProductos::guardarProducto));
-        post("/producto/:id",controllerProductos::modificarProducto);
+        post("/producto/:id",RouteWithTransaction(controllerProductos::modificarProducto));
 
         delete("/producto/:id",RouteWithTransaction(controllerProductos::eliminarProducto));
 
