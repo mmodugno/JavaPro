@@ -141,10 +141,10 @@ public class Server {
        
         //ORDENES DE COMPRA
 
-        get("/ordenes",controllerOrdenes::ordenes,engine);
+        get("/ordenes",TemplWithTransaction(controllerOrdenes::ordenes),engine);
         get("/crearOrden",TemplWithTransaction(controllerOrdenes::nuevaOrden),engine);
        // get("/orden/:id",,engine);
-        post("/orden", controllerOrdenes::crear);
+        post("/orden", RouteWithTransaction(controllerOrdenes::crear));
        // post("orden:id");
 
         //VINCULADOR
