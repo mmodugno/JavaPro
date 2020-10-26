@@ -22,15 +22,15 @@ import javax.persistence.EntityManager;
 
 public class ControllerOrdenes {
 
-    RepositorioOrdenDeCompra repo = null;
 
     public ControllerOrdenes() throws CloneNotSupportedException {
-        repo = new RepositorioOrdenDeCompra();
+
     }
 
-    public ModelAndView ordenes(Request request, Response response) throws CloneNotSupportedException {
+    public ModelAndView ordenes(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException {
 
         //DOMINIO
+		RepositorioOrdenDeCompra repo = new RepositorioOrdenDeCompra(entityManager);
         List<OrdenDeCompra> ordenes = repo.todos();
         /** **PARA PROBAR SI ANDA EL CERRAR** **/
         //repo.todos().get(0).setCerrado(true);
@@ -55,13 +55,14 @@ public class ControllerOrdenes {
         return new ModelAndView(map,"formularioOrden.html");
     }
 
-    public Response crear(Request request, Response response) throws ParseException {
+    public Response crear(Request request, Response response, EntityManager entityManager) throws ParseException, CloneNotSupportedException {
+    	RepositorioOrdenDeCompra repo = new RepositorioOrdenDeCompra(entityManager);
     	OrdenDeCompra nuevaOrden = new OrdenDeCompra();
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     	  	
     	
        	
-    	nuevaOrden.setIdOrden(repo.proximoId());
+
     	nuevaOrden.setNecesitaPresupuesto(Integer.parseInt(request.queryParams("presupuesto")));
 
     	//nuevaOrden.agregarItem(item);
@@ -81,7 +82,7 @@ public class ControllerOrdenes {
     	}
     	    	
     	
-    	repo.agregar(nuevaOrden);
+    	repo.crear(nuevaOrden);
     	
     	response.redirect("/ordenes");
     	
@@ -122,10 +123,4 @@ public class ControllerOrdenes {
     	return new Presupuesto();
     }
     
-    
-    
-   
-    
-    
-
 }
