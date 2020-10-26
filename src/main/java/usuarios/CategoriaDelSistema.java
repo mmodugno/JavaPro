@@ -20,6 +20,10 @@ public abstract class CategoriaDelSistema {
 	@Column
 	private String criterio;
 	
+	public CategoriaDelSistema() {
+		
+	}
+	
 	public CategoriaDelSistema(String nombre, String criterio) {
 		this.nombre = nombre;
 		this.criterio = criterio;

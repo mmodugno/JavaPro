@@ -5,6 +5,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import egreso.Egreso;
 import egreso.Ingreso;
 import egreso.MedioDePago;
@@ -24,9 +30,13 @@ import db.EntityManagerHelper;
 
 public class RepositorioEgreso {
 	
-	 static List<Egreso> egresos = null;
+	private EntityManager entityManager;
+	
+	private static List<Egreso> egresos = null;
 
-	 public RepositorioEgreso() throws CloneNotSupportedException {
+	 public RepositorioEgreso(EntityManager entityManager) throws CloneNotSupportedException {
+		 
+		this.entityManager = entityManager;
 		 
 		Proveedor proveedor1 = new Proveedor("Info Tech","22412145696", "6725");
 		
@@ -100,17 +110,22 @@ public class RepositorioEgreso {
 	 }
 
 	 public List<Egreso> byCategoria(CategoriaDelSistema unaCategoria) {
-	        return egresos.stream().filter(a ->
+	        return this.todos().stream().filter(a ->
 	                a.esDeCategoria(unaCategoria)
 	        ).collect(Collectors.toList());
 	  }
 	   
 	 public List<Egreso> todos() {
-	        return new ArrayList<>(egresos);
+		 
+		   CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+	        CriteriaQuery<Egreso> consulta = cb.createQuery(Egreso.class);
+	        Root<Egreso> egresos = consulta.from(Egreso.class);
+	        return this.entityManager.createQuery(consulta.select(egresos)).getResultList();
+	         
 	    }   
 	   
 	public void crear(Egreso egreso) {
-	    	egresos.add(egreso);
+		this.entityManager.persist(egreso);
 	    }
 	
 	public void reemplazar(Egreso egreso) {
@@ -122,12 +137,14 @@ public class RepositorioEgreso {
 	}
 
 	public Egreso byID(int id) {
-		Optional<Egreso> egreso = egresos.stream().filter(e -> e.getId() == id).findFirst();
-
-		if (egreso.isPresent()) {
-			return egreso.get();
-		}
-		else return null;
+		
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Egreso> consulta = cb.createQuery(Egreso.class);
+        Root<Egreso> egresos = consulta.from(Egreso.class);
+        Predicate condicion = cb.equal(egresos.get("id"), id);
+        CriteriaQuery<Egreso> where = consulta.select(egresos).where(condicion);
+        return this.entityManager.createQuery(where).getSingleResult();
+       
 	}
 
 	public void eliminar(Egreso egreso){

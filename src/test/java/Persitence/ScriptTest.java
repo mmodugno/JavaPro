@@ -86,6 +86,12 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
         Ingreso ingreso3 = new Ingreso("Venta",500.0);
 
 
+        egreso1.setCategoria(categoriaBSAS);
+
+		egreso2.setCategoria(categoriaMendoza);
+		 
+		egreso3.setCategoria(categoriaARGENTINA);
+
 
 
         //PERSISTIENDO

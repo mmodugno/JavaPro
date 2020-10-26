@@ -21,6 +21,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
+import javax.persistence.EntityManager;
+
 public class ControllerVinculador {
 
     RepositorioEgreso repositorioEgreso;
@@ -28,8 +30,6 @@ public class ControllerVinculador {
     Vinculador vinculador = new Vinculador();
 
     public ControllerVinculador() throws CloneNotSupportedException {
-        repositorioEgreso = new RepositorioEgreso();
-        repositorioIngreso = new RepositorioIngreso();
 
     }
 
@@ -100,7 +100,7 @@ public class ControllerVinculador {
         return new ModelAndView(map, "vinculaciones.html");
     }
 
-    public String vincular(Request request, Response response) throws CloneNotSupportedException, IOException, ListaVaciaExcepcion, MontoSuperadoExcepcion {
+    public String vincular(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException, IOException, ListaVaciaExcepcion, MontoSuperadoExcepcion {
 
 
 
@@ -113,7 +113,7 @@ public class ControllerVinculador {
             vinculador2.setEntidadJuridica(entidadJuridica);
 
             RepositorioIngreso repoIngreso = new RepositorioIngreso();
-            RepositorioEgreso repoEgreso = new RepositorioEgreso();
+            RepositorioEgreso repoEgreso = new RepositorioEgreso(entityManager);
             entidadJuridica.setIngresos(repoIngreso.todos());
             entidadJuridica.setEgresos(repoEgreso.todos());
             vinculador2.obtenerIngresosEgresos();
