@@ -129,7 +129,7 @@ public class Server {
         get("/producto", controllerProductos::nuevoProducto, engine);
         get( "/producto/:id", TemplWithTransaction(controllerProductos::detalleProducto), engine);
         post("/producto", RouteWithTransaction(controllerProductos::guardarProducto));
-        post("/producto/:id",controllerProductos::modificarProducto);
+        post("/producto/:id",RouteWithTransaction(controllerProductos::modificarProducto));
 
         delete("/producto/:id",RouteWithTransaction(controllerProductos::eliminarProducto));
 
@@ -141,10 +141,10 @@ public class Server {
        
         //ORDENES DE COMPRA
 
-        get("/ordenes",controllerOrdenes::ordenes,engine);
+        get("/ordenes",TemplWithTransaction(controllerOrdenes::ordenes),engine);
         get("/crearOrden",TemplWithTransaction(controllerOrdenes::nuevaOrden),engine);
        // get("/orden/:id",,engine);
-        post("/orden", controllerOrdenes::crear);
+        post("/orden", RouteWithTransaction(controllerOrdenes::crear));
        // post("orden:id");
 
         //VINCULADOR
