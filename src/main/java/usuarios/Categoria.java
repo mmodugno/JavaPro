@@ -13,6 +13,8 @@ public class Categoria extends CategoriaDelSistema{
 		super(nombre,criterio);
 	}
 	
-
+	public Categoria( ) {
+		super();
+	}
 	
 }

@@ -13,6 +13,7 @@ import spark.Response;
 import usuarios.CategoriaDelSistema;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,11 +33,12 @@ public class ControllerEgresos {
       
     }
 
-    public ModelAndView modificarEgresoGet(Request request, Response response) throws CloneNotSupportedException {
+    public ModelAndView modificarEgresoGet(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException {
     	
-    	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra();
-    	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto();
-    	RepositorioCategoria repoCategorias = new RepositorioCategoria();
+    	RepositorioEgreso repoEgreso = new RepositorioEgreso(entityManager);
+    	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra(entityManager);
+    	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto(entityManager);
+    	RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
     	
     	List<OrdenDeCompra> ordenes = repoOrdenesCompra.todos();
     	List<Presupuesto> presupuestos = repoPresupuestos.todos();
@@ -50,12 +52,19 @@ public class ControllerEgresos {
 
 		String strID = request.params("id");
 		int id = Integer.parseInt(strID);
-		Egreso egreso = repo.byID(id);
+		Egreso egreso = repoEgreso.byID(id);
+		
+		String año = String.valueOf(egreso.getFecha().getYear());
+		String mes = String.valueOf(egreso.getFecha().getMonthValue());
+		String dia = String.valueOf(egreso.getFecha().getDayOfMonth());
+	
+		String fecha = año+"-"+mes+"-"+dia;
 
-		//RepositorioOrdenDeCompra ordenes = new RepositorioOrdenDeCompra();
+		//
 
 		//Map<String, Object> map = new HashMap<>();
 		map.put("egreso", egreso);
+		map.put("fecha", fecha);
 
 		//HAY QUE VER COMO PASAR TODOS LOS REPOS, LO UNICO QUE SE ME OCURRE PASARLE TODOS LOS REPOS AL HTML. todo Charlar
 
@@ -64,9 +73,9 @@ public class ControllerEgresos {
 
     public static void asignarParametros(Egreso egreso, Request request,EntityManager entityManager) throws CloneNotSupportedException {
 
-		RepositorioOrdenDeCompra repoOrden = new RepositorioOrdenDeCompra();
+		RepositorioOrdenDeCompra repoOrden = new RepositorioOrdenDeCompra(entityManager);
 		RepositorioPresupuesto repoPresupuesto = new RepositorioPresupuesto(entityManager);
-		RepositorioCategoria repoCategoria = new RepositorioCategoria();
+		RepositorioCategoria repoCategoria = new RepositorioCategoria(entityManager);
 
 		String ordenDeCompra = request.queryParams("orden");
 		String pres = request.queryParams("presupuesto");
@@ -109,7 +118,7 @@ public class ControllerEgresos {
 		
 		asignarParametros(egreso, request,entityManager);
 		
-		repo.reemplazar(egreso);
+		repo.crear(egreso);
 
 		response.redirect("/egresos");
 

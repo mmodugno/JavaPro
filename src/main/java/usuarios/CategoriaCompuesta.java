@@ -17,6 +17,9 @@ public class CategoriaCompuesta extends CategoriaDelSistema{
 		super(nombre,criterio);
 	}
 
+	public CategoriaCompuesta( ) {
+		super();
+	}
 
 	@Transient
 	private List<CategoriaDelSistema> subCategorias = new ArrayList<CategoriaDelSistema>();

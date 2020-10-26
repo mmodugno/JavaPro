@@ -118,7 +118,7 @@ public class Server {
 			return null;
 		}), engine);
         get("/crearEgreso", TemplWithTransaction(Server::crearEgreso), engine);
-        get("/modificarEgreso/:id", controllerEgresos::modificarEgresoGet,engine);
+        get("/modificarEgreso/:id", TemplWithTransaction(controllerEgresos::modificarEgresoGet),engine);
 
         get("/categorias", TemplWithTransaction(Server::mostrarCategorias), engine);
         get("/categoria", TemplWithTransaction(Server::mostrarCategorias), engine);
@@ -317,9 +317,9 @@ public class Server {
     
     public static ModelAndView crearEgreso(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException{
     	
-    	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra();
+    	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra(entityManager);
     	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto(entityManager);
-    	RepositorioCategoria repoCategorias = new RepositorioCategoria();
+    	RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
     	
     	List<OrdenDeCompra> ordenes = repoOrdenesCompra.todos();
     	List<Presupuesto> presupuestos = repoPresupuestos.todos();
@@ -346,20 +346,23 @@ public class Server {
     	
     	MedioDePago medioPagoEgreso = egreso.getPresupuesto().getMedioDePago();
     	
+    	Map<String, Object> map = new HashMap<>();
+        map.put("egreso", egreso);
+    	
+    	if (medioPagoEgreso != null) {
+    	
     	String nombreMedioPago = medioPagoEgreso.getPayment_type().toString();
     	
     	String imagenMedioPago = new api().getRouteByName(nombreMedioPago);
-    	
-    	
-    	Map<String, Object> map = new HashMap<>();
-        map.put("egreso", egreso);
+  
         
-        if(medioPagoEgreso != null) {
         map.put("nombreMedioPago", nombreMedioPago);
         map.put("imagenMedioPago", imagenMedioPago);
         
-        }
+        	
+    	}
         
+    	
      
         return new ModelAndView(map,"detalleEgreso.html");
     }
@@ -384,7 +387,7 @@ public class Server {
     
     public static ModelAndView mostrarCategorias(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException {
     	
-    	RepositorioCategoria repoCategoria = new RepositorioCategoria();
+    	RepositorioCategoria repoCategoria = new RepositorioCategoria(entityManager);
     	
     	List<CategoriaDelSistema> categorias = repoCategoria.todos();
     	
@@ -415,7 +418,7 @@ public class Server {
     	}
     	
     	if(tipoDocumentoString.equals("Presupuestos")) {
-    		RepositorioPresupuesto repoPresupuesto = new RepositorioPresupuesto();
+    		RepositorioPresupuesto repoPresupuesto = new RepositorioPresupuesto(entityManager);
     		Presupuesto pre = repoPresupuesto.byID(6);
     		Boolean resultado = pre.esDeCategoria(categoria);
     		List<Presupuesto> presupuestos = repoPresupuesto.todos().stream().filter(a -> a.esDeCategoria(categoria)).collect(Collectors.toList());

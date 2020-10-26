@@ -128,13 +128,13 @@ public class RepositorioEgreso {
 		this.entityManager.persist(egreso);
 	    }
 	
-	public void reemplazar(Egreso egreso) {
+	/*public void reemplazar(Egreso egreso) {
 		
 		int index = egresos.indexOf(egreso);
 		
 		egresos.set(index,egreso);
 		
-	}
+	}*/
 
 	public Egreso byID(int id) {
 		
