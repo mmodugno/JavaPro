@@ -6,6 +6,7 @@ import producto.TipoItem;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,14 +45,14 @@ public class RepositorioProducto {
         return this.entityManager.createQuery(consulta.select(productos)).getResultList();
     }
 
-    public static Producto byID(int id) {
+    public Producto byID(int id) {
 
-        Optional<Producto> producto = productos.stream().filter(e -> e.getIdProducto() == id).findFirst();
-
-        if (producto.isPresent()) {
-            return producto.get();
-        }
-        else return null;
+        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Producto> consulta = cb.createQuery(Producto.class);
+        Root<Producto> productos = consulta.from(Producto.class);
+        Predicate condicion = cb.equal(productos.get("idProducto"), id);
+        CriteriaQuery<Producto> where = consulta.select(productos).where(condicion);
+        return this.entityManager.createQuery(where).getSingleResult();
     }
 
     int ordenarInt(int primero,int segundo){
@@ -61,26 +62,19 @@ public class RepositorioProducto {
 
     }
 
-    public int proximoId(){
-        productos.sort((Producto producto1, Producto producto2) -> {
-            return ordenarInt(producto1.getIdProducto(),producto2.getIdProducto());
-        });
-        return productos.get(0).getIdProducto() + 1;
-    }
-
     public void agregar(Producto producto){
 
-
         this.entityManager.persist(producto);
-        //todo Aca persisto
+
     }
 
     public static void modificar(Producto producto){
         //todo Aca tengo que modificar en la base
     }
 
-    public static void eliminar(Producto producto){
-        productos.remove(producto);
+    public void eliminar(int id){
+        Producto producto = this.byID(id);
+        this.entityManager.remove(producto);
 
         //todo aca tengo que hacer el delete de la base
     }
