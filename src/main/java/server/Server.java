@@ -150,7 +150,12 @@ public class Server {
         //VINCULADOR
 
         get("/vinculaciones", controllerVinculador::vinculaciones, engine);
-        get("/vincular", controllerVinculador::vincular, engine);
+       // get("/vincular", controllerVinculador::vincular, engine);
+        
+        get("/vincular",(request,response) -> {
+     	   return controllerVinculador.vincular(request,response);
+        });
+        
         get("/working",Server::work,engine);
         
 
