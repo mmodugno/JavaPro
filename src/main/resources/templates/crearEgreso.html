@@ -74,7 +74,7 @@
                         <div class="form-group">
                             <select class="form-control" name="presupuesto" id="presupuesto">
                                 {{#if egreso}}
-                                <option value = {{egreso.presupuesto.id}}>{{egreso.presupuesto.id}}</option>
+                                <option value = {{egreso.presupuesto.id}} data-image={{medioDePago.tipoPago}}>{{egreso.presupuesto.id}}</option>
                                 {{else}}
                                 <option value = "visa">Seleccionar...</option>
                                 {{/if}}

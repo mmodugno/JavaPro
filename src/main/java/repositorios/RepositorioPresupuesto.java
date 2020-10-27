@@ -9,6 +9,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import com.mercadopago.exceptions.MPRestException;
+
 import egreso.Egreso;
 import egreso.Ingreso;
 import egreso.MedioDePago;
@@ -28,16 +30,16 @@ public class RepositorioPresupuesto {
 	
 	static List<Presupuesto> presupuestos = null;
 	
-	 public RepositorioPresupuesto() throws CloneNotSupportedException {
+	 public RepositorioPresupuesto() throws CloneNotSupportedException, MPRestException {
 	    
 			 
 	    	Categoria categoriaBSAS = new Categoria("Buenos Aires","Provincia");
 	    	
 	    	Proveedor proveedor1 = new Proveedor("Info Tech","22412145696", "6725");
 	    	
-	    	MedioDePago medioDePago = new MedioDePago(TipoMedioPago.Argencard, 221144);
+	    	MedioDePago medioDePago = new MedioDePago(TipoMedioPago.Argencard);
 	    	
-	    	MedioDePago medioDePago2 = new MedioDePago(TipoMedioPago.Visa, 221144);
+	    	MedioDePago medioDePago2 = new MedioDePago(TipoMedioPago.Visa);
 	    	
 	    	Producto producto1 = new Producto(1,"Monitor", "Monitor 32", TipoItem.ARTICULO);
 	    	Producto producto2 = new Producto(2,"Notebook", "Notebook Lenovo", TipoItem.ARTICULO);
@@ -79,9 +81,9 @@ public class RepositorioPresupuesto {
     	
     	Proveedor proveedor1 = new Proveedor("Info Tech","22412145696", "6725");
     	
-    	MedioDePago medioDePago = new MedioDePago(TipoMedioPago.Argencard, 221144);
+    	MedioDePago medioDePago = new MedioDePago(TipoMedioPago.Argencard);
     	
-    	MedioDePago medioDePago2 = new MedioDePago(TipoMedioPago.Visa, 221144);
+    	MedioDePago medioDePago2 = new MedioDePago(TipoMedioPago.Visa);
     	
     	Producto producto1 = new Producto(1,"Monitor", "Monitor 32", TipoItem.ARTICULO);
     	Producto producto2 = new Producto(2,"Notebook", "Notebook Lenovo", TipoItem.ARTICULO);

@@ -1,5 +1,6 @@
 package usuarios;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -19,6 +20,9 @@ public abstract class CategoriaDelSistema {
 	
 	@Column
 	private String criterio;
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+	private List<CategoriaDelSistema> subCategorias;
 	
 	public CategoriaDelSistema() {
 		
@@ -44,9 +48,17 @@ public abstract class CategoriaDelSistema {
 		return false;
 	};
 	
+	public void agregarSubCategoria(CategoriaDelSistema categoria) {
+		subCategorias.add(categoria);
+	}
+	
+	public void setSubCategorias(List<CategoriaDelSistema> subCategorias) {
+		this.subCategorias = subCategorias;
+	}
+
+	
 	public List<CategoriaDelSistema> getSubCategorias() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.subCategorias;
 	}
 
 	

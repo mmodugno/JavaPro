@@ -44,8 +44,9 @@ public class Presupuesto implements Categorizable{
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Proveedor proveedor;
 
-    @Transient
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private MedioDePago medioDePago;
+    
     private boolean aceptado;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private CategoriaDelSistema categoria = null;

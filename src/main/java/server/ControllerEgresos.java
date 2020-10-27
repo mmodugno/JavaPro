@@ -21,6 +21,8 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 
+import com.mercadopago.exceptions.MPRestException;
+
 import egreso.Egreso;
 import egreso.OrdenDeCompra;
 import egreso.Presupuesto;

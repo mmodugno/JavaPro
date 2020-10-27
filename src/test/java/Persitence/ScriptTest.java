@@ -33,7 +33,7 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
         //PROVEEDOR
 
         Proveedor proveedor1 = new Proveedor("Info Tech","22412145696", "6725");
-        Proveedor proveedor2 = new Proveedor("Juan Computación","21123214569","1419");
+        Proveedor proveedor2 = new Proveedor("Juan Computacion","21123214569","1419");
 
         //ITEMS PRESUPUESTO PRUEBA
         Item item1 = new Item(producto1, 1, 0.00);
@@ -50,7 +50,9 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
 
 
             //un medio para el presupuesto
-        MedioDePago medioDePago = new MedioDePago(TipoMedioPago.Argencard, 221144);
+        MedioDePago medioDePago = new MedioDePago(TipoMedioPago.Argencard);
+        
+        MedioDePago medioDePago2 = new MedioDePago(TipoMedioPago.Visa);
 
         //PRESUPUESTO
         Presupuesto presupuesto1;
@@ -60,7 +62,7 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
         presupuesto1.getItems().get(0).setPrecioUnitario(80.00);
         presupuesto1.getItems().get(1).setPrecioUnitario(30.00);
 
-        presupuesto2 = new Presupuesto(ordenDeCompra.getItems(),proveedor2,medioDePago);
+        presupuesto2 = new Presupuesto(ordenDeCompra.getItems(),proveedor2,medioDePago2);
         presupuesto2.getItems().get(0).setPrecioUnitario(90.00);
         presupuesto2.getItems().get(1).setPrecioUnitario(40.00);
 
@@ -93,8 +95,20 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
 		egreso3.setCategoria(categoriaARGENTINA);
 
 
+		
 
         //PERSISTIENDO
+		
+		 EntityManagerHelper.beginTransaction();
+	       EntityManagerHelper.getEntityManager().persist(item1);
+	       EntityManagerHelper.getEntityManager().persist(item2); 
+	       EntityManagerHelper.commit();
+		
+		 EntityManagerHelper.beginTransaction();
+	       EntityManagerHelper.getEntityManager().persist(medioDePago);
+	       EntityManagerHelper.getEntityManager().persist(medioDePago2); 
+	       EntityManagerHelper.commit();
+	        
         EntityManagerHelper.beginTransaction();
         EntityManagerHelper.getEntityManager().persist(producto1);
         EntityManagerHelper.getEntityManager().persist(producto2);
@@ -140,8 +154,8 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
 	    Use gesoc;
         Drop TABLE gesoc.egreso_documentocomercial, gesoc.documentocomercial, gesoc.egreso,
         gesoc.ordendecompra_item, gesoc.presupuesto_item,gesoc.ordendecompra_presupuesto,
-        gesoc.ordendecompra, gesoc.presupuesto, gesoc.item, gesoc.producto, gesoc.ingreso,
-        gesoc.categoriadelsistema, gesoc.proveedor;
+        gesoc.ordendecompra, gesoc.presupuesto, gesoc.item, gesoc.producto, gesoc.ingreso,gesoc.categoriadelsistema_categoriadelsistema,
+        gesoc.categoriadelsistema, gesoc.proveedor,gesoc.mediodepago;
 	*/
 	/*
 	@Test

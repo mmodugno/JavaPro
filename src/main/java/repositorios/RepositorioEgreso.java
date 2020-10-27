@@ -11,6 +11,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import com.mercadopago.exceptions.MPRestException;
+
 import egreso.Egreso;
 import egreso.Ingreso;
 import egreso.MedioDePago;
@@ -40,9 +42,9 @@ public class RepositorioEgreso {
 		 
 		Proveedor proveedor1 = new Proveedor("Info Tech","22412145696", "6725");
 		
-		MedioDePago medioDePago = new MedioDePago(TipoMedioPago.Argencard, 221144);
+		MedioDePago medioDePago = new MedioDePago(TipoMedioPago.Argencard);
 		 
-		MedioDePago medioDePago2 = new MedioDePago(TipoMedioPago.Visa, 221144);
+		MedioDePago medioDePago2 = new MedioDePago(TipoMedioPago.Visa);
 		
 		Producto producto1 = new Producto(1,"Monitor", "Monitor 32", TipoItem.ARTICULO);
 		Producto producto2 = new Producto(2,"Notebook", "Notebook Lenovo", TipoItem.ARTICULO);

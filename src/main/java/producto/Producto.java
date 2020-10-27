@@ -28,7 +28,7 @@ public class Producto {
 	private int codProducto;
 	private String nombre;
 	private String descripcion;
-	@Transient
+	@Enumerated(EnumType.STRING)
 	//TODO hacer converter
 	private TipoItem tipoProducto;
 

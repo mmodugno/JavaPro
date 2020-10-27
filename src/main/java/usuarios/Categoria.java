@@ -17,4 +17,8 @@ public class Categoria extends CategoriaDelSistema{
 		super();
 	}
 	
+	@Override
+	public List<CategoriaDelSistema> getSubCategorias() {
+		return null;
+	}
 }
