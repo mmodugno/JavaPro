@@ -60,11 +60,11 @@ public class ControllerEgresos {
 		int id = Integer.parseInt(strID);
 		Egreso egreso = repoEgreso.byID(id);
 		
-		String año = String.valueOf(egreso.getFecha().getYear());
+		String anio = String.valueOf(egreso.getFecha().getYear());
 		String mes = String.valueOf(egreso.getFecha().getMonthValue());
 		String dia = String.valueOf(egreso.getFecha().getDayOfMonth());
 	
-		String fecha = año+"-"+mes+"-"+dia;
+		String fecha = anio+"-"+mes+"-"+dia;
 
 		//
 

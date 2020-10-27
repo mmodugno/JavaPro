@@ -9,6 +9,7 @@ import repositorios.RepositorioPresupuesto;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import usuarios.CategoriaDelSistema;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import javax.persistence.EntityManager;
 
 import egreso.Egreso;
 import egreso.Ingreso;
@@ -32,10 +35,13 @@ public class ControllerIngresos {
 
 
 
-    public ModelAndView nuevoIngreso(Request request, Response response){
+    public ModelAndView nuevoIngreso(Request request, Response response, EntityManager entityManager){
     	
     	RepositorioIngreso repo = new RepositorioIngreso();
 
+    	RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
+    	List<CategoriaDelSistema> categorias = repoCategorias.todos();
+    	
         //DOMINIO
         List<RepositorioIngreso> repos = new ArrayList<>();
         
@@ -43,6 +49,7 @@ public class ControllerIngresos {
         //OUTPUT
         Map<String, Object> map = new HashMap<>();
         map.put("repos", repo);
+        map.put("categorias", categorias);
     	
    
         return new ModelAndView(map,"formularioIngresos.html");
@@ -99,17 +106,22 @@ public class ControllerIngresos {
 		return response;
 	}
 	
-	public ModelAndView modificarIngreso(Request request, Response response) throws CloneNotSupportedException {
+	public ModelAndView modificarIngreso(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException {
+		
+		RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
 
 		String strID = request.params("id");
 		
 		int id = Integer.parseInt(strID);
 		
 		Ingreso ingreso = repo.byID(id);
+		
+		List<CategoriaDelSistema> categorias = repoCategorias.todos();
 
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("ingreso", ingreso);
+		map.put("categorias", categorias);
 
 		return new ModelAndView(map,"formularioIngresos.html");
 		

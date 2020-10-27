@@ -31,11 +31,27 @@
                 <label for="nombre">Monto</label>
                 <input type="" id="monto" name="monto" {{#if ingreso}}value="{{ingreso.monto}}" {{else}} placeholder="0.00" {{/if}} required>
 
+
+
+                <div class="form-group"></div>
+                <label for="categoria">Categoria</label>
+                <select class="form-control" name="categoria" id="categoria">
+                            {{#if ingreso.categoria}}
+                                <option value = {{ingreso.categoria.categoria}}>{{ingreso.categoria.categoria}}</option>
+                                {{else}}
+                                <option value = "">Seleccionar...</option>
+                                {{/if}}
+                              	{{#each categorias}}
+                              	<option value = "{{categoria}}">{{categoria}}</option>
+                                {{/each}}
+                            </select>
+                </div>
+
+
             </fieldset>
 
             <div class="">
-                <input type="submit" class="btn btn-primary" {{#if ingreso}} value="Modificar Ingreso" {{else}} value="Crear Ingreso" {{/if}}>
-                {{#if ingreso}}<button type="button" class="btn btn-borrar" onclick="confirmarBorrarIngreso('{{ingreso.id}}')">Borrar</button> {{/if}}
+                <input type="submit" class="btn btn-primary" {{#if ingreso}} value="Modificar Ingreso" {{else}} value="Crear Ingreso" {{/if}}> {{#if ingreso}}<button type="button" class="btn btn-borrar" onclick="confirmarBorrarIngreso('{{ingreso.id}}')">Borrar</button>                {{/if}}
                 <a href="/ingresos" class="btn btn-danger">Cancelar</a>
             </div>
 

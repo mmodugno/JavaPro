@@ -30,8 +30,6 @@ public class Reporte {
 		this.informe = informe;
 	}
 
-
-
 	public Reporte() {
 		informe += "\n\n##### Reporte Validación de Egreso #####\n\n";
 	}
@@ -107,7 +105,7 @@ public class Reporte {
 		informe += "\nResultado : " + resultadoString(resultado);
 	}
 	
-	private String resultadoString(boolean resultado) {
+	public String resultadoString(boolean resultado) {
 		if (resultado)
 			return " Válido";
 		else
@@ -119,6 +117,10 @@ public class Reporte {
 	public void setResultadoValidacion(boolean resultadoValidacion) {
 		this.resultadoValidacion = resultadoValidacion;
 		informe += "\n\n### Resultado Validación Egreso : " + resultadoString(resultadoValidacion) + " ###\n";
+	}
+	public boolean resultadoValidacion() {
+		// TODO Auto-generated method stub
+		return this.resultadoValidacion;
 	}
 	
 	

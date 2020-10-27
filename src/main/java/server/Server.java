@@ -131,10 +131,10 @@ public class Server {
         
         //INGRESOS
         get("/ingresos", controllerIngresos::ingresos, engine);
-        get("/crearIngreso", Server::crearIngreso, engine);
+        get("/crearIngreso", TemplWithTransaction(controllerIngresos::nuevoIngreso), engine);
         post("/ingreso",controllerIngresos::guardarIngreso);
         delete("/ingreso/:id", controllerIngresos::eliminarIngreso);
-        get("/ingreso/:id", controllerIngresos::modificarIngreso,engine); ///VER EL POST
+        get("/ingreso/:id", TemplWithTransaction(controllerIngresos::modificarIngreso),engine); ///VER EL POST
         post("/ingreso/:id", controllerIngresos::persistirIngreso);
 
         //acciones productos
@@ -147,17 +147,8 @@ public class Server {
         delete("/producto/:id",RouteWithTransaction(controllerProductos::eliminarProducto));
 
         //validaciones
-       get("/egreso/:id/validacion",(request,response) -> {
-    	   return RouteWithTransaction((req, res, em) -> {
-			try {
-				return Validar(req, res, em);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return request;
-		});
-       });
+       get("/egreso/:id/validacion",(req,resp) -> Validar(req,resp));
+    		   
        
        
         //ORDENES DE COMPRA
@@ -192,9 +183,10 @@ public class Server {
 
     
     
-    public static String Validar(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException, IOException {
+    public static String Validar(Request request, Response response) throws CloneNotSupportedException {
     	
-    	RepositorioEgreso repo = new RepositorioEgreso(entityManager);
+    	EntityManager entityManager = entityManagerFactory.createEntityManager();;
+		RepositorioEgreso repo = new RepositorioEgreso(entityManager );
 
     	String strID = request.params("id");
 
@@ -206,7 +198,7 @@ public class Server {
         	Map<String, Object> map = new HashMap<>();
         	map.put("egreso","No existe Egreso con id "+strID);
         	
-        	map.put("informe","Egreso no v�lido");
+        	map.put("informe","Egreso no valido");
         	
         	map.put("Resultado Validacion",false);
         	
@@ -227,9 +219,15 @@ public class Server {
         validador.validarEgreso(egreso);
 
         Reporte resultadoReporte = validador.getReporteValidacion();
+        
+        Map<String, String> map = new HashMap<>();
+        
+        map.put("EgresoId",strID);
+        map.put("Informe",resultadoReporte.getInforme());
+        map.put("ResultadoValidacion",resultadoReporte.resultadoString(resultadoReporte.resultadoValidacion()));
 
         Gson gson = new Gson();
-        String JSON = gson.toJson(resultadoReporte);
+        String JSON = gson.toJson(map);
 
         System.out.println(JSON);
 
@@ -239,12 +237,33 @@ public class Server {
         String ruta = "resultadoEgreso"+strID+"Validacion.json";
 
         File file = new File(ruta);
-        file.createNewFile();
-        FileWriter fw = new FileWriter(file);
+        try {
+			file.createNewFile();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        FileWriter fw = null;
+		try {
+			fw = new FileWriter(file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         BufferedWriter bw = new BufferedWriter(fw);
 
-        bw.write(JSON);
-        bw.close();
+        try {
+			bw.write(JSON);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        try {
+			bw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
              
        return JSON;
     }
@@ -277,6 +296,9 @@ public class Server {
     }
     
     public static ModelAndView crearIngreso(Request request, Response response){
+    	
+    	
+    	
         return new ModelAndView(null,"formularioIngresos.html");
     }
     

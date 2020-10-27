@@ -145,7 +145,18 @@ public class RepositorioEgreso {
         Root<Egreso> egresos = consulta.from(Egreso.class);
         Predicate condicion = cb.equal(egresos.get("id"), id);
         CriteriaQuery<Egreso> where = consulta.select(egresos).where(condicion);
-        return this.entityManager.createQuery(where).getSingleResult();
+        
+        
+        try {
+        	  Egreso egreso = this.entityManager.createQuery(where).getSingleResult();
+        	  return egreso;
+        	}
+        	catch(Exception e) {
+        	  return null;
+        	}
+        
+      
+        
        
 	}
 
