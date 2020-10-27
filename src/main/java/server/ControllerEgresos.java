@@ -22,6 +22,8 @@ import egreso.Egreso;
 import egreso.OrdenDeCompra;
 import egreso.Presupuesto;
 
+import javax.persistence.EntityManager;
+
 public class ControllerEgresos {
 
     private static RepositorioEgreso repo;
@@ -117,9 +119,9 @@ public class ControllerEgresos {
 
 */
 
-    public ModelAndView modificarEgresoGet(Request request, Response response) throws CloneNotSupportedException {
+    public ModelAndView modificarEgresoGet(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException {
     	
-    	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra();
+    	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra(entityManager);
     	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto();
     	RepositorioCategoria repoCategorias = new RepositorioCategoria();
     	

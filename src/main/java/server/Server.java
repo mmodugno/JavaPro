@@ -107,7 +107,7 @@ public class Server {
         get("/egresos", Server::egresos, engine);
         get("/egreso/:id", Server::detalleEgreso, engine);
         get("/crearEgreso", Server::crearEgreso, engine);
-        get("/modificarEgreso/:id", controllerEgresos::modificarEgresoGet,engine);
+        get("/modificarEgreso/:id", TemplWithTransaction(controllerEgresos::modificarEgresoGet),engine);
 
         get("/categorias", Server::mostrarCategorias, engine);
         get("/categoria", Server::mostrarCategorias, engine);
