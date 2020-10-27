@@ -76,7 +76,7 @@ public class VincularTest {
 
         primerOrganizacion.agregarEntidad(entidadJuridica);
 
-        ordenDeCompra = new OrdenDeCompra(0,5);
+        ordenDeCompra = new OrdenDeCompra(0);
         ordenDeCompra.agregarItem(item1);
         ordenDeCompra.agregarItem(item2);
         presupuesto1 = new Presupuesto(ordenDeCompra.getItems(),proveedor1,medioDePago);
@@ -113,7 +113,7 @@ public class VincularTest {
 
 
         //EGRESO 2
-        ordenDeCompra2 = new OrdenDeCompra(0,8);
+        ordenDeCompra2 = new OrdenDeCompra(0);
         ordenDeCompra2.agregarItem(item3);
         ordenDeCompra2.agregarItem(item4);
 
@@ -127,7 +127,7 @@ public class VincularTest {
         ordenDeCompra.cerrarOrden();
 
         //EGRESO 3
-        ordenDeCompra3 = new OrdenDeCompra(0,7);
+        ordenDeCompra3 = new OrdenDeCompra(0);
         ordenDeCompra3.agregarItem(item5);
 
         presupuesto3 = new Presupuesto(ordenDeCompra3.getItems(),proveedor1,medioDePago);

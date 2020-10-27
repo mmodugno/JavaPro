@@ -40,8 +40,8 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
         Item item2 = new Item(producto2, 2, 0.00);
 
             //ORDEN DE COMPRA
-         OrdenDeCompra ordenDeCompra = new OrdenDeCompra(1,1);
-         OrdenDeCompra ordenDeCompra2 = new OrdenDeCompra(3,2);
+         OrdenDeCompra ordenDeCompra = new OrdenDeCompra(1);
+         OrdenDeCompra ordenDeCompra2 = new OrdenDeCompra(3);
 
          ordenDeCompra.agregarItem(item1);
          ordenDeCompra.agregarItem(item2);

@@ -107,6 +107,7 @@ public class Server {
         get("/logout", controllerLogin::logout, engine);
 
         //EGRESOS
+
         get("/egresos",TemplWithTransaction(Server::egresos),engine);
         get("/egreso/:id", TemplWithTransaction((req, res, em) -> {
 			try {
@@ -122,6 +123,7 @@ public class Server {
 
         get("/categorias", TemplWithTransaction(Server::mostrarCategorias), engine);
         get("/categoria", TemplWithTransaction(Server::mostrarCategorias), engine);
+
         
         post("/egreso",RouteWithTransaction(controllerEgresos::guardarEgreso));
         delete("/egreso/:id", controllerEgresos::eliminarEgreso);

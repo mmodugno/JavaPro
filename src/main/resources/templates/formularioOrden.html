@@ -61,11 +61,13 @@
 
             function agregar() {
                 cont++;
+                document.getElementById("cantidadItems").value = cont;
+
                 var fila = '<tr class="selected" id="fila' + cont + '">' +
                     '<td>' + cont + '</td>' +
-                    '<td> <select id="product"> {{#each productos}}<option value="{{codProducto}}">{{nombre}}</option>{{/each}}</select> </td>  ' +
-                    '<td> $<input type="number" name="monto" id="monto" placeholder="0.00"></td>' +
-                    '<td><input type="number" min="1" max="100" placeholder="1-100" id="cantidad" required></td>  ' +
+                    '<td> <select id="producto' + cont + '"name="producto' + cont + '"> {{#each productos}}<option value="{{codProducto}}">{{nombre}}</option>{{/each}}</select> </td>  ' +
+                    '<td> $<input type="number" step="0.01" name="monto' + cont + '" id="monto' + cont + '" placeholder="0.00"></td>' +
+                    '<td><input type="number" min="1" max="100" placeholder="1-100" id="cantidad' + cont + '" name="cantidad' + cont + '" required></td>  ' +
                     '<td><button id="btn-del" class="borrar">Eliminar</button></td>' +
                     '</tr>'
                 $('#items').append(fila);
@@ -127,6 +129,7 @@
                 <button id="btn-add" class="btn">Agregar</button>
 
                 <table id="items" class="table table-bordered">
+                    <input type="hidden" value="" id="cantidadItems" name="cantidadItems">
                     <thead>
                     <tr>
                         <td>Nro</td>

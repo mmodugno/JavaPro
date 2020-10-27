@@ -27,6 +27,8 @@ import egreso.Egreso;
 import egreso.OrdenDeCompra;
 import egreso.Presupuesto;
 
+import javax.persistence.EntityManager;
+
 public class ControllerEgresos {
 
     private static RepositorioEgreso repo;
@@ -35,12 +37,14 @@ public class ControllerEgresos {
       
     }
 
+
     public ModelAndView modificarEgresoGet(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException {
     	
     	RepositorioEgreso repoEgreso = new RepositorioEgreso(entityManager);
     	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra(entityManager);
     	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto(entityManager);
     	RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
+
     	
     	List<OrdenDeCompra> ordenes = repoOrdenesCompra.todos();
     	List<Presupuesto> presupuestos = repoPresupuestos.todos();
@@ -56,11 +60,11 @@ public class ControllerEgresos {
 		int id = Integer.parseInt(strID);
 		Egreso egreso = repoEgreso.byID(id);
 		
-		String año = String.valueOf(egreso.getFecha().getYear());
+		String aÃ±o = String.valueOf(egreso.getFecha().getYear());
 		String mes = String.valueOf(egreso.getFecha().getMonthValue());
 		String dia = String.valueOf(egreso.getFecha().getDayOfMonth());
 	
-		String fecha = año+"-"+mes+"-"+dia;
+		String fecha = aÃ±o+"-"+mes+"-"+dia;
 
 		//
 

@@ -75,4 +75,12 @@ public class RepositorioProducto {
         //todo aca tengo que hacer el delete de la base
     }
 
+    public Producto byCodPro(int codPro) {
+        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Producto> consulta = cb.createQuery(Producto.class);
+        Root<Producto> productos = consulta.from(Producto.class);
+        Predicate condicion = cb.equal(productos.get("codProducto"), codPro);
+        CriteriaQuery<Producto> where = consulta.select(productos).where(condicion);
+        return this.entityManager.createQuery(where).getSingleResult();
+    }
 }

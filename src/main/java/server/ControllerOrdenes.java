@@ -2,6 +2,7 @@ package server;
 
 import egreso.OrdenDeCompra;
 import egreso.Presupuesto;
+import producto.Item;
 import producto.Producto;
 import repositorios.RepositorioOrdenDeCompra;
 import repositorios.RepositorioProducto;
@@ -59,14 +60,10 @@ public class ControllerOrdenes {
     	RepositorioOrdenDeCompra repo = new RepositorioOrdenDeCompra(entityManager);
     	OrdenDeCompra nuevaOrden = new OrdenDeCompra();
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    	  	
-    	
-       	
+    	RepositorioProducto repoPro = new RepositorioProducto(entityManager);
 
     	nuevaOrden.setNecesitaPresupuesto(Integer.parseInt(request.queryParams("presupuesto")));
 
-    	//nuevaOrden.agregarItem(item);
-    	
     	String fecha =  request.queryParams("fecha");   	
     	LocalDate fechaFinal = LocalDate.parse(fecha);
     	nuevaOrden.setFecha(fechaFinal);
@@ -80,6 +77,16 @@ public class ControllerOrdenes {
     		e.printStackTrace();
     		nuevaOrden.agregarPresupuesto(new Presupuesto());
     	}
+
+    	int cantidad = Integer.parseInt(request.queryParams("cantidadItems"));
+    	for(int i = 1; i<=cantidad; i++)
+		{
+			Item item = new Item();
+			item.setPrecioUnitario(Double.parseDouble(request.queryParams("monto"+i)));
+			item.setProducto(repoPro.byCodPro(Integer.parseInt(request.queryParams("producto"+i))));
+			item.setCantidad(Integer.parseInt(request.queryParams("cantidad"+i)));
+			nuevaOrden.getItems().add(item);
+		}
     	    	
     	
     	repo.crear(nuevaOrden);

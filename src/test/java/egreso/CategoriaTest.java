@@ -47,7 +47,7 @@ public class CategoriaTest {
 	 @Before
 	    public void init() throws FileNotFoundException, ClassNotFoundException, CreationError, SQLException, CloneNotSupportedException   {
 		 
-		ordenDeCompra = new OrdenDeCompra(1,5);
+		ordenDeCompra = new OrdenDeCompra(1);
 	    ordenDeCompra.agregarItem(item1);
 	    
 		userAdmin = new UsuarioAdministrador("usuarioAdmin","admin",organizacion,true);

@@ -51,8 +51,8 @@ public class RepositorioEgreso {
 		Item item1 = new Item(producto1, 2, 0.00);
 		Item item2 = new Item(producto2, 3, 0.00);
 		 
-		OrdenDeCompra ordenDeCompra = new OrdenDeCompra(1,1);
-		OrdenDeCompra ordenDeCompra2 = new OrdenDeCompra(3,2);
+		OrdenDeCompra ordenDeCompra = new OrdenDeCompra(1);
+		OrdenDeCompra ordenDeCompra2 = new OrdenDeCompra(3);
 		
 		ordenDeCompra.agregarItem(item1);
 	    ordenDeCompra.agregarItem(item2);
