@@ -13,10 +13,15 @@ import spark.Response;
 import usuarios.CategoriaDelSistema;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import javax.persistence.EntityManager;
+
+import com.mercadopago.exceptions.MPRestException;
 
 import egreso.Egreso;
 import egreso.OrdenDeCompra;
@@ -28,102 +33,18 @@ public class ControllerEgresos {
 
     private static RepositorioEgreso repo;
 
-    public ControllerEgresos()  {
-        try {
-			repo = new RepositorioEgreso();
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
-
-    /*public ModelAndView egresos(Request request, Response response){
-
-        //DOMINIO
-        List<Egreso> egresos = repo.todos();
-
-        //OUTPUT
-        Map<String, Object> map = new HashMap<>();
-        map.put("egresos", egresos);
-
-        return new ModelAndView(map, "egresos.html");
-
-    }
-
-    public ModelAndView nuevoProducto(Request request, Response response){
-        return new ModelAndView(null,"nuevoProducto.html");
-    }
-
-    public ModelAndView detalleEgreso(Request request, Response response) throws CloneNotSupportedException{
-
-
-        String strID = request.params("id");
-
-        int id = Integer.parseInt(strID);
-
-        Egreso egreso = repo.byID(id);
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("egreso", egreso);
-
-        return new ModelAndView(map,"nuevoProducto.html");
+    public ControllerEgresos(){
+      
     }
 
 
-    private static void asignarParametrosProducto(Producto producto,Request request) {
-
-
-
-        producto.setCodProducto(new Integer(request.queryParams("codigo")));
-        producto.setNombre(request.queryParams("nombre"));
-        producto.setDescripcion(request.queryParams("descripcion"));
-
-
-        if(request.queryParams("opciones").equals("Articulo")){
-            producto.setTipoProducto(TipoItem.ARTICULO);
-        }
-        else if(request.queryParams("opciones").equals("Servicio")){
-            producto.setTipoProducto(TipoItem.SERVICIO);
-        }
-
-    }
-
-    public Response guardarProducto(Request request, Response response){
-        Producto producto = new Producto();
-        producto.setIdProducto(repo.proximoId());
-
-        asignarParametrosProducto(producto, request);
-
-        repo.agregar(producto);
-        producto.setTipoProducto(TipoItem.ARTICULO);
-
-        response.redirect("/productos");
-
-        return response;
-    }
-
-    public Response modificarProducto(Request request, Response response){
-
-        String strID = request.params("id");
-        int id = new Integer(strID);
-        Producto producto = repo.byID(id);
-
-        asignarParametrosProducto(producto, request);
-
-        repo.modificar(producto);//Esto va a hacer algo cuando tengamos la base
-
-        response.redirect("/productos");
-
-        return response;
-    }
-
-*/
-
-    public ModelAndView modificarEgresoGet(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException {
+    public ModelAndView modificarEgresoGet(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException {
     	
+    	RepositorioEgreso repoEgreso = new RepositorioEgreso(entityManager);
     	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra(entityManager);
-    	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto();
-    	RepositorioCategoria repoCategorias = new RepositorioCategoria();
+    	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto(entityManager);
+    	RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
+
     	
     	List<OrdenDeCompra> ordenes = repoOrdenesCompra.todos();
     	List<Presupuesto> presupuestos = repoPresupuestos.todos();
@@ -137,23 +58,30 @@ public class ControllerEgresos {
 
 		String strID = request.params("id");
 		int id = Integer.parseInt(strID);
-		Egreso egreso = repo.byID(id);
+		Egreso egreso = repoEgreso.byID(id);
+		
+		String año = String.valueOf(egreso.getFecha().getYear());
+		String mes = String.valueOf(egreso.getFecha().getMonthValue());
+		String dia = String.valueOf(egreso.getFecha().getDayOfMonth());
+	
+		String fecha = año+"-"+mes+"-"+dia;
 
-		//RepositorioOrdenDeCompra ordenes = new RepositorioOrdenDeCompra();
+		//
 
 		//Map<String, Object> map = new HashMap<>();
 		map.put("egreso", egreso);
+		map.put("fecha", fecha);
 
 		//HAY QUE VER COMO PASAR TODOS LOS REPOS, LO UNICO QUE SE ME OCURRE PASARLE TODOS LOS REPOS AL HTML. todo Charlar
 
 		return new ModelAndView(map,"crearEgreso.html");
 	}
 
-    public static void asignarParametros(Egreso egreso, Request request) throws CloneNotSupportedException {
+    public static void asignarParametros(Egreso egreso, Request request,EntityManager entityManager) throws CloneNotSupportedException {
 
-		RepositorioOrdenDeCompra repoOrden = new RepositorioOrdenDeCompra();
-		RepositorioPresupuesto repoPresupuesto = new RepositorioPresupuesto();
-		RepositorioCategoria repoCategoria = new RepositorioCategoria();
+		RepositorioOrdenDeCompra repoOrden = new RepositorioOrdenDeCompra(entityManager);
+		RepositorioPresupuesto repoPresupuesto = new RepositorioPresupuesto(entityManager);
+		RepositorioCategoria repoCategoria = new RepositorioCategoria(entityManager);
 
 		String ordenDeCompra = request.queryParams("orden");
 		String pres = request.queryParams("presupuesto");
@@ -184,9 +112,9 @@ public class ControllerEgresos {
 
 	}
 
-	public Response modificarEgreso(Request request, Response response) throws CloneNotSupportedException {
+	public Response modificarEgreso(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException {
 		
-		RepositorioEgreso repo = new RepositorioEgreso();
+		RepositorioEgreso repo = new RepositorioEgreso(entityManager);
 		
 		String strID = request.params("id");
 		
@@ -194,9 +122,9 @@ public class ControllerEgresos {
 		
 		Egreso egreso = repo.byID(id);
 		
-		asignarParametros(egreso, request);
+		asignarParametros(egreso, request,entityManager);
 		
-		repo.reemplazar(egreso);
+		repo.crear(egreso);
 
 		response.redirect("/egresos");
 
@@ -204,12 +132,14 @@ public class ControllerEgresos {
 
 	}
     //ESTE ES EL QUE CREA
-    public Response guardarEgreso(Request request, Response response) throws CloneNotSupportedException{
-
+    public Response guardarEgreso(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException{
+    	
+    	RepositorioEgreso repo = new RepositorioEgreso(entityManager);
+    	
         Egreso egreso = new Egreso();
-        egreso.setId(repo.proximoId());
+        //egreso.setId(repo.proximoId());
 
-		asignarParametros(egreso, request);
+		asignarParametros(egreso, request,entityManager);
         
         repo.crear(egreso);
         

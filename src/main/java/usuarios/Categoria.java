@@ -13,6 +13,12 @@ public class Categoria extends CategoriaDelSistema{
 		super(nombre,criterio);
 	}
 	
-
+	public Categoria( ) {
+		super();
+	}
 	
+	@Override
+	public List<CategoriaDelSistema> getSubCategorias() {
+		return null;
+	}
 }

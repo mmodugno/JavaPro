@@ -74,7 +74,7 @@
                         <div class="form-group">
                             <select class="form-control" name="presupuesto" id="presupuesto">
                                 {{#if egreso}}
-                                <option value = {{egreso.presupuesto.id}}>{{egreso.presupuesto.id}}</option>
+                                <option value = {{egreso.presupuesto.id}} data-image={{medioDePago.tipoPago}}>{{egreso.presupuesto.id}}</option>
                                 {{else}}
                                 <option value = "visa">Seleccionar...</option>
                                 {{/if}}
@@ -124,7 +124,7 @@
                     <div class="col-md-6 mb-3">
                         <label for="documentos">Fecha</label>
                         <div class='input-group date' id='datetimepicker1'>
-                            <input type='date' class="form-control" name="fecha" id="fecha" placeholder="DD/MM/AAAA" />
+                            <input type='date' class="form-control" name="fecha" id="fecha" {{#if fecha}} value="{{fecha}}" {{/if}} />
                         </div>
                     </div>
                 </div>

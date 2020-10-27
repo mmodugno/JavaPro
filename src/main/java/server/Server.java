@@ -3,6 +3,7 @@ package server;
 import egreso.Egreso;
 import egreso.Ingreso;
 import egreso.MedioDePago;
+import egreso.MontoSuperadoExcepcion;
 import egreso.OrdenDeCompra;
 import egreso.Presupuesto;
 import meliApi.api;
@@ -42,6 +43,8 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 
 import com.google.gson.Gson;
 import com.mercadopago.exceptions.MPRestException;
+
+import Vinculador.ListaVaciaExcepcion;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -104,17 +107,27 @@ public class Server {
         get("/logout", controllerLogin::logout, engine);
 
         //EGRESOS
-        get("/egresos", Server::egresos, engine);
-        get("/egreso/:id", Server::detalleEgreso, engine);
-        get("/crearEgreso", Server::crearEgreso, engine);
+
+        get("/egresos",TemplWithTransaction(Server::egresos),engine);
+        get("/egreso/:id", TemplWithTransaction((req, res, em) -> {
+			try {
+				return detalleEgreso(req, res, em);
+			} catch (MPRestException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}), engine);
+        get("/crearEgreso", TemplWithTransaction(Server::crearEgreso), engine);
         get("/modificarEgreso/:id", TemplWithTransaction(controllerEgresos::modificarEgresoGet),engine);
 
-        get("/categorias", Server::mostrarCategorias, engine);
-        get("/categoria", Server::mostrarCategorias, engine);
+        get("/categorias", TemplWithTransaction(Server::mostrarCategorias), engine);
+        get("/categoria", TemplWithTransaction(Server::mostrarCategorias), engine);
+
         
-        post("/egreso",controllerEgresos::guardarEgreso);
+        post("/egreso",RouteWithTransaction(controllerEgresos::guardarEgreso));
         delete("/egreso/:id", controllerEgresos::eliminarEgreso);
-        post("/egreso/:id", controllerEgresos::modificarEgreso);
+        post("/egreso/:id", RouteWithTransaction(controllerEgresos::modificarEgreso));
         
         //INGRESOS
         get("/ingresos", controllerIngresos::ingresos, engine);
@@ -135,7 +148,15 @@ public class Server {
 
         //validaciones
        get("/egreso/:id/validacion",(request,response) -> {
-    	   return Validar(request,response);
+    	   return RouteWithTransaction((req, res, em) -> {
+			try {
+				return Validar(req, res, em);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return request;
+		});
        });
        
        
@@ -150,7 +171,20 @@ public class Server {
         //VINCULADOR
 
         get("/vinculaciones", controllerVinculador::vinculaciones, engine);
-        get("/vincular", controllerVinculador::vincular, engine);
+       // get("/vincular", controllerVinculador::vincular, engine);
+        
+        get("/vincular",(request,response) -> {
+     	   return RouteWithTransaction((req, res, em) -> {
+			try {
+				return controllerVinculador.vincular(req, res, em);
+			} catch (IOException | ListaVaciaExcepcion | MontoSuperadoExcepcion e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return request;
+     	  });
+        });
+        
         get("/working",Server::work,engine);
         
 
@@ -158,9 +192,9 @@ public class Server {
 
     
     
-    public static String Validar(Request request, Response response) throws CloneNotSupportedException, IOException {
+    public static String Validar(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException, IOException {
     	
-    	RepositorioEgreso repo = new RepositorioEgreso();
+    	RepositorioEgreso repo = new RepositorioEgreso(entityManager);
 
     	String strID = request.params("id");
 
@@ -247,10 +281,10 @@ public class Server {
     }
     
 
-    public static ModelAndView egresos(Request request, Response response) throws CloneNotSupportedException {
+    public static ModelAndView egresos(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException {
 
         //INIT
-        RepositorioEgreso repo = new RepositorioEgreso();
+        RepositorioEgreso repo = new RepositorioEgreso(entityManager);
 
         //DOMINIO
         List<Egreso> egresos = repo.todos();
@@ -283,11 +317,11 @@ public class Server {
     
 
     
-    public static ModelAndView crearEgreso(Request request, Response response) throws CloneNotSupportedException{
+    public static ModelAndView crearEgreso(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException{
     	
-    	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra();
-    	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto();
-    	RepositorioCategoria repoCategorias = new RepositorioCategoria();
+    	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra(entityManager);
+    	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto(entityManager);
+    	RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
     	
     	List<OrdenDeCompra> ordenes = repoOrdenesCompra.todos();
     	List<Presupuesto> presupuestos = repoPresupuestos.todos();
@@ -302,9 +336,9 @@ public class Server {
         return new ModelAndView(map ,"crearEgreso.html");
     }
     
-    public static ModelAndView detalleEgreso(Request request, Response response) throws CloneNotSupportedException, MPRestException{
+    public static ModelAndView detalleEgreso(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException, MPRestException{
     	
-    	RepositorioEgreso repo = new RepositorioEgreso();
+    	RepositorioEgreso repo = new RepositorioEgreso(entityManager);
     	
     	String strID = request.params("id");
     	
@@ -314,20 +348,23 @@ public class Server {
     	
     	MedioDePago medioPagoEgreso = egreso.getPresupuesto().getMedioDePago();
     	
+    	Map<String, Object> map = new HashMap<>();
+        map.put("egreso", egreso);
+    	
+    	if (medioPagoEgreso != null) {
+    	
     	String nombreMedioPago = medioPagoEgreso.getPayment_type().toString();
     	
     	String imagenMedioPago = new api().getRouteByName(nombreMedioPago);
-    	
-    	
-    	Map<String, Object> map = new HashMap<>();
-        map.put("egreso", egreso);
+  
         
-        if(medioPagoEgreso != null) {
         map.put("nombreMedioPago", nombreMedioPago);
         map.put("imagenMedioPago", imagenMedioPago);
         
-        }
+        	
+    	}
         
+    	
      
         return new ModelAndView(map,"detalleEgreso.html");
     }
@@ -350,9 +387,9 @@ public class Server {
         return new ModelAndView(map, "categorias.html");
     }*/
     
-    public static ModelAndView mostrarCategorias(Request request, Response response) throws CloneNotSupportedException {
+    public static ModelAndView mostrarCategorias(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException {
     	
-    	RepositorioCategoria repoCategoria = new RepositorioCategoria();
+    	RepositorioCategoria repoCategoria = new RepositorioCategoria(entityManager);
     	
     	List<CategoriaDelSistema> categorias = repoCategoria.todos();
     	
@@ -371,7 +408,7 @@ public class Server {
     	Map<String, Object> map = new HashMap<>();
     	
     	if(tipoDocumentoString.equals("Egresos")) {
-    		RepositorioEgreso repoEgresos = new RepositorioEgreso();	
+    		RepositorioEgreso repoEgresos = new RepositorioEgreso(entityManager);	
     		List<Egreso> egresos = repoEgresos.todos().stream().filter(a -> a.esDeCategoria(categoria)).collect(Collectors.toList());
     		map.put("documentos",egresos);
     	}
@@ -383,7 +420,7 @@ public class Server {
     	}
     	
     	if(tipoDocumentoString.equals("Presupuestos")) {
-    		RepositorioPresupuesto repoPresupuesto = new RepositorioPresupuesto();
+    		RepositorioPresupuesto repoPresupuesto = new RepositorioPresupuesto(entityManager);
     		Presupuesto pre = repoPresupuesto.byID(6);
     		Boolean resultado = pre.esDeCategoria(categoria);
     		List<Presupuesto> presupuestos = repoPresupuesto.todos().stream().filter(a -> a.esDeCategoria(categoria)).collect(Collectors.toList());

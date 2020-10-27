@@ -17,14 +17,13 @@ public class CategoriaCompuesta extends CategoriaDelSistema{
 		super(nombre,criterio);
 	}
 
-
-	@Transient
-	private List<CategoriaDelSistema> subCategorias = new ArrayList<CategoriaDelSistema>();
-	
-	
-	public void agregarSubCategoria(CategoriaDelSistema categoria) {
-		subCategorias.add(categoria);
+	public CategoriaCompuesta( ) {
+		super();
 	}
+
+	
+	
+	
 	
 	@Override
 	public boolean esCompuesta() {
@@ -33,14 +32,7 @@ public class CategoriaCompuesta extends CategoriaDelSistema{
 	
 
 
-	public void setSubCategorias(List<CategoriaDelSistema> subCategorias) {
-		this.subCategorias = subCategorias;
-	}
-
-	@Override
-	public List<CategoriaDelSistema> getSubCategorias() {
-		return this.subCategorias;
-	}
+	
 
 	
 

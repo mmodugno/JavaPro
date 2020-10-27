@@ -9,6 +9,11 @@ import javax.persistence.*;
 @Table
 public class Proveedor {
 
+	public Proveedor() {
+		
+	}
+
+	
 
 	/*CONSTRUCTOR*/
 	public Proveedor(String nombre, String cuilOCuit, String direccionPostal) {

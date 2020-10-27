@@ -21,6 +21,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
+import javax.persistence.EntityManager;
+
 public class ControllerVinculador {
 
     RepositorioEgreso repositorioEgreso;
@@ -28,8 +30,6 @@ public class ControllerVinculador {
     Vinculador vinculador = new Vinculador();
 
     public ControllerVinculador() throws CloneNotSupportedException {
-        repositorioEgreso = new RepositorioEgreso();
-        repositorioIngreso = new RepositorioIngreso();
 
     }
 
@@ -100,7 +100,7 @@ public class ControllerVinculador {
         return new ModelAndView(map, "vinculaciones.html");
     }
 
-    public ModelAndView vincular(Request request, Response response) throws CloneNotSupportedException, IOException, ListaVaciaExcepcion, MontoSuperadoExcepcion {
+    public String vincular(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException, IOException, ListaVaciaExcepcion, MontoSuperadoExcepcion {
 
 
 
@@ -113,7 +113,7 @@ public class ControllerVinculador {
             vinculador2.setEntidadJuridica(entidadJuridica);
 
             RepositorioIngreso repoIngreso = new RepositorioIngreso();
-            RepositorioEgreso repoEgreso = new RepositorioEgreso();
+            RepositorioEgreso repoEgreso = new RepositorioEgreso(entityManager);
             entidadJuridica.setIngresos(repoIngreso.todos());
             entidadJuridica.setEgresos(repoEgreso.todos());
             vinculador2.obtenerIngresosEgresos();
@@ -127,8 +127,11 @@ public class ControllerVinculador {
             String JSON2 = gson.toJson(vinculador2.getBalanceEgresos());
 
             String JSON = JSON1 + JSON2;
-
+            return JSON;
+            /*
             System.out.println(JSON);
+            devuelveJSON(JSON);
+            
             String ruta = "resultadoValidacion.json";
 
             File file = new File(ruta);
@@ -139,10 +142,47 @@ public class ControllerVinculador {
             bw.write(JSON);
             bw.close();
 
-            response.redirect("/vinculaciones");
+           // response.redirect("/vinculaciones");
+         */
 
         }
 
-        return new ModelAndView(null,"index.html");
+       // return new ModelAndView(null,"index.html");
+        return "Reintentar";
     }
+
+
+public static String devuelveJSON(String JSON) throws CloneNotSupportedException, IOException {
+	return JSON;
+
 }
+
+
+}
+
+/*
+   public static String Validar(Request request, Response response) throws CloneNotSupportedException, IOException {
+    	
+    	RepositorioEgreso repo = new RepositorioEgreso();
+
+    	String strID = request.params("id");
+
+        int id = Integer.parseInt(strID);
+
+        Egreso egreso = repo.byID(id);
+        
+        if (egreso == null) {
+        	Map<String, Object> map = new HashMap<>();
+        	map.put("egreso","No existe Egreso con id "+strID);
+        	
+        	map.put("informe","Egreso no v�lido");
+        	
+        	map.put("Resultado Validacion",false);
+        	
+        	Gson gson = new Gson();
+            String JSON = gson.toJson(map);
+
+            return JSON;
+        	
+        }
+ */
