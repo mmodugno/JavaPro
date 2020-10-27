@@ -66,8 +66,8 @@ public class ValidarEgresoTest {
     	
     	primerONG.agregarEntidad(entidadJuridica);
     	
-    	ordenDeCompra = new OrdenDeCompra(1,1);
-    	ordenDeCompra2 = new OrdenDeCompra(3,2); // Orden De Compra con 3 Presupuestos
+    	ordenDeCompra = new OrdenDeCompra(1);
+    	ordenDeCompra2 = new OrdenDeCompra(3); // Orden De Compra con 3 Presupuestos
     	ordenDeCompra.setCriterioSeleccion(new ElMasBarato());
     	ordenDeCompra2.setCriterioSeleccion(new ElMasBarato());
         ordenDeCompra.agregarItem(item1);
@@ -160,7 +160,7 @@ public class ValidarEgresoTest {
     	Presupuesto presupuesto5;
     	Presupuesto presupuesto6;
     	
-    	ordenDeCompra3 = new OrdenDeCompra(3,3);
+    	ordenDeCompra3 = new OrdenDeCompra(3);
     	ordenDeCompra3.setCriterioSeleccion(new ElMasBarato());
     	
     	

@@ -45,7 +45,7 @@ public class CrearPresupuestosTest {
 	    @Before
 	    public void init() throws ClassNotFoundException, FileNotFoundException, SQLException, CreationError, CloneNotSupportedException {
 	    		    	
-	    	ordenDeCompra = new OrdenDeCompra(1,5);
+	    	ordenDeCompra = new OrdenDeCompra(1);
 	        ordenDeCompra.agregarItem(item1);
 	        ordenDeCompra.agregarItem(item2);
 	        presupuesto1 = new Presupuesto(ordenDeCompra.getItems(),proveedor1,medioDePago);

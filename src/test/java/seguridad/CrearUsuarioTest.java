@@ -53,7 +53,7 @@ public class CrearUsuarioTest {
 		Item item1 = new Item(p1, 1, 80);
 		Item item2 = new Item(p2,2, 90);
 
-		OrdenDeCompra ordenDeCompra = new OrdenDeCompra(0, 1);
+		OrdenDeCompra ordenDeCompra = new OrdenDeCompra(0);
 
 		ordenDeCompra.agregarItem(item1);
 		ordenDeCompra.agregarItem(item2);

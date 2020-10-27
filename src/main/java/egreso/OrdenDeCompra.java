@@ -18,13 +18,13 @@ import usuarios.Usuario;
 public class OrdenDeCompra {
 
 	/*CONSTRUCTOR*/
-	public OrdenDeCompra(int necesitaPresupuesto,int idOrden) {
+	public OrdenDeCompra(int necesitaPresupuesto) {
 		this.fecha = LocalDate.now();
 		this.items = new ArrayList<Item>();
 		this.necesitaPresupuesto = necesitaPresupuesto;
 		this.presupuestos = new ArrayList<Presupuesto>();
 		this.revisores = new ArrayList<Usuario>();
-		this.idOrden = idOrden;
+
 	}
 	
 	public OrdenDeCompra() {
@@ -48,6 +48,7 @@ public class OrdenDeCompra {
 	@Column(columnDefinition = "DATE")
 	private LocalDate fecha;
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idOrden;
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Item> items;
