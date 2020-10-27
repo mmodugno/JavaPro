@@ -130,9 +130,9 @@
                             <td>{{valorTotal}}</td>
                             <td>{{fecha}}</td>
                             <td>
-                                <a href="detalleEgreso.html ">
-                                    <button class="btn btn-yoel ">Seleccionar</button>
-                                </a>
+
+                                <button class="btn btn-yoel " onclick="route('{{tipoDocumento}}','{{id}}')">Seleccionar</button>
+
                             </td>
                         </tr>
                         {{/each}}
@@ -222,6 +222,10 @@
             categoria = document.getElementById('categoria').value;
 
             window.location = "/categoria?tipoDoc=" + filtro + "&categoria=" + categoria;
+        };
+
+        function route(tipoDoc, id) {
+            window.location = "/" + tipoDoc.toLowerCase().slice(0, -1) + "/" + id;
         };
     </script>
 
