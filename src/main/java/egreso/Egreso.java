@@ -82,6 +82,9 @@ public class Egreso implements Categorizable{
 	public OrdenDeCompra getOrdenDeCompra() {
 		return ordenDeCompra;
 	}
+	public Integer getOrdenDeCompraId() {
+		return ordenDeCompra.getIdOrden();
+	}
 	public Presupuesto getPresupuesto() {
 		return presupuesto;
 	}
