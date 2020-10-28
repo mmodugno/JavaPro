@@ -113,7 +113,6 @@ public class Server {
 			try {
 				return detalleEgreso(req, res, em);
 			} catch (MPRestException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;
@@ -155,7 +154,20 @@ public class Server {
 
         get("/ordenes",TemplWithTransaction(controllerOrdenes::ordenes),engine);
         get("/crearOrden",TemplWithTransaction(controllerOrdenes::nuevaOrden),engine);
-       // get("/orden/:id",,engine);
+        
+        //get("/orden/:id",Server::detalleOrden,engine); //TODO
+        
+        get("/orden/:id", TemplWithTransaction((req, res, em) -> {
+			try {
+				return detalleOrden(req, res, em);
+			} catch (MPRestException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}), engine);
+        
+        delete("/orden/:id", controllerOrdenes::eliminarOrden);
+        
         post("/orden", RouteWithTransaction(controllerOrdenes::crear));
        // post("orden:id");
 
@@ -386,9 +398,25 @@ public class Server {
         	
     	}
         
+        return new ModelAndView(map,"detalleEgreso.html");
+    }
+    
+ public static ModelAndView detalleOrden(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException, MPRestException{
+    	
+	 	RepositorioOrdenDeCompra repo = new RepositorioOrdenDeCompra(entityManager);
+    	
+    	String strID = request.params("id");
+    	
+    	int id = Integer.parseInt(strID);
+    	
+    	OrdenDeCompra orden = repo.byID(id);
+    	
+    	Map<String, Object> map = new HashMap<>();
+    	
+        map.put("orden", orden);
     	
      
-        return new ModelAndView(map,"detalleEgreso.html");
+        return new ModelAndView(map,"detalleOrden.html");
     }
 
     /*public static ModelAndView mostrarCategorias(Request request, Response response) throws CloneNotSupportedException {

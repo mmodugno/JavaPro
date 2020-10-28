@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="/public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/public/vendor/jquery/jquery.min.js"></script>
+    <script src="/public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/public/js/functions.js"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="/public/css/simple-sidebar.css" rel="stylesheet">
+
+    <title>Detalle Orden De Compra</title>
+
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom imagen-logo">
+            <a href="/inicio">
+                <img src="/public/img/pruebalogosoc.png" alt="Logo GeSoc">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+             <span class="navbar-toggler-icon"></span>
+        </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Usuario</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Dropdown
+                    </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+    </header>
+
+    <div class="d-flex" id="wrapper">
+
+
+        {{>sidebar.hbs}}
+
+        <!-- Page Content -->
+
+        <div id="page-content-wrapper">
+            <h1 class="mt-4 text-center">Detalle de Orden de Compra {{orden.idOrden}}</h1>
+            <div class="contenido-centrado contenedor">
+
+                <ul class="list-group color-none">
+
+                    <li class="list-group-item color-none"> ID: {{orden.idOrden}}</li> 
+                    <li class="list-group-item color-none">Fecha: {{orden.fecha}}</li>
+                    <li class="list-group-item color-none">Cantidad de Presupuestos: {{orden.nececsitaPresupuesto}}</li>
+                    <li class="list-group-item color-none">Esta Cerrada?  {{orden.cerrada}}</li>
+                    <!-- ACA FALTARIAN LOS ITEMS Y LOS USUARIOS REVISORES -->
+                   
+
+                </ul>
+
+                <div class="separar-arriba">
+                    <!-- <a href="/modificarEgreso/{{ingreso.id}}" class="btn btn-primary">Modificar</a> -->
+                    <button type="button" class="btn btn-borrar" onclick="confirmarBorrarOrden('{{orden.idOrden}}')">Borrar</button>
+                    <a href="/ordenes" class="btn btn-danger">Volver</a>
+                      <!-- ACA FALTARIAN VER EL TEMA DE LA ELIMINACION -->
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/public/vendor/jquery/jquery.min.js"></script>
+    <script src="/public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+
+</body>
+
+<!-- ================= ELIMINACION ================== -->
+<div class="modalEliminar modal" id="eliminarEgreso">
+    <div class="modalContent">
+        <input type="hidden" value="" id="egresoId">
+        <p>¿Realmente desea eliminar el egreso?</p>
+        <button type="button" name="button" class="btn-close-modal" onclick="cerrarConfirmacionBorrar()"><i class="fas fa-times-circle"></i></button>
+        <br>
+        <div class="">
+            <button type="button" name="button" class="btn-rojo" onclick="eliminarEgreso()">Eliminar</button>
+            <button type="button" name="button" class="btn-cancelar" onclick="cerrarConfirmacionBorrar()">Cancelar</button>
+        </div>
+    </div>
+</div>
+<!-- ================= FIN ELIMINACION ================== -->
+
+</html>

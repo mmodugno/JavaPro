@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import egreso.Egreso;
 import egreso.MedioDePago;
 import egreso.OrdenDeCompra;
 import egreso.Presupuesto;
@@ -23,6 +24,7 @@ import javax.persistence.criteria.Root;
 
 public class RepositorioOrdenDeCompra {
 	
+	private static List<OrdenDeCompra> ordenesDeCompra = null;
 
 	EntityManager entityManager;
     public RepositorioOrdenDeCompra(EntityManager entityManager) throws CloneNotSupportedException {
@@ -56,6 +58,8 @@ public class RepositorioOrdenDeCompra {
 
     }
 
-	
+	public void eliminar(OrdenDeCompra orden){
+		ordenesDeCompra.remove(orden);
+	}
 
 }

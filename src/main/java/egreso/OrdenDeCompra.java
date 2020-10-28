@@ -98,6 +98,10 @@ public class OrdenDeCompra {
 		return presupuestos.get(0).getId(); 
 	}
 	
+	public String getCerrada() {
+		if(isCerrado()) return "No";
+		else return "Si";
+	}
 	
 	
 	/*SETTERS*/

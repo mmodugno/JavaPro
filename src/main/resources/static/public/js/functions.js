@@ -80,3 +80,22 @@ function eliminarIngreso() {
         }
 
     });}
+
+
+    
+/**Eliminar ingreso**/
+function confirmarBorrarIngreso(id) {
+    document.getElementById("ordenId").value = id;
+    document.getElementById("eliminarOrdenVentana").style.display = 'block';
+
+}
+function eliminarOrden() {
+    let id = document.getElementById("ordenId").value;
+    $.ajax({
+        type: "delete",
+        url: id,
+        success: function(resultado) {
+            window.location.href = "/ordenes";
+        }
+
+    });}

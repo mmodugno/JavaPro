@@ -1,9 +1,11 @@
 package server;
 
+import egreso.Egreso;
 import egreso.OrdenDeCompra;
 import egreso.Presupuesto;
 import producto.Item;
 import producto.Producto;
+import repositorios.RepositorioEgreso;
 import repositorios.RepositorioOrdenDeCompra;
 import repositorios.RepositorioProducto;
 import spark.ModelAndView;
@@ -22,8 +24,8 @@ import com.google.gson.Gson;
 import javax.persistence.EntityManager;
 
 public class ControllerOrdenes {
-
-
+	  private static RepositorioOrdenDeCompra repo;
+	  
     public ControllerOrdenes() throws CloneNotSupportedException {
 
     }
@@ -127,7 +129,23 @@ public class ControllerOrdenes {
     		
     		return pres;
     	}
+    	//Esto nunca lo deberia hacer
     	return new Presupuesto();
     }
+    
+    
+    
+    
+    public Response eliminarOrden(Request request, Response response) throws CloneNotSupportedException{
+    	//RepositorioOrdenDeCompra repo = new RepositorioOrdenDeCompra(entityManager);
+    	
+		String strID = request.params("id");
+		int id = new Integer(strID);
+		OrdenDeCompra orden = repo.byID(id);
+
+		repo.eliminar(orden);
+
+		return response;
+	}
     
 }
