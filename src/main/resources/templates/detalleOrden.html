@@ -73,8 +73,23 @@
 
                     <li class="list-group-item color-none"> ID: {{orden.idOrden}}</li> 
                     <li class="list-group-item color-none">Fecha: {{orden.fecha}}</li>
-                    <li class="list-group-item color-none">Cantidad de Presupuestos: {{orden.nececsitaPresupuesto}}</li>
-                    <li class="list-group-item color-none">Esta Cerrada?  {{orden.cerrada}}</li>
+                    <li class="list-group-item color-none">Cantidad de Presupuestos: {{orden.necesitaPresupuesto}}</li>
+                     <li class="list-group-item color-none">Presupuestos: 
+                        <li class="list-group-item color-none"> {{orden.presupuestosId}} </li>
+                     
+                     </li>
+                     <li class="list-group-item color-none">Revisores: 
+                         <li class="list-group-item color-none"> {{orden.revisores}} </li>
+                     
+                     </li>
+
+
+
+                     <!--  {{#if egreso}}<option>{{egreso.ordenDeCompra.idOrden}}</option>{{/if}}  -->
+
+
+
+                    <li class="list-group-item color-none">Esta Cerrada?  {{#if orden.cerrado}} Si {{else}} No {{/if}}</li>
                     <!-- ACA FALTARIAN LOS ITEMS Y LOS USUARIOS REVISORES -->
                    
 
@@ -82,7 +97,7 @@
 
                 <div class="separar-arriba">
                     <!-- <a href="/modificarEgreso/{{ingreso.id}}" class="btn btn-primary">Modificar</a> -->
-                    <button type="button" class="btn btn-borrar" onclick="confirmarBorrarOrden('{{orden.idOrden}}')">Borrar</button>
+                    <button type="button" class="btn btn-borrar" onclick="eliminarOrden()">Borrar</button>
                     <a href="/ordenes" class="btn btn-danger">Volver</a>
                       <!-- ACA FALTARIAN VER EL TEMA DE LA ELIMINACION -->
                 </div>
@@ -111,14 +126,14 @@
 </body>
 
 <!-- ================= ELIMINACION ================== -->
-<div class="modalEliminar modal" id="eliminarEgreso">
+<div class="modalEliminar modal" id="eliminarOrden">
     <div class="modalContent">
-        <input type="hidden" value="" id="egresoId">
-        <p>¿Realmente desea eliminar el egreso?</p>
+        <input type="hidden" value="" id="idOrdenDeCompra">
+        <p>¿Realmente desea eliminar la Orden de Compra?</p>
         <button type="button" name="button" class="btn-close-modal" onclick="cerrarConfirmacionBorrar()"><i class="fas fa-times-circle"></i></button>
         <br>
         <div class="">
-            <button type="button" name="button" class="btn-rojo" onclick="eliminarEgreso()">Eliminar</button>
+            <button type="button" name="button" class="btn-rojo" onclick="eliminarOrden()">Eliminar</button>
             <button type="button" name="button" class="btn-cancelar" onclick="cerrarConfirmacionBorrar()">Cancelar</button>
         </div>
     </div>

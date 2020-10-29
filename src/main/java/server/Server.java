@@ -50,9 +50,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-
 public class Server {
-
     static EntityManagerFactory entityManagerFactory;
 
     private static ControllerProductos controllerProductos= new ControllerProductos();
@@ -62,6 +60,7 @@ public class Server {
     private static ControllerVinculador controllerVinculador;
 	private static ControllerLogin controllerLogin= new ControllerLogin();
     
+	
     static {
         try {
             controllerVinculador = new ControllerVinculador();
@@ -74,7 +73,8 @@ public class Server {
             e.printStackTrace();
         }
     }
-
+   
+ 
     public static void main(String[] args) {
         enableDebugScreen();
         port(1133);
@@ -87,6 +87,7 @@ public class Server {
             staticFiles.location("/resources");
         }
 
+        
         entityManagerFactory = Persistence.createEntityManagerFactory("db");
 
         controllerProductos= new ControllerProductos();
@@ -106,6 +107,7 @@ public class Server {
         post("/login", controllerLogin::validarLogin, engine);
         get("/logout", controllerLogin::logout, engine);
 
+        
         //EGRESOS
 
         get("/egresos",TemplWithTransaction(Server::egresos),engine);

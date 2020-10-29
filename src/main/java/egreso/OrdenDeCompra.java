@@ -103,7 +103,16 @@ public class OrdenDeCompra {
 		else return "Si";
 	}
 	
-	
+	public String getPresupuestosId() {
+		int i;
+		String s = "";
+		List<Presupuesto> presupuestos = getPresupuestos();
+		for(i=0; i< getPresupuestos().size(); i++ ){
+			String id = Integer.toString(presupuestos.get(i).getId());
+			s.concat(id);
+	}
+		return s;
+	}
 	/*SETTERS*/
 	public void setItems(List<Item> items) {
 		this.items = items;
