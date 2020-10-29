@@ -13,6 +13,7 @@ import spark.Request;
 import spark.Response;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -71,6 +72,7 @@ public class ControllerOrdenes {
     	nuevaOrden.setFecha(fechaFinal);
     	
     	//Prespuesto:
+    	/*
     	try {
     		Presupuesto pres = leerPresupuesto(request);
     		nuevaOrden.agregarPresupuesto(pres);
@@ -79,7 +81,11 @@ public class ControllerOrdenes {
     		e.printStackTrace();
     		nuevaOrden.agregarPresupuesto(new Presupuesto());
     	}
-
+*/
+    	leerPresupuestos( request, nuevaOrden); //TODO TESTING
+    	
+    	
+    	
     	int cantidad = Integer.parseInt(request.queryParams("cantidadItems"));
     	for(int i = 1; i<=cantidad; i++)
 		{
@@ -105,17 +111,7 @@ public class ControllerOrdenes {
     	if (archivo.exists()) {
     	 Gson gson = new Gson();
     		 
-    	 /*
-    		FileReader fr;
-			
-			fr = new FileReader(archivo);
-    		BufferedReader br = new BufferedReader(fr);
-    		String texto = br.readLine();
-    		
-    		Presupuesto pres = gson.fromJson(texto, Presupuesto.class);
-    		//pres.setId();
-    		fr.close();
-    		*/
+    
    		 
      		String data;
      		 
@@ -133,7 +129,34 @@ public class ControllerOrdenes {
     	return new Presupuesto();
     }
     
-    
+    public void leerPresupuestos(Request request,OrdenDeCompra orden) {
+    	File archivo = new File(request.queryParams("presupuestoDeOrden"));
+    	
+    	if (archivo.exists()) {
+    	 Gson gson = new Gson();
+    		 
+   		 
+     		String data;
+     		 
+     		Scanner myReader = null;
+			try {
+				myReader = new Scanner(archivo);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+     		
+     		while(myReader.hasNextLine()){
+     		data = myReader.nextLine();
+     		Presupuesto pres = gson.fromJson(data, Presupuesto.class);
+     		orden.agregarPresupuesto(pres);
+     		}
+
+     		myReader.close();
+     		
+    	}
+
+    }
     
     
     public Response eliminarOrden(Request request, Response response) throws CloneNotSupportedException{

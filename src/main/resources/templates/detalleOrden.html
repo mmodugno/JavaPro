@@ -73,27 +73,46 @@
 
                     <li class="list-group-item color-none"> ID: {{orden.idOrden}}</li> 
                     <li class="list-group-item color-none">Fecha: {{orden.fecha}}</li>
-                    <li class="list-group-item color-none">Cantidad de Presupuestos: {{orden.necesitaPresupuesto}}</li>
-                     <li class="list-group-item color-none">Presupuestos: 
-                        <li class="list-group-item color-none"> {{orden.presupuestosId}} </li>
+                    <li class="list-group-item color-none">Cantidad de Presupuestos Necesarios: {{orden.necesitaPresupuesto}}</li>
+                     <li class="list-group-item color-none">ID de Presupuestos: 
+
+                     <ul>
+                      {{#each orden.presupuestos}}
+                     <li> {{id}} </li>
+                      {{/each}}
+                     </ul>
+
+                      </li>
+                     
+                       <li class="list-group-item color-none">Items: 
+                        <ul>
+                        {{#each orden.items}}
+                        <li> {{producto.nombre}} </li>
+                        {{/each}}
+                        </ul>
                      
                      </li>
+
                      <li class="list-group-item color-none">Revisores: 
-                         <li class="list-group-item color-none"> {{orden.revisores}} </li>
+                        <ul>
+                        {{#each orden.revisores}}
+                        <li> {{nombre}} </li>
+                        {{/each}}
+                        </ul>
                      
                      </li>
 
 
 
-                     <!--  {{#if egreso}}<option>{{egreso.ordenDeCompra.idOrden}}</option>{{/if}}  -->
+                     
 
 
 
-                    <li class="list-group-item color-none">Esta Cerrada?  {{#if orden.cerrado}} Si {{else}} No {{/if}}</li>
+                    <li class="list-group-item color-none">Cerrada:  {{#if orden.cerrado}} Si {{else}} No {{/if}}</li>
                     <!-- ACA FALTARIAN LOS ITEMS Y LOS USUARIOS REVISORES -->
                    
 
-                </ul>
+                </ul> 
 
                 <div class="separar-arriba">
                     <!-- <a href="/modificarEgreso/{{ingreso.id}}" class="btn btn-primary">Modificar</a> -->
