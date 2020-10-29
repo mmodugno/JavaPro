@@ -39,6 +39,14 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/public/js/functions.js"></script>
+    <script>
+        $(document).ready( function() {
+            $('#orden').change( function() {
+                location.href = "/crearEgreso?ordenDeCompraId="+$(this).val()
+            });
+        });
+    </script>
 </head>
 
 <body class="bg-light">
@@ -60,7 +68,11 @@
                                 {{#if egreso}}
                                 <option value = {{egreso.ordenDeCompra.idOrden}}>{{egreso.ordenDeCompra.idOrden}}</option>
                                 {{else}}
+                                {{#if orden}}
+                                <option value = "{{orden.idOrden}}" selected hidden>{{orden.idOrden}}</option>
+                                {{else}}
                                 <option value = "">Seleccionar...</option>
+                                {{/if}}
                                 {{/if}}
                                 {{#each ordenes}}
                               	<option value = "{{idOrden}}">{{idOrden}}</option>
@@ -78,9 +90,11 @@
                                 {{else}}
                                 <option value = "visa">Seleccionar...</option>
                                 {{/if}}
+                                {{#if orden}}
                                 {{#each presupuestos}}
                                 <option value = {{id}} data-image={{medioDePago.tipoPago}}>{{id}} - {{medioDePago.tipoPago}}</option>
                                 {{/each}}
+                                {{/if}}
                             </select>
                         </div>
                     </div>
