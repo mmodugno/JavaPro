@@ -48,6 +48,7 @@
                             <th scope="col">Nro</th>
                             <th scope="col">Monto</th>
                             <th scope="col">Fecha</th>
+                            <th scope="col">Orden de Compra ID</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -57,6 +58,9 @@
                             <td>{{id}}</td>
                             <td>{{valorTotal}}</td>
                             <td>{{fecha}}</td>
+                            <td>
+                            	<a href="/orden/{{ordenDeCompraId}}">{{ordenDeCompraId}}</a>
+                            </td>
                             <td>
                                 <a href="/egreso/{{id}}">
                                     <button class="btn btn-yoel">DETALLE</button>
