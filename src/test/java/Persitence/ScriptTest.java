@@ -2,10 +2,14 @@ package Persitence;
 
 import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import egreso.*;
+import organizacion.Organizacion;
+
 import org.hibernate.metamodel.binding.EntityIdentifier;
 import org.junit.Test;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
@@ -19,6 +23,9 @@ import producto.TipoItem;
 import usuarios.Categoria;
 import usuarios.CategoriaCompuesta;
 import usuarios.CategoriaDelSistema;
+import usuarios.CreadorUsuario;
+import usuarios.CreationError;
+import usuarios.Usuario;
 
 public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
 
@@ -152,6 +159,19 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
         EntityManagerHelper.persist(ingreso3);
         EntityManagerHelper.commit();
         
+	}
+	
+	@Test
+	public void usuarioTest() throws FileNotFoundException, ClassNotFoundException, CreationError, SQLException {
+		
+		CreadorUsuario userMaker = new CreadorUsuario();
+    	Organizacion organizacion = new Organizacion();
+    	
+    	Usuario userStandard = userMaker.crearUsuario("userStandard", "pru3b@tesT", "estandar", organizacion);
+        
+    	EntityManagerHelper.beginTransaction();
+	    EntityManagerHelper.getEntityManager().persist(userStandard);
+	    EntityManagerHelper.commit();
 	}
 	/*SCRIPT BORRAR TABLAS
 	    Use gesoc;
