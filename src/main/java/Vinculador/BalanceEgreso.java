@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BalanceEgreso {
+
+
+    public BalanceEgreso() {
+    }
+
     /*ATRIBUTOS*/
     private int id;
     private Egreso egreso;

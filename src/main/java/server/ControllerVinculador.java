@@ -62,8 +62,6 @@ public class ControllerVinculador {
 
 
         Map<String, Object> map = new HashMap<>();
-        List<BalanceEgreso> balances = new ArrayList<>();
-        List<Ingreso> ingresos = new ArrayList<>();
 
         List<CriterioDeVinculacion> criterios = new ArrayList<>();
         CriterioDeVinculacion criterio1= new PrimeroEgreso();
@@ -84,28 +82,30 @@ public class ControllerVinculador {
         if(request.queryParams("criterio") != null) {
             String criterio = request.queryParams("criterio");
 
-            Vinculador vinculador2 = new Vinculador();
+            Vinculador vinculador = new Vinculador();
             PrimeroEgreso primeroEgreso = new PrimeroEgreso();
             PrimeroIngreso primeroIngreso = new PrimeroIngreso();
             EntidadJuridica entidadJuridica = new EntidadJuridica("Web Social ONG", "Web Social", "90-61775331-4", 1143, 01, Collections.emptyList());
-            vinculador2.setEntidadJuridica(entidadJuridica);
+            vinculador.setEntidadJuridica(entidadJuridica);
 
             RepositorioIngreso repoIngreso = new RepositorioIngreso(entityManager);
             RepositorioEgreso repoEgreso = new RepositorioEgreso(entityManager);
-            entidadJuridica.setIngresos(repoIngreso.todos());
-            entidadJuridica.setEgresos(repoEgreso.todos());
-            vinculador2.obtenerIngresosEgresos();
+            List<Ingreso> ingresos = repoIngreso.todos();
+            entidadJuridica.setIngresos(ingresos);
+            List<Egreso> egresos = repoEgreso.todos();
+            entidadJuridica.setEgresos(egresos);
+            vinculador.obtenerIngresosEgresos();
 
             if(criterio.equals("primeroEgreso")){
-                vinculador2.vincular(primeroEgreso);
+                vinculador.vincular(primeroEgreso);
             }
             if(criterio.equals("primeroIngreso")){
-                vinculador2.vincular(primeroIngreso);
+                vinculador.vincular(primeroIngreso);
             }
 
             Gson gson = new Gson();
-            String JSON1 = gson.toJson(vinculador2.getBalanceIngresos());
-            String JSON2 = gson.toJson(vinculador2.getBalanceEgresos());
+            String JSON1 = gson.toJson(vinculador.getBalanceIngresos());
+            String JSON2 = gson.toJson(vinculador.getBalanceEgresos());
 
             String JSON = JSON1 + JSON2;
             return JSON;

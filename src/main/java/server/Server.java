@@ -179,18 +179,9 @@ public class Server {
 
         get("/vinculaciones", controllerVinculador::vinculaciones, engine);
        // get("/vincular", controllerVinculador::vincular, engine);
-        
-        get("/vincular",(request,response) -> {
-     	   return RouteWithTransaction((req, res, em) -> {
-			try {
-				return controllerVinculador.vincular(req, res, em);
-			} catch (IOException | ListaVaciaExcepcion | MontoSuperadoExcepcion e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return request;
-     	  });
-        });
+
+        get("/vincular", RouteWithTransaction(controllerVinculador::vincular));
+
         
         get("/working",Server::work,engine);
         
