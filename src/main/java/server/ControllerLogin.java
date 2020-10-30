@@ -3,6 +3,8 @@ package server;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
+import javax.persistence.EntityManager;
+
 import repositorios.RepositorioUsuario;
 import spark.ModelAndView;
 import spark.Request;
@@ -11,9 +13,7 @@ import usuarios.CreationError;
 import usuarios.Usuario;
 
 public class ControllerLogin {
-	
-	
-	
+		
     public ModelAndView login(Request request, Response response) {
         return new ModelAndView(null, "login.html");
     }
@@ -22,12 +22,12 @@ public class ControllerLogin {
         return new ModelAndView(null, "loginIncorrecto.html");
     }
     
-    public ModelAndView validarLogin(Request request, Response response) throws FileNotFoundException, ClassNotFoundException, CreationError, SQLException {
+    public ModelAndView validarLogin(Request request, Response response, EntityManager entityManager) throws FileNotFoundException, ClassNotFoundException, CreationError, SQLException {
     	
     	String user = request.queryParams("username");
         String pass = request.queryParams("password");
         
-        RepositorioUsuario repoUsuario = new RepositorioUsuario();
+        RepositorioUsuario repoUsuario = new RepositorioUsuario(entityManager);
     	
         Usuario usuario = repoUsuario.buscarUsuario(user);
 
