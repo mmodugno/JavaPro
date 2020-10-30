@@ -128,7 +128,7 @@ public class Presupuesto implements Categorizable{
 		if(categoria == null) return false;
 		else {
 			if(unaCategoria.esCompuesta()) {
-				return unaCategoria.getSubCategorias().stream().anyMatch(c -> this.esDeCategoria(c));
+				return unaCategoria.getSubCategorias().stream().anyMatch(c -> this.esDeCategoria(c)) || categoria.getCategoria().equals(unaCategoria.getCategoria());
 			} else {
 				return categoria.getCategoria().equals(unaCategoria.getCategoria());
 			}
