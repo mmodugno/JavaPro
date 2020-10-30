@@ -12,15 +12,20 @@ import java.util.List;
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-//@Entity
-//@Table
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-//@DiscriminatorColumn(name = "tipo")
+@Entity
+@Table(name="Usuarios")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo")
 public abstract class Usuario {
 	
 	public Usuario(String nombre, String password, Organizacion organizacion, boolean creadoConExito){
@@ -31,19 +36,24 @@ public abstract class Usuario {
 		this.creadoConExito = creadoConExito;
 	}
 
-	//@Id
-	//TODO @GeneratedValue()
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-
 	private String nombre;
 	//TODO guardar passw como HASH
 	private String password;
+	@Transient
 	private Organizacion organizacion;
+	@Transient
 	private List<OrdenDeCompra> suscripciones;
+	@Transient
 	private List<Egreso> egresosValidados;
 	private boolean creadoConExito;
+	@Transient
 	private Reporte reporteValidacion;
+	
+	// Getters
 	
 	public List<OrdenDeCompra> getSuscripciones() {
 		return suscripciones;
@@ -56,6 +66,16 @@ public abstract class Usuario {
 	public String getPassword() {
 		return password;
 	}
+	
+	public Organizacion getOrganizacion() {
+		return organizacion;
+	}
+	
+	public boolean creadoConExito() {
+		return creadoConExito;
+	}
+	
+	// Setters
 
 	public void suscribirse(OrdenDeCompra ordenASuscribir) {
 		suscripciones.add(ordenASuscribir);
@@ -67,13 +87,7 @@ public abstract class Usuario {
 		//organizacion.nuevoEgreso(unEgreso);
 		//organizacion.sacarOrden(unEgreso.getOrdenDeCompra());
 	}
-	
-	public boolean creadoConExito() {
-		return creadoConExito;
-	}
-	public Organizacion getOrganizacion() {
-		return organizacion;
-	}
+
 
 /*
 	public boolean creadoConExito() {
