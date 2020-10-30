@@ -74,7 +74,7 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
         presupuesto2.getItems().get(1).setPrecioUnitario(40.00);
 
         ordenDeCompra.agregarPresupuesto(presupuesto1);
-        ordenDeCompra.agregarPresupuesto(presupuesto2);
+        ordenDeCompra2.agregarPresupuesto(presupuesto2);
         //CATEGORIAS
         Categoria categoriaBSAS = new Categoria("Buenos Aires","Provincia");
         Categoria categoriaMendoza = new Categoria("Mendoza","Provincia");
