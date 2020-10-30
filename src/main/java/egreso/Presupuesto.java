@@ -30,6 +30,7 @@ public class Presupuesto implements Categorizable{
 	* */
 
 	public Presupuesto() {
+		items = new ArrayList<>();
 		// TODO Auto-generated constructor stub
 	}
 
