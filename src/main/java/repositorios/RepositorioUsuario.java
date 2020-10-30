@@ -30,21 +30,6 @@ public class RepositorioUsuario {
         
     	this.entityManager = entityManager;
     	
-    	if (usuarios == null) {
-    		
-        	
-        	CreadorUsuario userMaker = new CreadorUsuario();
-        	Organizacion organizacion = new Organizacion();
-        	
-        	Usuario userStandard = userMaker.crearUsuario("userStandard", "pru3b@tesT", "estandar", organizacion);
-            usuarios = new ArrayList<>();
-            usuarios.add(userStandard);
-            
-//        	EntityManagerHelper.beginTransaction();
-//		    EntityManagerHelper.getEntityManager().persist(userStandard);
-//		    EntityManagerHelper.commit();
-		    
-        }
     }
 
     public Usuario buscarUsuario(String nombre) {
