@@ -51,6 +51,15 @@ public class ControllerEgresos {
     	List<CategoriaDelSistema> categorias = repoCategorias.todos();
     	
     	Map<String, Object> map = new HashMap<>();
+
+		if(request.queryParams("ordenDeCompraId")!= null){
+			int id = Integer.parseInt(request.queryParams("ordenDeCompraId"));
+
+			OrdenDeCompra orden = repoOrdenesCompra.byID(id);
+			presupuestos = orden.getPresupuestos();
+			map.put("orden",orden);
+
+		}
         map.put("ordenes", ordenes);
         map.put("presupuestos", presupuestos);
         map.put("categorias", categorias);
@@ -74,7 +83,7 @@ public class ControllerEgresos {
 
 		//HAY QUE VER COMO PASAR TODOS LOS REPOS, LO UNICO QUE SE ME OCURRE PASARLE TODOS LOS REPOS AL HTML. todo Charlar
 
-		return new ModelAndView(map,"crearEgreso.html");
+		return new ModelAndView(map,"crearEgreso2.html");
 	}
 
     public static void asignarParametros(Egreso egreso, Request request,EntityManager entityManager) throws CloneNotSupportedException {
