@@ -7,9 +7,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import db.EntityManagerHelper;
 import organizacion.Organizacion;
+import producto.Producto;
 import usuarios.CreadorUsuario;
 import usuarios.CreationError;
 import usuarios.Usuario;
@@ -34,24 +40,40 @@ public class RepositorioUsuario {
             usuarios = new ArrayList<>();
             usuarios.add(userStandard);
             
-        	EntityManagerHelper.beginTransaction();
-		    EntityManagerHelper.getEntityManager().persist(userStandard);
-		    EntityManagerHelper.commit();
+//        	EntityManagerHelper.beginTransaction();
+//		    EntityManagerHelper.getEntityManager().persist(userStandard);
+//		    EntityManagerHelper.commit();
 		    
         }
     }
 
     public Usuario buscarUsuario(String nombre) {
-    	if(usuarios.stream().filter(usuario -> usuario.getNombre().equals(nombre)).count() > 0 ) {
-    		Usuario unUsuario = usuarios.stream().filter(usuario -> usuario.getNombre().equals(nombre)).findFirst().get();
-            return unUsuario;
-    	} else {
-    		return null;
+    	Usuario unUsuario = null;
+    	CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Usuario> consulta = cb.createQuery(Usuario.class);
+        Root<Usuario> usuarios = consulta.from(Usuario.class);
+        Predicate condicion = cb.equal(usuarios.get("nombre"), nombre);
+        CriteriaQuery<Usuario> where = consulta.select(usuarios).where(condicion);
+
+        try {
+        	unUsuario = this.entityManager.createQuery(where).getSingleResult();
+        	return unUsuario;
+        } catch (NoResultException nre){
+        	
     	}
+
+    	if(unUsuario == null){
+    	 return null;
+    	}
+    	return unUsuario;
     }
 
     public List<Usuario> todos() {
-        return new ArrayList<>(usuarios);
+
+        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Usuario> consulta = cb.createQuery(Usuario.class);
+        Root<Usuario> usuarios = consulta.from(Usuario.class);
+        return this.entityManager.createQuery(consulta.select(usuarios)).getResultList();
     }
 
     public void borrar(String nombre) {

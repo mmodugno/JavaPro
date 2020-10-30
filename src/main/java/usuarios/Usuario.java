@@ -28,6 +28,9 @@ import javax.persistence.Transient;
 @DiscriminatorColumn(name = "tipo")
 public abstract class Usuario {
 	
+	public Usuario() {
+    }
+
 	public Usuario(String nombre, String password, Organizacion organizacion, boolean creadoConExito){
 		this.nombre = nombre;
 		this.password = password;
