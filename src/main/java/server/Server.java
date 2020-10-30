@@ -20,11 +20,14 @@ import spark.*;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import usuarios.Categoria;
 import usuarios.CategoriaDelSistema;
+import usuarios.CreationError;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,7 +107,14 @@ public class Server {
         get("/pageblank", Server::mostrarPageBlank, engine);
         get("/login", controllerLogin::login, engine);
         get("/loginIncorrecto", controllerLogin::loginIncorrecto, engine);
-        post("/login", controllerLogin::validarLogin, engine);
+        post("/login", TemplWithTransaction((req, res, em) -> {
+			try {
+				return controllerLogin.validarLogin(req, res, em);
+			} catch (FileNotFoundException | ClassNotFoundException | CreationError | SQLException e1) {
+				e1.printStackTrace();
+			}
+			return null;
+		}), engine);
         get("/logout", controllerLogin::logout, engine);
 
         
