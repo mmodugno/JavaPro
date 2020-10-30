@@ -62,37 +62,14 @@ public class ControllerVinculador {
 
 
         Map<String, Object> map = new HashMap<>();
-        List<BalanceEgreso> balances = new ArrayList<>();
-        List<Ingreso> ingresos = new ArrayList<>();
-        if(request.queryParams("mostrar") != null) {
-            String mostrar = request.queryParams("mostrar");
-            if (mostrar != null) {
 
-                if (mostrar.equals("balances")) {
-
-                    map.remove("ingresos", ingresos);
-
-                    BalanceEgreso balance = new BalanceEgreso();
-                    balance.setId(0303456);
-                    balances.add(balance);
-
-                    map.put("balances", balances);
-                } else if (mostrar.equals("ingresos")) {
-
-                    map.remove("balances", balances);
-
-                    ingresos = repositorioIngreso.todos();
-                    map.put("ingresos", ingresos);
-                }
-            }
-        }
         List<CriterioDeVinculacion> criterios = new ArrayList<>();
         CriterioDeVinculacion criterio1= new PrimeroEgreso();
         criterio1.setNombre("primeroEgreso");
-        //CriterioDeVinculacion criterio2= new PrimeroIngreso();
-        //criterio2.setNombre("PrimeroIngreso");
+        CriterioDeVinculacion criterio2= new PrimeroIngreso();
+        criterio2.setNombre("PrimeroIngreso");
         criterios.add(criterio1);
-        //criterios.add(criterio2);
+        criterios.add(criterio2);
        // CriterioDeVinculacion criterio3= new Mix();
         //criterio3.setNombre("Mix");
         map.put("criterios",criterios);
@@ -102,29 +79,33 @@ public class ControllerVinculador {
 
     public String vincular(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException, IOException, ListaVaciaExcepcion, MontoSuperadoExcepcion {
 
-
-
         if(request.queryParams("criterio") != null) {
             String criterio = request.queryParams("criterio");
 
-            Vinculador vinculador2 = new Vinculador();
+            Vinculador vinculador = new Vinculador();
             PrimeroEgreso primeroEgreso = new PrimeroEgreso();
+            PrimeroIngreso primeroIngreso = new PrimeroIngreso();
             EntidadJuridica entidadJuridica = new EntidadJuridica("Web Social ONG", "Web Social", "90-61775331-4", 1143, 01, Collections.emptyList());
-            vinculador2.setEntidadJuridica(entidadJuridica);
+            vinculador.setEntidadJuridica(entidadJuridica);
 
-            RepositorioIngreso repoIngreso = new RepositorioIngreso();
+            RepositorioIngreso repoIngreso = new RepositorioIngreso(entityManager);
             RepositorioEgreso repoEgreso = new RepositorioEgreso(entityManager);
-            entidadJuridica.setIngresos(repoIngreso.todos());
-            entidadJuridica.setEgresos(repoEgreso.todos());
-            vinculador2.obtenerIngresosEgresos();
+            List<Ingreso> ingresos = repoIngreso.todos();
+            entidadJuridica.setIngresos(ingresos);
+            List<Egreso> egresos = repoEgreso.todos();
+            entidadJuridica.setEgresos(egresos);
+            vinculador.obtenerIngresosEgresos();
 
             if(criterio.equals("primeroEgreso")){
-                vinculador2.vincular(primeroEgreso);
+                vinculador.vincular(primeroEgreso);
+            }
+            if(criterio.equals("primeroIngreso")){
+                vinculador.vincular(primeroIngreso);
             }
 
             Gson gson = new Gson();
-            String JSON1 = gson.toJson(vinculador2.getBalanceIngresos());
-            String JSON2 = gson.toJson(vinculador2.getBalanceEgresos());
+            String JSON1 = gson.toJson(vinculador.getBalanceIngresos());
+            String JSON2 = gson.toJson(vinculador.getBalanceEgresos());
 
             String JSON = JSON1 + JSON2;
             return JSON;
@@ -156,8 +137,11 @@ public static String devuelveJSON(String JSON) throws CloneNotSupportedException
 	return JSON;
 
 }
-
-
+/*
+    public static List<Ingreso> ingresosDesde(){}
+    public static List<Ingreso> ingresosHasta(){}
+    public static List<Egreso> egresosDesde(){}
+    public static List<Egreso> egresosDesde(){}*/
 }
 
 /*

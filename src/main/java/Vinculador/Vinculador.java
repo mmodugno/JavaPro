@@ -10,8 +10,8 @@ public class Vinculador {
 
     /*CONSTRUCTOR*/
     public Vinculador(EntidadJuridica unaEntidadJuridica) {
-        balanceEgresos = new ArrayList<>();
-        balanceIngresos = new ArrayList<>();
+        balanceEgresos = new ArrayList<BalanceEgreso>();
+        balanceIngresos = new ArrayList<BalanceIngreso>();
         this.egresosSinVincular = new ArrayList<Egreso>();
         this.ingresosSinVincular = new ArrayList<Ingreso>();
         this.condiciones = new ArrayList<CondicionObligatoria>();
@@ -30,8 +30,8 @@ public class Vinculador {
 
 
     public Vinculador() {
-        balanceEgresos = new ArrayList<>();
-        balanceIngresos = new ArrayList<>();
+        balanceEgresos = new ArrayList<BalanceEgreso>();
+        balanceIngresos = new ArrayList<BalanceIngreso>();
         this.egresosSinVincular = new ArrayList<Egreso>();
         this.ingresosSinVincular = new ArrayList<Ingreso>();
         this.condiciones = new ArrayList<CondicionObligatoria>();
