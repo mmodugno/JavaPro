@@ -13,6 +13,7 @@ import usuarios.Categoria;
 import usuarios.CategoriaDelSistema;
 import usuarios.CreadorUsuario;
 
+
 @Entity
 @Table
 public class Egreso implements Categorizable{

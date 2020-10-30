@@ -23,6 +23,8 @@ import java.util.*;
 
 import javax.persistence.EntityManager;
 
+import java.util.stream.Collectors;
+
 public class ControllerVinculador {
 
     RepositorioEgreso repositorioEgreso;
@@ -103,13 +105,27 @@ public class ControllerVinculador {
                 vinculador.vincular(primeroIngreso);
             }
 
+            List<Integer> listaBalanceIngresos = vinculador.getBalanceIngresos().stream().map(i -> i.getIngreso().getId()).collect(Collectors.toList()); 
+            List<Integer> listaBalanceEgresos = vinculador.getBalanceEgresos().stream().map(i -> i.getEgreso().getId()).collect(Collectors.toList()); 
+            
+            
             Gson gson = new Gson();
-            String JSON1 = gson.toJson(vinculador.getBalanceIngresos());
+            
+            Map<String,Object> map = new HashMap<>();
+
+            map.put("listaBalanceIngresos",listaBalanceIngresos);
+            map.put("listaBalanceEgresos",listaBalanceEgresos);
+            
+           /* String JSON1 = gson.toJson(vinculador.getBalanceIngresos());
             String JSON2 = gson.toJson(vinculador.getBalanceEgresos());
 
-            String JSON = JSON1 + JSON2;
-            return JSON;
-            /*
+            String JSON = JSON1 + JSON2;*/
+            
+            
+            //return JSON;
+            
+            return gson.toJson(map);
+            /* Gso
             System.out.println(JSON);
             devuelveJSON(JSON);
             
