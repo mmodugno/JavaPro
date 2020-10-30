@@ -59,7 +59,7 @@ public class RepositorioOrdenDeCompra {
     }
 
 	public void eliminar(OrdenDeCompra orden){
-		ordenesDeCompra.remove(orden);
+		this.entityManager.remove(orden);
 	}
 
 }

@@ -99,7 +99,7 @@ public class ControllerOrdenes {
     	
     	repo.crear(nuevaOrden);
     	
-    	response.redirect("/ordenes");
+    	response.redirect("ordenes");
     	
     	
     	return response;
