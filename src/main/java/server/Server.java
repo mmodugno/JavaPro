@@ -7,18 +7,14 @@ import egreso.MontoSuperadoExcepcion;
 import egreso.OrdenDeCompra;
 import egreso.Presupuesto;
 import meliApi.api;
-import producto.Producto;
-import producto.TipoItem;
 import repositorios.RepositorioCategoria;
 import repositorios.RepositorioEgreso;
 import repositorios.RepositorioIngreso;
 import repositorios.RepositorioOrdenDeCompra;
 import repositorios.RepositorioPresupuesto;
-import repositorios.RepositorioProducto;
 import spark.*;
 
 import spark.template.handlebars.HandlebarsTemplateEngine;
-import usuarios.Categoria;
 import usuarios.CategoriaDelSistema;
 import usuarios.CreationError;
 
@@ -35,13 +31,9 @@ import java.util.stream.Collectors;
 
 
 import auditoria.CantidadPresupuestos;
-import auditoria.Criterios;
-import auditoria.Items;
-import auditoria.MontoPresupuesto;
 import auditoria.Reporte;
 import auditoria.Validador;
 
-import db.EntityManagerHelper;
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
@@ -141,12 +133,12 @@ public class Server {
         post("/egreso/:id", RouteWithTransaction(controllerEgresos::modificarEgreso));
         
         //INGRESOS
-        get("/ingresos", controllerIngresos::ingresos, engine);
+        get("/ingresos", TemplWithTransaction(controllerIngresos::ingresos), engine);
         get("/crearIngreso", TemplWithTransaction(controllerIngresos::nuevoIngreso), engine);
-        post("/ingreso",controllerIngresos::guardarIngreso);
-        delete("/ingreso/:id", controllerIngresos::eliminarIngreso);
+        post("/ingreso",RouteWithTransaction(controllerIngresos::guardarIngreso));
+        delete("/ingreso/:id", RouteWithTransaction(controllerIngresos::eliminarIngreso));
         get("/ingreso/:id", TemplWithTransaction(controllerIngresos::modificarIngreso),engine); ///VER EL POST
-        post("/ingreso/:id", controllerIngresos::persistirIngreso);
+        post("/ingreso/:id", RouteWithTransaction(controllerIngresos::persistirIngreso));
 
         //acciones productos
         get("/productos",TemplWithTransaction(controllerProductos::productos),engine);
@@ -486,7 +478,7 @@ public class Server {
     	}
     	
     	if(tipoDocumentoString.equals("Ingresos")) {
-    		RepositorioIngreso repoIngresos = new RepositorioIngreso();
+    		RepositorioIngreso repoIngresos = new RepositorioIngreso(entityManager);
     		List<Ingreso> ingresos = repoIngresos.todos().stream().filter(a -> a.esDeCategoria(categoria)).collect(Collectors.toList());
     		map.put("documentos",ingresos);
     	}

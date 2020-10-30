@@ -5,86 +5,69 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import egreso.Egreso;
 import egreso.Ingreso;
+import producto.Producto;
 import usuarios.CategoriaDelSistema;
+
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 public class RepositorioIngreso {
 
-	static List<Ingreso> ingresos = null;
-	static int proximoId = 5;
+	public EntityManager entityManager;
 
 
-    public RepositorioIngreso() {
-        if (ingresos == null) {
-        	
-        	ingresos = new ArrayList<>();
-        			
-        	Ingreso ingreso1 = new Ingreso("Donacion",1000.0);
-        	Ingreso ingreso2 = new Ingreso("Venta",10000.0);
-        	Ingreso ingreso3 = new Ingreso("Venta",500.0);
-        	
-        	ingreso1.setId(1001);
-        	ingreso2.setId(1002);
-        	ingreso3.setId(1003);
+    public RepositorioIngreso(EntityManager entityManager) {
 
-        	ingresos.add(ingreso1);
-        	ingresos.add(ingreso2);
-        	ingresos.add(ingreso3);
-        	
-        	proximoId = this.proximoId();
-        }
+        this.entityManager = entityManager;
     }
     
  
-    
+    /*
     public List<Ingreso> byCategoria(CategoriaDelSistema unaCategoria) {
         return ingresos.stream().filter(a ->
                 a.esDeCategoria(unaCategoria)
         ).collect(Collectors.toList());
-  }
+  }*/
 
     public Ingreso byID(int id) {
-		Optional<Ingreso> ingreso = ingresos.stream().filter(e -> e.getId() == id).findFirst();
 
-		if (ingreso.isPresent()) {
-			return ingreso.get();
-		}
-		else return null;
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+		CriteriaQuery<Ingreso> consulta = cb.createQuery(Ingreso.class);
+		Root<Ingreso> ingresos = consulta.from(Ingreso.class);
+		Predicate condicion = cb.equal(ingresos.get("id"), id);
+		CriteriaQuery<Ingreso> where = consulta.select(ingresos).where(condicion);
+		return this.entityManager.createQuery(where).getSingleResult();
 	}
 
     public List<Ingreso> todos() {
-        return new ArrayList<>(ingresos);
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+		CriteriaQuery<Ingreso> consulta = cb.createQuery(Ingreso.class);
+		Root<Ingreso> ingresos = consulta.from(Ingreso.class);
+		return this.entityManager.createQuery(consulta.select(ingresos)).getResultList();
     }
 
-
+/*
     public Ingreso buscarIngreso(String descripcion) {
         Ingreso unIngreso = ingresos.stream().filter(ingreso -> ingreso.getDescripcion().equals(descripcion)).findFirst().get();
         return unIngreso;
-    }
+    }*/
     public void borrar(Ingreso ingreso) {
-        ingresos.remove(ingreso);
+        this.entityManager.remove(ingreso);
     }
 
     public void crear(Ingreso ingreso) {
-    	ingresos.add(ingreso);
+    	this.entityManager.persist(ingreso);
     }
-    
+
     int ordenarInt(int primero,int segundo){
 		if (primero > segundo) return -1;
 		if (primero < segundo) return 1;
 		return 0;
 
 	}
-    
-    public int getProximoId() {
-    	return proximoId;
-    }
-    
-    public int proximoId(){
-    	ingresos.sort((Ingreso egreso1, Ingreso egreso2) -> {
-			return ordenarInt(egreso1.getId(),egreso2.getId());
-		});
-		return ingresos.get(0).getId() + 1;
-	}
+
 }

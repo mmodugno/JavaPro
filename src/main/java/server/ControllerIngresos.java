@@ -1,11 +1,7 @@
 package server;
 
-import producto.Producto;
-import producto.TipoItem;
 import repositorios.RepositorioCategoria;
 import repositorios.RepositorioIngreso;
-import repositorios.RepositorioOrdenDeCompra;
-import repositorios.RepositorioPresupuesto;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -16,28 +12,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.persistence.EntityManager;
 
-import egreso.Egreso;
 import egreso.Ingreso;
-import egreso.OrdenDeCompra;
-import egreso.Presupuesto;
 
 public class ControllerIngresos {
 
-    private static RepositorioIngreso repo;
+
 
     public ControllerIngresos() {
-        repo = new RepositorioIngreso();
+
     }
 
 
 
     public ModelAndView nuevoIngreso(Request request, Response response, EntityManager entityManager){
     	
-    	RepositorioIngreso repo = new RepositorioIngreso();
+    	RepositorioIngreso repo = new RepositorioIngreso(entityManager);
 
     	RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
     	List<CategoriaDelSistema> categorias = repoCategorias.todos();
@@ -71,10 +63,11 @@ public class ControllerIngresos {
 	}
     
     
-    public Response guardarIngreso(Request request, Response response) throws CloneNotSupportedException{
+    public Response guardarIngreso(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException{
 
+		RepositorioIngreso repo = new RepositorioIngreso(entityManager);
         Ingreso ingreso= new Ingreso();
-        ingreso.setId(repo.proximoId());
+
 
 		asignarParametros(ingreso, request);
 		ingreso.setFecha(LocalDate.now());
@@ -88,8 +81,9 @@ public class ControllerIngresos {
 
     
 
-	public Response eliminarIngreso(Request request, Response response){
+	public Response eliminarIngreso(Request request, Response response, EntityManager entityManager){
 
+		RepositorioIngreso repo = new RepositorioIngreso(entityManager);
 		String strID = request.params("id");
 		int id = new Integer(strID);
 		
@@ -107,7 +101,7 @@ public class ControllerIngresos {
 	}
 	
 	public ModelAndView modificarIngreso(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException {
-		
+		RepositorioIngreso repo = new RepositorioIngreso(entityManager);
 		RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
 
 		String strID = request.params("id");
@@ -127,8 +121,9 @@ public class ControllerIngresos {
 		
 	}
 	
-	public Response persistirIngreso(Request request, Response response) throws CloneNotSupportedException {
-		
+	public Response persistirIngreso(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException {
+
+		RepositorioIngreso repo = new RepositorioIngreso(entityManager);
 		String strID = request.params("id");
 		
 		int id = Integer.parseInt(strID);
@@ -143,8 +138,8 @@ public class ControllerIngresos {
 
 	}
 
-	public ModelAndView ingresos(Request request, Response response) throws CloneNotSupportedException {
-
+	public ModelAndView ingresos(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException {
+		RepositorioIngreso repo = new RepositorioIngreso(entityManager);
 
 		//DOMINIO
 		List<Ingreso> ingresos = repo.todos();
