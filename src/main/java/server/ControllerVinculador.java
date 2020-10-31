@@ -5,6 +5,7 @@ import auditoria.CantidadPresupuestos;
 import auditoria.Reporte;
 import auditoria.Validador;
 import com.google.gson.Gson;
+import com.mercadopago.resources.datastructures.merchantorder.Collector;
 import egreso.Egreso;
 import egreso.Ingreso;
 import egreso.MontoSuperadoExcepcion;
@@ -138,7 +139,9 @@ public class ControllerVinculador {
             }
 
 
-            List<Integer> listaBalanceIngresos = vinculador.getBalanceIngresos().stream().map(i -> i.getIngreso().getId()).collect(Collectors.toList());
+            List<String> listaBalanceIngresos = vinculador.getBalanceIngresos().stream().map(i -> "Ingreso: " + i.getIngreso().getId()
+                    + ", Descripcion:  " +i.getIngreso().getDescripcion() + ", Monto Vinculado:" + i.getIngreso().getMontoVinculado()
+            + "| Egresos: " + egresosLista(i.getEgresosVinculados())).collect(Collectors.toList());
             List<Integer> listaBalanceEgresos = vinculador.getBalanceEgresos().stream().map(i -> i.getEgreso().getId()).collect(Collectors.toList());
 
 
@@ -179,6 +182,12 @@ public class ControllerVinculador {
 
         // return new ModelAndView(null,"index.html");
         return "Reintentar";
+    }
+
+    private List<String> egresosLista(List<Egreso> egresosVinculados) {
+
+        List<String> lista = egresosVinculados.stream().map(e -> "Id: " + e.getId() + ", Monto: " + e.getValorTotal()).collect(Collectors.toList());
+                return lista;
     }
 
     private void limpiarIngresos(EntityManager entityManager) {
