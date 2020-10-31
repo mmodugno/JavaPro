@@ -2,6 +2,8 @@ package usuarios;
 
 import organizacion.Organizacion;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
@@ -27,9 +29,9 @@ public class CreadorUsuario {
 		if(validator.weakPassword(newPassword)) throw new CreationError("La password es demasiado debil. Por favor, elija otra.");
 		
 		if(tipoUsuario == "admin") {
-			return new UsuarioAdministrador(newUser, newPassword, organizacion, true);
+			return new UsuarioAdministrador(newUser, DigestUtils.md5Hex(newPassword), organizacion, true);
 		} else if (tipoUsuario == "estandar"){
-			return new UsuarioEstandard(newUser, newPassword, organizacion, true);
+			return new UsuarioEstandard(newUser, DigestUtils.md5Hex(newPassword), organizacion, true);
 		}else {
 			throw new CreationError("No reconozco el tipo de usuario");
 		}
