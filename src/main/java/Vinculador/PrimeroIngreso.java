@@ -16,6 +16,7 @@ public class PrimeroIngreso extends CriterioDeVinculacion {
 
     @Override
     void vincular(List<Egreso> egresos, List<Ingreso> ingresos, Vinculador vinculador) throws ListaVaciaExcepcion, MontoSuperadoExcepcion {
+
         ordenarValor(ingresos, egresos);
 
 
@@ -25,7 +26,8 @@ public class PrimeroIngreso extends CriterioDeVinculacion {
                 seAsigno = false;
                 int tam_egresos = egresos.size();
                 for (int e = 0; e<tam_egresos; e++) {
-                    Egreso egreso = egresos.get(e);
+                    Egreso egreso = null ;
+                    egreso = egresos.get(e);
                     for (int z = 0; z < ingresos.size(); z++) {
                         BalanceIngreso balanceIngreso = null;
                         if (egreso.getValorTotal() <= ingresos.get(z).getMontoSinVincular()) {

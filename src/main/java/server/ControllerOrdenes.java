@@ -74,8 +74,8 @@ public class ControllerOrdenes {
 
     	nuevaOrden.setNecesitaPresupuesto(Integer.parseInt(request.queryParams("presupuesto")));
 
-    	String fecha =  request.queryParams("fecha");   	
-    	LocalDate fechaFinal = LocalDate.parse(fecha);
+    	String fecha =  request.queryParams("fecha");
+		LocalDate fechaFinal = LocalDate.parse(fecha);
     	nuevaOrden.setFecha(fechaFinal);
     	
 
