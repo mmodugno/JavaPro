@@ -39,7 +39,10 @@ public class ControllerOrdenes {
     }
 
     public ModelAndView ordenes(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException {
-
+    	
+    	if(request.session().attribute("user") == null )
+    		response.redirect("/login");
+        
         //DOMINIO
 		RepositorioOrdenDeCompra repo = new RepositorioOrdenDeCompra(entityManager);
         List<OrdenDeCompra> ordenes = repo.todos();
@@ -51,7 +54,7 @@ public class ControllerOrdenes {
         //OUTPUT
         Map<String, Object> map = new HashMap<>();
         map.put("ordenes", ordenes);
-
+        map.put("usuario", request.session().attribute("user"));
 
         return new ModelAndView(map, "ordenes.html");
     }
