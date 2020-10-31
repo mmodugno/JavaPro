@@ -139,6 +139,9 @@ public class ControllerIngresos {
 	}
 
 	public ModelAndView ingresos(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException {
+		
+		if(request.session().attribute("user") == null )
+    		response.redirect("/login");
 		RepositorioIngreso repo = new RepositorioIngreso(entityManager);
 
 		//DOMINIO
@@ -147,6 +150,7 @@ public class ControllerIngresos {
 		//OUTPUT
 		Map<String, Object> map = new HashMap<>();
 		map.put("ingresos", ingresos);
+		map.put("usuario", request.session().attribute("user"));
 
 		return new ModelAndView(map, "ingresos.html");
 	}

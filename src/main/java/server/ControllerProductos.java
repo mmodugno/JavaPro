@@ -18,7 +18,8 @@ public class ControllerProductos {
 
 
     public ModelAndView productos(Request request, Response response, EntityManager entityManager){
-
+    	if(request.session().attribute("user") == null )
+    		response.redirect("/login");
         RepositorioProducto repositorio = new RepositorioProducto(entityManager);
         //DOMINIO
         List<Producto> productos = repositorio.todos();
@@ -26,6 +27,7 @@ public class ControllerProductos {
         //OUTPUT
         Map<String, Object> map = new HashMap<>();
         map.put("productos", productos);
+        map.put("usuario", request.session().attribute("user"));
 
         return new ModelAndView(map, "productos.html");
 

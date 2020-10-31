@@ -5,6 +5,7 @@ import auditoria.CantidadPresupuestos;
 import auditoria.Reporte;
 import auditoria.Validador;
 import com.google.gson.Gson;
+import com.mercadopago.resources.datastructures.merchantorder.Collector;
 import egreso.Egreso;
 import egreso.Ingreso;
 import egreso.MontoSuperadoExcepcion;
@@ -19,6 +20,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -62,7 +64,9 @@ public class ControllerVinculador {
 
 
     public ModelAndView vinculaciones(Request request, Response response) {
-
+    	
+    	if(request.session().attribute("user") == null )
+    		response.redirect("/login");
 
         Map<String, Object> map = new HashMap<>();
 
@@ -76,6 +80,7 @@ public class ControllerVinculador {
         // CriterioDeVinculacion criterio3= new Mix();
         //criterio3.setNombre("Mix");
         map.put("criterios", criterios);
+        map.put("usuario", request.session().attribute("user"));
 
         return new ModelAndView(map, "vinculaciones.html");
     }
@@ -92,6 +97,7 @@ public class ControllerVinculador {
             vinculador.setEntidadJuridica(entidadJuridica);
 
 
+
             /*
             String desdeFecha = request.params("fechaDesde");
             LocalDate desdeFechaFinal = LocalDate.parse(desdeFecha);
@@ -104,12 +110,12 @@ public class ControllerVinculador {
 
             List<Ingreso> ingresos = repoIngreso.todos();
             if(request.queryParams("fechaDesde" )!= null) {
-                String desdeFecha = request.params("fechaDesde");
+                String desdeFecha = request.queryParams("fechaDesde");
                 LocalDate desdeFechaFinal = LocalDate.parse(desdeFecha);
                 ingresosDesde(desdeFechaFinal, ingresos);
             }
             if(request.queryParams("fechaHasta" )!=null) {
-                String hastaFecha = request.params("fechaHasta");
+                String hastaFecha = request.queryParams("fechaHasta");
                 LocalDate hastaFechaFinal = LocalDate.parse(hastaFecha);
                 ingresosHasta(hastaFechaFinal, ingresos);
             }
@@ -117,12 +123,12 @@ public class ControllerVinculador {
 
             List<Egreso> egresos = repoEgreso.todos();
             if(request.queryParams("fechaDesde" )!= null) {
-                String desdeFecha = request.params("fechaDesde");
+                String desdeFecha = request.queryParams("fechaDesde");
                 LocalDate desdeFechaFinal = LocalDate.parse(desdeFecha);
                 egresosDesde(desdeFechaFinal, egresos);
             }
             if(request.queryParams("fechaHasta" )!=null) {
-                String hastaFecha = request.params("fechaHasta");
+                String hastaFecha = request.queryParams("fechaHasta");
                 LocalDate hastaFechaFinal = LocalDate.parse(hastaFecha);
                 egresosHasta(hastaFechaFinal, egresos);
             }
@@ -138,8 +144,13 @@ public class ControllerVinculador {
             }
 
 
-            List<Integer> listaBalanceIngresos = vinculador.getBalanceIngresos().stream().map(i -> i.getIngreso().getId()).collect(Collectors.toList());
-            List<Integer> listaBalanceEgresos = vinculador.getBalanceEgresos().stream().map(i -> i.getEgreso().getId()).collect(Collectors.toList());
+            List<String> listaBalanceIngresos = vinculador.getBalanceIngresos().stream().map(i -> "Ingreso: " + i.getIngreso().getId()
+                    + ", Descripcion:  " +i.getIngreso().getDescripcion() + ", Monto Vinculado:" + i.getIngreso().getMontoVinculado()
+            + "| Egresos: " + egresosLista(i.getEgresosVinculados())).collect(Collectors.toList());
+
+            List<String> listaBalanceEgresos = vinculador.getBalanceEgresos().stream().map(i -> "Egreso: " + i.getEgreso().getId()
+            + ", Monto: " +i.getEgreso().getValorTotal()+ "| Ingresos: "+i.getValorIngresos()+ ", Valores: "+ i.getValorIngresos())
+                    .collect(Collectors.toList());
 
 
             Gson gson = new Gson();
@@ -179,6 +190,12 @@ public class ControllerVinculador {
 
         // return new ModelAndView(null,"index.html");
         return "Reintentar";
+    }
+
+    private List<String> egresosLista(List<Egreso> egresosVinculados) {
+
+        List<String> lista = egresosVinculados.stream().map(e -> "Id: " + e.getId() + ", Monto: " + e.getValorTotal()).collect(Collectors.toList());
+                return lista;
     }
 
     private void limpiarIngresos(EntityManager entityManager) {
