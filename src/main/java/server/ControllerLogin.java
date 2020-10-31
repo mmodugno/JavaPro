@@ -5,6 +5,8 @@ import java.sql.SQLException;
 
 import javax.persistence.EntityManager;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import repositorios.RepositorioUsuario;
 import spark.ModelAndView;
 import spark.Request;
@@ -36,7 +38,7 @@ public class ControllerLogin {
 	        response.redirect("/loginIncorrecto");
         }
         
-        if((usuario.getNombre().equals(user)) && (usuario.getPassword().equals(pass))) {
+        if((usuario.getNombre().equals(user)) && (usuario.getPassword().equals(DigestUtils.md5Hex(pass)))) {
         	
         	request.session(true);
             request.session().attribute("user", user);

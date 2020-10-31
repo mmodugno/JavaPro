@@ -17,6 +17,7 @@ import spark.*;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import usuarios.CategoriaDelSistema;
 import usuarios.CreationError;
+import usuarios.Usuario;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -281,7 +282,9 @@ public class Server {
     	
     	if(request.session().attribute("user") == null )
     		response.redirect("/login");
-        return new ModelAndView(null, "index.html");
+    	Map<String, Object> map = new HashMap<>();
+        map.put("usuario", request.session().attribute("user"));
+        return new ModelAndView( map , "index.html");
     }
     
     
