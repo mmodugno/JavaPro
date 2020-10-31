@@ -316,6 +316,8 @@ public class Server {
     public static ModelAndView egresos(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException {
 
         //INIT
+    	if(request.session().attribute("user") == null )
+    		response.redirect("/login");
         RepositorioEgreso repo = new RepositorioEgreso(entityManager);
 
         //DOMINIO
@@ -326,6 +328,7 @@ public class Server {
         //OUTPUT
         Map<String, Object> map = new HashMap<>();
         map.put("egresos", egresos);
+        map.put("usuario", request.session().attribute("user"));
 
         return new ModelAndView(map, "egresos.html");
     }
