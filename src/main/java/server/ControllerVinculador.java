@@ -20,6 +20,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -93,6 +94,7 @@ public class ControllerVinculador {
             vinculador.setEntidadJuridica(entidadJuridica);
 
 
+
             /*
             String desdeFecha = request.params("fechaDesde");
             LocalDate desdeFechaFinal = LocalDate.parse(desdeFecha);
@@ -105,12 +107,12 @@ public class ControllerVinculador {
 
             List<Ingreso> ingresos = repoIngreso.todos();
             if(request.queryParams("fechaDesde" )!= null) {
-                String desdeFecha = request.params("fechaDesde");
+                String desdeFecha = request.queryParams("fechaDesde");
                 LocalDate desdeFechaFinal = LocalDate.parse(desdeFecha);
                 ingresosDesde(desdeFechaFinal, ingresos);
             }
             if(request.queryParams("fechaHasta" )!=null) {
-                String hastaFecha = request.params("fechaHasta");
+                String hastaFecha = request.queryParams("fechaHasta");
                 LocalDate hastaFechaFinal = LocalDate.parse(hastaFecha);
                 ingresosHasta(hastaFechaFinal, ingresos);
             }
@@ -118,12 +120,12 @@ public class ControllerVinculador {
 
             List<Egreso> egresos = repoEgreso.todos();
             if(request.queryParams("fechaDesde" )!= null) {
-                String desdeFecha = request.params("fechaDesde");
+                String desdeFecha = request.queryParams("fechaDesde");
                 LocalDate desdeFechaFinal = LocalDate.parse(desdeFecha);
                 egresosDesde(desdeFechaFinal, egresos);
             }
             if(request.queryParams("fechaHasta" )!=null) {
-                String hastaFecha = request.params("fechaHasta");
+                String hastaFecha = request.queryParams("fechaHasta");
                 LocalDate hastaFechaFinal = LocalDate.parse(hastaFecha);
                 egresosHasta(hastaFechaFinal, egresos);
             }
@@ -142,7 +144,7 @@ public class ControllerVinculador {
             List<String> listaBalanceIngresos = vinculador.getBalanceIngresos().stream().map(i -> "Ingreso: " + i.getIngreso().getId()
                     + ", Descripcion:  " +i.getIngreso().getDescripcion() + ", Monto Vinculado:" + i.getIngreso().getMontoVinculado()
             + "| Egresos: " + egresosLista(i.getEgresosVinculados())).collect(Collectors.toList());
-            
+
             List<String> listaBalanceEgresos = vinculador.getBalanceEgresos().stream().map(i -> "Egreso: " + i.getEgreso().getId()
             + ", Monto: " +i.getEgreso().getValorTotal()+ "| Ingresos: "+i.getValorIngresos()+ ", Valores: "+ i.getValorIngresos())
                     .collect(Collectors.toList());
