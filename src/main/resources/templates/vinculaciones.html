@@ -11,26 +11,26 @@
         <div>
 
             <label >Criterio de Viculacion</label>
-                <select name="vinculaciones">
+                <select name="criterioElegido" id="criterioElegido">
                     {{#each criterios}}
                     <option id="{{nombre}}">{{nombre}}</option>
                     {{/each}}
                 </select>
         </div>
-        <div>
+        <!--div>
             <label>Condiciones Para Vinculacion</label>
                 <select>
                     <option>OP1</option>
                     <option>OP2</option>
                 </select>
-        </div>
+        </div-->
         </fieldset>
 
     <fieldset>
     <div class="show-vinculacion">
         <label>Fecha Desde:</label>
         <div class='input-group date' id='datetimepicker1'>
-            <input type='date' class="form-control" name="fechaDesde" id="fechaDesde" placeholder="DD/MM/AAAA" />
+            <input type="date" class="form-control" name="fechaDesde" id="fechaDesde" placeholder="DD/MM/AAAA" />
         </div>
 
         <label>Fecha Hasta</label>
@@ -60,14 +60,12 @@
 
     function mostrarSeleccionado() {
 
-        if(document.getElementById('primeroEgreso')){
-            window.location = "/vincular?criterio=primeroEgreso";
+
+
+        if(document.getElementById('criterioElegido')){
+            window.location = "/vincular?criterio="+document.getElementById('criterioElegido').value+"&fechaDesde="+document.getElementById('fechaDesde').value+"&fechaHasta="+document.getElementById('fechaHasta').value;
               alert("Redirigiendo al resultado de la vinculacion...");
            
-        }else if(document.getElementById('primeroIngreso')){
-            window.location = "/vincular?criterio=primeroIngreso";
-            alert("Redirigiendo al resultado de la vinculacion...");
-
         }
         else{
             window.location = "/working";
