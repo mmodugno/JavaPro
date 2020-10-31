@@ -64,7 +64,9 @@ public class ControllerVinculador {
 
 
     public ModelAndView vinculaciones(Request request, Response response) {
-
+    	
+    	if(request.session().attribute("user") == null )
+    		response.redirect("/login");
 
         Map<String, Object> map = new HashMap<>();
 
@@ -78,6 +80,7 @@ public class ControllerVinculador {
         // CriterioDeVinculacion criterio3= new Mix();
         //criterio3.setNombre("Mix");
         map.put("criterios", criterios);
+        map.put("usuario", request.session().attribute("user"));
 
         return new ModelAndView(map, "vinculaciones.html");
     }
