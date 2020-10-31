@@ -450,6 +450,9 @@ public class Server {
     
     public static ModelAndView mostrarCategorias(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException {
     	
+    	if(request.session().attribute("user") == null )
+    		response.redirect("/login");
+    	
     	RepositorioCategoria repoCategoria = new RepositorioCategoria(entityManager);
     	
     	List<CategoriaDelSistema> categorias = repoCategoria.todos();
@@ -494,6 +497,7 @@ public class Server {
     	}
     	
     	map.put("categorias", categorias);
+    	map.put("usuario", request.session().attribute("user"));
     	
 		return new ModelAndView(map, "categorias.html");
     	
