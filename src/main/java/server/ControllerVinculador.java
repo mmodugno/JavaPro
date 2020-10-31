@@ -19,6 +19,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 
 import javax.persistence.EntityManager;
@@ -60,28 +61,28 @@ public class ControllerVinculador {
     }
 
 
-    public ModelAndView vinculaciones(Request request, Response response){
+    public ModelAndView vinculaciones(Request request, Response response) {
 
 
         Map<String, Object> map = new HashMap<>();
 
         List<CriterioDeVinculacion> criterios = new ArrayList<>();
-        CriterioDeVinculacion criterio1= new PrimeroEgreso();
+        CriterioDeVinculacion criterio1 = new PrimeroEgreso();
         criterio1.setNombre("primeroEgreso");
-        CriterioDeVinculacion criterio2= new PrimeroIngreso();
+        CriterioDeVinculacion criterio2 = new PrimeroIngreso();
         criterio2.setNombre("PrimeroIngreso");
         criterios.add(criterio1);
         criterios.add(criterio2);
-       // CriterioDeVinculacion criterio3= new Mix();
+        // CriterioDeVinculacion criterio3= new Mix();
         //criterio3.setNombre("Mix");
-        map.put("criterios",criterios);
+        map.put("criterios", criterios);
 
         return new ModelAndView(map, "vinculaciones.html");
     }
 
     public String vincular(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException, IOException, ListaVaciaExcepcion, MontoSuperadoExcepcion {
 
-        if(request.queryParams("criterio") != null) {
+        if (request.queryParams("criterio") != null) {
             String criterio = request.queryParams("criterio");
 
             Vinculador vinculador = new Vinculador();
@@ -90,40 +91,72 @@ public class ControllerVinculador {
             EntidadJuridica entidadJuridica = new EntidadJuridica("Web Social ONG", "Web Social", "90-61775331-4", 1143, 01, Collections.emptyList());
             vinculador.setEntidadJuridica(entidadJuridica);
 
+
+            /*
+            String desdeFecha = request.params("fechaDesde");
+            LocalDate desdeFechaFinal = LocalDate.parse(desdeFecha);
+
+            String hastaFecha = request.params("fechaHasta");
+            LocalDate hastaFechaFinal = LocalDate.parse(hastaFecha);*/
+
             RepositorioIngreso repoIngreso = new RepositorioIngreso(entityManager);
             RepositorioEgreso repoEgreso = new RepositorioEgreso(entityManager);
+
             List<Ingreso> ingresos = repoIngreso.todos();
+            if(request.queryParams("fechaDesde" )!= null) {
+                String desdeFecha = request.params("fechaDesde");
+                LocalDate desdeFechaFinal = LocalDate.parse(desdeFecha);
+                ingresosDesde(desdeFechaFinal, ingresos);
+            }
+            if(request.queryParams("fechaHasta" )!=null) {
+                String hastaFecha = request.params("fechaHasta");
+                LocalDate hastaFechaFinal = LocalDate.parse(hastaFecha);
+                ingresosHasta(hastaFechaFinal, ingresos);
+            }
             entidadJuridica.setIngresos(ingresos);
+
             List<Egreso> egresos = repoEgreso.todos();
+            if(request.queryParams("fechaDesde" )!= null) {
+                String desdeFecha = request.params("fechaDesde");
+                LocalDate desdeFechaFinal = LocalDate.parse(desdeFecha);
+                egresosDesde(desdeFechaFinal, egresos);
+            }
+            if(request.queryParams("fechaHasta" )!=null) {
+                String hastaFecha = request.params("fechaHasta");
+                LocalDate hastaFechaFinal = LocalDate.parse(hastaFecha);
+                egresosHasta(hastaFechaFinal, egresos);
+            }
             entidadJuridica.setEgresos(egresos);
             vinculador.obtenerIngresosEgresos();
 
-            if(criterio.equals("primeroEgreso")){
+
+            if (criterio.equals("primeroEgreso")) {
                 vinculador.vincular(primeroEgreso);
             }
-            if(criterio.equals("primeroIngreso")){
+            if (criterio.equals("primeroIngreso")) {
                 vinculador.vincular(primeroIngreso);
             }
 
-            List<Integer> listaBalanceIngresos = vinculador.getBalanceIngresos().stream().map(i -> i.getIngreso().getId()).collect(Collectors.toList()); 
-            List<Integer> listaBalanceEgresos = vinculador.getBalanceEgresos().stream().map(i -> i.getEgreso().getId()).collect(Collectors.toList()); 
-            
-            
-            Gson gson = new Gson();
-            
-            Map<String,Object> map = new HashMap<>();
 
-            map.put("listaBalanceIngresos",listaBalanceIngresos);
-            map.put("listaBalanceEgresos",listaBalanceEgresos);
+            List<Integer> listaBalanceIngresos = vinculador.getBalanceIngresos().stream().map(i -> i.getIngreso().getId()).collect(Collectors.toList());
+            List<Integer> listaBalanceEgresos = vinculador.getBalanceEgresos().stream().map(i -> i.getEgreso().getId()).collect(Collectors.toList());
+
+
+            Gson gson = new Gson();
+
+            Map<String, Object> map = new HashMap<>();
+
+            map.put("listaBalanceIngresos", listaBalanceIngresos);
+            map.put("listaBalanceEgresos", listaBalanceEgresos);
             
            /* String JSON1 = gson.toJson(vinculador.getBalanceIngresos());
             String JSON2 = gson.toJson(vinculador.getBalanceEgresos());
 
             String JSON = JSON1 + JSON2;*/
-            
-            
+
+
             //return JSON;
-            
+            limpiarIngresos(entityManager);
             return gson.toJson(map);
             /* Gso
             System.out.println(JSON);
@@ -144,21 +177,43 @@ public class ControllerVinculador {
 
         }
 
-       // return new ModelAndView(null,"index.html");
+        // return new ModelAndView(null,"index.html");
         return "Reintentar";
     }
 
+    private void limpiarIngresos(EntityManager entityManager) {
+        RepositorioIngreso repo = new RepositorioIngreso(entityManager);
+        repo.todos().forEach(a -> {
+            try {
+                a.setMontoVinculado(0.00);
+            } catch (MontoSuperadoExcepcion montoSuperadoExcepcion) {
+                montoSuperadoExcepcion.printStackTrace();
+            }
+        });
+    }
 
-public static String devuelveJSON(String JSON) throws CloneNotSupportedException, IOException {
-	return JSON;
 
-}
-/*
-    public static List<Ingreso> ingresosDesde(){}
-    public static List<Ingreso> ingresosHasta(){}
-    public static List<Egreso> egresosDesde(){}
-    public static List<Egreso> egresosDesde(){}*/
-}
+    public static String devuelveJSON(String JSON) throws CloneNotSupportedException, IOException {
+        return JSON;
+
+    }
+
+    public static List<Ingreso> ingresosDesde(LocalDate fecha, List<Ingreso> ingresos) {
+        return ingresos.stream().filter(i -> i.getFecha().isAfter(fecha)).collect(Collectors.toList());
+    }
+
+    public static List<Ingreso> ingresosHasta(LocalDate fecha, List<Ingreso> ingresos) {
+        return ingresos.stream().filter(i -> i.getFecha().isBefore(fecha)).collect(Collectors.toList());
+    }
+
+    public static List<Egreso> egresosDesde(LocalDate fecha, List<Egreso> egresos) {
+        return egresos.stream().filter(e -> e.getFecha().isAfter(fecha)).collect(Collectors.toList());
+    }
+
+    public static List<Egreso> egresosHasta(LocalDate fecha, List<Egreso> egresos) {
+        return egresos.stream().filter(e -> e.getFecha().isBefore(fecha)).collect(Collectors.toList());
+    }
+
 
 /*
    public static String Validar(Request request, Response response) throws CloneNotSupportedException, IOException {
@@ -186,3 +241,4 @@ public static String devuelveJSON(String JSON) throws CloneNotSupportedException
         	
         }
  */
+}

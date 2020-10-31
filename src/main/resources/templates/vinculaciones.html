@@ -25,21 +25,23 @@
                 </select>
         </div>
         </fieldset>
-    </form>
 
+    <fieldset>
     <div class="show-vinculacion">
         <label>Fecha Desde:</label>
-        <div class='input-group date' id='desdeFecha'>
+        <div class='input-group date' id='datetimepicker1'>
             <input type='date' class="form-control" name="fechaDesde" id="fechaDesde" placeholder="DD/MM/AAAA" />
         </div>
 
         <label>Fecha Hasta</label>
-        <div class='input-group date' id='hastaFecha'>
+        <div class='input-group date' id='datetimepicker2'>
             <input type='date' class="form-control" name="fechaHasta" id="fechaHasta" placeholder="DD/MM/AAAA" />
         </div>
 
         <input type="button" onclick="mostrarSeleccionado()" value="Vincular">
     </div>
+    </fieldset>
+    </form>
 
 
 
@@ -62,6 +64,10 @@
             window.location = "/vincular?criterio=primeroEgreso";
               alert("Redirigiendo al resultado de la vinculacion...");
            
+        }else if(document.getElementById('primeroIngreso')){
+            window.location = "/vincular?criterio=primeroIngreso";
+            alert("Redirigiendo al resultado de la vinculacion...");
+
         }
         else{
             window.location = "/working";

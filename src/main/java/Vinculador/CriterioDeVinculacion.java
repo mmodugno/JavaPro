@@ -10,9 +10,6 @@ import java.util.stream.Collectors;
 
 public abstract class CriterioDeVinculacion {
 
-
-
-
     private String nombre = "";
 
     public CriterioDeVinculacion() {
