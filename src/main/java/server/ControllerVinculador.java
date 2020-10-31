@@ -142,7 +142,10 @@ public class ControllerVinculador {
             List<String> listaBalanceIngresos = vinculador.getBalanceIngresos().stream().map(i -> "Ingreso: " + i.getIngreso().getId()
                     + ", Descripcion:  " +i.getIngreso().getDescripcion() + ", Monto Vinculado:" + i.getIngreso().getMontoVinculado()
             + "| Egresos: " + egresosLista(i.getEgresosVinculados())).collect(Collectors.toList());
-            List<Integer> listaBalanceEgresos = vinculador.getBalanceEgresos().stream().map(i -> i.getEgreso().getId()).collect(Collectors.toList());
+            
+            List<String> listaBalanceEgresos = vinculador.getBalanceEgresos().stream().map(i -> "Egreso: " + i.getEgreso().getId()
+            + ", Monto: " +i.getEgreso().getValorTotal()+ "| Ingresos: "+i.getValorIngresos()+ ", Valores: "+ i.getValorIngresos())
+                    .collect(Collectors.toList());
 
 
             Gson gson = new Gson();
