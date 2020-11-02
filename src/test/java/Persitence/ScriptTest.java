@@ -108,7 +108,7 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
 		
 
         //PERSISTIENDO
-		
+
 		 EntityManagerHelper.beginTransaction();
 	       EntityManagerHelper.getEntityManager().persist(item1);
 	       EntityManagerHelper.getEntityManager().persist(item2); 

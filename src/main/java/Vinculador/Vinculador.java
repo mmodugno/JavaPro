@@ -115,12 +115,13 @@ public class Vinculador {
     }
 
     public BalanceIngreso byID(int id) {
-        Optional<BalanceIngreso> ingreso = balanceIngresos.stream().filter(e -> e.getIngreso().getId() == id).findFirst();
 
-        if (ingreso.isPresent()) {
-            return ingreso.get();
-        }
-        else return null;
+        BalanceIngreso ingreso = balanceIngresos.stream().filter(e -> e.getIngreso().getId() == id).findFirst().get();
+
+
+            return ingreso;
+
+
     }
 
 

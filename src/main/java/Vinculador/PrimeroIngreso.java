@@ -2,6 +2,7 @@ package Vinculador;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import egreso.Egreso;
 import egreso.Ingreso;
@@ -31,8 +32,8 @@ public class PrimeroIngreso extends CriterioDeVinculacion {
                     for (int z = 0; z < ingresos.size(); z++) {
                         BalanceIngreso balanceIngreso = null;
                         if (egreso.getValorTotal() <= ingresos.get(z).getMontoSinVincular()) {
-
-                            if (vinculador.getBalanceIngresos().contains(ingresos.get(z))) {
+                        List<Integer> idsIngresos = vinculador.getBalanceIngresos().stream().map(a -> a.getIngreso().getId()).collect(Collectors.toList());
+                            if (idsIngresos.contains(ingresos.get(z))) {
                                 balanceIngreso = vinculador.byID(ingresos.get(z).getId());
                             } else {
                                 balanceIngreso = new BalanceIngreso();

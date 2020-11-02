@@ -86,7 +86,7 @@ public class ControllerVinculador {
     }
 
     public String vincular(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException, IOException, ListaVaciaExcepcion, MontoSuperadoExcepcion {
-
+        limpiarIngresos(entityManager);
         if (request.queryParams("criterio") != null) {
             String criterio = request.queryParams("criterio");
 
@@ -145,7 +145,7 @@ public class ControllerVinculador {
 
 
             List<String> listaBalanceIngresos = vinculador.getBalanceIngresos().stream().map(i -> "Ingreso: " + i.getIngreso().getId()
-                    + ", Descripcion:  " +i.getIngreso().getDescripcion() + ", Monto Vinculado:" + i.getIngreso().getMontoVinculado()
+                    + ", Descripcion:  " +i.getIngreso().getDescripcion() + ", Monto Total: "+i.getIngreso().getMonto() +", Monto Vinculado:" + i.getIngreso().getMontoVinculado()
             + "| Egresos: " + egresosLista(i.getEgresosVinculados())).collect(Collectors.toList());
 
             List<String> listaBalanceEgresos = vinculador.getBalanceEgresos().stream().map(i -> "Egreso: " + i.getEgreso().getId()
@@ -167,7 +167,7 @@ public class ControllerVinculador {
 
 
             //return JSON;
-            limpiarIngresos(entityManager);
+
             return gson.toJson(map);
             /* Gso
             System.out.println(JSON);
