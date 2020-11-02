@@ -15,17 +15,6 @@ import java.lang.reflect.Type;
 
 public class api {
 	
-	/*
-	public void validate2() {
-		
-		MedioDePago medioDePago = new MedioDePago(TipoMedioPago.Argencard, 221144);
-
-		System.out.println(medioDePago.getPayment_type().toString().equals("Argencard"));
-		
-	}
-	*/
-	
-	
 	public List<Map<String, Object>> getListPaymentMethods() throws MPRestException {
 		MercadoPago.SDK.setBaseUrl("https://api.mercadopago.com");
 		MercadoPago.SDK.configure("TEST-4876257682735912-102121-020195b6c403bfe2f119a8dd2474a72c-333551634");

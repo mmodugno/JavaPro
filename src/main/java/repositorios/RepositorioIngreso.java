@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import egreso.Ingreso;
+import organizacion.EntidadJuridica;
 import producto.Producto;
 import usuarios.CategoriaDelSistema;
 
@@ -55,6 +56,10 @@ public class RepositorioIngreso {
         Ingreso unIngreso = ingresos.stream().filter(ingreso -> ingreso.getDescripcion().equals(descripcion)).findFirst().get();
         return unIngreso;
     }*/
+    
+ 
+    
+    
     public void borrar(Ingreso ingreso) {
         this.entityManager.remove(ingreso);
     }

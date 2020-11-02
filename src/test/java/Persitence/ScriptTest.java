@@ -5,9 +5,11 @@ import static org.junit.Assert.*;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import egreso.*;
+import organizacion.EntidadJuridica;
 import organizacion.Organizacion;
 
 import org.hibernate.metamodel.binding.EntityIdentifier;
@@ -30,13 +32,23 @@ import usuarios.Usuario;
 public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
 
 	@Test
-	public void productoTest() throws CloneNotSupportedException {
-
-	    //PRODUCTOS
+	public void productoTest() throws CloneNotSupportedException, FileNotFoundException, ClassNotFoundException, CreationError, SQLException {
+		
+		//USUARIO y organizaciones
+		
+		CreadorUsuario userMaker = new CreadorUsuario();
+    	Organizacion organizacion = new Organizacion();
+    	
+    	EntidadJuridica entidadJuridica = new EntidadJuridica("Web Social ONG", "Web Social", "90-61775331-4", 1143, 01, Collections.emptyList());
+    	
+    	Usuario userStandard = userMaker.crearUsuario("userStandard", "pru3b@tesT", "estandar", organizacion);
+        
+    	
+		//PRODUCTOS
 		Producto producto1 = new Producto(1, "Monitor", "Monitor 32", TipoItem.ARTICULO);
         Producto producto2 = new Producto(2, "Notebook", "Notebook Lenovo", TipoItem.ARTICULO);
         Producto producto3 = new Producto(3, "Office", "Office365", TipoItem.SERVICIO);
-
+        
         //PROVEEDOR
 
         Proveedor proveedor1 = new Proveedor("Info Tech","22412145696", "6725");
@@ -102,77 +114,107 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
 		egreso2.setCategoria(categoriaMendoza);
 		 
 		egreso3.setCategoria(categoriaARGENTINA);
-
-
-
 		
+		//LISTAS DE EGRESOS/INGRESOS/ORDENES PARA UNA ORG
+
+		List<CategoriaDelSistema> listaCategorias = new ArrayList<>();
+		
+		listaCategorias.add(categoriaBSAS);
+		listaCategorias.add(categoriaMendoza);
+		listaCategorias.add(categoriaARGENTINA);
+		
+		List<Egreso> listaEgresos1 = new ArrayList<>();
+		
+		listaEgresos1.add(egreso1);
+		listaEgresos1.add(egreso2);
+		listaEgresos1.add(egreso3);
+		
+		List<Ingreso> listaIngresos1 = new ArrayList<>();
+		
+		listaIngresos1.add(ingreso1);
+		listaIngresos1.add(ingreso2);
+		listaIngresos1.add(ingreso3);
+		
+		List<OrdenDeCompra> listaOrdenes1 = new ArrayList<>();
+		
+		listaOrdenes1.add(ordenDeCompra);
+		listaOrdenes1.add(ordenDeCompra2);
+		
+		//ASIGNANDO DOCS
+		
+		entidadJuridica.setEgresos(listaEgresos1);
+		entidadJuridica.setIngresos(listaIngresos1);
+		entidadJuridica.setOrdenesPendientes(listaOrdenes1);
+		
+		organizacion.agregarEntidad(entidadJuridica);
 
         //PERSISTIENDO
 		
-		 EntityManagerHelper.beginTransaction();
-	       EntityManagerHelper.getEntityManager().persist(item1);
-	       EntityManagerHelper.getEntityManager().persist(item2); 
-	       EntityManagerHelper.commit();
+
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.getEntityManager().persist(item1);
+		EntityManagerHelper.getEntityManager().persist(item2);
+		EntityManagerHelper.commit();
+
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.getEntityManager().persist(medioDePago);
+		EntityManagerHelper.getEntityManager().persist(medioDePago2);
+		EntityManagerHelper.commit();
+
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.getEntityManager().persist(producto1);
+		EntityManagerHelper.getEntityManager().persist(producto2);
+		EntityManagerHelper.getEntityManager().persist(producto3);
+		EntityManagerHelper.commit();
+
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.getEntityManager().persist(proveedor1);
+		EntityManagerHelper.getEntityManager().persist(proveedor2);
+		EntityManagerHelper.commit();
+
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.getEntityManager().persist(categoriaBSAS);
+		EntityManagerHelper.getEntityManager().persist(categoriaMendoza);
+		EntityManagerHelper.getEntityManager().persist(categoriaARGENTINA);
+		EntityManagerHelper.commit();
+
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.persist(presupuesto1);
+		EntityManagerHelper.persist(presupuesto2);
+		EntityManagerHelper.commit();
+
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.getEntityManager().persist(ordenDeCompra);
+		EntityManagerHelper.getEntityManager().persist(ordenDeCompra2);
+		EntityManagerHelper.commit();
+
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.persist(egreso1);
+		EntityManagerHelper.persist(egreso2);
+		EntityManagerHelper.persist(egreso3);
+		EntityManagerHelper.commit();
+
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.persist(ingreso1);
+		EntityManagerHelper.persist(ingreso2);
+		EntityManagerHelper.persist(ingreso3);
+		EntityManagerHelper.commit();
+			
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.getEntityManager().persist(entidadJuridica);
+		EntityManagerHelper.commit();
 		
-		 EntityManagerHelper.beginTransaction();
-	       EntityManagerHelper.getEntityManager().persist(medioDePago);
-	       EntityManagerHelper.getEntityManager().persist(medioDePago2); 
-	       EntityManagerHelper.commit();
-	        
-        EntityManagerHelper.beginTransaction();
-        EntityManagerHelper.getEntityManager().persist(producto1);
-        EntityManagerHelper.getEntityManager().persist(producto2);
-        EntityManagerHelper.getEntityManager().persist(producto3);
-        EntityManagerHelper.commit();
-
-        EntityManagerHelper.beginTransaction();
-        EntityManagerHelper.getEntityManager().persist(proveedor1);
-        EntityManagerHelper.getEntityManager().persist(proveedor2);
-        EntityManagerHelper.commit();
-
-        EntityManagerHelper.beginTransaction();
-        EntityManagerHelper.getEntityManager().persist(categoriaBSAS);
-        EntityManagerHelper.getEntityManager().persist(categoriaMendoza);
-        EntityManagerHelper.getEntityManager().persist(categoriaARGENTINA);
-        EntityManagerHelper.commit();
-
-
-        EntityManagerHelper.beginTransaction();
-        EntityManagerHelper.persist(presupuesto1);
-        EntityManagerHelper.persist(presupuesto2);
-        EntityManagerHelper.commit();
-
-        EntityManagerHelper.beginTransaction();
-        EntityManagerHelper.getEntityManager().persist(ordenDeCompra);
-        EntityManagerHelper.getEntityManager().persist(ordenDeCompra2);
-        EntityManagerHelper.commit();
-
-        EntityManagerHelper.beginTransaction();
-        EntityManagerHelper.persist(egreso1);
-        EntityManagerHelper.persist(egreso2);
-        EntityManagerHelper.persist(egreso3);
-        EntityManagerHelper.commit();
-
-        EntityManagerHelper.beginTransaction();
-        EntityManagerHelper.persist(ingreso1);
-        EntityManagerHelper.persist(ingreso2);
-        EntityManagerHelper.persist(ingreso3);
-        EntityManagerHelper.commit();
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.getEntityManager().persist(organizacion);
+		EntityManagerHelper.commit();
+		
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.getEntityManager().persist(userStandard);
+		EntityManagerHelper.commit();
         
 	}
 	
-	@Test
-	public void usuarioTest() throws FileNotFoundException, ClassNotFoundException, CreationError, SQLException {
-		
-		CreadorUsuario userMaker = new CreadorUsuario();
-    	Organizacion organizacion = new Organizacion();
-    	
-    	Usuario userStandard = userMaker.crearUsuario("userStandard", "pru3b@tesT", "estandar", organizacion);
-        
-    	EntityManagerHelper.beginTransaction();
-	    EntityManagerHelper.getEntityManager().persist(userStandard);
-	    EntityManagerHelper.commit();
-	}
+	
 	/*SCRIPT BORRAR TABLAS
 	    Use gesoc;
         Drop TABLE gesoc.egreso_documentocomercial, gesoc.documentocomercial, gesoc.egreso,

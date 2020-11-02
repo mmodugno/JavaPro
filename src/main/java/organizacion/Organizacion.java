@@ -2,9 +2,23 @@ package organizacion;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import egreso.*;
 import usuarios.CategoriaDelSistema;
 
+@Entity
+@Table
 public class Organizacion {
 
 	public Organizacion(){
@@ -12,8 +26,14 @@ public class Organizacion {
 		this.entidades = new ArrayList<EntidadJuridica>();
 	}
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<EntidadJuridica> entidades;
 
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<CategoriaDelSistema> categorias = new ArrayList<CategoriaDelSistema>();
 	
 	public void agregarEntidad(EntidadJuridica entidad) {
