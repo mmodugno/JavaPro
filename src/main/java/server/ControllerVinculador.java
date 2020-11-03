@@ -149,7 +149,7 @@ public class ControllerVinculador {
             + "| Egresos: " + egresosLista(i.getEgresosVinculados())).collect(Collectors.toList());
 
             List<String> listaBalanceEgresos = vinculador.getBalanceEgresos().stream().map(i -> "Egreso: " + i.getEgreso().getId()
-            + ", Monto: " +i.getEgreso().getValorTotal()+ "| Ingresos: "+i.getValorIngresos()+ ", Valores: "+ i.getValorIngresos())
+            + ", Monto: " +i.getEgreso().getValorTotal()+ ingresosLista(i.getIngresosVinculados(), i.getValorIngresos()))
                     .collect(Collectors.toList());
 
 
@@ -190,6 +190,12 @@ public class ControllerVinculador {
 
         // return new ModelAndView(null,"index.html");
         return "Reintentar";
+    }
+
+    private String ingresosLista(List<Ingreso> ingresosVinculados, List<Double> valorIngresos) {
+        List<Integer> listaint = ingresosVinculados.stream().map(a -> a.getId()).collect(Collectors.toList());
+        String lista = "Ingresos: "+listaint+ ", Valores: "+ valorIngresos;
+           return lista;
     }
 
     private List<String> egresosLista(List<Egreso> egresosVinculados) {

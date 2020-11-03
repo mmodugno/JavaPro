@@ -76,10 +76,10 @@ public abstract class CriterioDeVinculacion {
 
                     //Por si el ingreso luego de el balance tiene dinero disponible
                     if (montoEgreso < montoIngresos) {
-                        double montoQueQueda = ingresos.get(0).getMonto() - (montoIngresos - montoEgreso);
-                        montoUsado.add(montoQueQueda - ingresos.get(0).getMontoSinVincular());
+                        double montoQueQueda = ingresos.get(0).getMontoSinVincular() - (montoIngresos - montoEgreso);
+                        montoUsado.add(ingresos.get(0).getMontoSinVincular() - (montoIngresos - montoEgreso));
                         ingresosUsados.add(ingresos.get(0));
-                        ingresos.get(0).setMontoVinculado(montoQueQueda);
+                        ingresos.get(0).setMontoVinculado(ingresos. get(0).getMonto() - montoQueQueda);
 
                     } else {
                         montoUsado.add(ingresos.get(0).getMontoSinVincular());
