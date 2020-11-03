@@ -97,10 +97,10 @@ public class Ingreso implements Categorizable{
 	}
 
 	//CUANDO ASOCIO EGRESO MODIFICO EL MONTO VINCULADO
-	public void asociarEgreso(double valor){
+	public void asociarEgreso(double valor) throws MontoSuperadoExcepcion {
 
 
-		montoVinculado += valor;
+		this.setMontoVinculado(this.getMontoVinculado()+valor);
 	}
 
 	public boolean puedoVincular(){

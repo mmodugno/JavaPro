@@ -116,7 +116,7 @@ public class Vinculador {
 
     public BalanceIngreso byID(int id) {
 
-        BalanceIngreso ingreso = balanceIngresos.stream().filter(e -> e.getIngreso().getId() == id).findFirst().get();
+        BalanceIngreso ingreso = balanceIngresos.stream().filter(e -> e.getIngreso().getId() == id).findAny().get();
 
 
             return ingreso;
