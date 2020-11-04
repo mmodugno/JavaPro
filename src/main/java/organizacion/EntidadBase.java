@@ -1,5 +1,14 @@
 package organizacion;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class EntidadBase {
 	public EntidadBase(String nombre, String descripcion, EntidadJuridica entidadJuridica) {
 		super();
@@ -14,8 +23,10 @@ public class EntidadBase {
 	*/
 
 	/*ATRIBUTOS*/
+	@Id
 	private String nombre;
 	private String descripcion;
+	@ManyToOne(cascade = CascadeType.ALL)
 	private EntidadJuridica entidadJuridica;
 
 	/*GETTERS*/

@@ -2,11 +2,16 @@ package server;
 
 import repositorios.RepositorioCategoria;
 import repositorios.RepositorioIngreso;
+import repositorios.RepositorioUsuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import usuarios.CategoriaDelSistema;
+import usuarios.CreationError;
+import usuarios.Usuario;
 
+import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -138,14 +143,37 @@ public class ControllerIngresos {
 
 	}
 
-	public ModelAndView ingresos(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException {
+	public ModelAndView ingresos(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException, FileNotFoundException {
 		
-		if(request.session().attribute("user") == null )
+		if(request.session().attribute("user") == null) {
     		response.redirect("/login");
-		RepositorioIngreso repo = new RepositorioIngreso(entityManager);
-
+    		return new ModelAndView(null, "ingresos.html");
+		}
+		
+		
+		RepositorioUsuario repoUser = null;
+		try {
+			repoUser = new RepositorioUsuario(entityManager);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CreationError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Usuario userActual = repoUser.byNombre(request.session().attribute("user"));
+		
+		//RepositorioIngreso repo = new RepositorioIngreso(entityManager).byEntidades(userActual.getOrganizacion().getEntidades());
+		
 		//DOMINIO
-		List<Ingreso> ingresos = repo.todos();
+		List<Ingreso> ingresos = userActual.getOrganizacion().getEntidades().get(0).getIngresos();
 
 		//OUTPUT
 		Map<String, Object> map = new HashMap<>();
@@ -153,7 +181,7 @@ public class ControllerIngresos {
 		map.put("usuario", request.session().attribute("user"));
 
 		return new ModelAndView(map, "ingresos.html");
-	}
+	} 
 	
 	
 

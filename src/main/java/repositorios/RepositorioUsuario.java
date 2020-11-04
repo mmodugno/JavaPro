@@ -14,6 +14,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import db.EntityManagerHelper;
+import egreso.Egreso;
 import organizacion.Organizacion;
 import producto.Producto;
 import usuarios.CreadorUsuario;
@@ -63,6 +64,18 @@ public class RepositorioUsuario {
 
     public void borrar(String nombre) {
         usuarios = usuarios.stream().filter(usuario -> !usuario.getNombre().equals(nombre)).collect(Collectors.toList());
+    }
+    
+    public Usuario byNombre(String nombre) {
+    	
+    	CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Usuario> consulta = cb.createQuery(Usuario.class);
+        Root<Usuario> usuario = consulta.from(Usuario.class);
+        Predicate condicion = cb.equal(usuario.get("nombre"),nombre);
+        CriteriaQuery<Usuario> where = consulta.select(usuario).where(condicion);
+        
+        return this.entityManager.createQuery(where).getSingleResult();
+      
     }
 
     public void crear(Usuario usuario) {

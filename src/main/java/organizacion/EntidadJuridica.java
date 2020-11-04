@@ -1,11 +1,21 @@
 package organizacion;
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import egreso.*;
 import usuarios.CategoriaDelSistema;
 
+@Entity
+@Table
 public class EntidadJuridica {
 
 	/*CONSTRUCTOR*/
@@ -23,6 +33,14 @@ public class EntidadJuridica {
 		this.ingresos = new ArrayList<Ingreso>();
 
 	}
+	
+	public EntidadJuridica() {
+		super();
+		this.egresos = new ArrayList<Egreso>();
+		this.ordenesPendientes = new ArrayList<OrdenDeCompra>();
+		this.ingresos = new ArrayList<Ingreso>();
+
+	}
 	/*
 	 * setRazonSocial(razonSocial);
 	 * setNombre(nombre);
@@ -32,16 +50,26 @@ public class EntidadJuridica {
 	 * setEntidadesBase(entidadesBase);
 	 */
 
+	
+	
 	/*ATRIBUTOS*/
+	@Id
 	private String razonSocial;
 	private String nombre;
 	private String cuit;
 	private int direccionPostal;
 	private int codInscripcion;
 
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<EntidadBase> entidadesBase;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Egreso> egresos;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<OrdenDeCompra> ordenesPendientes;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Ingreso> ingresos;
 
 	/*GETTERS*/
