@@ -7,11 +7,7 @@ import egreso.MontoSuperadoExcepcion;
 import egreso.OrdenDeCompra;
 import egreso.Presupuesto;
 import meliApi.api;
-import repositorios.RepositorioCategoria;
-import repositorios.RepositorioEgreso;
-import repositorios.RepositorioIngreso;
-import repositorios.RepositorioOrdenDeCompra;
-import repositorios.RepositorioPresupuesto;
+import repositorios.*;
 import spark.*;
 
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -316,13 +312,33 @@ public class Server {
     public static ModelAndView egresos(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException {
 
         //INIT
-    	if(request.session().attribute("user") == null )
-    		response.redirect("/login");
-        RepositorioEgreso repo = new RepositorioEgreso(entityManager);
+        if(request.session().attribute("user") == null) {
+            response.redirect("/login");
+            return new ModelAndView(null, "ingresos.html");
+        }
+
+        RepositorioUsuario repoUser = null;
+        try {
+            repoUser = new RepositorioUsuario(entityManager);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (CreationError e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        Usuario userActual = repoUser.byNombre(request.session().attribute("user"));
+
 
         //DOMINIO
-        List<Egreso> egresos = repo.todos();
- 
+        List<Egreso> egresos = userActual.getOrganizacion().getEntidades().get(0).getEgresos();
          
    
         //OUTPUT
