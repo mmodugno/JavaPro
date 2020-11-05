@@ -174,7 +174,7 @@ public class Server {
 
         //VINCULADOR
 
-        get("/vinculaciones", controllerVinculador::vinculaciones, engine);
+        get("/vinculaciones", TemplWithTransaction(controllerVinculador::vinculaciones), engine);
        // get("/vincular", controllerVinculador::vincular, engine);
 
         get("/vincular", RouteWithTransaction(controllerVinculador::vincular));

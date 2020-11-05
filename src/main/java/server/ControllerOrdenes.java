@@ -7,10 +7,7 @@ import egreso.Presupuesto;
 import producto.Item;
 import producto.Producto;
 import producto.Proveedor;
-import repositorios.RepositorioEgreso;
-import repositorios.RepositorioOrdenDeCompra;
-import repositorios.RepositorioPresupuesto;
-import repositorios.RepositorioProducto;
+import repositorios.*;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -18,12 +15,15 @@ import spark.Response;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
 import com.google.gson.Gson;
+import usuarios.CreationError;
+import usuarios.Usuario;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -39,13 +39,35 @@ public class ControllerOrdenes {
     }
 
     public ModelAndView ordenes(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException {
-    	
-    	if(request.session().attribute("user") == null )
-    		response.redirect("/login");
+
+		//INIT
+		if(request.session().attribute("user") == null) {
+			response.redirect("/login");
+			return new ModelAndView(null, "ingresos.html");
+		}
+
+		RepositorioUsuario repoUser = null;
+		try {
+			repoUser = new RepositorioUsuario(entityManager);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CreationError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Usuario userActual = repoUser.byNombre(request.session().attribute("user"));
         
         //DOMINIO
 		RepositorioOrdenDeCompra repo = new RepositorioOrdenDeCompra(entityManager);
-        List<OrdenDeCompra> ordenes = repo.todos();
+        List<OrdenDeCompra> ordenes = userActual.getOrganizacion().getEntidades().get(0).getOrdenesPendientes();
         /** **PARA PROBAR SI ANDA EL CERRAR** **/
         //repo.todos().get(0).setCerrado(true);
         /** No las marca como cerrada si o no porque técnicamente las creamos de 0 y no son creadas con el egreso.

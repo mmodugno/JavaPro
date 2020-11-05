@@ -17,6 +17,7 @@ import usuarios.Usuario;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -143,7 +144,9 @@ public class VincularTest {
 
     @Test
     public void vincularIngresoEgreso() throws ListaVaciaExcepcion, MontoSuperadoExcepcion {
-        vinculador.obtenerIngresosEgresos();
+        LocalDate desde = LocalDate.parse("2020-01-01");
+        LocalDate hasta = LocalDate.parse("2021-01-01");
+        vinculador.obtenerIngresosEgresos(desde, hasta);
         vinculador.vincular(primeroEgreso);
         Assert.assertEquals(1,vinculador.getBalanceIngresos().get(0).getEgresosVinculados().size());
         Assert.assertEquals(vinculador.getBalanceIngresos().get(0).getEgresosVinculados().get(0),egreso);
@@ -197,8 +200,9 @@ public class VincularTest {
         egreso2 = entidadJuridica.getEgresos().get(1);
         primerOrganizacion.getEntidades().get(0).nuevoEgreso(ordenDeCompra3); // Obtengo primera Entidad para agregarle los Egresos
         egreso3 = entidadJuridica.getEgresos().get(2);
-
-        vinculador.obtenerIngresosEgresos();
+        LocalDate desde = LocalDate.parse("2020-01-01");
+        LocalDate hasta = LocalDate.parse("2021-01-01");
+        vinculador.obtenerIngresosEgresos(desde, hasta);
         vinculador.vincular(primeroEgreso);
 
         /*Assert.assertTrue(egreso2.isVinculado());

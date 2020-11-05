@@ -17,6 +17,7 @@
                     {{/each}}
                 </select>
         </div>
+         <input id="user" name="user" value="{{usuarioActual.nombre}}" hidden>
         <!--div>
             <label>Condiciones Para Vinculacion</label>
                 <select>
@@ -63,7 +64,7 @@
 
 
         if(document.getElementById('criterioElegido')){
-            window.location = "/vincular?criterio="+document.getElementById('criterioElegido').value+"&fechaDesde="+document.getElementById('fechaDesde').value+"&fechaHasta="+document.getElementById('fechaHasta').value;
+            window.location = "/vincular?criterio="+document.getElementById('criterioElegido').value+"&fechaDesde="+document.getElementById('fechaDesde').value+"&fechaHasta="+document.getElementById('fechaHasta').value+"&user="+document.getElementById('user').value;
               alert("Redirigiendo al resultado de la vinculacion...");
            
         }

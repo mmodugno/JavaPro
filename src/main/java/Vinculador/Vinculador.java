@@ -2,9 +2,11 @@ package Vinculador;
 import egreso.*;
 import organizacion.EntidadJuridica;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Vinculador {
 
@@ -80,7 +82,7 @@ public class Vinculador {
         this.condiciones = condiciones;
     }
 
-    public void obtenerIngresosEgresos() throws ListaVaciaExcepcion{
+    public void obtenerIngresosEgresos(LocalDate desde, LocalDate hasta) throws ListaVaciaExcepcion{
         if(entidadJuridica.getIngresos().isEmpty()) {
             throw new ListaVaciaExcepcion("La lista de ingresos de la entidad juruidica esta vacia");
         }
@@ -102,7 +104,10 @@ public class Vinculador {
                 montoSuperadoExcepcion.printStackTrace();
             }
         });
-
+        ingresosDesde(desde, ingresosSinVincular);
+        ingresosHasta(hasta,ingresosSinVincular);
+        egresosDesde(desde,egresosSinVincular);
+        egresosHasta(hasta,egresosSinVincular);
 
         /*
         egresosSinVincular = filtrarEgresos(entidadJuridica.getEgresos());
@@ -122,6 +127,21 @@ public class Vinculador {
             return ingreso;
 
 
+    }
+    public static List<Ingreso> ingresosDesde(LocalDate fecha, List<Ingreso> ingresos) {
+        return ingresos.stream().filter(i -> i.getFecha().isAfter(fecha)).collect(Collectors.toList());
+    }
+
+    public static List<Ingreso> ingresosHasta(LocalDate fecha, List<Ingreso> ingresos) {
+        return ingresos.stream().filter(i -> i.getFecha().isBefore(fecha)).collect(Collectors.toList());
+    }
+
+    public static List<Egreso> egresosDesde(LocalDate fecha, List<Egreso> egresos) {
+        return egresos.stream().filter(e -> e.getFecha().isAfter(fecha)).collect(Collectors.toList());
+    }
+
+    public static List<Egreso> egresosHasta(LocalDate fecha, List<Egreso> egresos) {
+        return egresos.stream().filter(e -> e.getFecha().isBefore(fecha)).collect(Collectors.toList());
     }
 
 
