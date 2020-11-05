@@ -107,16 +107,20 @@ public class ControllerEgresos {
 
     	CategoriaDelSistema categoria = repoCategoria.buscar(categoriaString);
 
+    	if(pres!=null && !pres.equals("noHay")){
 		int idPresupuesto = Integer.parseInt(pres);
 		Presupuesto presupuesto = repoPresupuesto.byID(idPresupuesto);
+		egreso.setPresupuesto(presupuesto);
+		egreso.setValorTotal(presupuesto.valorTotal());
+    	}else {
+    		egreso.setValorTotal(orden.valorTotal());
+		}
+
+		egreso.setFecha(LocalDate.parse(fecha));
 		orden.cerrarOrden();
 		egreso.setOrdenDeCompra(orden);
 		//egreso.setDocumentosComerciales();
 		egreso.setCategoria(categoria);
-		presupuesto.setAceptado();
-		egreso.setPresupuesto(presupuesto);
-		egreso.setValorTotal(presupuesto.valorTotal());
-		egreso.setFecha(LocalDate.parse(fecha));
 
 
 	}
@@ -168,3 +172,4 @@ public class ControllerEgresos {
 		return response;
 	}
 }
+

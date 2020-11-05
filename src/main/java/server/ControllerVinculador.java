@@ -12,18 +12,20 @@ import egreso.MontoSuperadoExcepcion;
 import organizacion.EntidadJuridica;
 import repositorios.RepositorioEgreso;
 import repositorios.RepositorioIngreso;
+import repositorios.RepositorioUsuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import usuarios.CreationError;
+import usuarios.Usuario;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 
 import java.util.stream.Collectors;
@@ -63,10 +65,31 @@ public class ControllerVinculador {
     }
 
 
-    public ModelAndView vinculaciones(Request request, Response response) {
-    	
-    	if(request.session().attribute("user") == null )
-    		response.redirect("/login");
+    public ModelAndView vinculaciones(Request request, Response response, EntityManager entityManager) {
+
+        if(request.session().attribute("user") == null) {
+            response.redirect("/login");
+            return new ModelAndView(null, "ingresos.html");
+        }
+
+        RepositorioUsuario repoUser = null;
+        try {
+            repoUser = new RepositorioUsuario(entityManager);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (CreationError e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        Usuario userActual = repoUser.byNombre(request.session().attribute("user"));
 
         Map<String, Object> map = new HashMap<>();
 
@@ -81,11 +104,15 @@ public class ControllerVinculador {
         //criterio3.setNombre("Mix");
         map.put("criterios", criterios);
         map.put("usuario", request.session().attribute("user"));
+        map.put("usuarioActual", userActual);
 
         return new ModelAndView(map, "vinculaciones.html");
     }
 
     public String vincular(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException, IOException, ListaVaciaExcepcion, MontoSuperadoExcepcion {
+        limpiarIngresos(entityManager);
+
+
 
         if (request.queryParams("criterio") != null) {
             String criterio = request.queryParams("criterio");
@@ -93,7 +120,28 @@ public class ControllerVinculador {
             Vinculador vinculador = new Vinculador();
             PrimeroEgreso primeroEgreso = new PrimeroEgreso();
             PrimeroIngreso primeroIngreso = new PrimeroIngreso();
-            EntidadJuridica entidadJuridica = new EntidadJuridica("Web Social ONG", "Web Social", "90-61775331-4", 1143, 01, Collections.emptyList());
+
+
+            RepositorioUsuario repoUser = null;
+            try {
+                repoUser = new RepositorioUsuario(entityManager);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (CreationError e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            Usuario userActual = repoUser.byNombre(request.queryParams("user"));
+
+            EntidadJuridica entidadJuridica = userActual.getOrganizacion().getEntidades().get(0);
             vinculador.setEntidadJuridica(entidadJuridica);
 
 
@@ -104,36 +152,22 @@ public class ControllerVinculador {
 
             String hastaFecha = request.params("fechaHasta");
             LocalDate hastaFechaFinal = LocalDate.parse(hastaFecha);*/
-
+/*
             RepositorioIngreso repoIngreso = new RepositorioIngreso(entityManager);
-            RepositorioEgreso repoEgreso = new RepositorioEgreso(entityManager);
+            RepositorioEgreso repoEgreso = new RepositorioEgreso(entityManager);*/
 
-            List<Ingreso> ingresos = repoIngreso.todos();
+            LocalDate desdeFechaFinal = null;
             if(request.queryParams("fechaDesde" )!= null) {
                 String desdeFecha = request.queryParams("fechaDesde");
-                LocalDate desdeFechaFinal = LocalDate.parse(desdeFecha);
-                ingresosDesde(desdeFechaFinal, ingresos);
+                desdeFechaFinal = LocalDate.parse(desdeFecha);
             }
+            LocalDate hastaFechaFinal = null;
             if(request.queryParams("fechaHasta" )!=null) {
                 String hastaFecha = request.queryParams("fechaHasta");
-                LocalDate hastaFechaFinal = LocalDate.parse(hastaFecha);
-                ingresosHasta(hastaFechaFinal, ingresos);
+                hastaFechaFinal = LocalDate.parse(hastaFecha);
             }
-            entidadJuridica.setIngresos(ingresos);
 
-            List<Egreso> egresos = repoEgreso.todos();
-            if(request.queryParams("fechaDesde" )!= null) {
-                String desdeFecha = request.queryParams("fechaDesde");
-                LocalDate desdeFechaFinal = LocalDate.parse(desdeFecha);
-                egresosDesde(desdeFechaFinal, egresos);
-            }
-            if(request.queryParams("fechaHasta" )!=null) {
-                String hastaFecha = request.queryParams("fechaHasta");
-                LocalDate hastaFechaFinal = LocalDate.parse(hastaFecha);
-                egresosHasta(hastaFechaFinal, egresos);
-            }
-            entidadJuridica.setEgresos(egresos);
-            vinculador.obtenerIngresosEgresos();
+            vinculador.obtenerIngresosEgresos(desdeFechaFinal, hastaFechaFinal);
 
 
             if (criterio.equals("primeroEgreso")) {
@@ -145,11 +179,11 @@ public class ControllerVinculador {
 
 
             List<String> listaBalanceIngresos = vinculador.getBalanceIngresos().stream().map(i -> "Ingreso: " + i.getIngreso().getId()
-                    + ", Descripcion:  " +i.getIngreso().getDescripcion() + ", Monto Vinculado:" + i.getIngreso().getMontoVinculado()
+                    + ", Descripcion:  " +i.getIngreso().getDescripcion() + ", Monto Total: "+i.getIngreso().getMonto() +", Monto Vinculado:" + i.getIngreso().getMontoVinculado()
             + "| Egresos: " + egresosLista(i.getEgresosVinculados())).collect(Collectors.toList());
 
             List<String> listaBalanceEgresos = vinculador.getBalanceEgresos().stream().map(i -> "Egreso: " + i.getEgreso().getId()
-            + ", Monto: " +i.getEgreso().getValorTotal()+ "| Ingresos: "+i.getValorIngresos()+ ", Valores: "+ i.getValorIngresos())
+            + ", Monto: " +i.getEgreso().getValorTotal()+ ingresosLista(i.getIngresosVinculados(), i.getValorIngresos()))
                     .collect(Collectors.toList());
 
 
@@ -167,7 +201,7 @@ public class ControllerVinculador {
 
 
             //return JSON;
-            limpiarIngresos(entityManager);
+
             return gson.toJson(map);
             /* Gso
             System.out.println(JSON);
@@ -190,6 +224,12 @@ public class ControllerVinculador {
 
         // return new ModelAndView(null,"index.html");
         return "Reintentar";
+    }
+
+    private String ingresosLista(List<Ingreso> ingresosVinculados, List<Double> valorIngresos) {
+        List<Integer> listaint = ingresosVinculados.stream().map(a -> a.getId()).collect(Collectors.toList());
+        String lista = "Ingresos: "+listaint+ ", Valores: "+ valorIngresos;
+           return lista;
     }
 
     private List<String> egresosLista(List<Egreso> egresosVinculados) {
@@ -215,21 +255,7 @@ public class ControllerVinculador {
 
     }
 
-    public static List<Ingreso> ingresosDesde(LocalDate fecha, List<Ingreso> ingresos) {
-        return ingresos.stream().filter(i -> i.getFecha().isAfter(fecha)).collect(Collectors.toList());
-    }
 
-    public static List<Ingreso> ingresosHasta(LocalDate fecha, List<Ingreso> ingresos) {
-        return ingresos.stream().filter(i -> i.getFecha().isBefore(fecha)).collect(Collectors.toList());
-    }
-
-    public static List<Egreso> egresosDesde(LocalDate fecha, List<Egreso> egresos) {
-        return egresos.stream().filter(e -> e.getFecha().isAfter(fecha)).collect(Collectors.toList());
-    }
-
-    public static List<Egreso> egresosHasta(LocalDate fecha, List<Egreso> egresos) {
-        return egresos.stream().filter(e -> e.getFecha().isBefore(fecha)).collect(Collectors.toList());
-    }
 
 
 /*

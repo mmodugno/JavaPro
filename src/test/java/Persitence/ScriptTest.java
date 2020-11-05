@@ -149,7 +149,6 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
 		organizacion.agregarEntidad(entidadJuridica);
 
         //PERSISTIENDO
-		
 
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.getEntityManager().persist(item1);
@@ -203,6 +202,7 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.getEntityManager().persist(entidadJuridica);
 		EntityManagerHelper.commit();
+
 		
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.getEntityManager().persist(organizacion);

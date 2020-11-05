@@ -6,6 +6,7 @@ import java.util.List;
 
 import egreso.Egreso;
 import egreso.Ingreso;
+import egreso.MontoSuperadoExcepcion;
 import organizacion.EntidadJuridica;
 
 public class Fecha extends CriterioDeVinculacion {
@@ -15,7 +16,7 @@ public class Fecha extends CriterioDeVinculacion {
 	}
 	
 	@Override
-    public void vincular(List<Egreso> egresos, List<Ingreso> ingresos, Vinculador vinculador) {
+    public void vincular(List<Egreso> egresos, List<Ingreso> ingresos, Vinculador vinculador) throws MontoSuperadoExcepcion {
         ordenarFecha(ingresos, egresos);
         for(int i = 0; i<ingresos.size(); i++){
             List<Integer> indexDestruir = new ArrayList<Integer>();

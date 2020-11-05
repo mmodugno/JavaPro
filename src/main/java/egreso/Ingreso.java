@@ -43,7 +43,7 @@ public class Ingreso implements Categorizable{
 	@ManyToOne(cascade = CascadeType.ALL)
 	private CategoriaDelSistema categoria = null;
 	//Esto lo voy a poner que lo ignore por la nueva forma en que vinculo! :)
-	@Transient
+
 	private double montoVinculado = 0.00;
 	@Column(columnDefinition = "DATE")
 	private LocalDate fecha;
@@ -97,10 +97,10 @@ public class Ingreso implements Categorizable{
 	}
 
 	//CUANDO ASOCIO EGRESO MODIFICO EL MONTO VINCULADO
-	public void asociarEgreso(double valor){
+	public void asociarEgreso(double valor) throws MontoSuperadoExcepcion {
 
 
-		montoVinculado += valor;
+		this.setMontoVinculado(this.getMontoVinculado()+valor);
 	}
 
 	public boolean puedoVincular(){
