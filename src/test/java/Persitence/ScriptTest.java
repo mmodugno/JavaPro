@@ -84,6 +84,9 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
         presupuesto2 = new Presupuesto(ordenDeCompra.getItems(),proveedor2,medioDePago2);
         presupuesto2.getItems().get(0).setPrecioUnitario(90.00);
         presupuesto2.getItems().get(1).setPrecioUnitario(40.00);
+        
+       
+        
 
         ordenDeCompra.agregarPresupuesto(presupuesto1);
         ordenDeCompra2.agregarPresupuesto(presupuesto2);
@@ -121,6 +124,8 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
 			 
 		ingreso3.setCategoria(categoriaARGENTINA);
 		
+		 presupuesto1.setCategoria(categoriaARGENTINA);
+		 
 		//LISTAS DE EGRESOS/INGRESOS/ORDENES PARA UNA ORG
 
 		List<CategoriaDelSistema> listaCategorias = new ArrayList<>();

@@ -503,8 +503,8 @@ public class Server {
     	
     	if(tipoDocumentoString.equals("Presupuestos")) {
     		RepositorioPresupuesto repoPresupuesto = new RepositorioPresupuesto(entityManager);
-    		Presupuesto pre = repoPresupuesto.byID(6);
-    		Boolean resultado = pre.esDeCategoria(categoria);
+    		//Presupuesto pre = repoPresupuesto.byID(6);
+    		//Boolean resultado = pre.esDeCategoria(categoria);
     		List<Presupuesto> presupuestos = repoPresupuesto.todos().stream().filter(a -> a.esDeCategoria(categoria)).collect(Collectors.toList());
     		map.put("presupuestos",presupuestos);
     	}

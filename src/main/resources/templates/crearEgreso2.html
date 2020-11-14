@@ -61,7 +61,9 @@
         <h4 class="mb-3">Egreso:{{#if egreso}} {{egreso.id }}{{/if}}</h4>
         <form class="needs-validation contenido-centrado contenedor" {{#if egreso}} action="/egreso/{{egreso.id}}" {{else}} action="/egreso" {{/if}} method="post" novalidate>
         <div class="row">
+
             <div class="col-md-6 mb-3">
+                <!-- Aca habria que poner que no se modifique la OC-->
                 <div class="form-group">
                     <label for="orden">Orden de Compra</label>
                     <select class="form-control" name="orden" id="orden">
