@@ -66,7 +66,6 @@ public class Egreso implements Categorizable{
 	private CategoriaDelSistema categoria = null;
 	
 	
-
 	/*GETTERS*/
 
 	public CategoriaDelSistema getCategoria() {

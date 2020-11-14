@@ -115,6 +115,12 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
 		 
 		egreso3.setCategoria(categoriaARGENTINA);
 		
+		ingreso1.setCategoria(categoriaBSAS);
+
+		ingreso2.setCategoria(categoriaMendoza);
+			 
+		ingreso3.setCategoria(categoriaARGENTINA);
+		
 		//LISTAS DE EGRESOS/INGRESOS/ORDENES PARA UNA ORG
 
 		List<CategoriaDelSistema> listaCategorias = new ArrayList<>();

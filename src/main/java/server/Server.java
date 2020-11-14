@@ -42,6 +42,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+
 public class Server {
     static EntityManagerFactory entityManagerFactory;
 
@@ -52,6 +53,7 @@ public class Server {
     private static ControllerVinculador controllerVinculador;
 	private static ControllerLogin controllerLogin= new ControllerLogin();
     
+	
 	
     static {
         try {
