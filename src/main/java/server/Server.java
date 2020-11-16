@@ -370,11 +370,13 @@ public class Server {
     
 
     
-    public static ModelAndView crearEgreso(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException{
-    	
-    	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra(entityManager);
-    	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto(entityManager);
-    	RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
+    public static ModelAndView crearEgreso(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException {
+
+        RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra(entityManager);
+        RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto(entityManager);
+        RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
+
+
 
     	
     	List<OrdenDeCompra> ordenes = repoOrdenesCompra.todos();

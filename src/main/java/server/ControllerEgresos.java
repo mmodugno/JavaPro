@@ -1,33 +1,27 @@
 package server;
 
-import producto.Producto;
-import producto.TipoItem;
-import repositorios.RepositorioCategoria;
-import repositorios.RepositorioEgreso;
-import repositorios.RepositorioOrdenDeCompra;
-import repositorios.RepositorioPresupuesto;
-import repositorios.RepositorioProducto;
+import com.google.gson.Gson;
+import egreso.Egreso;
+import egreso.OrdenDeCompra;
+import egreso.Presupuesto;
+import org.hibernate.Hibernate;
+import org.hibernate.engine.spi.SessionImplementor;
+import repositorios.*;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import usuarios.CategoriaDelSistema;
 
+import org.hibernate.engine.spi.PersistenceContext;
+import org.hibernate.engine.spi.SessionImplementor;
+
+
+
+import javax.persistence.EntityManager;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-
-import javax.persistence.EntityManager;
-
-import com.mercadopago.exceptions.MPRestException;
-
-import egreso.Egreso;
-import egreso.OrdenDeCompra;
-import egreso.Presupuesto;
-
-import javax.persistence.EntityManager;
 
 public class ControllerEgresos {
 
@@ -39,7 +33,7 @@ public class ControllerEgresos {
 
 
     public ModelAndView modificarEgresoGet(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException {
-    	
+
     	RepositorioEgreso repoEgreso = new RepositorioEgreso(entityManager);
     	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra(entityManager);
     	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto(entityManager);
@@ -152,9 +146,26 @@ public class ControllerEgresos {
         Egreso egreso = new Egreso();
         //egreso.setId(repo.proximoId());
 
+		RepositorioDocumentos repositorioDocumentos = new RepositorioDocumentos();
+
+		Transaccion transaccion = new Transaccion();
+		transaccion.setDocumento("egreso");
+		transaccion.setOperacion("crear");
+		transaccion.setViejo("");
+
+
+
+
+
 		asignarParametros(egreso, request,entityManager);
-        
+
+
         repo.crear(egreso);
+
+
+		transaccion.setNuevo(converter(egreso));
+
+		repositorioDocumentos.crearTransaccion(transaccion);
         
         response.redirect("/egresos");
 
@@ -170,6 +181,22 @@ public class ControllerEgresos {
 		repo.eliminar(egreso);
 
 		return response;
+	}
+
+	static public String converter(Egreso egreso){
+		HashMap map = new HashMap();
+
+		map.put("Egreso",egreso.getId());
+		map.put("fecha", egreso.getFecha());
+		map.put("Orden de Compra",egreso.getOrdenDeCompra().getIdOrden());
+		map.put("Presupuesto",egreso.getPresupuesto().getId());
+		map.put("Categoria", egreso.getCategoria().getCategoria());
+
+		Gson gson = new Gson();
+		String nuevo = gson.toJson(map);
+
+		return nuevo;
+
 	}
 }
 

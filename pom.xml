@@ -121,6 +121,13 @@
     		<version>1.14</version>
 		</dependency>
 
+	  <!-- dependencia morphia para usar mongoDB-->
+	  <dependency>
+		  <groupId>dev.morphia.morphia</groupId>
+		  <artifactId>core</artifactId>
+		  <version>1.5.3</version>
+	  </dependency>
+
 
    </dependencies>
 
