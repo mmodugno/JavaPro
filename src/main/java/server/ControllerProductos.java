@@ -44,7 +44,10 @@ public class ControllerProductos {
 
     public ModelAndView detalleProducto(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException{
 
-        RepositorioProducto repositorio = new RepositorioProducto(entityManager);
+    	if(request.session().attribute("user") == null )
+    		response.redirect("/login");
+    	
+    	RepositorioProducto repositorio = new RepositorioProducto(entityManager);
         String strID = request.params("id");
 
         int id = Integer.parseInt(strID);
@@ -53,7 +56,7 @@ public class ControllerProductos {
 
         Map<String, Object> map = new HashMap<>();
         map.put("producto", producto);
-
+        map.put("usuario", request.session().attribute("user"));
 
         return new ModelAndView(map,"nuevoProducto.html");
     }
