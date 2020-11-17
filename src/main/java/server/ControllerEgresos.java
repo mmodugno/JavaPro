@@ -40,6 +40,9 @@ public class ControllerEgresos {
 
     public ModelAndView modificarEgresoGet(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException {
     	
+    	if(request.session().attribute("user") == null )
+    		response.redirect("/login");
+    	
     	RepositorioEgreso repoEgreso = new RepositorioEgreso(entityManager);
     	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra(entityManager);
     	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto(entityManager);
@@ -80,6 +83,7 @@ public class ControllerEgresos {
 		//Map<String, Object> map = new HashMap<>();
 		map.put("egreso", egreso);
 		map.put("fecha", fecha);
+		map.put("usuario", request.session().attribute("user"));
 
 		//HAY QUE VER COMO PASAR TODOS LOS REPOS, LO UNICO QUE SE ME OCURRE PASARLE TODOS LOS REPOS AL HTML. todo Charlar
 
