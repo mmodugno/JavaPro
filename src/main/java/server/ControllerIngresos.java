@@ -34,6 +34,9 @@ public class ControllerIngresos {
 
     public ModelAndView nuevoIngreso(Request request, Response response, EntityManager entityManager){
     	
+    	if(request.session().attribute("user") == null )
+    		response.redirect("/login");
+    	
     	RepositorioIngreso repo = new RepositorioIngreso(entityManager);
 
     	RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
@@ -47,7 +50,7 @@ public class ControllerIngresos {
         Map<String, Object> map = new HashMap<>();
         map.put("repos", repo);
         map.put("categorias", categorias);
-    	
+        map.put("usuario", request.session().attribute("user"));
    
         return new ModelAndView(map,"formularioIngresos.html");
     }
@@ -106,6 +109,9 @@ public class ControllerIngresos {
 	}
 	
 	public ModelAndView modificarIngreso(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException {
+		if(request.session().attribute("user") == null )
+    		response.redirect("/login");
+		
 		RepositorioIngreso repo = new RepositorioIngreso(entityManager);
 		RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
 
@@ -121,6 +127,7 @@ public class ControllerIngresos {
 		Map<String, Object> map = new HashMap<>();
 		map.put("ingreso", ingreso);
 		map.put("categorias", categorias);
+		map.put("usuario", request.session().attribute("user"));
 
 		return new ModelAndView(map,"formularioIngresos.html");
 		

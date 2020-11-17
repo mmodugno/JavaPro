@@ -85,7 +85,7 @@ public class Server {
         entityManagerFactory = Persistence.createEntityManagerFactory("db");
 
         controllerProductos= new ControllerProductos();
-
+       
 
         // Ejemplo de acceso: http://localhost:9000/inicio
         HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
@@ -108,7 +108,7 @@ public class Server {
 		}), engine);
         get("/logout", controllerLogin::logout, engine);
 
-        
+       
         //EGRESOS
 
         get("/egresos",TemplWithTransaction(Server::egresos),engine);
@@ -125,8 +125,7 @@ public class Server {
 
         get("/categorias", TemplWithTransaction(Server::mostrarCategorias), engine);
         get("/categoria", TemplWithTransaction(Server::mostrarCategorias), engine);
-
-        
+       
         post("/egreso",RouteWithTransaction(controllerEgresos::guardarEgreso));
         delete("/egreso/:id", controllerEgresos::eliminarEgreso);
         post("/egreso/:id", RouteWithTransaction(controllerEgresos::modificarEgreso));
@@ -316,7 +315,6 @@ public class Server {
         //INIT
         if(request.session().attribute("user") == null) {
             response.redirect("/login");
-            return new ModelAndView(null, "ingresos.html");
         }
 
         RepositorioUsuario repoUser = null;
@@ -366,16 +364,15 @@ public class Server {
         else if(request.queryParams("opciones").equals("Servicio")){
             producto.setTipoProducto(TipoItem.SERVICIO);
         }*/
-    
-    
 
-    
-    public static ModelAndView crearEgreso(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException {
-
-        RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra(entityManager);
-        RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto(entityManager);
-        RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
-
+    public static ModelAndView crearEgreso(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException{
+    	
+    	if(request.session().attribute("user") == null )
+    		response.redirect("/login");
+    	
+    	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra(entityManager);
+    	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto(entityManager);
+    	RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
 
 
     	
@@ -398,11 +395,15 @@ public class Server {
         map.put("presupuestos", presupuestos);
         map.put("categorias", categorias);
         map.put("repoPresupuesto", repoPresupuestos);
+        map.put("usuario", request.session().attribute("user"));
         return new ModelAndView(map ,"crearEgreso.html");
     }
     
     public static ModelAndView detalleEgreso(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException, MPRestException{
     	
+    	if(request.session().attribute("user") == null) {
+            response.redirect("/login");
+        }
     	RepositorioEgreso repo = new RepositorioEgreso(entityManager);
     	
     	String strID = request.params("id");
@@ -425,6 +426,7 @@ public class Server {
         
         map.put("nombreMedioPago", nombreMedioPago);
         map.put("imagenMedioPago", imagenMedioPago);
+        map.put("usuario", request.session().attribute("user"));
         
         	
     	}
@@ -434,21 +436,26 @@ public class Server {
     
  public static ModelAndView detalleOrden(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException, MPRestException{
     	
-	 	RepositorioOrdenDeCompra repo = new RepositorioOrdenDeCompra(entityManager);
-    	
-    	String strID = request.params("id");
-    	
-    	int id = Integer.parseInt(strID);
-    	
-    	OrdenDeCompra orden = repo.byID(id);
-    	
-    	Map<String, Object> map = new HashMap<>();
-    	
-        map.put("orden", orden);
-    	
-     
-        return new ModelAndView(map,"detalleOrden.html");
-    }
+	 if(request.session().attribute("user") == null) {
+         response.redirect("/login");
+     }	
+
+	 RepositorioOrdenDeCompra repo = new RepositorioOrdenDeCompra(entityManager);
+
+	 String strID = request.params("id");
+
+	 int id = Integer.parseInt(strID);
+
+	 OrdenDeCompra orden = repo.byID(id);
+
+	 Map<String, Object> map = new HashMap<>();
+
+	 map.put("orden", orden);
+	 map.put("usuario", request.session().attribute("user"));
+
+	 return new ModelAndView(map,"detalleOrden.html");
+	 
+ }
 
     /*public static ModelAndView mostrarCategorias(Request request, Response response) throws CloneNotSupportedException {
     	
@@ -526,6 +533,13 @@ public class Server {
 
     //PRODUCTOS
     public static ModelAndView work(Request request, Response response){
+    	
+    	if(request.session().attribute("user") == null )
+    		response.redirect("/login");
+    	
+    	Map<String, Object> map = new HashMap<>();
+    	
+    	map.put("usuario", request.session().attribute("user"));
         return new ModelAndView(null,"index2.html");
     }
 

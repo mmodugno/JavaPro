@@ -34,6 +34,9 @@ public class ControllerEgresos {
 
     public ModelAndView modificarEgresoGet(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException {
 
+    	if(request.session().attribute("user") == null )
+    		response.redirect("/login");
+
     	RepositorioEgreso repoEgreso = new RepositorioEgreso(entityManager);
     	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra(entityManager);
     	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto(entityManager);
@@ -74,6 +77,7 @@ public class ControllerEgresos {
 		//Map<String, Object> map = new HashMap<>();
 		map.put("egreso", egreso);
 		map.put("fecha", fecha);
+		map.put("usuario", request.session().attribute("user"));
 
 		//HAY QUE VER COMO PASAR TODOS LOS REPOS, LO UNICO QUE SE ME OCURRE PASARLE TODOS LOS REPOS AL HTML. todo Charlar
 
@@ -81,18 +85,23 @@ public class ControllerEgresos {
 	}
 
     public static void asignarParametros(Egreso egreso, Request request,EntityManager entityManager) throws CloneNotSupportedException {
-
+    	OrdenDeCompra orden;
 		RepositorioOrdenDeCompra repoOrden = new RepositorioOrdenDeCompra(entityManager);
 		RepositorioPresupuesto repoPresupuesto = new RepositorioPresupuesto(entityManager);
 		RepositorioCategoria repoCategoria = new RepositorioCategoria(entityManager);
 
+		if(request.queryParams("orden")!= null){
 		String ordenDeCompra = request.queryParams("orden");
+		int idOrden = Integer.parseInt(ordenDeCompra);
+		orden = repoOrden.byID(idOrden);
+		}
+		else {orden = egreso.getOrdenDeCompra();}
+		
 		String pres = request.queryParams("presupuesto");
 		String categoriaString = (request.queryParams("categoria") != null) ? request.queryParams("categoria") : "";
 		String fecha = request.queryParams("fecha");
 
-		int idOrden = Integer.parseInt(ordenDeCompra);
-		OrdenDeCompra orden = repoOrden.byID(idOrden);
+		
 		
 		if(!categoriaString.contains("%20")) {
     		categoriaString = categoriaString.replace("%20"," ");
