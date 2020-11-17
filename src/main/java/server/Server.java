@@ -370,6 +370,9 @@ public class Server {
     
     public static ModelAndView crearEgreso(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException{
     	
+    	if(request.session().attribute("user") == null )
+    		response.redirect("/login");
+    	
     	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra(entityManager);
     	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto(entityManager);
     	RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
@@ -394,6 +397,7 @@ public class Server {
         map.put("presupuestos", presupuestos);
         map.put("categorias", categorias);
         map.put("repoPresupuesto", repoPresupuestos);
+        map.put("usuario", request.session().attribute("user"));
         return new ModelAndView(map ,"crearEgreso.html");
     }
     
