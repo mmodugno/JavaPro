@@ -438,21 +438,26 @@ public class Server {
     
  public static ModelAndView detalleOrden(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException, MPRestException{
     	
-	 	RepositorioOrdenDeCompra repo = new RepositorioOrdenDeCompra(entityManager);
-    	
-    	String strID = request.params("id");
-    	
-    	int id = Integer.parseInt(strID);
-    	
-    	OrdenDeCompra orden = repo.byID(id);
-    	
-    	Map<String, Object> map = new HashMap<>();
-    	
-        map.put("orden", orden);
-    	
-     
-        return new ModelAndView(map,"detalleOrden.html");
-    }
+	 if(request.session().attribute("user") == null) {
+         response.redirect("/login");
+     }	
+
+	 RepositorioOrdenDeCompra repo = new RepositorioOrdenDeCompra(entityManager);
+
+	 String strID = request.params("id");
+
+	 int id = Integer.parseInt(strID);
+
+	 OrdenDeCompra orden = repo.byID(id);
+
+	 Map<String, Object> map = new HashMap<>();
+
+	 map.put("orden", orden);
+	 map.put("usuario", request.session().attribute("user"));
+
+	 return new ModelAndView(map,"detalleOrden.html");
+	 
+ }
 
     /*public static ModelAndView mostrarCategorias(Request request, Response response) throws CloneNotSupportedException {
     	
