@@ -125,8 +125,7 @@ public class Server {
 
         get("/categorias", TemplWithTransaction(Server::mostrarCategorias), engine);
         get("/categoria", TemplWithTransaction(Server::mostrarCategorias), engine);
-
-        
+       
         post("/egreso",RouteWithTransaction(controllerEgresos::guardarEgreso));
         delete("/egreso/:id", controllerEgresos::eliminarEgreso);
         post("/egreso/:id", RouteWithTransaction(controllerEgresos::modificarEgreso));
@@ -316,7 +315,6 @@ public class Server {
         //INIT
         if(request.session().attribute("user") == null) {
             response.redirect("/login");
-            return new ModelAndView(null, "ingresos.html");
         }
 
         RepositorioUsuario repoUser = null;
@@ -401,6 +399,9 @@ public class Server {
     
     public static ModelAndView detalleEgreso(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException, MPRestException{
     	
+    	if(request.session().attribute("user") == null) {
+            response.redirect("/login");
+        }
     	RepositorioEgreso repo = new RepositorioEgreso(entityManager);
     	
     	String strID = request.params("id");
@@ -423,6 +424,7 @@ public class Server {
         
         map.put("nombreMedioPago", nombreMedioPago);
         map.put("imagenMedioPago", imagenMedioPago);
+        map.put("usuario", request.session().attribute("user"));
         
         	
     	}
