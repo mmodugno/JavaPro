@@ -83,11 +83,14 @@ public class ControllerOrdenes {
 
     public ModelAndView nuevaOrden(Request request, Response response, EntityManager entityManager){
 
-
+    	if(request.session().attribute("user") == null )
+    		response.redirect("/login");
+    	
 		RepositorioProducto repoPro = new RepositorioProducto(entityManager);
         Map<String, Object> map = new HashMap<>();
         List<Producto> productos = repoPro.todos();
         map.put("productos", productos);
+        map.put("usuario", request.session().attribute("user"));
         return new ModelAndView(map,"formularioOrden.html");
     }
 
