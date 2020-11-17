@@ -10,9 +10,18 @@ public class Transaccion {
     private String documento;
     private String viejo;
     private String nuevo;
+    private String fecha;
 
     public String getOperacion() {
         return operacion;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 
     public void setOperacion(String operacion) {

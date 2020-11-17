@@ -122,16 +122,30 @@ public class ControllerEgresos {
 	public Response modificarEgreso(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException {
 		
 		RepositorioEgreso repo = new RepositorioEgreso(entityManager);
+
+		RepositorioDocumentos repositorioDocumentos = new RepositorioDocumentos();
+		Transaccion transaccion = new Transaccion();
+		transaccion.setDocumento("egreso");
+		transaccion.setOperacion("modificar");
+		transaccion.setViejo("");
+		transaccion.setFecha(LocalDate.now().toString());
 		
 		String strID = request.params("id");
 		
 		int id = new Integer(strID);
 		
 		Egreso egreso = repo.byID(id);
+
+		//VIEJO
+		transaccion.setViejo(converter(egreso));
 		
 		asignarParametros(egreso, request,entityManager);
 		
 		repo.crear(egreso);
+
+		//TERMINO CREAR TRANSACCION
+		transaccion.setNuevo(converter(egreso));
+		repositorioDocumentos.crearTransaccion(transaccion);
 
 		response.redirect("/egresos");
 
@@ -146,25 +160,21 @@ public class ControllerEgresos {
         Egreso egreso = new Egreso();
         //egreso.setId(repo.proximoId());
 
+		//LOGICA TRANSACCION NUEVO EGRESO
 		RepositorioDocumentos repositorioDocumentos = new RepositorioDocumentos();
-
 		Transaccion transaccion = new Transaccion();
 		transaccion.setDocumento("egreso");
 		transaccion.setOperacion("crear");
 		transaccion.setViejo("");
-
-
-
-
+		transaccion.setFecha(LocalDate.now().toString());
 
 		asignarParametros(egreso, request,entityManager);
 
 
         repo.crear(egreso);
 
-
+		//TERMINO CREAR TRANSACCION
 		transaccion.setNuevo(converter(egreso));
-
 		repositorioDocumentos.crearTransaccion(transaccion);
         
         response.redirect("/egresos");
@@ -177,6 +187,16 @@ public class ControllerEgresos {
 		String strID = request.params("id");
 		int id = new Integer(strID);
 		Egreso egreso = repo.byID(id);
+
+		//TRANSACCION
+		RepositorioDocumentos repositorioDocumentos = new RepositorioDocumentos();
+		Transaccion transaccion = new Transaccion();
+		transaccion.setDocumento("egreso");
+		transaccion.setOperacion("eliminar");
+		transaccion.setViejo("");
+		transaccion.setFecha(LocalDate.now().toString());
+		transaccion.setViejo(converter(egreso));
+		repositorioDocumentos.crearTransaccion(transaccion);
 
 		repo.eliminar(egreso);
 
@@ -198,5 +218,8 @@ public class ControllerEgresos {
 		return nuevo;
 
 	}
+
+
+
 }
 
