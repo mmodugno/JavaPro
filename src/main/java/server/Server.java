@@ -535,6 +535,13 @@ public class Server {
 
     //PRODUCTOS
     public static ModelAndView work(Request request, Response response){
+    	
+    	if(request.session().attribute("user") == null )
+    		response.redirect("/login");
+    	
+    	Map<String, Object> map = new HashMap<>();
+    	
+    	map.put("usuario", request.session().attribute("user"));
         return new ModelAndView(null,"index2.html");
     }
 
