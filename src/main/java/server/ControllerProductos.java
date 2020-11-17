@@ -34,7 +34,12 @@ public class ControllerProductos {
     }
 
     public ModelAndView nuevoProducto(Request request, Response response){
-        return new ModelAndView(null,"nuevoProducto.html");
+    	if(request.session().attribute("user") == null )
+    		response.redirect("/login");
+    	Map<String, Object> map = new HashMap<>();
+    	map.put("usuario", request.session().attribute("user"));
+    	
+        return new ModelAndView(map,"nuevoProducto.html");
     }
 
     public ModelAndView detalleProducto(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException{
