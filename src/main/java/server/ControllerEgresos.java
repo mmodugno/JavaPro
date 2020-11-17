@@ -14,10 +14,13 @@ import usuarios.CategoriaDelSistema;
 
 import org.hibernate.engine.spi.PersistenceContext;
 import org.hibernate.engine.spi.SessionImplementor;
-
+import usuarios.CreationError;
+import usuarios.Usuario;
 
 
 import javax.persistence.EntityManager;
+import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -162,7 +165,7 @@ public class ControllerEgresos {
 
 	}
     //ESTE ES EL QUE CREA
-    public Response guardarEgreso(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException{
+    public Response guardarEgreso(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException, ClassNotFoundException, FileNotFoundException, SQLException, CreationError {
     	
     	RepositorioEgreso repo = new RepositorioEgreso(entityManager);
     	
@@ -180,7 +183,11 @@ public class ControllerEgresos {
 		asignarParametros(egreso, request,entityManager);
 
 
-        repo.crear(egreso);
+        //repo.crear(egreso);
+		RepositorioUsuario repositorioUsuario = new RepositorioUsuario(entityManager);
+		Usuario userActual = repositorioUsuario.byNombre(request.session().attribute("user"));
+
+		userActual.getOrganizacion().getEntidades().get(0).getEgresos().add(egreso);
 
 		//TERMINO CREAR TRANSACCION
 		transaccion.setNuevo(converter(egreso));
@@ -191,8 +198,9 @@ public class ControllerEgresos {
         return response;
     }
 
-	public Response eliminarEgreso(Request request, Response response){
+	public Response eliminarEgreso(Request request, Response response, EntityManager entityManager) throws ClassNotFoundException, FileNotFoundException, SQLException, CreationError, CloneNotSupportedException {
 
+    	repo = new RepositorioEgreso(entityManager);
 		String strID = request.params("id");
 		int id = new Integer(strID);
 		Egreso egreso = repo.byID(id);
@@ -207,6 +215,9 @@ public class ControllerEgresos {
 		transaccion.setViejo(converter(egreso));
 		repositorioDocumentos.crearTransaccion(transaccion);
 
+		RepositorioUsuario repositorioUsuario = new RepositorioUsuario(entityManager);
+		Usuario userActual = repositorioUsuario.byNombre(request.session().attribute("user"));
+		userActual.getOrganizacion().getEntidades().get(0).getEgresos().remove(egreso);
 		repo.eliminar(egreso);
 
 		return response;

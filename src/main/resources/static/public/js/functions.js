@@ -45,7 +45,7 @@ function cerrarConfirmacionBorrar() {
 /**eliminar egreso**/
 function confirmarBorrarEgreso(id) {
     document.getElementById("egresoId").value = id;
-    document.getElementById("eliminarEgreso").style.display = 'block';
+    document.getElementById("eliminarEgresoVentana").style.display = 'block';
 
 }
 

@@ -127,7 +127,7 @@ public class Server {
         get("/categoria", TemplWithTransaction(Server::mostrarCategorias), engine);
        
         post("/egreso",RouteWithTransaction(controllerEgresos::guardarEgreso));
-        delete("/egreso/:id", controllerEgresos::eliminarEgreso);
+        delete("/egreso/:id", RouteWithTransaction(controllerEgresos::eliminarEgreso));
         post("/egreso/:id", RouteWithTransaction(controllerEgresos::modificarEgreso));
         
         //INGRESOS
