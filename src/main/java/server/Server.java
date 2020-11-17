@@ -85,7 +85,7 @@ public class Server {
         entityManagerFactory = Persistence.createEntityManagerFactory("db");
 
         controllerProductos= new ControllerProductos();
-
+       
 
         // Ejemplo de acceso: http://localhost:9000/inicio
         HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
@@ -108,7 +108,7 @@ public class Server {
 		}), engine);
         get("/logout", controllerLogin::logout, engine);
 
-        
+       
         //EGRESOS
 
         get("/egresos",TemplWithTransaction(Server::egresos),engine);

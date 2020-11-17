@@ -87,18 +87,23 @@ public class ControllerEgresos {
 	}
 
     public static void asignarParametros(Egreso egreso, Request request,EntityManager entityManager) throws CloneNotSupportedException {
-
+    	OrdenDeCompra orden;
 		RepositorioOrdenDeCompra repoOrden = new RepositorioOrdenDeCompra(entityManager);
 		RepositorioPresupuesto repoPresupuesto = new RepositorioPresupuesto(entityManager);
 		RepositorioCategoria repoCategoria = new RepositorioCategoria(entityManager);
 
+		if(request.queryParams("orden")!= null){
 		String ordenDeCompra = request.queryParams("orden");
+		int idOrden = Integer.parseInt(ordenDeCompra);
+		orden = repoOrden.byID(idOrden);
+		}
+		else {orden = egreso.getOrdenDeCompra();}
+		
 		String pres = request.queryParams("presupuesto");
 		String categoriaString = (request.queryParams("categoria") != null) ? request.queryParams("categoria") : "";
 		String fecha = request.queryParams("fecha");
 
-		int idOrden = Integer.parseInt(ordenDeCompra);
-		OrdenDeCompra orden = repoOrden.byID(idOrden);
+		
 		
 		if(!categoriaString.contains("%20")) {
     		categoriaString = categoriaString.replace("%20"," ");
