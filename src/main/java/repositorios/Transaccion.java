@@ -3,7 +3,7 @@ package repositorios;
 
 import dev.morphia.annotations.Entity;
 
-@Entity
+@Entity("Transaccion")
 public class Transaccion {
 
     private String operacion;

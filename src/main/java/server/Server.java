@@ -182,12 +182,24 @@ public class Server {
 
         
         get("/working",Server::work,engine);
+
+
+        //API DOCUMENTAL
+        get("/transaccion",Server::documentos);
         
 
     }
 
-    
-    
+    private static Object documentos(Request request, Response response) {
+
+        String tipo = request.queryParams("tipo");
+        String operacion = request.queryParams("operacion");
+
+        RepositorioDocumentos repositorioDocumentos = new RepositorioDocumentos();
+        return repositorioDocumentos.documentos(tipo,operacion);
+    }
+
+
     public static String Validar(Request request, Response response) throws CloneNotSupportedException {
     	
     	EntityManager entityManager = entityManagerFactory.createEntityManager();;
