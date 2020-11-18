@@ -177,7 +177,6 @@ public class ControllerEgresos {
 		Transaccion transaccion = new Transaccion();
 		transaccion.setDocumento("egreso");
 		transaccion.setOperacion("crear");
-		transaccion.setViejo("");
 		transaccion.setFecha(LocalDate.now().toString());
 
 		asignarParametros(egreso, request,entityManager);
