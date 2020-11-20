@@ -168,7 +168,7 @@ public class Server {
 			return null;
 		}), engine);
         
-        delete("/orden/:id", controllerOrdenes::eliminarOrden);
+        delete("/orden/:id", RouteWithTransaction(controllerOrdenes::eliminarOrden));
         
         post("/orden", RouteWithTransaction(controllerOrdenes::crear));
        // post("orden:id");

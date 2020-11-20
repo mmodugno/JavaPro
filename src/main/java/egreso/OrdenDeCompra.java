@@ -50,7 +50,7 @@ public class OrdenDeCompra {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idOrden;
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private List<Item> items;
 	private int necesitaPresupuesto;
 	@OneToMany(cascade = CascadeType.ALL)

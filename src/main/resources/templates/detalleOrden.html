@@ -8,10 +8,13 @@
 
 
     <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="/public/vendor/bootstrap/css/bootstrap.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <link href="/public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <script src="/public/js/functions.js"></script>
 
-    <!-- Custom styles for this template -->
+
     <link href="/public/css/simple-sidebar.css" rel="stylesheet">
 
     <title>Detalle Orden De Compra</title>
@@ -82,7 +85,7 @@
 
                 <div class="separar-arriba">
                     <!-- <a href="/modificarEgreso/{{ingreso.id}}" class="btn btn-primary">Modificar</a> -->
-                    <button type="button" class="btn btn-borrar" onclick="eliminarOrden()">Borrar</button>
+                    <button type="button" class="btn btn-borrar" onclick="confirmarBorrarOrden('{{orden.idOrden}}')">Borrar</button>
                     <a href="/ordenes" class="btn btn-danger">Volver</a>
                       <!-- ACA FALTARIAN VER EL TEMA DE LA ELIMINACION -->
                 </div>
@@ -96,25 +99,15 @@
     </div>
     <!-- /#wrapper -->
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="/public/vendor/jquery/jquery.min.js"></script>
-    <script src="/public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Menu Toggle Script -->
-    <script>
-        $("#menu-toggle").click(function(e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
-    </script>
 
 </body>
 
 <!-- ================= ELIMINACION ================== -->
-<div class="modalEliminar modal" id="eliminarOrden">
+<div class="modalEliminar modal" id="eliminarOrdenVentana">
     <div class="modalContent">
-        <input type="hidden" value="" id="idOrdenDeCompra">
-        <p>¿Realmente desea eliminar la Orden de Compra?</p>
+        <input type="hidden" value="" id="ordenId">
+        <p>ï¿½Realmente desea eliminar la Orden de Compra?</p>
         <button type="button" name="button" class="btn-close-modal" onclick="cerrarConfirmacionBorrar()"><i class="fas fa-times-circle"></i></button>
         <br>
         <div class="">

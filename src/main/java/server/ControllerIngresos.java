@@ -70,9 +70,9 @@ public class ControllerIngresos {
 	}
 
 
-	public Response guardarIngreso(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException {
+	public Response guardarIngreso(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException, ClassNotFoundException, FileNotFoundException, SQLException, CreationError {
 
-		//TODO HACER QIE SE LO ASIGNE A una entidad específica Gracias!!
+
 		RepositorioIngreso repo = new RepositorioIngreso(entityManager);
 		Ingreso ingreso = new Ingreso();
 
@@ -80,7 +80,11 @@ public class ControllerIngresos {
 		asignarParametros(ingreso, request);
 		ingreso.setFecha(LocalDate.now());
 
-		repo.crear(ingreso);
+		RepositorioUsuario repositorioUsuario = new RepositorioUsuario(entityManager);
+		Usuario userActual = repositorioUsuario.byNombre(request.session().attribute("user"));
+
+		userActual.getOrganizacion().getEntidades().get(0).getIngresos().add(ingreso);
+		//repo.crear(ingreso);
 
 		//LOGICA TRANSACCION NUEVO INGRESO
 		RepositorioDocumentos repositorioDocumentos = new RepositorioDocumentos();
@@ -98,7 +102,7 @@ public class ControllerIngresos {
 	}
 
 
-	public Response eliminarIngreso(Request request, Response response, EntityManager entityManager) {
+	public Response eliminarIngreso(Request request, Response response, EntityManager entityManager) throws ClassNotFoundException, FileNotFoundException, SQLException, CreationError {
 
 
 		//TODO Hacer que elimine por favor!! Revisar el de egreso que debe ser lo mismo
@@ -107,6 +111,10 @@ public class ControllerIngresos {
 		int id = new Integer(strID);
 
 		Ingreso ingreso = repo.byID(id);
+
+		RepositorioUsuario repositorioUsuario = new RepositorioUsuario(entityManager);
+		Usuario userActual = repositorioUsuario.byNombre(request.session().attribute("user"));
+		userActual.getOrganizacion().getEntidades().get(0).getIngresos().remove(ingreso);
 		repo.borrar(ingreso);
 
 		RepositorioDocumentos repositorioDocumentos = new RepositorioDocumentos();
