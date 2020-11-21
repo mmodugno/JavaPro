@@ -127,7 +127,7 @@ public class Server {
         get("/categoria", TemplWithTransaction(Server::mostrarCategorias), engine);
        
         post("/egreso",RouteWithTransaction(controllerEgresos::guardarEgreso));
-        delete("/egreso/:id", controllerEgresos::eliminarEgreso);
+        delete("/egreso/:id", RouteWithTransaction(controllerEgresos::eliminarEgreso));
         post("/egreso/:id", RouteWithTransaction(controllerEgresos::modificarEgreso));
         
         //INGRESOS
@@ -168,7 +168,7 @@ public class Server {
 			return null;
 		}), engine);
         
-        delete("/orden/:id", controllerOrdenes::eliminarOrden);
+        delete("/orden/:id", RouteWithTransaction(controllerOrdenes::eliminarOrden));
         
         post("/orden", RouteWithTransaction(controllerOrdenes::crear));
        // post("orden:id");
@@ -182,12 +182,24 @@ public class Server {
 
         
         get("/working",Server::work,engine);
+
+
+        //API DOCUMENTAL
+        get("/transaccion",Server::documentos);
         
 
     }
 
-    
-    
+    private static Object documentos(Request request, Response response) {
+
+        String tipo = request.queryParams("tipo");
+        String operacion = request.queryParams("operacion");
+
+        RepositorioDocumentos repositorioDocumentos = new RepositorioDocumentos();
+        return repositorioDocumentos.documentos(tipo,operacion);
+    }
+
+
     public static String Validar(Request request, Response response) throws CloneNotSupportedException {
     	
     	EntityManager entityManager = entityManagerFactory.createEntityManager();;
@@ -364,10 +376,7 @@ public class Server {
         else if(request.queryParams("opciones").equals("Servicio")){
             producto.setTipoProducto(TipoItem.SERVICIO);
         }*/
-    
-    
 
-    
     public static ModelAndView crearEgreso(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException{
     	
     	if(request.session().attribute("user") == null )
@@ -376,6 +385,7 @@ public class Server {
     	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra(entityManager);
     	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto(entityManager);
     	RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
+
 
     	
     	List<OrdenDeCompra> ordenes = repoOrdenesCompra.todos();

@@ -94,7 +94,7 @@ public class ControllerOrdenes {
         return new ModelAndView(map,"formularioOrden.html");
     }
 
-    public Response crear(Request request, Response response, EntityManager entityManager) throws ParseException, CloneNotSupportedException {
+    public Response crear(Request request, Response response, EntityManager entityManager) throws ParseException, CloneNotSupportedException, ClassNotFoundException, FileNotFoundException, SQLException, CreationError {
     	RepositorioOrdenDeCompra repo = new RepositorioOrdenDeCompra(entityManager);
     	OrdenDeCompra nuevaOrden = new OrdenDeCompra();
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -131,9 +131,22 @@ public class ControllerOrdenes {
 			item.setCantidad(Integer.parseInt(request.queryParams("cantidad"+i)));
 			nuevaOrden.getItems().add(item);
 		}
-    	    	
-    	
-    	repo.crear(nuevaOrden);
+
+		RepositorioUsuario repositorioUsuario = new RepositorioUsuario(entityManager);
+		Usuario userActual = repositorioUsuario.byNombre(request.session().attribute("user"));
+
+		userActual.getOrganizacion().getEntidades().get(0).getOrdenesPendientes().add(nuevaOrden);
+    	//repo.crear(nuevaOrden);
+
+		//LOGICA TRANSACCION NUEVO INGRESO
+		RepositorioDocumentos repositorioDocumentos = new RepositorioDocumentos();
+		Transaccion transaccion = new Transaccion();
+		transaccion.setDocumento("orden");
+		transaccion.setOperacion("crear");
+		transaccion.setFecha(LocalDate.now().toString());
+
+		transaccion.setNuevo(converter(nuevaOrden));
+		repositorioDocumentos.crearTransaccion(transaccion);
     	
     	response.redirect("ordenes");
     	
@@ -237,16 +250,44 @@ public class ControllerOrdenes {
     }
     
     
-    public Response eliminarOrden(Request request, Response response) throws CloneNotSupportedException{
-    	//RepositorioOrdenDeCompra repo = new RepositorioOrdenDeCompra(entityManager);
+    public Response eliminarOrden(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException, ClassNotFoundException, FileNotFoundException, SQLException, CreationError {
+    	RepositorioOrdenDeCompra repositorioOrdenDeCompra = new RepositorioOrdenDeCompra(entityManager);
     	
 		String strID = request.params("id");
 		int id = new Integer(strID);
-		OrdenDeCompra orden = repo.byID(id);
+		OrdenDeCompra orden = repositorioOrdenDeCompra.byID(id);
 
-		repo.eliminar(orden);
+		RepositorioDocumentos repositorioDocumentos = new RepositorioDocumentos();
+		Transaccion transaccion = new Transaccion();
+		transaccion.setDocumento("orden");
+		transaccion.setOperacion("eliminar");
+		transaccion.setFecha(LocalDate.now().toString());
+
+		transaccion.setViejo(converter(orden));
+		repositorioDocumentos.crearTransaccion(transaccion);
+
+		RepositorioUsuario repositorioUsuario = new RepositorioUsuario(entityManager);
+		Usuario userActual = repositorioUsuario.byNombre(request.session().attribute("user"));
+		userActual.getOrganizacion().getEntidades().get(0).getOrdenesPendientes().remove(orden);
+		repositorioOrdenDeCompra.eliminar(orden);
 
 		return response;
 	}
-    
+
+	static public String converter(OrdenDeCompra orden){
+		HashMap map = new HashMap();
+
+		map.put("orden", orden.getIdOrden());
+		map.put("Presupuestos que necesita", orden.getNecesitaPresupuesto());
+		map.put("Presupuestos", orden.getPresupuestos().stream().map(a -> a.getId()));
+		map.put("fecha", orden.getFecha());
+
+		map.put("items", orden.getItems().stream().map(i -> i.getProducto().getNombre() + " cantidad " + i.getCantidad()));
+
+		Gson gson = new Gson();
+		String nuevo = gson.toJson(map);
+
+		return nuevo;
+	}
 }
+

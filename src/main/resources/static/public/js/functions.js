@@ -45,7 +45,7 @@ function cerrarConfirmacionBorrar() {
 /**eliminar egreso**/
 function confirmarBorrarEgreso(id) {
     document.getElementById("egresoId").value = id;
-    document.getElementById("eliminarEgreso").style.display = 'block';
+    document.getElementById("eliminarEgresoVentana").style.display = 'block';
 
 }
 
@@ -85,12 +85,12 @@ function eliminarIngreso() {
     
 /**Eliminar orden de compra**/
 function confirmarBorrarOrden(id) {
-    document.getElementById("idOrdenDeCompra").value = id;
+    document.getElementById("ordenId").value = id;
     document.getElementById("eliminarOrdenVentana").style.display = 'block';
 
 }
 function eliminarOrden() {
-    let id = document.getElementById("idOrdenDeCompra").value;
+    let id = document.getElementById("ordenId").value;
     $.ajax({
         type: "delete",
         url: id,
