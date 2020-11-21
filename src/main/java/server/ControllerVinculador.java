@@ -97,7 +97,7 @@ public class ControllerVinculador {
         CriterioDeVinculacion criterio1 = new PrimeroEgreso();
         criterio1.setNombre("primeroEgreso");
         CriterioDeVinculacion criterio2 = new PrimeroIngreso();
-        criterio2.setNombre("PrimeroIngreso");
+        criterio2.setNombre("primeroIngreso");
         criterios.add(criterio1);
         criterios.add(criterio2);
         // CriterioDeVinculacion criterio3= new Mix();
