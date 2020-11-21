@@ -91,8 +91,8 @@ public class Vinculador {
         }
 
         /**Siempre traigo todos los ingresos/egresos acá**/
-        egresosSinVincular = entidadJuridica.getEgresos();
-        ingresosSinVincular = entidadJuridica.getIngresos();
+        egresosSinVincular = new ArrayList<Egreso>(entidadJuridica.getEgresos());
+        ingresosSinVincular = new ArrayList<Ingreso>(entidadJuridica.getIngresos());
 
 
         /**Lo que hago aca es limpiar si algun ingreso, por algun motivo tenia algo ya vinculado**/
