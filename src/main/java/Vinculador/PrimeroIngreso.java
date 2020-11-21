@@ -23,12 +23,11 @@ public class PrimeroIngreso extends CriterioDeVinculacion {
 
             boolean seAsigno = true;
 
-            while(seAsigno && egresos.size()>0 && ingresos.size()>0){
+            while(seAsigno && 0 < egresos.size()){
                 seAsigno = false;
                 int tam_egresos = egresos.size();
                 for (int e = 0; e<tam_egresos; e++) {
-                    Egreso egreso = null ;
-                    egreso = egresos.get(e);
+                    Egreso egreso = egresos.get(e);
                     for (int z = 0; z < ingresos.size(); z++) {
                         BalanceIngreso balanceIngreso = null;
                         if (egreso.getValorTotal() <= ingresos.get(z).getMontoSinVincular()) {
@@ -41,15 +40,16 @@ public class PrimeroIngreso extends CriterioDeVinculacion {
                             }
                             ingresos.get(z).asociarEgreso(egreso.getValorTotal());
                             balanceIngreso.asociarEgreso(egresos.remove(e));
-                            e -= 1;
+                            e--;
+                            tam_egresos--;
                             seAsigno = true;
                             z=ingresos.size();
+                            if(balanceIngreso != null) {
+                                vinculador.getBalanceIngresos().add(balanceIngreso);
+                            }
                         }
-                        if(balanceIngreso != null) {
-                            vinculador.getBalanceIngresos().add(balanceIngreso);
-                        }
-                    }
 
+                    }
                 }
             }
         formarBalanceEgreso(egresos,ingresos,vinculador);
