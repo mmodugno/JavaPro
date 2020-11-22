@@ -31,14 +31,14 @@
                 <div class="form-group"></div>
                 <label for="categoria">Categoria</label>
                 <select class="form-control" name="categoria" id="categoria">
-                            {{#if ingreso.categoria}}
+                            {{#if presupuesto.categoria}}
                                 <option value = {{presupuesto.categoria.categoria}}>{{presupuesto.categoria.categoria}}</option>
-                                {{else}}
+                            {{else}}
                                 <option value = "">Seleccionar...</option>
-                                {{/if}}
-                              	{{#each categorias}}
+                           {{/if}}
+                           {{#each categorias}}
                               	<option value = "{{categoria}}">{{categoria}}</option>
-                                {{/each}}
+                           {{/each}}
                             </select>
                 </div>
 

@@ -12,6 +12,7 @@ import egreso.OrdenDeCompra;
 import egreso.Presupuesto;
 import producto.Producto;
 import producto.TipoItem;
+import repositorios.RepositorioCategoria;
 import repositorios.RepositorioOrdenDeCompra;
 import repositorios.RepositorioPresupuesto;
 import repositorios.RepositorioProducto;
@@ -19,6 +20,7 @@ import repositorios.RepositorioUsuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import usuarios.CategoriaDelSistema;
 import usuarios.CreationError;
 import usuarios.Usuario;
 
@@ -66,14 +68,17 @@ public class ControllerPresupuesto {
     		response.redirect("/login");
     	
     	RepositorioPresupuesto repositorio = new RepositorioPresupuesto(entityManager);
+    	RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
         String strID = request.params("id");
 
         int id = Integer.parseInt(strID);
 
         Presupuesto presupuesto = repositorio.byID(id);
+        List<CategoriaDelSistema> categorias = repoCategorias.todos();
 
         Map<String, Object> map = new HashMap<>();
         map.put("presupuesto", presupuesto);
+        map.put("categorias", categorias);
         map.put("usuario", request.session().attribute("user"));
 
         return new ModelAndView(map,"detallePresupuesto.html");
