@@ -199,8 +199,8 @@ public class Server {
         
         //Presupuestos
         get("/presupuestos", TemplWithTransaction(controllerPresupuesto::presupuestos), engine);
-        get("/presupuestos/:id", TemplWithTransaction(controllerPresupuesto::detallePresupuesto), engine);
-        post("/presupuestos/:id", RouteWithTransaction(controllerPresupuesto::modificarCategoria));
+        get("/presupuesto/:id", TemplWithTransaction(controllerPresupuesto::detallePresupuesto), engine);
+        post("/presupuesto/:id", RouteWithTransaction(controllerPresupuesto::modificarCategoria));
 
         //API DOCUMENTAL
         get("/transaccion",Server::documentos);
