@@ -213,7 +213,7 @@ public class VincularTest {
 
     }
 
-    @Test
+   /* @Test
     public void crearBalance() throws MontoSuperadoExcepcion {
         //INSTANCIO UNA ENTIDAD JURIDICA NUEVA
         entidadJuridica.setEgresos(new ArrayList<Egreso>());
@@ -239,7 +239,7 @@ public class VincularTest {
 
     }
 
-
+*/
 
     }
 

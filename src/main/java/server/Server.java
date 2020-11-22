@@ -11,6 +11,10 @@ import repositorios.*;
 import spark.*;
 
 import spark.template.handlebars.HandlebarsTemplateEngine;
+import static spark.Spark.*;
+import static spark.debug.DebugScreen.enableDebugScreen;
+
+import spark.template.handlebars.HandlebarsTemplateEngine;
 import usuarios.CategoriaDelSistema;
 import usuarios.CreationError;
 import usuarios.Usuario;
@@ -75,16 +79,31 @@ public class Server {
         if (processBuilder.environment().get("PORT") != null) {
             return Integer.parseInt(processBuilder.environment().get("PORT"));
         }
-        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+        return 1133; //return default port if heroku-port isn't set (i.e. on localhost)
     }
    
+    public static void initRoutes() {
+
+        boolean localhost = true;
+        if (localhost) {
+            String projectDir = System.getProperty("user.dir");
+            String staticDir = "/src/main/resources/static/";
+            staticFiles.externalLocation(projectDir + staticDir);
+        } else {
+            staticFiles.location("/public");
+        }
+        
+        
+    } 
  
     public static void main(String[] args) {
     	
     	port(getHerokuAssignedPort());
-    	
-        enableDebugScreen();
-        port(1133);
+       // enableDebugScreen();
+        //port(1133);
+
+       // initRoutes();
+        
         boolean localhost = true;
         if (localhost) {
             String projectDir = System.getProperty("user.dir");
@@ -94,8 +113,16 @@ public class Server {
             staticFiles.location("/resources");
         }
 
+        Map<String, String> env = System.getenv();
+        Map<String, Object> configOverrides = new HashMap<String, Object>();
+        for (String envName : env.keySet()) {
+            if (envName.contains("DB_USER")) {
+                configOverrides.put("toplink.jdbc.user", env.get(envName));    
+            }
+            // You can put more code in here to populate configOverrides...
+        }
         
-        entityManagerFactory = Persistence.createEntityManagerFactory("db");
+        entityManagerFactory = Persistence.createEntityManagerFactory("db", configOverrides);
 
         controllerProductos= new ControllerProductos();
        

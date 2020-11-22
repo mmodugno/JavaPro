@@ -19,28 +19,31 @@
     <plugin>
     <groupId>com.heroku.sdk</groupId>
     <artifactId>heroku-maven-plugin</artifactId>
-    <version>0.4.4</version>
+    <version>1.1.3</version>
     <configuration>
         <jdkVersion>1.8</jdkVersion>
         <!-- Use your own application name -->
-        <appName>spark-heroku-example</appName> 
+        <appName>spark-heroku-gesoc</appName> 
         <processTypes>
             <!-- Tell Heroku how to launch your application -->
             <!-- You might have to remove the ./ in front   -->
-            <web>java -jar ./target/my-app-1.0-jar-with-dependencies.jar</web>
+            <web>java -jar target/nombre-proyecto-1-jar-with-dependencies.jar</web>
         </processTypes>
     </configuration>
 </plugin>
 
         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>2.0.3</version>
-            <configuration>
-                <source>1.8</source>
-                <target>1.8</target>
-            </configuration>
-        </plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <warSourceDirectory>src/main/webapp</warSourceDirectory>
+                    <warName>kamienica</warName>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            
+           
         <plugin>
             <artifactId>maven-assembly-plugin</artifactId>
             <executions>
@@ -64,38 +67,7 @@
             </configuration>
         </plugin>
 
- 
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>2.3.2</version>
-            <configuration>
-                <source>1.8</source>
-                <target>1.8</target>
-            </configuration>
-        </plugin>
-        <plugin>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <executions>
-                <execution>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>single</goal>
-                    </goals>
-                </execution>
-            </executions>
-            <configuration>
-                <descriptorRefs>
-                    <!-- This tells Maven to include all dependencies -->
-                    <descriptorRef>jar-with-dependencies</descriptorRef>
-                </descriptorRefs>
-                <archive>
-                    <manifest>
-                        <mainClass>Main</mainClass>
-                    </manifest>
-                </archive>
-            </configuration>
-        </plugin>
+        
     </plugins>
     
 	</build>
@@ -114,6 +86,18 @@
 		  <artifactId>json</artifactId>
 		  <version>20090211</version>
 		</dependency>
+		
+		<dependency>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <version>42.2.5</version>
+</dependency>
+
+<dependency>
+    <groupId>org.openrdf.sesame</groupId>
+    <artifactId>sesame-rio-api</artifactId>
+    <version>2.7.2</version>
+</dependency>
 	
 	  <dependency>
 		  <groupId>com.sparkjava</groupId>
@@ -133,6 +117,24 @@
     	<artifactId>hibernate-core</artifactId>
    	 <version>4.3.6.Final</version>
 	</dependency>
+	
+	<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-webmvc</artifactId>
+    <version>3.2.17.RELEASE</version>
+</dependency>
+
+	<dependency>
+    <groupId>org.apache.tiles</groupId>
+    <artifactId>tiles-extras</artifactId>
+    <version>3.0.5</version>
+    <exclusions>
+        <exclusion>
+            <artifactId>javassist</artifactId>
+            <groupId>jboss</groupId>
+        </exclusion>
+    </exclusions>
+</dependency>
 	
 	<dependency>
     	<groupId>org.hibernate</groupId>
@@ -214,6 +216,7 @@
 	   <groupId>com.heroku.sdk</groupId>
 			<artifactId>heroku-maven-plugin</artifactId>
 		<version>2.0.3</version>
+		</dependency>
 	   
 	   
 	   <dependency>
@@ -222,8 +225,21 @@
     	<version>2.0.3</version>
 	</dependency>
 	   
-	   </dependency>
+	   <dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-core</artifactId>
+    <version>4.3.6.Final</version>
+    <exclusions>
+        <!-- 排除javassist-->
+        <exclusion>
+            <groupId>javassist</groupId>
+            <artifactId>javassist</artifactId>
+        </exclusion>
+    </exclusions>
+	</dependency>
+	   
 
+    	
 
    </dependencies>
 

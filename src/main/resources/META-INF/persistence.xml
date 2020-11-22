@@ -13,14 +13,15 @@
         <properties> 
 	    <property name="hibernate.archive.autodetection" value="class"/>        
         
-            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" /> 
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/gesoc" />
-            <property name="hibernate.connection.username" value="root" /> 
-            <property name="hibernate.connection.password" value="dds2020" />
+            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver" /> 
+            <property name="hibernate.connection.url" value="jdbc:postgresql://ec2-52-87-22-151.compute-1.amazonaws.com:5432/db39s1dkodetn3"/>
+            <property name="hibernate.connection.username" value="ymtidcsxjifsfn" /> 
+            <property name="hibernate.connection.password" value="9663b7f7828f43b76172ee1eb875394d5db506c841c8d521dccc43d64e61d948" />
             
-                        
-            <property name="dialect" value="org.hibernate.dialect.H2Dialect"/>
+                                            
+            <property name="dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
 
+			<property name="connection.pool_size" value="1"/>
             <property name="hibernate.show_sql" value="true" /> 
             <property name="hibernate.format_sql" value="true" /> 
             <property name="use_sql_comments" value="true" /> 
@@ -30,3 +31,5 @@
     </persistence-unit> 
   
 </persistence>
+
+
