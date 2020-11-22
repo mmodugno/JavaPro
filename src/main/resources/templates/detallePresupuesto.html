@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link rel="stylesheet" href="/public/vendor/bootstrap/css/bootstrap.css">
+
+    <script src="/public/vendor/jquery/jquery.min.js"></script>
+    <script src="/public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="/public/css/styles-nuevo.css">
+    <script src="/public/js/functions.js"></script>
+    <title>Actualizar Categoria Presupuesto</title>
+</head>
+
+<body>
+    <main class="contenido-centrado contenedor">
+
+        <form action="/presupuesto/{{id}}" method="post">
+            <fieldset class="">
+                <legend class="centrar-texto">Actualizar Categoria Presupuesto ID : {{presupuesto.id}}</legend>
+
+                <label>Medio de Pago : {{presupuesto.medioDePago.tipoPago}} </label>
+
+                <label for="nombre">Valor Total</label>
+                <input type="" id="valorTotal" name="valorTotal" value="{{presupuesto.valorTotal}}" required>
+
+                <div class="form-group"></div>
+                <label for="categoria">Categoria</label>
+                <select class="form-control" name="categoria" id="categoria">
+                            {{#if ingreso.categoria}}
+                                <option value = {{presupuesto.categoria.categoria}}>{{presupuesto.categoria.categoria}}</option>
+                                {{else}}
+                                <option value = "">Seleccionar...</option>
+                                {{/if}}
+                              	{{#each categorias}}
+                              	<option value = "{{categoria}}">{{categoria}}</option>
+                                {{/each}}
+                            </select>
+                </div>
+
+
+            </fieldset>
+
+            <div class="">
+                <input type="submit" class="btn btn-primary" value="Actualizar">
+                <a href="/presupuestos" class="btn btn-danger">Volver</a>
+            </div>
+
+        </form>
+    </main>
+
+</body>
+
+</html>
