@@ -10,8 +10,11 @@ import javax.persistence.EntityManager;
 
 import egreso.OrdenDeCompra;
 import egreso.Presupuesto;
+import producto.Producto;
+import producto.TipoItem;
 import repositorios.RepositorioOrdenDeCompra;
 import repositorios.RepositorioPresupuesto;
+import repositorios.RepositorioProducto;
 import repositorios.RepositorioUsuario;
 import spark.ModelAndView;
 import spark.Request;
@@ -56,5 +59,54 @@ public class ControllerPresupuesto {
 	
 	    return new ModelAndView(map, "presupuestos.html");
 	}
+	
+	public ModelAndView detallePresupuesto(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException{
+
+    	if(request.session().attribute("user") == null )
+    		response.redirect("/login");
+    	
+    	RepositorioPresupuesto repositorio = new RepositorioPresupuesto(entityManager);
+        String strID = request.params("id");
+
+        int id = Integer.parseInt(strID);
+
+        Presupuesto presupuesto = repositorio.byID(id);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("presupuesto", presupuesto);
+        map.put("usuario", request.session().attribute("user"));
+
+        return new ModelAndView(map,"detallePresupuesto.html");
+    }
+	
+	public Response modificarCategoria(Request request, Response response, EntityManager entityManager) {
+
+        RepositorioProducto repositorio = new RepositorioProducto(entityManager);
+        String strID = request.params("id");
+        int id = new Integer(strID);
+        Producto producto = repositorio.byID(id);
+
+        actualizarCategoria(producto, request);
+
+        response.redirect("/presupuestos");
+
+        return response;
+    }
+	
+	private static void actualizarCategoria(Producto producto,Request request) {
+
+        producto.setCodProducto(new Integer(request.queryParams("codigo")));
+        producto.setNombre(request.queryParams("nombre"));
+        producto.setDescripcion(request.queryParams("descripcion"));
+
+
+        if(request.queryParams("opciones").equals("Articulo")){
+            producto.setTipoProducto(TipoItem.ARTICULO);
+        }
+        else if(request.queryParams("opciones").equals("Servicio")){
+            producto.setTipoProducto(TipoItem.SERVICIO);
+        }
+
+    }
 
 }
