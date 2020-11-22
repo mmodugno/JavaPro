@@ -30,7 +30,6 @@ public class ControllerPresupuesto {
 
 		if(request.session().attribute("user") == null) {
 			response.redirect("/login");
-			return new ModelAndView(null, "ingresos.html");
 		}
 	
 		RepositorioUsuario repoUser = null;
@@ -57,7 +56,7 @@ public class ControllerPresupuesto {
 
 	    Map<String, Object> map = new HashMap<>();
 	    map.put("presupuestos", presupuestos);
-	    //map.put("usuario", request.session().attribute("user"));
+	    map.put("usuario", request.session().attribute("user"));
 	
 	    return new ModelAndView(map, "presupuestos.html");
 	}
@@ -84,33 +83,27 @@ public class ControllerPresupuesto {
         return new ModelAndView(map,"detallePresupuesto.html");
     }
 	
-	public Response modificarCategoria(Request request, Response response, EntityManager entityManager) {
+	public Response modificarCategoria(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException {
 
-        RepositorioProducto repositorio = new RepositorioProducto(entityManager);
+		RepositorioPresupuesto repositorio = new RepositorioPresupuesto(entityManager);
         String strID = request.params("id");
         int id = new Integer(strID);
-        Producto producto = repositorio.byID(id);
+        Presupuesto presupuesto = repositorio.byID(id);
 
-        actualizarCategoria(producto, request);
+        actualizarCategoria(presupuesto, request, entityManager);
 
         response.redirect("/presupuestos");
 
         return response;
     }
 	
-	private static void actualizarCategoria(Producto producto,Request request) {
+	private static void actualizarCategoria(Presupuesto presupuesto, Request request, EntityManager entityManager) {
+		
+		RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
+		
+		CategoriaDelSistema categoria = repoCategorias.buscar(request.queryParams("categoria"));
 
-        producto.setCodProducto(new Integer(request.queryParams("codigo")));
-        producto.setNombre(request.queryParams("nombre"));
-        producto.setDescripcion(request.queryParams("descripcion"));
-
-
-        if(request.queryParams("opciones").equals("Articulo")){
-            producto.setTipoProducto(TipoItem.ARTICULO);
-        }
-        else if(request.queryParams("opciones").equals("Servicio")){
-            producto.setTipoProducto(TipoItem.SERVICIO);
-        }
+		presupuesto.setCategoria(categoria);
 
     }
 
