@@ -50,6 +50,7 @@ public class Server {
 
     private static ControllerProductos controllerProductos= new ControllerProductos();
     private static ControllerEgresos controllerEgresos= new ControllerEgresos();
+    private static ControllerPresupuesto controllerPresupuesto = new ControllerPresupuesto();
     private static ControllerIngresos controllerIngresos= new ControllerIngresos();
     private static ControllerOrdenes controllerOrdenes;
     private static ControllerVinculador controllerVinculador;
@@ -195,6 +196,10 @@ public class Server {
 
         
         get("/working",Server::work,engine);
+        
+        //Presupuestos
+        get("/presupuestos", TemplWithTransaction(controllerPresupuesto::presupuestos), engine);
+        //get("/presupuestos/:id", controllerPresupuestos::detallePresupuestos);
 
 
         //API DOCUMENTAL
