@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Presupuestos</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="public/css/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <header>
+        {{>navbar.hbs}}
+    </header>
+
+    <div class="d-flex" id="wrapper">
+
+
+        <!-- Sidebar -->
+        {{>sidebar.hbs}}
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+            <h1 class="mt-4 text-center">Categorizar Presupuestos</h1>
+
+            <div class="row py-5"></div>
+
+            <div class="contenido-centrado">
+                <table class="table  gradual ">
+                    <thead class="thead-dark">
+
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Medio de Pago</th>
+                            <th scope="col">Valor Total</th>
+                            <th scope="col">Categoría</th>
+                            <th scope="col"></th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        {{#each presupuestos}}
+                        <tr class="ultimo-final">
+                            <td>{{id}}</td>
+                            <td>{{medioDePago.tipoPago}}</td>
+                            <td>{{valorTotal}}</td>
+                            <td>{{categoria.categoria}}</td>
+                            <td>
+                                <a href="/presupuesto/{{id}}">
+                                    <button class="btn btn-yoel">Categorizar</button>
+                                </a>
+                            </td>
+
+
+                        </tr>
+                        {{/each}}
+
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+    </div>
+    <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/public/vendor/jquery/jquery.min.js"></script>
+    <script src="/public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+
+</html>

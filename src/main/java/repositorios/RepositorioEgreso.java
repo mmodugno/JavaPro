@@ -11,6 +11,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.Criteria;
+
 import com.mercadopago.exceptions.MPRestException;
 
 import egreso.Egreso;
@@ -116,14 +118,13 @@ public class RepositorioEgreso {
 	                a.esDeCategoria(unaCategoria)
 	        ).collect(Collectors.toList());
 	  }
-	   
+	 
 	 public List<Egreso> todos() {
 		 
-		   CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
-	        CriteriaQuery<Egreso> consulta = cb.createQuery(Egreso.class);
-	        Root<Egreso> egresos = consulta.from(Egreso.class);
-	        return this.entityManager.createQuery(consulta.select(egresos)).getResultList();
-	         
+		 CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+	     CriteriaQuery<Egreso> consulta = cb.createQuery(Egreso.class);
+	     Root<Egreso> egresos = consulta.from(Egreso.class);
+	     return this.entityManager.createQuery(consulta.select(egresos)).getResultList();	         
 	    }   
 	   
 	public void crear(Egreso egreso) {
