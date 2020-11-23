@@ -86,14 +86,14 @@ public class Server {
     	
         //enableDebugScreen();
         //port(1133);
-        boolean localhost = true;
-        if (localhost) {
-            String projectDir = System.getProperty("user.dir");
+      //  boolean localhost = true;
+       if (getHerokuAssignedPort() == 1133) {
+    	   String projectDir = System.getProperty("user.dir");
             String staticDir = "/src/main/resources/static/";
-            staticFiles.externalLocation(projectDir + staticDir);
+           staticFiles.externalLocation(projectDir + staticDir);
         } else {
-            staticFiles.location("/resources");
-        }
+            staticFiles.location("/static");
+       }
 
         
         entityManagerFactory = Persistence.createEntityManagerFactory("db");
