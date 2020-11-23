@@ -12,7 +12,7 @@ import egreso.*;
 import organizacion.EntidadJuridica;
 import organizacion.Organizacion;
 
-import org.hibernate.metamodel.binding.EntityIdentifier;
+//import org.hibernate.metamodel.binding.EntityIdentifier.*;
 import org.junit.Test;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
@@ -31,7 +31,7 @@ import usuarios.Usuario;
 
 public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
 
-	@Test
+/*	@Test
 	public void productoTest() throws CloneNotSupportedException, FileNotFoundException, ClassNotFoundException, CreationError, SQLException {
 		
 		//USUARIO y organizaciones
