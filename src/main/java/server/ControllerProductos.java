@@ -18,7 +18,7 @@ public class ControllerProductos {
 
 
     public ModelAndView productos(Request request, Response response, EntityManager entityManager){
-    	if(request.session().attribute("user") == null )
+    	if((request.session().attribute("user") == null) || (request.session().attribute("admin").equals(true)))
     		response.redirect("/login");
         RepositorioProducto repositorio = new RepositorioProducto(entityManager);
         //DOMINIO
