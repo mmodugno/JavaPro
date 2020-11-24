@@ -44,8 +44,15 @@ public class ControllerLogin {
             request.session().attribute("user", user);
             request.session().attribute("usuario", usuario);
             request.session().maxInactiveInterval(3600);
-
-            response.redirect("/inicio");
+            
+            if(usuario.getNombre().equals("administrador") ) {
+            	request.session().attribute("admin", true);
+            	response.redirect("/administracion");
+            } else {
+            	request.session().attribute("admin", false);
+            	response.redirect("/inicio");
+            }
+            
         }
         
         response.status(401);
