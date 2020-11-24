@@ -41,10 +41,8 @@ public class ControllerOrdenes {
     public ModelAndView ordenes(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException {
 
 		//INIT
-		if(request.session().attribute("user") == null) {
+    	if((request.session().attribute("user") == null) || (request.session().attribute("admin").equals(true)))
 			response.redirect("/login");
-			return new ModelAndView(null, "ingresos.html");
-		}
 
 		RepositorioUsuario repoUser = null;
 		try {
@@ -83,7 +81,7 @@ public class ControllerOrdenes {
 
     public ModelAndView nuevaOrden(Request request, Response response, EntityManager entityManager){
 
-    	if(request.session().attribute("user") == null )
+    	if((request.session().attribute("user") == null) || (request.session().attribute("admin").equals(true)))
     		response.redirect("/login");
     	
 		RepositorioProducto repoPro = new RepositorioProducto(entityManager);
