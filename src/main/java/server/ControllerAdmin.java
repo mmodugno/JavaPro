@@ -10,8 +10,6 @@ import spark.Response;
 public class ControllerAdmin {
 	
 	public ModelAndView index(Request request, Response response) {
-	    	
-		System.out.println("Valor Atributo Session admin : " + request.session().attribute("admin"));
 		
 		if((request.session().attribute("user") == null) || (request.session().attribute("admin") == null))
     		response.redirect("/login");
