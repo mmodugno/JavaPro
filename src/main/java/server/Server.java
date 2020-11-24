@@ -55,6 +55,7 @@ public class Server {
     private static ControllerOrdenes controllerOrdenes;
     private static ControllerVinculador controllerVinculador;
 	private static ControllerLogin controllerLogin= new ControllerLogin();
+	private static ControllerAdmin controllerAdmin = new ControllerAdmin();
     
 	
 	
@@ -202,6 +203,9 @@ public class Server {
         get("/presupuesto/:id", TemplWithTransaction(controllerPresupuesto::detallePresupuesto), engine);
         post("/presupuesto/:id", RouteWithTransaction(controllerPresupuesto::modificarCategoria));
 
+        // Acceso como Admin
+        get("/administracion", controllerAdmin::index, engine);
+        
         //API DOCUMENTAL
         get("/transaccion",Server::documentos);
         
