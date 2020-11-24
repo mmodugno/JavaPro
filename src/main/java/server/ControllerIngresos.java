@@ -32,7 +32,7 @@ public class ControllerIngresos {
 
 	public ModelAndView nuevoIngreso(Request request, Response response, EntityManager entityManager) {
 
-		if (request.session().attribute("user") == null)
+		if((request.session().attribute("user") == null) || (request.session().attribute("admin").equals(true)))
 			response.redirect("/login");
 
 		RepositorioIngreso repo = new RepositorioIngreso(entityManager);
@@ -137,7 +137,7 @@ public class ControllerIngresos {
 	}
 
 	public ModelAndView modificarIngreso(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException {
-		if (request.session().attribute("user") == null)
+		if((request.session().attribute("user") == null) || (request.session().attribute("admin").equals(true)))
 			response.redirect("/login");
 
 		RepositorioIngreso repo = new RepositorioIngreso(entityManager);
@@ -194,10 +194,8 @@ public class ControllerIngresos {
 
 	public ModelAndView ingresos(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException, FileNotFoundException {
 
-		if (request.session().attribute("user") == null) {
+		if((request.session().attribute("user") == null) || (request.session().attribute("admin").equals(true)))
 			response.redirect("/login");
-			return new ModelAndView(null, "ingresos.html");
-		}
 
 
 		RepositorioUsuario repoUser = null;
