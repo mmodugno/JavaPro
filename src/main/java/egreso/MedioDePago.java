@@ -77,7 +77,7 @@ public class MedioDePago {
 		this.imageRoute = route;
 	}
 	
-	public String getImageRoute(String route) {
+	public String getImageRoute() {
 		return this.imageRoute;
 	}
 }

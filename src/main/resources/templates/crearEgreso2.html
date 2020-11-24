@@ -19,7 +19,7 @@
             -ms-user-select: none;
             user-select: none;
         }
-
+        
         @media (min-width: 768px) {
             .bd-placeholder-img-lg {
                 font-size: 3.5rem;
@@ -41,35 +41,34 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
     <script src="/public/js/functions.js"></script>
     <script>
-        $(document).ready( function() {
-            $('#orden').change( function() {
-                location.href = "/modificarEgreso/{{egreso.id}}?ordenDeCompraId="+$(this).val()
+        $(document).ready(function() {
+            $('#orden').change(function() {
+                location.href = "/modificarEgreso/{{egreso.id}}?ordenDeCompraId=" + $(this).val()
             });
         });
     </script>
 </head>
 
 <body class="bg-light">
-<div class="container contenido-centrado-detalle">
-    <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="/public/img/logoIcon.png" alt="" width="72" height="72">
-        <h2>Crear Egreso</h2>
-    </div>
+    <div class="container contenido-centrado-detalle">
+        <div class="py-5 text-center">
+            <img class="d-block mx-auto mb-4" src="/public/img/logoIcon.png" alt="" width="72" height="72">
+            <h2>Crear Egreso</h2>
+        </div>
 
-    <div class="contenido-centrado contenedor">
-        <!-- aca esta la clase container-->
-        <h4 class="mb-3">Egreso:{{#if egreso}} {{egreso.id }}{{/if}}</h4>
-        <form class="needs-validation contenido-centrado contenedor" {{#if egreso}} action="/egreso/{{egreso.id}}" {{else}} action="/egreso" {{/if}} method="post" novalidate>
-        <div class="row">
+        <div class="contenido-centrado contenedor">
+            <!-- aca esta la clase container-->
+            <h4 class="mb-3">Egreso:{{#if egreso}} {{egreso.id }}{{/if}}</h4>
+            <form class="needs-validation contenido-centrado contenedor" {{#if egreso}} action="/egreso/{{egreso.id}}" {{else}} action="/egreso" {{/if}} method="post" novalidate>
+                <div class="row">
 
-            <div class="col-md-6 mb-3">
-                <!-- Aca habria que poner que no se modifique la OC-->
-                {{#if egreso}}
-                <br> La Orden de Compra del Egreso es {{egreso.ordenDeCompra.idOrden}}
-                {{else}}
-                <div class="form-group">
-                    <label for="orden">Orden de Compra</label>
-                    <select class="form-control" name="orden" id="orden">
+                    <div class="col-md-6 mb-3">
+                        <!-- Aca habria que poner que no se modifique la OC-->
+                        {{#if egreso}}
+                        <br> La Orden de Compra del Egreso es {{egreso.ordenDeCompra.idOrden}} {{else}}
+                        <div class="form-group">
+                            <label for="orden">Orden de Compra</label>
+                            <select class="form-control" name="orden" id="orden">
                         {{#if orden}}
                         <option value = "{{orden.idOrden}}" hidden selected >{{orden.idOrden}}</option>
                         {{else}}
@@ -83,42 +82,41 @@
                         <option value = "{{idOrden}}">{{idOrden}}</option>
                         {{/each}}
                     </select>
-                </div>
-                {{/if}}
-
-            </div>
-            <div class="col-md-6 mb-3">
-                <!--Acá si requiere presupuestos la OC seria solamente-->
-                <label for="presupuesto">Presupuesto:</label>
-                <div class="form-group">
-                    <select class="form-control" name="presupuesto" id="presupuesto">
-                        {{#if egreso}}
-                        <option value = {{egreso.presupuesto.id}} data-image={{medioDePago.tipoPago}}>{{egreso.presupuesto.id}}</option>
-                        {{else}}
-                        <option value = "visa">Seleccionar...</option>
+                        </div>
                         {{/if}}
+
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <!--Acá si requiere presupuestos la OC seria solamente-->
+                        <label for="presupuesto">Presupuesto:</label>
+                        <div class="form-group">
+                            <select class="form-control" name="presupuesto" id="presupuesto">
+                        {{#if egreso}}
                         {{#if orden}}
                         {{#each presupuestos}}
                         <option value = {{id}} data-image={{medioDePago.tipoPago}}>{{id}} - {{medioDePago.tipoPago}}</option>
                         {{/each}}
                         {{/if}}
+                        {{else}}
+                        <option value = "noHay">Seleccionar...</option>
+                        {{/if}}
                     </select>
+                        </div>
+                        <img id="imagenMedio" src="{{imageRoute}}" alt="Presupuesto no seleccionado" height="50" width="50">
+                    </div>
                 </div>
-                <img id="imagenMedio" src="" alt="Presupuesto no seleccionado" height="50" width="50">
-            </div>
-        </div>
 
 
 
-        <input type="hidden" id="{{id}}" name="{{id}}" value="{{medioDePago.tipoPago}}">
+                <input type="hidden" id="{{id}}" name="{{id}}" value="{{medioDePago.tipoPago}}">
 
 
 
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <div class="form-group">
-                    <label for="categoria">Categoria</label>
-                    <select class="form-control" name="categoria" id="categoria">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="categoria">Categoria</label>
+                            <select class="form-control" name="categoria" id="categoria">
                         {{#if egreso.categoria}}
                         <option value = {{egreso.categoria.categoria}}>{{egreso.categoria.categoria}}</option>
                         {{else}}
@@ -128,10 +126,10 @@
                         <option value = "{{categoria}}">{{categoria}}</option>
                         {{/each}}
                     </select>
-                </div>
-            </div>
+                        </div>
+                    </div>
 
-            <!--<div class="col-md-6 mb-3">
+                    <!--<div class="col-md-6 mb-3">
                 <div class="form-group">
                     <label for="documentos">Documentos Comerciales</label>
                     <select class="form-control" name="docsComerciales" id="documentos">
@@ -143,54 +141,54 @@
                     </select>
                 </div>
             </div> -->
-            <div class="col-md-6 mb-3">
-                <label for="documentos">Fecha</label>
-                <div class='input-group date' id='datetimepicker1'>
-                    <input type='date' class="form-control" name="fecha" id="fecha" {{#if fecha}} value="{{fecha}}" {{/if}} />
+                    <div class="col-md-6 mb-3">
+                        <label for="documentos">Fecha</label>
+                        <div class='input-group date' id='datetimepicker1'>
+                            <input type='date' class="form-control" name="fecha" id="fecha" {{#if fecha}} value="{{fecha}}" {{/if}} />
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="row">
+                <div class="row">
+                </div>
+                <hr class="mb-4">
+                <div class="botones-centrados">
+                    <button type="submit" class="btn btn-primary">Confirmar Egreso</button>
+                    <a href="/egresos" class="btn btn-danger"> Cancelar </a>
+                </div>
+            </form>
         </div>
-        <hr class="mb-4">
-        <div class="botones-centrados">
-            <button type="submit" class="btn btn-primary">Confirmar Egreso</button>
-            <a href="/egresos" class="btn btn-danger"> Cancelar </a>
-        </div>
-        </form>
     </div>
-</div>
 
 
 
 
-<footer class="my-5 pt-5 text-muted text-center text-small">
-    <p class="mb-1">&copy; 2020 GeSoc</p>
-    <ul class="list-inline">
-        <li class="list-inline-item"><a href="/inicio">Inicio</a></li>
-    </ul>
-</footer>
-</div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script>
-    window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')
-</script>
-<!-- <script src="/public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2020 GeSoc</p>
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="/inicio">Inicio</a></li>
+        </ul>
+    </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script>
+        window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')
+    </script>
+    <!-- <script src="/public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
 
 
-<script type="text/javascript">
-    $("#presupuesto").change(function() {
-        var val = ($(this).find(':selected').data('image'));
-        document.getElementById("imagenMedio").src = "http://img.mlstatic.com/org-img/MP3/API/logos/" + val + ".gif";
-    });
-</script>
+    <script type="text/javascript">
+        $("#presupuesto").change(function() {
+            var val = ($(this).find(':selected').data('image'));
+            document.getElementById("imagenMedio").src = "http://img.mlstatic.com/org-img/MP3/API/logos/" + val + ".gif";
+        });
+    </script>
 
-<script type="text/javascript">
-    $(function() {
-        $('#datetimepicker1').datetimepicker();
-    });
-</script>
+    <script type="text/javascript">
+        $(function() {
+            $('#datetimepicker1').datetimepicker();
+        });
+    </script>
 </body>
 
 </html>

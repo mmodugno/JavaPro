@@ -51,23 +51,19 @@ public class ControllerEgresos {
     	List<CategoriaDelSistema> categorias = repoCategorias.todos();
     	
     	Map<String, Object> map = new HashMap<>();
-
-		if(request.queryParams("ordenDeCompraId")!= null){
-			int id = Integer.parseInt(request.queryParams("ordenDeCompraId"));
-
-			OrdenDeCompra orden = repoOrdenesCompra.byID(id);
-			presupuestos = orden.getPresupuestos();
-			map.put("orden",orden);
-
-		}
+    	
+		String strID = request.params("id");
+		int id = Integer.parseInt(strID);
+		Egreso egreso = repoEgreso.byID(id);
+  
+		OrdenDeCompra orden = repoOrdenesCompra.byID(egreso.getOrdenDeCompraId());
+		presupuestos = orden.getPresupuestos();
+		map.put("orden",orden);
+		
         map.put("ordenes", ordenes);
         map.put("presupuestos", presupuestos);
         map.put("categorias", categorias);
         
-
-		String strID = request.params("id");
-		int id = Integer.parseInt(strID);
-		Egreso egreso = repoEgreso.byID(id);
 		
 		String anio = String.valueOf(egreso.getFecha().getYear());
 		String mes = String.valueOf(egreso.getFecha().getMonthValue());
@@ -76,7 +72,7 @@ public class ControllerEgresos {
 		String fecha = anio+"-"+mes+"-"+dia;
 
 		//
-
+		map.put("imageRoute",egreso.getPresupuesto().getMedioDePago().getImageRoute());
 		//Map<String, Object> map = new HashMap<>();
 		map.put("egreso", egreso);
 		map.put("fecha", fecha);
