@@ -28,9 +28,9 @@ public class ControllerPresupuesto {
 	
 	public ModelAndView presupuestos(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException {
 
-		if(request.session().attribute("user") == null) {
+		if((request.session().attribute("user") == null) || (request.session().attribute("admin").equals(true)))
 			response.redirect("/login");
-		}
+
 	
 		RepositorioUsuario repoUser = null;
 		try {
@@ -63,7 +63,7 @@ public class ControllerPresupuesto {
 	
 	public ModelAndView detallePresupuesto(Request request, Response response, EntityManager entityManager) throws CloneNotSupportedException{
 
-    	if(request.session().attribute("user") == null )
+		if((request.session().attribute("user") == null) || (request.session().attribute("admin").equals(true)))
     		response.redirect("/login");
     	
     	RepositorioPresupuesto repositorio = new RepositorioPresupuesto(entityManager);
