@@ -311,8 +311,9 @@ public class Server {
 
     public static ModelAndView mostrarIndex(Request request, Response response) {
     	
-    	if(request.session().attribute("user") == null )
+    	if((request.session().attribute("user") == null) || (request.session().attribute("admin").equals(true)))
     		response.redirect("/login");
+    	
     	Map<String, Object> map = new HashMap<>();
         map.put("usuario", request.session().attribute("user"));
         return new ModelAndView( map , "index.html");
@@ -347,9 +348,8 @@ public class Server {
     public static ModelAndView egresos(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException {
 
         //INIT
-        if(request.session().attribute("user") == null) {
+    	if((request.session().attribute("user") == null) || (request.session().attribute("admin").equals(true)))
             response.redirect("/login");
-        }
 
         RepositorioUsuario repoUser = null;
         try {
@@ -401,7 +401,7 @@ public class Server {
 
     public static ModelAndView crearEgreso(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException{
     	
-    	if(request.session().attribute("user") == null )
+    	if((request.session().attribute("user") == null) || (request.session().attribute("admin").equals(true)))
     		response.redirect("/login");
     	
     	RepositorioOrdenDeCompra repoOrdenesCompra = new RepositorioOrdenDeCompra(entityManager);
@@ -435,9 +435,9 @@ public class Server {
     
     public static ModelAndView detalleEgreso(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException, MPRestException{
     	
-    	if(request.session().attribute("user") == null) {
+    	if((request.session().attribute("user") == null) || (request.session().attribute("admin").equals(true)))
             response.redirect("/login");
-        }
+
     	RepositorioEgreso repo = new RepositorioEgreso(entityManager);
     	
     	String strID = request.params("id");
@@ -470,9 +470,9 @@ public class Server {
     
  public static ModelAndView detalleOrden(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException, MPRestException{
     	
-	 if(request.session().attribute("user") == null) {
+	 if((request.session().attribute("user") == null) || (request.session().attribute("admin").equals(true)))
          response.redirect("/login");
-     }	
+
 
 	 RepositorioOrdenDeCompra repo = new RepositorioOrdenDeCompra(entityManager);
 
@@ -568,7 +568,7 @@ public class Server {
     //PRODUCTOS
     public static ModelAndView work(Request request, Response response){
     	
-    	if(request.session().attribute("user") == null )
+    	if((request.session().attribute("user") == null) || (request.session().attribute("admin").equals(true)))
     		response.redirect("/login");
     	
     	Map<String, Object> map = new HashMap<>();
