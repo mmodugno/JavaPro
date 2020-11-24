@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>GeSoc - Admin Panel</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="public/css/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <header>
+        {{>navbar.hbs}}
+    </header>
+
+    <div class="d-flex" id="wrapper">
+
+
+        <!-- Sidebar -->
+        {{>sidebar.hbs}}
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+
+
+            <div class="container-fluid">
+                <h1 class="mt-4">Dashboard</h1>
+                <p>GeSoc es un software orientado a la contabilidad de gestión. Mediante su uso, se busca optimizar la actividad mediante la velocidad de acceso a la información contable de una organización/entitdad.</p>
+                <img class="d-block mx-auto mb-4" src="/public/img/logoIcon.png" alt="" width="100" height="100">
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="public/vendor/jquery/jquery.min.js"></script>
+    <script src="public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+
+</body>
+
+</html>
