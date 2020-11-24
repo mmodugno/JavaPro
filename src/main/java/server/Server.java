@@ -511,7 +511,7 @@ public class Server {
     
     public static ModelAndView mostrarCategorias(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException {
     	
-    	if(request.session().attribute("user") == null )
+    	if((request.session().attribute("user") == null) || (request.session().attribute("admin").equals(true)))
     		response.redirect("/login");
     	
     	RepositorioCategoria repoCategoria = new RepositorioCategoria(entityManager);
