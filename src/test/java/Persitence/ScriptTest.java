@@ -42,6 +42,7 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
     	EntidadJuridica entidadJuridica = new EntidadJuridica("Web Social ONG", "Web Social", "90-61775331-4", 1143, 01, Collections.emptyList());
     	
     	Usuario userStandard = userMaker.crearUsuario("userStandard", "pru3b@tesT", "estandar", organizacion);
+    	Usuario userAdmin = userMaker.crearUsuario("administrador", "pru3b@tesT", "admin", null);
         
     	
 		//PRODUCTOS
@@ -221,6 +222,7 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
 		
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.getEntityManager().persist(userStandard);
+		EntityManagerHelper.getEntityManager().persist(userAdmin);
 		EntityManagerHelper.commit();
         
 	}
