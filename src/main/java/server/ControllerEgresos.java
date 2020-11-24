@@ -37,7 +37,7 @@ public class ControllerEgresos {
 
     public ModelAndView modificarEgresoGet(Request request, Response response,EntityManager entityManager) throws CloneNotSupportedException {
 
-    	if(request.session().attribute("user") == null )
+    	if((request.session().attribute("user") == null) || (request.session().attribute("admin").equals(true)))
     		response.redirect("/login");
 
     	RepositorioEgreso repoEgreso = new RepositorioEgreso(entityManager);
