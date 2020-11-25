@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Bienvenidos a GeSoc</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="public/css/simple-sidebar.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+    <header>
+        {{>navbar.hbs}}
+    </header>
+
+    <div class="d-flex" id="wrapper">
+
+
+        <!-- Sidebar -->
+        {{>sidebar.hbs}}
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+            <h1 class="mt-4 text-center">Egresos</h1>
+
+            <div class="row py-5"></div>
+
+            <div class="contenido-centrado">
+            <div class="row">
+            	<div style="float:left; width:150px; margin-left: 20px;">
+	            	<select name="registros" id="registros">
+	                    <option>1</option>
+	                    <option>5</option>
+	                    <option>10</option>
+	                    <option>50</option>
+	            	</select>
+            	</div>
+            	<div style="display: inline-block; margin:0 auto; width:100px;"></div>
+            	<div style="float:right; margin-right: 10px;"><a href="{{pagAnterior}}"> << </a></div>
+            	<div style="float:right; margin-right: 10px;"><p>{{paginaActual}} / {{ultimaPagina}}</p></div>
+            	<div style="float:right; margin-right: 20px;"><a href="{{pagSiguiente}}"> >> </a></div>
+            </div>
+            
+                <table id="tabla_dinamica" class="table gradual display">
+                    <thead class="thead-dark">
+                    	<tr>
+                            <th scope="col">Nro</th>
+                            <th scope="col">Monto</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Orden de Compra ID</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {{#each egresos}}
+                        <tr class="ultimo-final">                         
+                            <td>{{id}}</td>
+                            <td>{{valorTotal}}</td>
+                            <td>{{fecha}}</td>
+                            <td>
+                            	<a href="/orden/{{ordenDeCompraId}}">{{ordenDeCompraId}}</a>
+                            </td>
+                            <td>
+                                <a href="/egreso/{{id}}">
+                                    <button class="btn btn-yoel">DETALLE</button>
+                                </a>
+                            </td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+                <a href="/crearEgreso">
+                    <button type="button" class="btn btn-warning">Crear Egreso</button>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="public/vendor/jquery/jquery.min.js"></script>
+    <script src="public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+    <script>
+    	const params = new URLSearchParams(window.location.search)
+    	if(params.has('nroRegistros')) {
+    		document.getElementById('registros').value = params.get('nroRegistros');
+    	} else {
+    		document.getElementById('registros').value = 5;
+    	}
+
+	</script>
+	<script>
+		$(function(){
+			url = window.location.href.split('?')[0];
+			// bind change event to select
+			$('#registros').on('change', function () {
+				var params = $(this).val(); // get selected value
+				if (url) { // require a URL
+					window.location = url + "?nroRegistros=" + params + "&pagActual=" + {{paginaActual}}; // redirect
+          		}
+          		return false;
+      		});
+    	});
+	</script>
+</body>
+
+</html>
