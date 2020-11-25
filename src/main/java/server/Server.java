@@ -41,7 +41,12 @@ import Vinculador.ListaVaciaExcepcion;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
 
 import static spark.Spark.*;
 
@@ -370,20 +375,82 @@ public class Server {
 
         Usuario userActual = repoUser.byNombre(request.session().attribute("user"));
 
-
         //DOMINIO
-        List<Egreso> egresos = userActual.getOrganizacion().getEntidades().get(0).getEgresos();
-         
-   
+        //List<Egreso> egresos = userActual.getOrganizacion().getEntidades().get(0).getEgresos();
+
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+    	CriteriaQuery<Egreso> cr = cb.createQuery(Egreso.class);
+    	Root<Egreso> res = cr.from(Egreso.class);
+    	cr.select(res);
+    	 
+     	TypedQuery<Egreso> query = entityManager.createQuery(cr);
+    	List<Egreso> egresos = query.getResultList();
+
+
+        //Paginado
+        int cantidadTotal = egresos.size();
+        int nroPaginasCombo;
+        String siguientePagina = new String();
+        int paginaActual;
+        String paginaAnterior = new String();
+        if(request.queryParams("nroRegistros") == null) {
+        	nroPaginasCombo = 5;
+        } else {
+        	System.out.println("queryParams nroRegistros : " + request.queryParams("nroRegistros"));
+        	System.out.println("Cantidad Registros : " + cantidadTotal);
+        	nroPaginasCombo = Integer.parseInt(request.queryParams("nroRegistros"));
+        }
+        if(request.queryParams("pagActual") == null) {
+        	paginaActual = 1;
+        	System.out.println("Params Pagina Actual : " + paginaActual);
+        } else {
+        	paginaActual = Integer.parseInt(request.queryParams("pagActual"));
+        	System.out.println("Params Pagina Actual : " + paginaActual);
+        }
+        
+        int ultimaPagina = (int) (Math.ceil(cantidadTotal / nroPaginasCombo));
+        if(ultimaPagina == 0)
+        	ultimaPagina = 1;
+        System.out.println("Ultima Pagina : " + ultimaPagina);
+        
+        if(cantidadTotal > nroPaginasCombo ) {
+        	if(paginaActual == 1) {
+        		siguientePagina = "egresos?nroRegistros=" + nroPaginasCombo + "&pagActual=" + (paginaActual + 1);
+	            paginaAnterior = "#";
+        	} else if(paginaActual == ultimaPagina) {
+        		siguientePagina = "#";
+        		paginaAnterior = "egresos?nroRegistros=" + nroPaginasCombo + "&pagActual=" + (paginaActual - 1);
+        	} else {
+
+	        	siguientePagina = "egresos?nroRegistros=" + nroPaginasCombo + "&pagActual=" + (paginaActual + 1);
+	    		paginaAnterior = "egresos?nroRegistros=" + nroPaginasCombo + "&pagActual=" + (paginaActual - 1);
+        	}
+        }
+        
+        if(cantidadTotal <= nroPaginasCombo ) {
+        	paginaActual = 1;
+	        siguientePagina = "#";
+	        paginaAnterior = "#";
+        }
+        
+        //Query
+        TypedQuery<Egreso> query2 = entityManager.createQuery(cr);
+        query2.setMaxResults(nroPaginasCombo);
+        query2.setFirstResult(nroPaginasCombo * (paginaActual - 1));
+    	List<Egreso> egresos2 = query2.getResultList();
+
         //OUTPUT
         Map<String, Object> map = new HashMap<>();
-        map.put("egresos", egresos);
+        map.put("egresos", egresos2);
         map.put("usuario", request.session().attribute("user"));
+        map.put("nroPaginasCombo", nroPaginasCombo);
+        map.put("paginaActual", paginaActual);
+        map.put("ultimaPagina", ultimaPagina);
+        map.put("pagSiguiente", siguientePagina);
+        map.put("pagAnterior", paginaAnterior);
 
-        return new ModelAndView(map, "egresos.html");
+        return new ModelAndView(map, "egresos2.html");
     }
-    
-
     
  /*   private static void asignarParametrosEgreso(Egreso egreso,Request request) {
 
