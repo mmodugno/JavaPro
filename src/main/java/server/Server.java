@@ -376,19 +376,9 @@ public class Server {
         Usuario userActual = repoUser.byNombre(request.session().attribute("user"));
 
         //DOMINIO
-        //List<Egreso> egresos = userActual.getOrganizacion().getEntidades().get(0).getEgresos();
-
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-    	CriteriaQuery<Egreso> cr = cb.createQuery(Egreso.class);
-    	Root<Egreso> res = cr.from(Egreso.class);
-    	cr.select(res);
-    	 
-     	TypedQuery<Egreso> query = entityManager.createQuery(cr);
-    	List<Egreso> egresos = query.getResultList();
-
+        int cantidadTotal = userActual.getOrganizacion().getEntidades().get(0).getEgresos().size();
 
         //Paginado
-        int cantidadTotal = egresos.size();
         int nroPaginasCombo;
         String siguientePagina = new String();
         int paginaActual;
@@ -432,16 +422,15 @@ public class Server {
 	        siguientePagina = "#";
 	        paginaAnterior = "#";
         }
+        int indiceFrom = nroPaginasCombo * (paginaActual - 1);
+        int indiceTo = (paginaActual + nroPaginasCombo) - 1;
+        if(indiceTo > cantidadTotal)
+        	indiceTo = cantidadTotal;
+        List<Egreso> egresos3 = userActual.getOrganizacion().getEntidades().get(0).getEgresos().subList(indiceFrom, indiceTo);
         
-        //Query
-        TypedQuery<Egreso> query2 = entityManager.createQuery(cr);
-        query2.setMaxResults(nroPaginasCombo);
-        query2.setFirstResult(nroPaginasCombo * (paginaActual - 1));
-    	List<Egreso> egresos2 = query2.getResultList();
-
         //OUTPUT
         Map<String, Object> map = new HashMap<>();
-        map.put("egresos", egresos2);
+        map.put("egresos", egresos3);
         map.put("usuario", request.session().attribute("user"));
         map.put("nroPaginasCombo", nroPaginasCombo);
         map.put("paginaActual", paginaActual);
