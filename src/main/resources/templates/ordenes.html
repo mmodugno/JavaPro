@@ -12,9 +12,6 @@
 
     <!-- Bootstrap core CSS -->
     <link href="public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Load Table CSS -->
-    {{>tableCss.hbs}}
-	<!-- Load Table CSS -->
     <!-- Custom styles for this template -->
     <link href="public/css/simple-sidebar.css" rel="stylesheet">
 
@@ -43,6 +40,20 @@
         <div class="row py-5"></div>
 
         <div class="contenido-centrado">
+        <div class="row">
+        	<div style="float:left; width:150px; margin-left: 20px;">
+            	<select name="registros" id="registros">
+                    <option>1</option>
+                    <option>5</option>
+                    <option>10</option>
+                    <option>50</option>
+            	</select>
+        	</div>
+        	<div style="display: inline-block; margin:0 auto; width:100px;"></div>
+        	<div style="float:right; margin-right: 10px;"><a href="{{pagAnterior}}"> << </a></div>
+        	<div style="float:right; margin-right: 10px;"><p>{{paginaActual}} / {{ultimaPagina}}</p></div>
+        	<div style="float:right; margin-right: 20px;"><a href="{{pagSiguiente}}"> >> </a></div>
+        </div>
             <table id="tabla_dinamica" class="table gradual display">
                 <thead class="thead-dark">
 
@@ -90,11 +101,27 @@
 	<!-- /#page-content-wrapper -->
 	    <!-- /#wrapper -->
 	{{>footer.hbs}}
-    <!-- Load Table Library -->
-    {{>tableLibraries.hbs}}
-	<!-- Load Table Library -->
-	<!-- Script Init Table -->
-    {{>tableInitScript.hbs}}
-	<!-- Script Init Table -->
+	<script>
+    	const params = new URLSearchParams(window.location.search)
+    	if(params.has('nroRegistros')) {
+    		document.getElementById('registros').value = params.get('nroRegistros');
+    	} else {
+    		document.getElementById('registros').value = 5;
+    	}
+
+	</script>
+	<script>
+		$(function(){
+			url = window.location.href.split('?')[0];
+			// bind change event to select
+			$('#registros').on('change', function () {
+				var params = $(this).val(); // get selected value
+				if (url) { // require a URL
+					window.location = url + "?nroRegistros=" + params + "&pagActual=" + {{paginaActual}}; // redirect
+          		}
+          		return false;
+      		});
+    	});
+	</script>
 </body>
 </html>

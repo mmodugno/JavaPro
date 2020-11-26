@@ -65,7 +65,55 @@ public class ControllerOrdenes {
         
         //DOMINIO
 		RepositorioOrdenDeCompra repo = new RepositorioOrdenDeCompra(entityManager);
-        List<OrdenDeCompra> ordenes = userActual.getOrganizacion().getEntidades().get(0).getOrdenesPendientes();
+		
+		int cantidadTotal = userActual.getOrganizacion().getEntidades().get(0).getOrdenesPendientes().size();
+		
+		//Paginado
+        int nroPaginasCombo;
+        String siguientePagina = new String();
+        int paginaActual;
+        String paginaAnterior = new String();
+        if(request.queryParams("nroRegistros") == null) {
+        	nroPaginasCombo = 5;
+        } else {
+        	nroPaginasCombo = Integer.parseInt(request.queryParams("nroRegistros"));
+        }
+        if(request.queryParams("pagActual") == null) {
+        	paginaActual = 1;
+
+        } else {
+        	paginaActual = Integer.parseInt(request.queryParams("pagActual"));
+        }
+        
+        int ultimaPagina = (int) (Math.ceil(cantidadTotal / nroPaginasCombo));
+        if(ultimaPagina == 0)
+        	ultimaPagina = 1;
+        
+        if(cantidadTotal > nroPaginasCombo ) {
+        	if(paginaActual == 1) {
+        		siguientePagina = "ordenes?nroRegistros=" + nroPaginasCombo + "&pagActual=" + (paginaActual + 1);
+	            paginaAnterior = "#";
+        	} else if(paginaActual == ultimaPagina) {
+        		siguientePagina = "#";
+        		paginaAnterior = "ordenes?nroRegistros=" + nroPaginasCombo + "&pagActual=" + (paginaActual - 1);
+        	} else {
+
+	        	siguientePagina = "ordenes?nroRegistros=" + nroPaginasCombo + "&pagActual=" + (paginaActual + 1);
+	    		paginaAnterior = "ordenes?nroRegistros=" + nroPaginasCombo + "&pagActual=" + (paginaActual - 1);
+        	}
+        }
+        
+        if(cantidadTotal <= nroPaginasCombo ) {
+        	paginaActual = 1;
+	        siguientePagina = "#";
+	        paginaAnterior = "#";
+        }
+        int indiceFrom = nroPaginasCombo * (paginaActual - 1);
+        int indiceTo = (paginaActual + nroPaginasCombo) - 1;
+        if(indiceTo > cantidadTotal)
+        	indiceTo = cantidadTotal;
+
+        List<OrdenDeCompra> ordenes = userActual.getOrganizacion().getEntidades().get(0).getOrdenesPendientes().subList(indiceFrom, indiceTo);
         /** **PARA PROBAR SI ANDA EL CERRAR** **/
         //repo.todos().get(0).setCerrado(true);
         /** No las marca como cerrada si o no porque técnicamente las creamos de 0 y no son creadas con el egreso.
@@ -75,6 +123,11 @@ public class ControllerOrdenes {
         Map<String, Object> map = new HashMap<>();
         map.put("ordenes", ordenes);
         map.put("usuario", request.session().attribute("user"));
+        map.put("nroPaginasCombo", nroPaginasCombo);
+        map.put("paginaActual", paginaActual);
+        map.put("ultimaPagina", ultimaPagina);
+        map.put("pagSiguiente", siguientePagina);
+        map.put("pagAnterior", paginaAnterior);
 
         return new ModelAndView(map, "ordenes.html");
     }
