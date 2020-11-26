@@ -24,11 +24,9 @@ import egreso.Ingreso;
 
 public class ControllerIngresos {
 
-
 	public ControllerIngresos() {
 
 	}
-
 
 	public ModelAndView nuevoIngreso(Request request, Response response, EntityManager entityManager) {
 
@@ -220,12 +218,64 @@ public class ControllerIngresos {
 		//RepositorioIngreso repo = new RepositorioIngreso(entityManager).byEntidades(userActual.getOrganizacion().getEntidades());
 
 		//DOMINIO
-		List<Ingreso> ingresos = userActual.getOrganizacion().getEntidades().get(0).getIngresos();
+		int cantidadTotal = userActual.getOrganizacion().getEntidades().get(0).getIngresos().size();
+		
+		//Paginado
+        int nroPaginasCombo;
+        String siguientePagina = new String();
+        int paginaActual;
+        String paginaAnterior = new String();
+        if(request.queryParams("nroRegistros") == null) {
+        	nroPaginasCombo = 5;
+        } else {
+        	nroPaginasCombo = Integer.parseInt(request.queryParams("nroRegistros"));
+        }
+        if(request.queryParams("pagActual") == null) {
+        	paginaActual = 1;
+
+        } else {
+        	paginaActual = Integer.parseInt(request.queryParams("pagActual"));
+        }
+        
+        int ultimaPagina = (int) (Math.ceil(cantidadTotal / nroPaginasCombo));
+        if(ultimaPagina == 0)
+        	ultimaPagina = 1;
+        
+        if(cantidadTotal > nroPaginasCombo ) {
+        	if(paginaActual == 1) {
+        		siguientePagina = "ingresos?nroRegistros=" + nroPaginasCombo + "&pagActual=" + (paginaActual + 1);
+	            paginaAnterior = "#";
+        	} else if(paginaActual == ultimaPagina) {
+        		siguientePagina = "#";
+        		paginaAnterior = "ingresos?nroRegistros=" + nroPaginasCombo + "&pagActual=" + (paginaActual - 1);
+        	} else {
+
+	        	siguientePagina = "ingresos?nroRegistros=" + nroPaginasCombo + "&pagActual=" + (paginaActual + 1);
+	    		paginaAnterior = "ingresos?nroRegistros=" + nroPaginasCombo + "&pagActual=" + (paginaActual - 1);
+        	}
+        }
+        
+        if(cantidadTotal <= nroPaginasCombo ) {
+        	paginaActual = 1;
+	        siguientePagina = "#";
+	        paginaAnterior = "#";
+        }
+        int indiceFrom = nroPaginasCombo * (paginaActual - 1);
+        int indiceTo = (paginaActual + nroPaginasCombo) - 1;
+        if(indiceTo > cantidadTotal)
+        indiceTo = cantidadTotal;
+        
+        List<Ingreso> ingresos = userActual.getOrganizacion().getEntidades().get(0).getIngresos().subList(indiceFrom, indiceTo);
 
 		//OUTPUT
 		Map<String, Object> map = new HashMap<>();
 		map.put("ingresos", ingresos);
 		map.put("usuario", request.session().attribute("user"));
+		map.put("nroPaginasCombo", nroPaginasCombo);
+        map.put("paginaActual", paginaActual);
+        map.put("ultimaPagina", ultimaPagina);
+        map.put("pagSiguiente", siguientePagina);
+        map.put("pagAnterior", paginaAnterior);
 
 		return new ModelAndView(map, "ingresos.html");
 	}
