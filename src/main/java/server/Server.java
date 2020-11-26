@@ -386,22 +386,18 @@ public class Server {
         if(request.queryParams("nroRegistros") == null) {
         	nroPaginasCombo = 5;
         } else {
-        	System.out.println("queryParams nroRegistros : " + request.queryParams("nroRegistros"));
-        	System.out.println("Cantidad Registros : " + cantidadTotal);
         	nroPaginasCombo = Integer.parseInt(request.queryParams("nroRegistros"));
         }
         if(request.queryParams("pagActual") == null) {
         	paginaActual = 1;
-        	System.out.println("Params Pagina Actual : " + paginaActual);
+
         } else {
         	paginaActual = Integer.parseInt(request.queryParams("pagActual"));
-        	System.out.println("Params Pagina Actual : " + paginaActual);
         }
         
         int ultimaPagina = (int) (Math.ceil(cantidadTotal / nroPaginasCombo));
         if(ultimaPagina == 0)
         	ultimaPagina = 1;
-        System.out.println("Ultima Pagina : " + ultimaPagina);
         
         if(cantidadTotal > nroPaginasCombo ) {
         	if(paginaActual == 1) {
