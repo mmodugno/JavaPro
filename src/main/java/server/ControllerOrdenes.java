@@ -156,20 +156,9 @@ public class ControllerOrdenes {
     	String fecha =  request.queryParams("fecha");
 		LocalDate fechaFinal = LocalDate.parse(fecha);
     	nuevaOrden.setFecha(fechaFinal);
-    	
 
-/*
-    	try {
-    		Presupuesto pres = leerPresupuesto(request);
-    		Presupuesto presupuestoPersistido = generarPresupuestoPersist(pres, entityManager);
-    		nuevaOrden.agregarPresupuesto(presupuestoPersistido);
-    	}
-    	catch(IOException e){
-    		e.printStackTrace();
-    		nuevaOrden.agregarPresupuesto(new Presupuesto());
-    	}*/
 
-    	leerPresupuestos( request, nuevaOrden, entityManager); //TODO TESTING
+    	leerPresupuestos( request, nuevaOrden, entityManager);
     	
     	
     	
@@ -186,8 +175,9 @@ public class ControllerOrdenes {
 		RepositorioUsuario repositorioUsuario = new RepositorioUsuario(entityManager);
 		Usuario userActual = repositorioUsuario.byNombre(request.session().attribute("user"));
 
+		repo.crear(nuevaOrden);
 		userActual.getOrganizacion().getEntidades().get(0).getOrdenesPendientes().add(nuevaOrden);
-    	//repo.crear(nuevaOrden);
+
 
 		//LOGICA TRANSACCION NUEVO INGRESO
 		RepositorioDocumentos repositorioDocumentos = new RepositorioDocumentos();
