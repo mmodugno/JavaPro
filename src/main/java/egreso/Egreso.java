@@ -105,7 +105,8 @@ public class Egreso implements Categorizable{
 	}
 	public void setOrdenDeCompra(OrdenDeCompra ordenDeCompra) {
 		this.ordenDeCompra = ordenDeCompra;
-		ordenDeCompra.setCerrado(true);
+		
+		if(ordenDeCompra != null) ordenDeCompra.setCerrado(true);
 	}
 	public void setPresupuesto(Presupuesto presupuesto) {
 		this.presupuesto = presupuesto;
