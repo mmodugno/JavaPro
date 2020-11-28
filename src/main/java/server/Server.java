@@ -1,5 +1,9 @@
 package server;
 
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import dev.morphia.Datastore;
+import dev.morphia.Morphia;
 import egreso.Egreso;
 import egreso.Ingreso;
 import egreso.MedioDePago;
@@ -61,6 +65,8 @@ public class Server {
     private static ControllerVinculador controllerVinculador;
 	private static ControllerLogin controllerLogin= new ControllerLogin();
 	private static ControllerAdmin controllerAdmin = new ControllerAdmin();
+
+	static Datastore datastore = null;
     
 	
 	
@@ -105,6 +111,18 @@ public class Server {
         entityManagerFactory = Persistence.createEntityManagerFactory("db");
 
         controllerProductos= new ControllerProductos();
+
+
+        Morphia morphia = new Morphia();
+        morphia.mapPackage("com.baeldung.morphia");
+        MongoClientURI uri = new MongoClientURI(
+                "mongodb://GeSoc:dds2020@cluster0-shard-00-00.lvoi9.mongodb.net:27017,cluster0-shard-00-01.lvoi9.mongodb.net:27017,cluster0-shard-00-02.lvoi9.mongodb.net:27017/GeSoc?ssl=true&replicaSet=atlas-r6t4sh-shard-0&authSource=admin&retryWrites=true&w=majority");
+
+        MongoClient mongoClient = new MongoClient(uri);
+
+
+        datastore = morphia.createDatastore(mongoClient, "GeSoc");
+        datastore.ensureIndexes();
        
 
         // Ejemplo de acceso: http://localhost:9000/inicio
@@ -215,6 +233,14 @@ public class Server {
         get("/transaccion",Server::documentos);
         
 
+    }
+
+    public static Datastore getDatastore() {
+        return datastore;
+    }
+
+    public void setDatastore(Datastore datastore) {
+        this.datastore = datastore;
     }
 
     private static Object documentos(Request request, Response response) {
