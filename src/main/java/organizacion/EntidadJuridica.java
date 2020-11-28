@@ -129,6 +129,10 @@ public class EntidadJuridica {
 	public void setIngresos(List<Ingreso> ingresos) {
 		this.ingresos = ingresos;
 	}
+	
+	public void agregarUnaOrden(OrdenDeCompra orden) {
+		this.ordenesPendientes.add(orden);
+	}
 
 
 	public void agregarEntidadBase(EntidadBase entidad) {

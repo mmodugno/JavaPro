@@ -113,7 +113,7 @@ public class ControllerOrdenes {
         if(indiceTo > cantidadTotal)
         	indiceTo = cantidadTotal;
 
-        List<OrdenDeCompra> ordenes = userActual.getOrganizacion().getEntidades().get(0).getOrdenesPendientes().subList(indiceFrom, indiceTo);
+        List<OrdenDeCompra> ordenes = userActual.getOrganizacion().getEntidades().get(0).getOrdenesPendientes();
         /** **PARA PROBAR SI ANDA EL CERRAR** **/
         //repo.todos().get(0).setCerrado(true);
         /** No las marca como cerrada si o no porque técnicamente las creamos de 0 y no son creadas con el egreso.
@@ -176,7 +176,8 @@ public class ControllerOrdenes {
 		Usuario userActual = repositorioUsuario.byNombre(request.session().attribute("user"));
 
 		repo.crear(nuevaOrden);
-		userActual.getOrganizacion().getEntidades().get(0).getOrdenesPendientes().add(nuevaOrden);
+		
+		userActual.getOrganizacion().getEntidades().get(0).agregarUnaOrden(nuevaOrden);
 
 
 		//LOGICA TRANSACCION NUEVO INGRESO
