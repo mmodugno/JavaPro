@@ -61,7 +61,8 @@ public class RepositorioIngreso {
     
     
     public void borrar(Ingreso ingreso) {
-        this.entityManager.remove(ingreso);
+        ingreso.setCategoria(null);
+    	this.entityManager.remove(ingreso);
     }
 
     public void crear(Ingreso ingreso) {

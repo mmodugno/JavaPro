@@ -102,8 +102,6 @@ public class ControllerIngresos {
 
 	public Response eliminarIngreso(Request request, Response response, EntityManager entityManager) throws ClassNotFoundException, FileNotFoundException, SQLException, CreationError {
 
-
-		//TODO Hacer que elimine por favor!! Revisar el de egreso que debe ser lo mismo
 		RepositorioIngreso repo = new RepositorioIngreso(entityManager);
 		String strID = request.params("id");
 		int id = new Integer(strID);
@@ -123,13 +121,6 @@ public class ControllerIngresos {
 
 		transaccion.setViejo(converter(ingreso));
 		repositorioDocumentos.crearTransaccion(transaccion);
-
-		/*
-		//Borra segun la descripcion:
-		String desc = request.params("descripcion");
-		repo.borrar(desc);*/
-
-		//response.redirect("/ingresos");
 
 		return response;
 	}

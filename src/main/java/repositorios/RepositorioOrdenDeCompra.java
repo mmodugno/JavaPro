@@ -59,6 +59,8 @@ public class RepositorioOrdenDeCompra {
     }
 
 	public void eliminar(OrdenDeCompra orden){
+        orden.setItems(null);
+        orden.setPresupuestos(null);
 		this.entityManager.remove(orden);
 	}
 
