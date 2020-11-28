@@ -18,6 +18,10 @@
 </head>
 
 <body>
+    <header>
+        {{>navbar.hbs}}
+    </header>
+
     <main class="contenido-centrado contenedor">
 
         <form {{#if producto}} action= "/producto/{{producto.idProducto}}" {{else}} action= "/producto" {{/if}} method="post">

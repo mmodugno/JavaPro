@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import usuarios.Categoria;
 import usuarios.CategoriaDelSistema;
 
 import javax.persistence.*;
@@ -66,6 +67,11 @@ public class Ingreso implements Categorizable{
 	
 	public String getDescripcion() {
 		return descripcion;
+	}
+	public CategoriaDelSistema getCategoria() {
+		if(categoria != null)
+		return categoria;
+		else return new Categoria("sin categoria","sin categoria");
 	}
 
 	/*SETTERS*/
