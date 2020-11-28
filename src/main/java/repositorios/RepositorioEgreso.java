@@ -162,7 +162,13 @@ public class RepositorioEgreso {
 	}
 
 	public void eliminar(Egreso egreso){
-	 	egresos.remove(egreso);
+
+		egreso.setDocumentosComerciales(null);
+		egreso.setCategoria(null);
+		egreso.setPresupuesto(null);
+		egreso.setOrdenDeCompra(null);
+
+		this.entityManager.remove(egreso);
 	}
 
 	int ordenarInt(int primero,int segundo){
