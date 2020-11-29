@@ -30,10 +30,10 @@ public class Organizacion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<EntidadJuridica> entidades;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<CategoriaDelSistema> categorias = new ArrayList<CategoriaDelSistema>();
 	
 	public void agregarEntidad(EntidadJuridica entidad) {

@@ -23,7 +23,7 @@ public class Item implements Cloneable {
 	private int id;
 
 	/*Atributos*/
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Producto producto;
 	private int cantidad;
 	private double precioUnitario;

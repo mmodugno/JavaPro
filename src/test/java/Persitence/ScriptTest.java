@@ -30,7 +30,7 @@ import usuarios.CreationError;
 import usuarios.Usuario;
 
 public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
-	/*@Test
+	@Test
 	public void productoTest() throws CloneNotSupportedException, FileNotFoundException, ClassNotFoundException, CreationError, SQLException {
 
 		//USUARIO y organizaciones

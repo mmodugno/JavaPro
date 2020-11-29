@@ -42,14 +42,14 @@ public class Presupuesto implements Categorizable{
 	@ManyToMany(cascade = CascadeType.ALL)
     private List<Item> items;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Proveedor proveedor;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private MedioDePago medioDePago;
     
     private boolean aceptado;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private CategoriaDelSistema categoria = null;
     
     public int getId() {

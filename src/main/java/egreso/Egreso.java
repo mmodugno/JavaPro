@@ -51,7 +51,7 @@ public class Egreso implements Categorizable{
 	
 	//siempre que hay una coleccion como atributo, la notation es algo to many (many to many / one to many)
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	//un egreso puede tener varios doc pero un doc esta solo en un egreso
 	private List<DocumentoComercial> documentosComerciales;
 	
@@ -61,7 +61,7 @@ public class Egreso implements Categorizable{
 	@OneToOne(cascade = CascadeType.MERGE)
 	private Presupuesto presupuesto;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	//@JoinColumn(name = "id_categoria")
 	private CategoriaDelSistema categoria = null;
 	
