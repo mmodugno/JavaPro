@@ -5,6 +5,7 @@ import com.mongodb.MongoClientURI;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import egreso.Egreso;
+import egreso.ElMasBarato;
 import egreso.Ingreso;
 import egreso.MedioDePago;
 import egreso.MontoSuperadoExcepcion;
@@ -304,8 +305,10 @@ public class Server {
 
         validador.agregarCondicionValidacion(new CantidadPresupuestos());
         validador.agregarCondicionValidacion(new MontoPresupuesto());
-//        validador.agregarCondicionValidacion(new Criterios());
+        validador.agregarCondicionValidacion(new Criterios());
         validador.agregarCondicionValidacion(new Items());
+        
+        egreso.getOrdenDeCompra().setCriterioSeleccion(new ElMasBarato());
 
         validador.validarEgreso(egreso);
 
