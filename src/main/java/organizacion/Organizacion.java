@@ -49,6 +49,10 @@ public class Organizacion {
 		categorias.add(categoria);
 	}
 	
+	public void agregarCategorias(List<CategoriaDelSistema> categorias) {
+		this.categorias = categorias;
+	}
+	
 	public List<CategoriaDelSistema> getCategorias() {
 		return this.categorias;
 	}

@@ -2,6 +2,7 @@ package server;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,10 +50,15 @@ public class ControllerPresupuesto {
 			e.printStackTrace();
 		}
 	
-		//Usuario userActual = repoUser.byNombre(request.session().attribute("user"));
+		Usuario userActual = repoUser.byNombre(request.session().attribute("user"));
 	    
 		RepositorioPresupuesto repo = new RepositorioPresupuesto(entityManager);
-	    List<Presupuesto> presupuestos = repo.todos();
+	    List<Presupuesto> presupuestos = new ArrayList<Presupuesto>();
+	    
+	    userActual.getOrganizacion().getEntidades().get(0).getOrdenesPendientes().forEach(
+	
+	    		a -> a.getPresupuestos().forEach(p -> presupuestos.add(p))
+	    );
 
 	    Map<String, Object> map = new HashMap<>();
 	    map.put("presupuestos", presupuestos);
@@ -71,9 +77,21 @@ public class ControllerPresupuesto {
         String strID = request.params("id");
 
         int id = Integer.parseInt(strID);
+        
+        RepositorioUsuario repoUser = null;
+		try {
+			repoUser = new RepositorioUsuario(entityManager);
+		} catch (FileNotFoundException | ClassNotFoundException | CreationError | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+Usuario userActual = repoUser.byNombre(request.session().attribute("user"));
+
+List<CategoriaDelSistema> categorias = userActual.getOrganizacion().getCategorias();
 
         Presupuesto presupuesto = repositorio.byID(id);
-        List<CategoriaDelSistema> categorias = repoCategorias.todos();
+        //List<CategoriaDelSistema> categorias = repoCategorias.todos();
 
         Map<String, Object> map = new HashMap<>();
         map.put("presupuesto", presupuesto);

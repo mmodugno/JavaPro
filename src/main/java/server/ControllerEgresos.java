@@ -48,7 +48,17 @@ public class ControllerEgresos {
     	
     	List<OrdenDeCompra> ordenes = repoOrdenesCompra.todos();
     	List<Presupuesto> presupuestos = repoPresupuestos.todos();
-    	List<CategoriaDelSistema> categorias = repoCategorias.todos();
+    	RepositorioUsuario repoUser = null;
+		try {
+			repoUser = new RepositorioUsuario(entityManager);
+		} catch (FileNotFoundException | ClassNotFoundException | CreationError | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+Usuario userActual = repoUser.byNombre(request.session().attribute("user"));
+
+List<CategoriaDelSistema> categorias = userActual.getOrganizacion().getCategorias();
     	
     	Map<String, Object> map = new HashMap<>();
     	
@@ -59,6 +69,7 @@ public class ControllerEgresos {
 		OrdenDeCompra orden = repoOrdenesCompra.byID(egreso.getOrdenDeCompraId());
 		presupuestos = orden.getPresupuestos();
 		map.put("orden",orden);
+		
 		
         map.put("ordenes", ordenes);
         map.put("presupuestos", presupuestos);

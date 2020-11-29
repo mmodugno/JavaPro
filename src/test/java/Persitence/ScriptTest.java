@@ -30,20 +30,24 @@ import usuarios.CreationError;
 import usuarios.Usuario;
 
 public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
-
-/*	@Test
+	@Test
 	public void productoTest() throws CloneNotSupportedException, FileNotFoundException, ClassNotFoundException, CreationError, SQLException {
 		
 		//USUARIO y organizaciones
 		
 		CreadorUsuario userMaker = new CreadorUsuario();
     	Organizacion organizacion = new Organizacion();
+    	Organizacion organizacion2 = new Organizacion();
     	
     	EntidadJuridica entidadJuridica = new EntidadJuridica("Web Social ONG", "Web Social", "90-61775331-4", 1143, 01, Collections.emptyList());
     	
+    	EntidadJuridica entidadJuridica21 = new EntidadJuridica("Web Social ONG 2", "Web Social 2", "91-61775331-4", 1144, 02, Collections.emptyList());
+    	
     	Usuario userStandard = userMaker.crearUsuario("userStandard", "pru3b@tesT", "estandar", organizacion);
-    	Usuario userAdmin = userMaker.crearUsuario("administrador", "pru3b@tesT", "admin", null);
+    	Usuario userAdmin = userMaker.crearUsuario("administrador", "pru3b@tesT", "admin", organizacion);
         
+    	Usuario userStandard21 = userMaker.crearUsuario("userStandard2", "pru3b@tesT", "estandar", organizacion2);
+    	Usuario userAdmin21 = userMaker.crearUsuario("administrador2", "pru3b@tesT", "admin", organizacion2);
     	
 		//PRODUCTOS
 		Producto producto1 = new Producto(1, "Monitor", "Monitor 32", TipoItem.ARTICULO);
@@ -59,16 +63,22 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
         Item item1 = new Item(producto1, 1, 0.00);
         Item item2 = new Item(producto2, 2, 0.00);
 
+        
+        Item item21 = new Item(producto2, 5, 0.00);
+        
             //ORDEN DE COMPRA
          OrdenDeCompra ordenDeCompra = new OrdenDeCompra(1);
          OrdenDeCompra ordenDeCompra2 = new OrdenDeCompra(3);
+         
+         OrdenDeCompra ordenDeCompra21 = new OrdenDeCompra(3);
 
          ordenDeCompra.agregarItem(item1);
          ordenDeCompra.agregarItem(item2);
          ordenDeCompra2.agregarItem(item1);
          ordenDeCompra2.agregarItem(item2);
 
-
+         ordenDeCompra21.agregarItem(item21);
+         
             //un medio para el presupuesto
         MedioDePago medioDePago = new MedioDePago(TipoMedioPago.Argencard);
         
@@ -77,6 +87,10 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
         //PRESUPUESTO
         Presupuesto presupuesto1;
         Presupuesto presupuesto2;
+        
+        Presupuesto presupuesto21 = new Presupuesto(ordenDeCompra21.getItems(),proveedor1,medioDePago);
+        
+        presupuesto21.getItems().get(0).setPrecioUnitario(80.00);
 
         presupuesto1 = new Presupuesto(ordenDeCompra.getItems(),proveedor1,medioDePago);
         presupuesto1.getItems().get(0).setPrecioUnitario(80.00);
@@ -87,7 +101,7 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
         presupuesto2.getItems().get(1).setPrecioUnitario(40.00);
         
        
-        
+        ordenDeCompra21.agregarPresupuesto(presupuesto21);
 
         ordenDeCompra.agregarPresupuesto(presupuesto1);
         ordenDeCompra2.agregarPresupuesto(presupuesto2);
@@ -96,6 +110,8 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
         Categoria categoriaMendoza = new Categoria("Mendoza","Provincia");
         CategoriaCompuesta categoriaARGENTINA = new CategoriaCompuesta("argentina","pais");
 
+        Categoria categoriaCatamarca = new Categoria("Catamarca","Provincia");
+        
         List<CategoriaDelSistema> listaSubCategorias = new ArrayList<CategoriaDelSistema>();
         listaSubCategorias.add(categoriaBSAS);
         listaSubCategorias.add(categoriaMendoza);
@@ -106,11 +122,15 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
         Egreso egreso1= new Egreso(ordenDeCompra, presupuesto1);
         Egreso egreso2= new Egreso(ordenDeCompra2, presupuesto2);
         Egreso egreso3= new Egreso(ordenDeCompra, presupuesto1);
+        
+        Egreso egreso21= new Egreso(ordenDeCompra21, presupuesto21);
 
         //INGRESOS
         Ingreso ingreso1 = new Ingreso("Donacion",1000.0);
         Ingreso ingreso2 = new Ingreso("Venta",10000.0);
         Ingreso ingreso3 = new Ingreso("Venta",500.0);
+        
+        Ingreso ingreso21 = new Ingreso("Donacion",5000.0);
 
 
         egreso1.setCategoria(categoriaBSAS);
@@ -135,11 +155,19 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
 		listaCategorias.add(categoriaMendoza);
 		listaCategorias.add(categoriaARGENTINA);
 		
+		List<CategoriaDelSistema> listaCategorias21 = new ArrayList<>();
+		
+		listaCategorias21.add(categoriaCatamarca);
+		
 		List<Egreso> listaEgresos1 = new ArrayList<>();
 		
 		listaEgresos1.add(egreso1);
 		listaEgresos1.add(egreso2);
 		listaEgresos1.add(egreso3);
+		
+		List<Egreso> listaEgresos21 = new ArrayList<>();
+		
+		listaEgresos21.add(egreso21);
 		
 		List<Ingreso> listaIngresos1 = new ArrayList<>();
 		
@@ -147,10 +175,18 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
 		listaIngresos1.add(ingreso2);
 		listaIngresos1.add(ingreso3);
 		
+		List<Ingreso> listaIngresos21 = new ArrayList<>();
+		
+		listaIngresos21.add(ingreso21);
+		
 		List<OrdenDeCompra> listaOrdenes1 = new ArrayList<>();
 		
 		listaOrdenes1.add(ordenDeCompra);
 		listaOrdenes1.add(ordenDeCompra2);
+		
+		List<OrdenDeCompra> listaOrdenes21 = new ArrayList<>();
+		
+		listaOrdenes21.add(ordenDeCompra21);
 		
 		//ASIGNANDO DOCS
 		
@@ -158,13 +194,22 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
 		entidadJuridica.setIngresos(listaIngresos1);
 		entidadJuridica.setOrdenesPendientes(listaOrdenes1);
 		
+		entidadJuridica21.setEgresos(listaEgresos21);
+		entidadJuridica21.setIngresos(listaIngresos21);
+		entidadJuridica21.setOrdenesPendientes(listaOrdenes21);
+		
+		organizacion.agregarCategorias(listaCategorias);
+		organizacion2.agregarCategorias(listaCategorias21);
+		
 		organizacion.agregarEntidad(entidadJuridica);
+		organizacion2.agregarEntidad(entidadJuridica21);
 
         //PERSISTIENDO
 
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.getEntityManager().persist(item1);
 		EntityManagerHelper.getEntityManager().persist(item2);
+		EntityManagerHelper.getEntityManager().persist(item21);
 		EntityManagerHelper.commit();
 
 		EntityManagerHelper.beginTransaction();
@@ -187,42 +232,51 @@ public class ScriptTest extends AbstractPersistenceTest implements WithGlobalEnt
 		EntityManagerHelper.getEntityManager().persist(categoriaBSAS);
 		EntityManagerHelper.getEntityManager().persist(categoriaMendoza);
 		EntityManagerHelper.getEntityManager().persist(categoriaARGENTINA);
+		EntityManagerHelper.getEntityManager().persist(categoriaCatamarca);
 		EntityManagerHelper.commit();
 
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.persist(presupuesto1);
 		EntityManagerHelper.persist(presupuesto2);
+		EntityManagerHelper.persist(presupuesto21);
 		EntityManagerHelper.commit();
 
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.getEntityManager().persist(ordenDeCompra);
 		EntityManagerHelper.getEntityManager().persist(ordenDeCompra2);
+		EntityManagerHelper.getEntityManager().persist(ordenDeCompra21);
 		EntityManagerHelper.commit();
 
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.persist(egreso1);
 		EntityManagerHelper.persist(egreso2);
+		EntityManagerHelper.persist(egreso21);
 		EntityManagerHelper.persist(egreso3);
 		EntityManagerHelper.commit();
 
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.persist(ingreso1);
 		EntityManagerHelper.persist(ingreso2);
+		EntityManagerHelper.persist(ingreso21);
 		EntityManagerHelper.persist(ingreso3);
 		EntityManagerHelper.commit();
 			
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.getEntityManager().persist(entidadJuridica);
+		EntityManagerHelper.getEntityManager().persist(entidadJuridica21);
 		EntityManagerHelper.commit();
 
 		
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.getEntityManager().persist(organizacion);
+		EntityManagerHelper.getEntityManager().persist(organizacion2);
 		EntityManagerHelper.commit();
 		
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.getEntityManager().persist(userStandard);
+		EntityManagerHelper.getEntityManager().persist(userStandard21);
 		EntityManagerHelper.getEntityManager().persist(userAdmin);
+		EntityManagerHelper.getEntityManager().persist(userAdmin21);
 		EntityManagerHelper.commit();
         
 	}
@@ -274,4 +328,5 @@ Categoria categoriaBSAS = new Categoria("Buenos Aires","Provincia");
         
 	}
 	*/
+	
 }

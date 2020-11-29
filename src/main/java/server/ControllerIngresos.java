@@ -36,10 +36,22 @@ public class ControllerIngresos {
 		RepositorioIngreso repo = new RepositorioIngreso(entityManager);
 
 		RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
-		List<CategoriaDelSistema> categorias = repoCategorias.todos();
+		//List<CategoriaDelSistema> categorias = repoCategorias.todos();
 
 		//DOMINIO
 		List<RepositorioIngreso> repos = new ArrayList<>();
+		
+		RepositorioUsuario repoUser = null;
+		try {
+			repoUser = new RepositorioUsuario(entityManager);
+		} catch (FileNotFoundException | ClassNotFoundException | CreationError | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+		Usuario userActual = repoUser.byNombre(request.session().attribute("user"));
+
+		List<CategoriaDelSistema> categorias = userActual.getOrganizacion().getCategorias();
 
 		repos.add(repo);
 		//OUTPUT
@@ -51,12 +63,15 @@ public class ControllerIngresos {
 		return new ModelAndView(map, "formularioIngresos.html");
 	}
 
-	public static void asignarParametros(Ingreso ingreso, Request request) throws CloneNotSupportedException {
+	public static void asignarParametros(Ingreso ingreso, Request request, EntityManager entityManager) throws CloneNotSupportedException {
 
-
+		RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
+		
 		String descripcion = request.queryParams("descripcion");
 		String montoString = request.queryParams("monto");
+		String categoria = request.queryParams("categoria");
 
+		CategoriaDelSistema categoriaParaAsignar = repoCategorias.buscar(categoria);
 
 		double monto = Double.parseDouble(montoString);
 		;
@@ -64,6 +79,7 @@ public class ControllerIngresos {
 
 		ingreso.setDescripcion(descripcion);
 		ingreso.setMonto(monto);
+		ingreso.setCategoria(categoriaParaAsignar);
 
 	}
 
@@ -75,7 +91,7 @@ public class ControllerIngresos {
 		Ingreso ingreso = new Ingreso();
 
 
-		asignarParametros(ingreso, request);
+		asignarParametros(ingreso, request, entityManager);
 		ingreso.setFecha(LocalDate.now());
 
 		RepositorioUsuario repositorioUsuario = new RepositorioUsuario(entityManager);
@@ -139,8 +155,19 @@ public class ControllerIngresos {
 
 		Ingreso ingreso = repo.byID(id);
 
-		List<CategoriaDelSistema> categorias = repoCategorias.todos();
+		//List<CategoriaDelSistema> categorias = repoCategorias.todos();
 
+		RepositorioUsuario repoUser = null;
+		try {
+			repoUser = new RepositorioUsuario(entityManager);
+		} catch (FileNotFoundException | ClassNotFoundException | CreationError | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+		Usuario userActual = repoUser.byNombre(request.session().attribute("user"));
+
+	List<CategoriaDelSistema> categorias = userActual.getOrganizacion().getCategorias();
 
 		Map<String, Object> map = new HashMap<>();
 		map.put("ingreso", ingreso);
@@ -169,7 +196,7 @@ public class ControllerIngresos {
 
 		transaccion.setViejo(converter(ingreso));
 
-		asignarParametros(ingreso, request);
+		asignarParametros(ingreso, request,entityManager);
 
 
 		transaccion.setNuevo(converter(ingreso));

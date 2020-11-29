@@ -25,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -261,9 +262,26 @@ public class Server {
     	String strID = request.params("id");
 
         int id = Integer.parseInt(strID);
-
-        Egreso egreso = repo.byID(id);
         
+        RepositorioUsuario repoUser = null;
+		try {
+			repoUser = new RepositorioUsuario(entityManager);
+		} catch (FileNotFoundException | ClassNotFoundException | CreationError | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+		Usuario userActual = repoUser.byNombre(request.session().attribute("user"));
+
+		List<Egreso> egresos = userActual.getOrganizacion().getEntidades().get(0).getEgresos();
+
+		Egreso egreso = null;
+		
+		if(egresos.stream().filter(e -> e.getId() == id).collect(Collectors.toList()).size() > 0) {
+			
+			egreso = repo.byID(id);
+		}
+	    
         if (egreso == null) {
         	Map<String, Object> map = new HashMap<>();
         	map.put("egreso","No existe Egreso con id "+strID);
@@ -486,11 +504,20 @@ public class Server {
     	RepositorioPresupuesto repoPresupuestos = new RepositorioPresupuesto(entityManager);
     	RepositorioCategoria repoCategorias = new RepositorioCategoria(entityManager);
 
+    	RepositorioUsuario repoUser = null;
+		try {
+			repoUser = new RepositorioUsuario(entityManager);
+		} catch (FileNotFoundException | ClassNotFoundException | CreationError | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+		Usuario userActual = repoUser.byNombre(request.session().attribute("user"));
 
     	
-    	List<OrdenDeCompra> ordenes = repoOrdenesCompra.todos();
+    	List<OrdenDeCompra> ordenes = userActual.getOrganizacion().getEntidades().get(0).getOrdenesPendientes();
     	List<Presupuesto> presupuestos = repoPresupuestos.todos();
-    	List<CategoriaDelSistema> categorias = repoCategorias.todos();
+    	List<CategoriaDelSistema> categorias = userActual.getOrganizacion().getCategorias();
 
     	Map<String, Object> map = new HashMap<>();
 
@@ -592,9 +619,21 @@ public class Server {
     	if((request.session().attribute("user") == null) || (request.session().attribute("admin").equals(true)))
     		response.redirect("/login");
     	
+    	
     	RepositorioCategoria repoCategoria = new RepositorioCategoria(entityManager);
     	
-    	List<CategoriaDelSistema> categorias = repoCategoria.todos();
+    	RepositorioUsuario repoUser = null;
+		try {
+			repoUser = new RepositorioUsuario(entityManager);
+		} catch (FileNotFoundException | ClassNotFoundException | CreationError | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	Usuario userActual = repoUser.byNombre(request.session().attribute("user"));
+    	
+    	
+    	List<CategoriaDelSistema> categorias = userActual.getOrganizacion().getCategorias();
     	
     	String categoriaString = (request.queryParams("categoria") != null) ? request.queryParams("categoria") : "";
     	
@@ -634,6 +673,7 @@ public class Server {
     		map.put("categoriaString",categoriaString);
     		map.put("tipoDocumento",tipoDocumentoString);
     	}
+    	
     	
     	map.put("categorias", categorias);
     	map.put("usuario", request.session().attribute("user"));
