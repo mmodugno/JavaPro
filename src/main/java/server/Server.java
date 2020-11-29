@@ -33,6 +33,9 @@ import java.util.stream.Collectors;
 
 
 import auditoria.CantidadPresupuestos;
+import auditoria.Criterios;
+import auditoria.Items;
+import auditoria.MontoPresupuesto;
 import auditoria.Reporte;
 import auditoria.Validador;
 
@@ -300,9 +303,9 @@ public class Server {
         Validador validador = new Validador();
 
         validador.agregarCondicionValidacion(new CantidadPresupuestos());
-       // validador.agregarCondicionValidacion(new MontoPresupuesto());
-       // validador.agregarCondicionValidacion(new Criterios());
-        // validador.agregarCondicionValidacion(new Items());
+        validador.agregarCondicionValidacion(new MontoPresupuesto());
+        validador.agregarCondicionValidacion(new Criterios());
+        validador.agregarCondicionValidacion(new Items());
 
         validador.validarEgreso(egreso);
 
