@@ -304,7 +304,7 @@ public class Server {
 
         validador.agregarCondicionValidacion(new CantidadPresupuestos());
         validador.agregarCondicionValidacion(new MontoPresupuesto());
-        validador.agregarCondicionValidacion(new Criterios());
+//        validador.agregarCondicionValidacion(new Criterios());
         validador.agregarCondicionValidacion(new Items());
 
         validador.validarEgreso(egreso);
