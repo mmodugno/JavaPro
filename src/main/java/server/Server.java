@@ -304,11 +304,9 @@ public class Server {
         Validador validador = new Validador();
 
         validador.agregarCondicionValidacion(new CantidadPresupuestos());
-        validador.agregarCondicionValidacion(new MontoPresupuesto());
-        validador.agregarCondicionValidacion(new Criterios());
+        //validador.agregarCondicionValidacion(new MontoPresupuesto());
+        //validador.agregarCondicionValidacion(new Criterios());
         validador.agregarCondicionValidacion(new Items());
-        
-        egreso.getOrdenDeCompra().setCriterioSeleccion(new ElMasBarato());
 
         validador.validarEgreso(egreso);
 
