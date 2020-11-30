@@ -72,6 +72,7 @@ public class Server {
 	private static ControllerAdmin controllerAdmin = new ControllerAdmin();
 
 	static Datastore datastore = null;
+	static EntityManager entityManager = null;
     
 	
 	
@@ -117,6 +118,7 @@ public class Server {
 
         controllerProductos= new ControllerProductos();
 
+        entityManager = entityManagerFactory.createEntityManager();
 
         Morphia morphia = new Morphia();
         morphia.mapPackage("com.baeldung.morphia");
@@ -124,7 +126,6 @@ public class Server {
                 "mongodb://GeSoc:dds2020@cluster0-shard-00-00.lvoi9.mongodb.net:27017,cluster0-shard-00-01.lvoi9.mongodb.net:27017,cluster0-shard-00-02.lvoi9.mongodb.net:27017/GeSoc?ssl=true&replicaSet=atlas-r6t4sh-shard-0&authSource=admin&retryWrites=true&w=majority");
 
         MongoClient mongoClient = new MongoClient(uri);
-
 
         datastore = morphia.createDatastore(mongoClient, "GeSoc");
         datastore.ensureIndexes();
@@ -703,7 +704,7 @@ public class Server {
 
     private static TemplateViewRoute TemplWithTransaction(WithTransaction<ModelAndView> fn) {
         TemplateViewRoute r = (req, res) -> {
-            EntityManager em = entityManagerFactory.createEntityManager();
+            EntityManager em = entityManager;
             em.getTransaction().begin();
             try {
                 ModelAndView result = fn.method(req, res, em);
@@ -719,7 +720,7 @@ public class Server {
 
     private static Route RouteWithTransaction(WithTransaction<Object> fn) {
         Route r = (req, res) -> {
-            EntityManager em = entityManagerFactory.createEntityManager();
+            EntityManager em = entityManager;
             em.getTransaction().begin();
             try {
                 Object result = fn.method(req, res, em);
