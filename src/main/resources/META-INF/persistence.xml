@@ -15,7 +15,8 @@
         
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver" /> 
             <property name="hibernate.connection.url" value="jdbc:postgresql://ec2-34-235-62-201.compute-1.amazonaws.com:5432/dapd17opmg85pb"/>
-            <property name="hibernate.connection.username" value="cmkmvkxpawwmlo" /> 
+            <property name="hibernate.connection.username" value="cmkmvkxpawwmlo" />
+            <property name="hibernate.enable_lazy_load_no_trans" value="true" />
 
             <property name="hibernate.connection.password" value="1105068b068ba5e427af7a4c9551bcd013bda0928d8ca6354a9561b0eba997bb" />
             
@@ -25,7 +26,7 @@
 			<property name="connection.pool_size" value="1"/>
             <property name="hibernate.show_sql" value="true" /> 
             <property name="hibernate.format_sql" value="true" /> 
-            <property name="use_sql_comments" value="true" /> 
+            <property name="use_sql_comments" value="true" />
             <property name="hibernate.hbm2ddl.auto" value="update" /> 
         </properties>
           

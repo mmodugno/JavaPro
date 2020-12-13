@@ -713,6 +713,7 @@ public class Server {
                 em.getTransaction().rollback();
                 throw ex;
             }
+            finally {em.close();}
         };
         return r;
     }
@@ -729,6 +730,7 @@ public class Server {
                 em.getTransaction().rollback();
                 throw ex;
             }
+            finally {em.close();}
         };
         return r;
     }
