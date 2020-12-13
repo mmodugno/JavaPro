@@ -104,10 +104,10 @@ public class Vinculador {
                 montoSuperadoExcepcion.printStackTrace();
             }
         });
-        ingresosDesde(desde, ingresosSinVincular);
-        ingresosHasta(hasta,ingresosSinVincular);
-        egresosDesde(desde,egresosSinVincular);
-        egresosHasta(hasta,egresosSinVincular);
+        ingresosSinVincular = ingresosDesde(desde, ingresosSinVincular);
+        ingresosSinVincular = ingresosHasta(hasta,ingresosSinVincular);
+        egresosSinVincular = egresosDesde(desde,egresosSinVincular);
+        egresosSinVincular = egresosHasta(hasta,egresosSinVincular);
 
         /*
         egresosSinVincular = filtrarEgresos(entidadJuridica.getEgresos());
