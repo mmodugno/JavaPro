@@ -285,9 +285,17 @@ public class ControllerOrdenes {
      		orden.agregarPresupuesto(presupuestoPersistido);
      		}
 
+
+
      		myReader.close();
      		
-    	}
+    	}else {
+			Gson gson = new Gson();
+			String data = request.queryParams("presupuestoDeOrden");
+			Presupuesto pres = gson.fromJson(data, Presupuesto.class);
+			Presupuesto presupuestoPersistido = generarPresupuestoPersist(pres, entityManager);
+			orden.agregarPresupuesto(presupuestoPersistido);
+		}
 
     }
     
