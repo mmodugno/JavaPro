@@ -53,7 +53,7 @@ public class OrdenDeCompra {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Item> items;
 	private int necesitaPresupuesto;
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Presupuesto> presupuestos;
 
 	//TODO

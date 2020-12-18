@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 import usuarios.CreationError;
@@ -215,7 +216,6 @@ public class ControllerOrdenes {
 		//MEDIOdePAGO
 		presupuesto.setMedioDePago(medioById(pres.getMedioDePago().getId(),entityManager));
 
-
 		return presupuesto;
 	}
 
@@ -321,10 +321,11 @@ public class ControllerOrdenes {
 
 		map.put("orden", orden.getIdOrden());
 		map.put("Presupuestos que necesita", orden.getNecesitaPresupuesto());
-		map.put("Presupuestos", orden.getPresupuestos().stream().map(a -> a.getId()));
+		List<String> listaPre = orden.getPresupuestos().stream().map(a -> "ID:" + a.getId()).collect(Collectors.toList());
+		map.put("Presupuestos", listaPre);
 		map.put("fecha", orden.getFecha());
-
-		map.put("items", orden.getItems().stream().map(i -> i.getProducto().getNombre() + " cantidad " + i.getCantidad()));
+		List<String> listaItems = orden.getItems().stream().map(i -> i.getProducto().getNombre() + " cantidad " + i.getCantidad()).collect(Collectors.toList());
+		map.put("items", listaItems);
 
 		Gson gson = new Gson();
 		String nuevo = gson.toJson(map);
