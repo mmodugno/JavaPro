@@ -10,7 +10,7 @@
     <!-- Bootstrap core CSS -->
     <link href="public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
 
     <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" />
@@ -25,19 +25,21 @@
             -ms-user-select: none;
             user-select: none;
         }
-
+        
         @media (min-width: 768px) {
             .bd-placeholder-img-lg {
                 font-size: 3.5rem;
             }
         }
-
-        .selected{
-            cursor:pointer;
+        
+        .selected {
+            cursor: pointer;
         }
-        .selected:hover{
+        
+        .selected:hover {
             background-color: #0585C0;
         }
+        
         .selected:hover button {
             color: black;
         }
@@ -50,11 +52,11 @@
         $(document).ready(function() {
             var cont = 0;
 
-            $('#contar').is(function () {
+            $('#contar').is(function() {
                 cont++;
             })
 
-            $('#btn-add').click(function () {
+            $('#btn-add').click(function() {
                 agregar();
                 reordenar();
             });
@@ -75,26 +77,43 @@
             }
 
             /*se supone que deberia reordenar*/
-            function reordenar(){
-                var num=1;
-                $('#items tbody tr').each(function(){
+            function reordenar() {
+                var num = 1;
+                $('#items tbody tr').each(function() {
                     $(this).find('td').eq(0).text(num);
                     num++;
                 });
 
             }
 
-            $(document).on('click', '.borrar', function (event) {
+            $(document).on('click', '.borrar', function(event) {
                 event.preventDefault();
                 $(this).closest('tr').remove();
                 reordenar();
             });
 
+            function leerArchivo(e) {
+                var archivo = e.target.files[0];
+                if (!archivo) {
+                    return;
+                }
+                var lector = new FileReader();
+                lector.onload = function(e) {
+                    var contenido = e.target.result;
+                    mostrarContenido(contenido);
+                };
+                lector.readAsText(archivo);
+            }
 
+            function mostrarContenido(contenido) {
+                var elemento = document.getElementById('contenido-archivo');
+                document.getElementById('presupuesoi').value = contenido;
+                elemento.innerHTML = contenido;
+            }
+
+            document.getElementById('presupuestoDeOrden').addEventListener('change', leerArchivo, false);
 
         });
-
-
     </script>
 
 
@@ -102,96 +121,93 @@
 
 
 <body class="bg-light">
-<div class="container contenido-centrado-detalle">
-    <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="public/img/logoIcon.png" alt="" width="72" height="72">
-        <h2>Detalle de Orden de Compra</h2>
-        <p class="lead">Para modificar la Orden, haga doble click en el texto a modificar</p>
-    </div>
+    <div class="container contenido-centrado-detalle">
+        <div class="py-5 text-center">
+            <img class="d-block mx-auto mb-4" src="public/img/logoIcon.png" alt="" width="72" height="72">
+            <h2>Detalle de Orden de Compra</h2>
+            <p class="lead">Para modificar la Orden, haga doble click en el texto a modificar</p>
+        </div>
 
 
-    <div class="contenido-centrado contenedor">
+        <div class="contenido-centrado contenedor">
 
-        <h4 class="mb-3">Orden de Compra:{{#if orden}} {{orden.idOrden}}{{/if}}</h4>
-        <form class="needs-validation contenido-centrado contenedor" action="/orden" method="post">
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <div class="form-group">
-                        <label for="presupuesto"  class="text-center">Cantidad de Presupuestos Necesarios</label>
-                        <input type="number" id="presupuesto" name="presupuesto" required {{#if orden}} value={{orden.necesitaPresupuesto}} {{else}}
-                               placeholder="Cantidad Presupuestos" {{/if}}>
+            <h4 class="mb-3">Orden de Compra:{{#if orden}} {{orden.idOrden}}{{/if}}</h4>
+            <form class="needs-validation contenido-centrado contenedor" action="/orden" method="post">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="presupuesto" class="text-center">Cantidad de Presupuestos Necesarios</label>
+                            <input type="number" id="presupuesto" name="presupuesto" required {{#if orden}} value={{orden.necesitaPresupuesto}} {{else}} placeholder="Cantidad Presupuestos" {{/if}}>
                         </div>
-                </div>
-            </div>
-
-            <div id="content">
-                <label>Agregar items a la Orden</label>
-                <button id="btn-add" class="btn">Agregar</button>
-
-                <table id="items" class="table table-bordered">
-                    <input type="hidden" value="" id="cantidadItems" name="cantidadItems">
-                    <thead>
-                    <tr>
-                        <td>Nro</td>
-                        <td>Producto</td>
-                        <td>Valor</td>
-                        <td>Cantidad</td>
-                        <td></td>
-                    </tr>
-                    {{#if orden}}
-                    {{#each orden.items}}
-                    <tr>
-                        <td id="contar"></td>
-                        <td></td>
-                        <td></td>
-                        <td><button id="btn-del" class="borrar">Eliminar</button></td>
-                    </tr>
-                    {{/each}}
-                    {{/if}}
-                    </thead>
-                </table>
-
-            </div>
-
-            <div class="row">
-                    <div class="form-group">
-                      <label for="exampleFormControlFile1">Ingrese Presupuesto</label>
-                      <input type="file" class="form-control-file" id="presupuestoDeOrden" name="presupuestoDeOrden">
                     </div>
-            </div>
-
-            <div class="row">
-
-                <div class='input-group date' id='datetimepicker1'>
-                    <input type='date' class="form-control " name="fecha" id="fecha" placeholder="DD/MM/AAAA" />
                 </div>
 
-            </div>
+                <div id="content">
+                    <label>Agregar items a la Orden</label>
+                    <button id="btn-add" class="btn">Agregar</button>
+
+                    <table id="items" class="table table-bordered">
+                        <input type="hidden" value="" id="cantidadItems" name="cantidadItems">
+                        <input type="hidden" value="" id="presupuesoi" name="presupuesoi">
+                        <thead>
+                            <tr>
+                                <td>Nro</td>
+                                <td>Producto</td>
+                                <td>Valor</td>
+                                <td>Cantidad</td>
+                                <td></td>
+                            </tr>
+                            {{#if orden}} {{#each orden.items}}
+                            <tr>
+                                <td id="contar"></td>
+                                <td></td>
+                                <td></td>
+                                <td><button id="btn-del" class="borrar">Eliminar</button></td>
+                            </tr>
+                            {{/each}} {{/if}}
+                        </thead>
+                    </table>
+
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">Ingrese Presupuesto</label>
+                        <input type="file" class="form-control-file" id="presupuestoDeOrden" name="presupuestoDeOrden">
+                        <h3>Contenido del archivo:</h3>
+                        <pre id="contenido-archivo"></pre>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class='input-group date' id='datetimepicker1'>
+                        <input type='date' class="form-control " name="fecha" id="fecha" placeholder="DD/MM/AAAA" />
+                    </div>
+
+                </div>
+
+                <hr class="mb-4">
 
 
-            
+                <div class="botones-centrados">
 
-            <hr class="mb-4">
+                    <button type="submit" class="btn btn-primary">Confirmar Orden</button>
 
+                    <a {{#if egreso}}href="/egreso/{{egreso.id}}" {{else}} href="/ordenes" {{/if}} class="btn btn-danger"> Cancelar </a>
 
-            <div class="botones-centrados">
-
-                <button type="submit" class="btn btn-primary">Confirmar Orden</button>
-
-                <a {{#if egreso}}href="/egreso/{{egreso.id}}"{{else}} href="/ordenes" {{/if}} class="btn btn-danger"> Cancelar </a>
-
-            </div>
-        </form>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<footer class="my-5 pt-5 text-muted text-center text-small">
-    <p class="mb-1">&copy; 2020 GeSoc</p>
-    <ul class="list-inline">
-        <li class="list-inline-item"><a href="/inicio">Inicio</a></li>
-    </ul>
-</footer>
-</div>
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2020 GeSoc</p>
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="/inicio">Inicio</a></li>
+        </ul>
+    </footer>
+    </div>
 
 </body>
 

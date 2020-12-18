@@ -158,7 +158,8 @@ public class ControllerOrdenes {
 		LocalDate fechaFinal = LocalDate.parse(fecha);
     	nuevaOrden.setFecha(fechaFinal);
 
-
+    	//String presupuesto = request.queryParams("presupuestoi");
+    	
     	leerPresupuestos( request, nuevaOrden, entityManager);
     	
     	
@@ -292,7 +293,8 @@ public class ControllerOrdenes {
     	}else {
 			Gson gson = new Gson();
 			String data = request.queryParams("presupuestoDeOrden");
-			Presupuesto pres = gson.fromJson(data, Presupuesto.class);
+			String data2 = request.queryParams("presupuesoi");
+			Presupuesto pres = gson.fromJson(data2, Presupuesto.class);
 			Presupuesto presupuestoPersistido = generarPresupuestoPersist(pres, entityManager);
 			orden.agregarPresupuesto(presupuestoPersistido);
 		}
