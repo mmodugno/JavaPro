@@ -294,9 +294,11 @@ public class ControllerOrdenes {
 			Gson gson = new Gson();
 			String data = request.queryParams("presupuestoDeOrden");
 			String data2 = request.queryParams("presupuesoi");
-			Presupuesto pres = gson.fromJson(data2, Presupuesto.class);
-			Presupuesto presupuestoPersistido = generarPresupuestoPersist(pres, entityManager);
-			orden.agregarPresupuesto(presupuestoPersistido);
+			String[] splitpresu = data2.split("\n");
+			for (int i = 0; i<splitpresu.length; i++){
+				orden.agregarPresupuesto(generarPresupuestoPersist(gson.fromJson(splitpresu[i], Presupuesto.class), entityManager));
+			}
+
 		}
 
     }
