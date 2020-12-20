@@ -1,5 +1,6 @@
 package auditoria;
 
+import egreso.Egreso;
 import egreso.OrdenDeCompra;
 
 public abstract class CondicionValidacion {
@@ -7,7 +8,7 @@ public abstract class CondicionValidacion {
 	/*ATRIBUTOS*/
 	protected String nombre;
 	
-	public abstract boolean validar(OrdenDeCompra ordenDeCompra, Reporte reporte);
+	public abstract boolean validar(OrdenDeCompra ordenDeCompra, Reporte reporte, Egreso egreso);
 
 	/*GETTERS*/
 	public String getNombre() {

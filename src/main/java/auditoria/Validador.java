@@ -54,8 +54,9 @@ public class Validador {
 		OrdenDeCompra ordenDeCompra;
 		
 		ordenDeCompra = egresoAvalidar.getOrdenDeCompra();
+	
 		
-		resultadoValidacion = condicionesValidacion.stream().map(unaCondicion -> this.ejecutarCondicion(unaCondicion, ordenDeCompra)).reduce(Boolean::logicalAnd).orElse(false);
+		resultadoValidacion = condicionesValidacion.stream().map(unaCondicion -> this.ejecutarCondicion(unaCondicion, ordenDeCompra, egresoAvalidar)).reduce(Boolean::logicalAnd).orElse(false);
 		
 		reporteValidacion.setResultadoValidacion(resultadoValidacion);
 		
@@ -70,9 +71,9 @@ public class Validador {
 		condicionesValidacion.add(condicionValidacion);
 	}
 	
-	private boolean ejecutarCondicion(CondicionValidacion unaCondicion, OrdenDeCompra ordenDeCompra) {
+	private boolean ejecutarCondicion(CondicionValidacion unaCondicion, OrdenDeCompra ordenDeCompra, Egreso egreso) {
 		boolean validacion;
-		validacion = unaCondicion.validar(ordenDeCompra, reporteValidacion);
+		validacion = unaCondicion.validar(ordenDeCompra, reporteValidacion, egreso);
 		
 		return validacion;
 	}

@@ -1,5 +1,6 @@
 package auditoria;
 
+import egreso.Egreso;
 import egreso.OrdenDeCompra;
 
 public class CantidadPresupuestos extends CondicionValidacion {
@@ -27,7 +28,7 @@ public class CantidadPresupuestos extends CondicionValidacion {
 		this.presupuestosRequeridos = presupuestosRequeridos;
 	}
 
-	public boolean validar(OrdenDeCompra ordenDeCompra, Reporte reporte) {
+/*	public boolean validar(OrdenDeCompra ordenDeCompra, Reporte reporte) {
 		nombre = "Validación de Cantidad de Presupuestos Requeridos";
 		boolean validacion;
 
@@ -39,6 +40,20 @@ public class CantidadPresupuestos extends CondicionValidacion {
 		reporte.resultadoValidacionPresupuestos(this, validacion);
 		
         return validacion;
-	}
+	}*/
+	@Override
+	public boolean validar(OrdenDeCompra ordenDeCompra, Reporte reporte, Egreso egreso) {
+		nombre = "Validación de Cantidad de Presupuestos Requeridos";
+		boolean validacion;
+
+		this.cantidadPresupuestos = ordenDeCompra.getPresupuestos().size();
+        this.presupuestosRequeridos = ordenDeCompra.getNecesitaPresupuesto();
+        		
+		validacion = presupuestosRequeridos <= cantidadPresupuestos;
+		
+		reporte.resultadoValidacionPresupuestos(this, validacion);
+		
+        return validacion;	
+       }
 
 }

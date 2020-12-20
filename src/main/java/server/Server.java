@@ -297,6 +297,8 @@ public class Server {
         	Gson gson = new Gson();
             String JSON = gson.toJson(map);
 
+            entityManager.close();
+            
             return JSON;
         	
         }
@@ -306,7 +308,7 @@ public class Server {
         validador.agregarCondicionValidacion(new CantidadPresupuestos());
         //validador.agregarCondicionValidacion(new MontoPresupuesto());
         //validador.agregarCondicionValidacion(new Criterios());
-        validador.agregarCondicionValidacion(new Items());
+       validador.agregarCondicionValidacion(new Items());
 
         validador.validarEgreso(egreso);
 
@@ -356,7 +358,9 @@ public class Server {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-             
+        
+       entityManager.close();
+        
        return JSON;
     }
     

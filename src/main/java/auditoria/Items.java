@@ -4,7 +4,10 @@ import static java.util.stream.Collectors.toList;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import egreso.Egreso;
 import egreso.OrdenDeCompra;
+import egreso.Presupuesto;
 import producto.Item;
 
 public class Items extends CondicionValidacion {
@@ -43,17 +46,17 @@ public class Items extends CondicionValidacion {
 		this.itemsFaltantesPresupuesto = itemsFaltantesPresupuesto;
 	}
 
-	public boolean validar(OrdenDeCompra ordenDeCompra, Reporte reporte) {
+	public boolean validar(OrdenDeCompra ordenDeCompra, Reporte reporte, Egreso egreso) {
 		nombre = "Validación de Items de Compra y Presupuesto";
 		boolean verificarCantidadItems;
 		boolean verificarItemsCompra;
 		boolean validacion;
 		
 		cantidadItemsCompra = ordenDeCompra.getItems().size();
-		cantidadItemsPresupuesto = ordenDeCompra.presupuestoAceptado().getItems().size();
+		cantidadItemsPresupuesto = egreso.getPresupuesto().getItems().size();
 		
 		verificarCantidadItems = ( cantidadItemsCompra == cantidadItemsPresupuesto);
-		verificarItemsCompra = this.verificarItems(ordenDeCompra);
+		verificarItemsCompra = this.verificarItems(ordenDeCompra,egreso.getPresupuesto());
 		
 		// Verificar Items en Orden de Compra por Id Producto
 		if(!verificarItemsCompra) {
@@ -69,13 +72,13 @@ public class Items extends CondicionValidacion {
 		return validacion;
 	}
 	
-	private boolean verificarItems(OrdenDeCompra ordenDeCompra) {
+	private boolean verificarItems(OrdenDeCompra ordenDeCompra, Presupuesto presupuesto) {
 		
 		List<Integer> codigosDeItemsCompra;
 		List<Integer> codigosDeItemsPresupuesto;
     	
     	codigosDeItemsCompra = ordenDeCompra.getItems().stream().map(Item::obtenerCodigoProducto).collect(toList());
-    	codigosDeItemsPresupuesto = ordenDeCompra.presupuestoAceptado().getItems().stream().map(Item::obtenerCodigoProducto).collect(toList());
+    	codigosDeItemsPresupuesto = presupuesto.getItems().stream().map(Item::obtenerCodigoProducto).collect(toList());
     	
     	return codigosDeItemsPresupuesto.containsAll(codigosDeItemsCompra) && codigosDeItemsCompra.containsAll(codigosDeItemsPresupuesto);
 	}
