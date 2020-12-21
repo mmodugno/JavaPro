@@ -1,5 +1,6 @@
 package auditoria;
 
+import egreso.Egreso;
 import egreso.OrdenDeCompra;
 
 public class MontoPresupuesto extends CondicionValidacion {
@@ -35,6 +36,11 @@ public class MontoPresupuesto extends CondicionValidacion {
 		reporte.resultadoValidacionMontoPresupuestos(this, validacion);
 		
 		return validacion;
+	}
+	@Override
+	public boolean validar(OrdenDeCompra ordenDeCompra, Reporte reporte, Egreso egreso) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 

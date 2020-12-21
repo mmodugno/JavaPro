@@ -82,7 +82,7 @@
                     </div>
                     <div class="col-md-5 mb-3">
                         <!--Acá si requiere presupuestos la OC seria solamente-->
-                        <label for="presupuesto">Presupuesto:</label>
+                        <label for="presupuesto">Presupuesto y Medio de Pago:</label>
                         <div class="form-group">
                             <select class="form-control" name="presupuesto" id="presupuesto">
                                 {{#if egreso}}
@@ -92,7 +92,7 @@
                                 {{/if}}
                                 {{#if orden}}
                                 {{#each presupuestos}}
-                                <option value = {{id}} data-image={{medioDePago.tipoPago}}>{{id}} - {{medioDePago.tipoPago}}</option>
+                                <option value = {{id}} data-image={{medioDePago.tipoPago}}>Nro {{id}} - {{medioDePago.tipoPago}}</option>
                                 {{/each}}
                                 {{/if}}
                             </select>

@@ -1,6 +1,7 @@
 package auditoria;
 
 import egreso.CriterioSeleccion;
+import egreso.Egreso;
 import egreso.OrdenDeCompra;
 import egreso.Presupuesto;
 
@@ -70,6 +71,11 @@ public class Criterios extends CondicionValidacion {
 		
 		return validacion;
 		
+	}
+	@Override
+	public boolean validar(OrdenDeCompra ordenDeCompra, Reporte reporte, Egreso egreso) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

@@ -24,24 +24,23 @@
 
     <main class="contenido-centrado contenedor">
 
-        <form {{#if producto}} action= "/producto/{{producto.idProducto}}" {{else}} action= "/producto" {{/if}} method="post">
+        <form {{#if producto}} action="/producto/{{producto.idProducto}}" {{else}} action="/producto" {{/if}} method="post">
             <fieldset class="">
-                <legend class="centrar-texto">{{#if producto}} Modificando {{producto.nombre}}
-                    {{else}} Nuevo Producto {{/if}}</legend>
+                <legend class="centrar-texto">{{#if producto}} Modificando {{producto.nombre}} {{else}} Nuevo Producto {{/if}}</legend>
 
                 <label>Id Producto: {{producto.idProducto}}</label>
 
                 <label for="codigo"><br>Código</label>
-                <input type= "" id="codigo" name="codigo"{{#if producto}}value="{{producto.codProducto}}"{{else}}placeholder="Código Producto"{{/if}} requiered>
+                <input type="" id="codigo" name="codigo" {{#if producto}}value="{{producto.codProducto}}" {{else}}placeholder="Código Producto" {{/if}} requiered>
 
                 <label for="nombre">Nombre</label>
-                <input type="" id="nombre" name="nombre" {{#if producto}}value= "{{producto.nombre}}" {{else}}placeholder="Nombre Producto"{{/if}} required>
+                <input type="" id="nombre" name="nombre" {{#if producto}}value="{{producto.nombre}}" {{else}}placeholder="Nombre Producto" {{/if}} required>
 
                 <label for="descripcion">descripcion</label>
-                <input type="" id="descripcion" name="descripcion" {{#if producto}} value= "{{producto.descripcion}}" {{else}}placeholder="Breve Descripción"{{/if}} required>
+                <input type="" id="descripcion" name="descripcion" {{#if producto}} value="{{producto.descripcion}}" {{else}}placeholder="Breve Descripción" {{/if}} required>
 
 
-                <select name="opciones">
+                <select name="opciones" required>
                     {{#if producto}} <option>{{producto.tipoProducto}}</option>{{else}}
                     <option value="" disabled selected>-- Tipo Producto --</option>{{/if}}
                     <option value="Articulo">Articulo</option>
@@ -51,11 +50,9 @@
             </fieldset>
 
             <div class="">
-                <input type="submit" class="btn btn-primary"{{#if producto}} value="Modificar Producto" {{else}} value="Crear Producto" {{/if}}>
-                {{#if producto}}
-                <button type="button" class="btn btn-borrar" onclick="confirmarBorrar('{{producto.idProducto}}')">Borrar</button>
-                 {{/if}}
-                <a href="/productos" class = "btn btn-danger">Cancelar</a>
+                <input type="submit" class="btn btn-primary" {{#if producto}} value="Modificar Producto" {{else}} value="Crear Producto" {{/if}}> {{#if producto}}
+                <button type="button" class="btn btn-borrar" onclick="confirmarBorrar('{{producto.idProducto}}')">Borrar</button> {{/if}}
+                <a href="/productos" class="btn btn-danger">Cancelar</a>
             </div>
 
         </form>
@@ -68,7 +65,7 @@
     <div class="modalContent">
         <input type="hidden" value="" id="productoId">
         <p>¿Realmente desea eliminar el producto?</p>
-        <button type="button" name="button" class="btn-close-modal" onclick="cerrarConfirmacionBorrar()" ><i class="fas fa-times-circle"></i></button>
+        <button type="button" name="button" class="btn-close-modal" onclick="cerrarConfirmacionBorrar()"><i class="fas fa-times-circle"></i></button>
         <br>
         <div class="">
             <button type="button" name="button" class="btn-rojo" onclick="eliminarProducto()">Eliminar</button>
